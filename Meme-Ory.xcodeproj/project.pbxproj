@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */; };
+		2A1B5FB9256A4A5D00E3283D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FB8256A4A5D00E3283D /* ContentView.swift */; };
+		2A1B5FBB256A4A5E00E3283D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
+		2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBD256A4A5E00E3283D /* Preview Assets.xcassets */; };
+		2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
+		2A1B5FC3256A4A5E00E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FC1256A4A5E00E3283D /* Meme_Ory.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meme-Ory.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme_OryApp.swift; sourceTree = "<group>"; };
+		2A1B5FB8256A4A5D00E3283D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2A1B5FBD256A4A5E00E3283D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2A1B5FBF256A4A5E00E3283D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		2A1B5FC2256A4A5E00E3283D /* Meme_Ory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Meme_Ory.xcdatamodel; sourceTree = "<group>"; };
+		2A1B5FC4256A4A5E00E3283D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A1B5FB0256A4A5D00E3283D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A1B5FAA256A4A5D00E3283D = {
+			isa = PBXGroup;
+			children = (
+				2A1B5FB5256A4A5D00E3283D /* Meme-Ory */,
+				2A1B5FB4256A4A5D00E3283D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2A1B5FB4256A4A5D00E3283D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A1B5FB5256A4A5D00E3283D /* Meme-Ory */ = {
+			isa = PBXGroup;
+			children = (
+				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
+				2A1B5FB8256A4A5D00E3283D /* ContentView.swift */,
+				2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */,
+				2A1B5FBF256A4A5E00E3283D /* Persistence.swift */,
+				2A1B5FC4256A4A5E00E3283D /* Info.plist */,
+				2A1B5FC1256A4A5E00E3283D /* Meme_Ory.xcdatamodeld */,
+				2A1B5FBC256A4A5E00E3283D /* Preview Content */,
+			);
+			path = "Meme-Ory";
+			sourceTree = "<group>";
+		};
+		2A1B5FBC256A4A5E00E3283D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2A1B5FBD256A4A5E00E3283D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2A1B5FB2256A4A5D00E3283D /* Meme-Ory */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A1B5FC7256A4A5E00E3283D /* Build configuration list for PBXNativeTarget "Meme-Ory" */;
+			buildPhases = (
+				2A1B5FAF256A4A5D00E3283D /* Sources */,
+				2A1B5FB0256A4A5D00E3283D /* Frameworks */,
+				2A1B5FB1256A4A5D00E3283D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Meme-Ory";
+			productName = "Meme-Ory";
+			productReference = 2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A1B5FAB256A4A5D00E3283D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1220;
+				LastUpgradeCheck = 1220;
+				TargetAttributes = {
+					2A1B5FB2256A4A5D00E3283D = {
+						CreatedOnToolsVersion = 12.2;
+					};
+				};
+			};
+			buildConfigurationList = 2A1B5FAE256A4A5D00E3283D /* Build configuration list for PBXProject "Meme-Ory" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2A1B5FAA256A4A5D00E3283D;
+			productRefGroup = 2A1B5FB4256A4A5D00E3283D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2A1B5FB2256A4A5D00E3283D /* Meme-Ory */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2A1B5FB1256A4A5D00E3283D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */,
+				2A1B5FBB256A4A5E00E3283D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A1B5FAF256A4A5D00E3283D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */,
+				2A1B5FB9256A4A5D00E3283D /* ContentView.swift in Sources */,
+				2A1B5FC3256A4A5E00E3283D /* Meme_Ory.xcdatamodeld in Sources */,
+				2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2A1B5FC5256A4A5E00E3283D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2A1B5FC6256A4A5E00E3283D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2A1B5FC8256A4A5E00E3283D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Meme-Ory/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.photoigor.Meme-Ory";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2A1B5FC9256A4A5E00E3283D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Meme-Ory/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.photoigor.Meme-Ory";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2A1B5FAE256A4A5D00E3283D /* Build configuration list for PBXProject "Meme-Ory" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A1B5FC5256A4A5E00E3283D /* Debug */,
+				2A1B5FC6256A4A5E00E3283D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A1B5FC7256A4A5E00E3283D /* Build configuration list for PBXNativeTarget "Meme-Ory" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A1B5FC8256A4A5E00E3283D /* Debug */,
+				2A1B5FC9256A4A5E00E3283D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2A1B5FC1256A4A5E00E3283D /* Meme_Ory.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2A1B5FC2256A4A5E00E3283D /* Meme_Ory.xcdatamodel */,
+			);
+			currentVersion = 2A1B5FC2256A4A5E00E3283D /* Meme_Ory.xcdatamodel */;
+			path = Meme_Ory.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 2A1B5FAB256A4A5D00E3283D /* Project object */;
+}
