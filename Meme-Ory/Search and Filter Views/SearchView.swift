@@ -9,27 +9,37 @@ import SwiftUI
 
 struct SearchView: View {
     
-    @Binding var filter: Filter
+    @Binding var searchString: String
     
     var body: some View {
-        TextField("Filter", text: $filter.string)
-    }
-}
-
-struct SearchView_Testing: View {
-    
-    @State private var filter: Filter = Filter()
-    
-    var body: some View {
-        SearchView(filter: $filter)
+        HStack(alignment: .center, spacing: 6) {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.secondary)
+            
+            TextField("Filter", text: $searchString)
+            
+            Button {
+                withAnimation {
+                    searchString = ""
+                }
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .opacity(searchString.isEmpty ? 0 : 1)
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+        .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
     }
 }
 
 struct SearchView_Previews: PreviewProvider {
+    @State static private var searchString = ""
+    
     static var previews: some View {
         NavigationView {
             List {
-                SearchView_Testing()
+                SearchView(searchString: $searchString)
             }
             .listStyle((InsetGroupedListStyle()))
         }

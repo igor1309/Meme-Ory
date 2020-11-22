@@ -12,20 +12,26 @@ struct StoryListView: View {
     
     @Environment(\.managedObjectContext) private var context
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Story.timestamp, ascending: true)],
-        animation: .default)
-    private var stories: FetchedResults<Story>
+    @Binding var filter: Filter
     
-    @State private var filter: Filter = Filter()
+    private let fetchRequest: NSFetchRequest<Story>
+    
+    @FetchRequest private var stories: FetchedResults<Story>
+    
+    init(filter: Binding<Filter>) {
+        _filter = filter
+        fetchRequest = Story.fetchRequest(filter.wrappedValue.predicate)
+        _stories = FetchRequest(fetchRequest: fetchRequest)
+    }
+    
     @State private var showFilter = false
     @State private var showCreateSheet = false
     
     var body: some View {
         List {
-            SearchView(filter: $filter)
+            SearchView(searchString: $filter.searchString)
             
-            Section {
+            Section(header: Text("Stories: \(context.realCount(for: fetchRequest))")) {
                 ForEach(stories, content: StoryRowView.init)
                     .onDelete(perform: deleteStorys)
             }
@@ -41,13 +47,14 @@ struct StoryListView: View {
         }
         .sheet(isPresented: $showCreateSheet) {
             StoryEditorView()
+                .environment(\.managedObjectContext, context)
         }
     }
     private func filterButton() -> some View {
         Button {
             let haptics = Haptics()
             haptics.feedback()
-
+            
             withAnimation {
                 showFilter = true
             }
@@ -56,7 +63,26 @@ struct StoryListView: View {
             Image(systemName: filter.isActive ? "tag.fill" : "tag")
         }
         .sheet(isPresented: $showFilter) {
-            TagFilter(filter: $filter)
+            TagFilterView(filter: $filter)
+                .environment(\.managedObjectContext, context)
+            
+        }
+        .contextMenu {
+            if filter.isActive {
+                Button {
+                    let haptics = Haptics()
+                    haptics.feedback()
+                    
+                    withAnimation {
+                        filter.reset()
+                    }
+                } label: {
+                    Label("Reset Tags",
+                          systemImage: "tag.slash.fill")
+                }
+            } else {
+                EmptyView()
+            }
         }
     }
     
@@ -81,11 +107,20 @@ struct StoryListView: View {
     }
 }
 
+struct StoryListView_Testing: View {
+    @State var filter = Filter()
+    
+    var body: some View {
+        StoryListView(filter: $filter)
+    }
+}
+
 struct StoryListView_Previews: PreviewProvider {
+    @State static var filter = Filter()
+    
     static var previews: some View {
         NavigationView {
-            StoryListView()
-                .navigationBarTitleDisplayMode(.inline)
+            StoryListView_Testing()
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .preferredColorScheme(.dark)

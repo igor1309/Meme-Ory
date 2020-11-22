@@ -10,6 +10,8 @@ import MobileCoreServices
 
 struct StoryRowView: View {
     
+    @Environment(\.managedObjectContext) private var context
+
     @ObservedObject var story: Story
     
     @State private var showSheet = false
@@ -23,6 +25,7 @@ struct StoryRowView: View {
         .buttonStyle(PlainButtonStyle())
         .sheet(isPresented: $showSheet) {
             StoryEditorView(story: story)
+                .environment(\.managedObjectContext, context)
         }
     }
     

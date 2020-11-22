@@ -12,10 +12,12 @@ struct Meme_OryApp: App {
     
     let persistenceController = PersistenceController.shared
     
+    @State private var filter = Filter()
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                StoryListView()
+                StoryListView(filter: $filter)
             }
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }

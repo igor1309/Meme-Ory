@@ -24,7 +24,7 @@
 		2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CAB256A98C4004B6E10 /* TagView.swift */; };
 		2A935CB2256AE742004B6E10 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB1256AE742004B6E10 /* Haptics.swift */; };
 		2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */; };
-		2A935CB8256AEA30004B6E10 /* TagFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB7256AEA30004B6E10 /* TagFilter.swift */; };
+		2A935CB8256AEA30004B6E10 /* TagFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB7256AEA30004B6E10 /* TagFilterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +47,7 @@
 		2A935CAB256A98C4004B6E10 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		2A935CB1256AE742004B6E10 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGridWrapperView.swift; sourceTree = "<group>"; };
-		2A935CB7256AEA30004B6E10 /* TagFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFilter.swift; sourceTree = "<group>"; };
+		2A935CB7256AEA30004B6E10 /* TagFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFilterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				2A935CA2256A807E004B6E10 /* SearchView.swift */,
-				2A935CB7256AEA30004B6E10 /* TagFilter.swift */,
+				2A935CB7256AEA30004B6E10 /* TagFilterView.swift */,
 			);
 			path = "Search and Filter Views";
 			sourceTree = "<group>";
@@ -247,7 +247,7 @@
 				2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */,
 				2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */,
 				2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */,
-				2A935CB8256AEA30004B6E10 /* TagFilter.swift in Sources */,
+				2A935CB8256AEA30004B6E10 /* TagFilterView.swift in Sources */,
 				2A935C9B256A7717004B6E10 /* Tag.swift in Sources */,
 				2A935CA3256A807E004B6E10 /* SearchView.swift in Sources */,
 				2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */,
