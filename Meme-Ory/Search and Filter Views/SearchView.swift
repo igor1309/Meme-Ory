@@ -16,7 +16,7 @@ struct SearchView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.secondary)
             
-            TextField("Filter", text: $searchString)
+            TextField("Filter (at least 3 letters)", text: $searchString)
             
             Button {
                 withAnimation {

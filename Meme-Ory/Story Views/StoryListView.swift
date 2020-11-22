@@ -60,7 +60,7 @@ struct StoryListView: View {
             }
             
         } label: {
-            Image(systemName: filter.isActive ? "tag.fill" : "tag")
+            Image(systemName: filter.isTagFilterActive ? "tag.fill" : "tag")
         }
         .sheet(isPresented: $showFilter) {
             TagFilterView(filter: $filter)
@@ -68,7 +68,7 @@ struct StoryListView: View {
             
         }
         .contextMenu {
-            if filter.isActive {
+            if filter.isTagFilterActive {
                 Button {
                     let haptics = Haptics()
                     haptics.feedback()

@@ -86,6 +86,7 @@ struct TagGridView: View {
         haptics.feedback()
         
         withAnimation {
+            selected.remove(tag)
             //  MARK: - FINISH THIS NOT WORKING
             //
             context.delete(tag)
