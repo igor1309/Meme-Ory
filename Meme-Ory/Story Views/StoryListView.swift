@@ -62,10 +62,16 @@ struct StoryListView: View {
         }
     }
     
+    private var optionsButtonColor: Color {
+        if filter.isTagFilterActive || filter.isListLimited {
+            return Color(UIColor.systemOrange)
+        } else {
+            return Color(UIColor.systemBlue)
+        }
+    }
+    
     private func optionsButton() -> some View {
-        let image = filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill"
-        
-        return Button {
+        Button {
             let haptics = Haptics()
             haptics.feedback()
             
@@ -73,8 +79,9 @@ struct StoryListView: View {
                 showListOptions = true
             }
         } label: {
-            Image(systemName: "slider.horizontal.3")//image)
+            Image(systemName: "slider.horizontal.3")
         }
+        .accentColor(optionsButtonColor)
         .sheet(isPresented: $showListOptions) {
             ListOptionView(filter: $filter)
                 .environment(\.managedObjectContext, context)
@@ -102,8 +109,7 @@ struct StoryListView: View {
                     filter.areInIncreasingOrder.toggle()
                 }
             } label: {
-                Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")",
-                      systemImage: image)
+                Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")", systemImage: filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill")
             }
             Button {
                 let haptics = Haptics()
