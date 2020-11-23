@@ -24,7 +24,14 @@ struct TagGridWrapperView: View {
         NavigationView {
             VStack {
                 HStack {
-                    TextField("New Tag Name", text: $newTagName)
+                    VStack {
+                        SearchView(title: "New Tag Name", text: $newTagName)
+                        
+                        TextField("New Tag Name", text: $newTagName)
+                        
+                        TextField("New Tag Name", text: $newTagName)
+                            .searchModifier(text: $newTagName)
+                    }
                     
                     Button(action: createNewTagAndSelect) {
                         Image(systemName: "plus.square")

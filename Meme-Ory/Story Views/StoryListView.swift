@@ -32,7 +32,7 @@ struct StoryListView: View {
     
     var body: some View {
         List {
-            SearchView(searchString: $filter.searchString)
+            SearchListRowView(title: "Filter (at least 3 letters)", text: $filter.searchString)
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories, content: StoryRowView.init)
