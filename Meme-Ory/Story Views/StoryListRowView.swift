@@ -1,5 +1,5 @@
 //
-//  StoryRowView.swift
+//  StoryListRowView.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 22.11.2020.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MobileCoreServices
 
-struct StoryRowView: View {
+struct StoryListRowView: View {
     
     @Environment(\.managedObjectContext) private var context
     
@@ -76,12 +76,12 @@ struct StoryRowView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             List(0..<5) { _ in
-                StoryRowView(story: SampleData.story)
+                StoryListRowView(story: SampleData.story)
             }
             .navigationBarTitleDisplayMode(.inline)
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .preferredColorScheme(.dark)
-        .previewLayout(.fixed(width: 350, height: 600))
+        .previewLayout(.fixed(width: 350, height: 800))
     }
 }

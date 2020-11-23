@@ -37,7 +37,7 @@ struct StoryListView: View {
                 .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
             
             Section(header: Text("Stories: \(count)")) {
-                ForEach(stories, content: StoryRowView.init)
+                ForEach(stories, content: StoryListRowView.init)
                     .onDelete(perform: deleteStories)
             }
         }
