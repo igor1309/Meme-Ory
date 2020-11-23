@@ -27,13 +27,15 @@ struct StoryListView: View {
     @State private var showFilter = false
     @State private var showCreateSheet = false
     
+    private var count: Int { context.realCount(for: fetchRequest) }
+    
     var body: some View {
         List {
             SearchView(searchString: $filter.searchString)
             
-            Section(header: Text("Stories: \(context.realCount(for: fetchRequest))")) {
+            Section(header: Text("Stories: \(count)")) {
                 ForEach(stories, content: StoryRowView.init)
-                    .onDelete(perform: deleteStorys)
+                    .onDelete(perform: deleteStories)
             }
         }
         .navigationBarItems(leading: filterButton(), trailing: createStoryButton())
@@ -77,8 +79,7 @@ struct StoryListView: View {
                         filter.reset()
                     }
                 } label: {
-                    Label("Reset Tags",
-                          systemImage: "tag.slash.fill")
+                    Label("Reset Tags", systemImage: "tag.slash.fill")
                 }
             } else {
                 EmptyView()
@@ -95,7 +96,7 @@ struct StoryListView: View {
         }
     }
     
-    private func deleteStorys(offsets: IndexSet) {
+    private func deleteStories(offsets: IndexSet) {
         let haptics = Haptics()
         haptics.feedback()
         

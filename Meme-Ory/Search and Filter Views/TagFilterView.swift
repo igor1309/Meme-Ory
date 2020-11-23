@@ -16,14 +16,7 @@ struct TagFilterView: View {
         NavigationView {
             VStack(alignment: .leading) {
                 Group {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Selected Tags".uppercased())
-                            .foregroundColor(.secondary)
-                            .font(.caption)
-                        
-                        Text(filter.tagList.isEmpty ? "—" :filter.tagList)
-                            .font(.footnote)
-                    }
+                    selectedTags()
                     
                     Divider()
                 }
@@ -33,6 +26,18 @@ struct TagFilterView: View {
             }
             .navigationTitle("Tag Filter")
             .navigationBarItems(leading: clearFilterButton(), trailing: doneButton())
+        }
+    }
+    
+    private func selectedTags() -> some View {
+        return VStack(alignment: .leading, spacing: 6) {
+            Text("Selected Tags".uppercased())
+                .foregroundColor(.secondary)
+                .font(.caption)
+            
+            Text(filter.tagList.isEmpty ? "<none>" : filter.tagList)
+                .foregroundColor(filter.tagList.isEmpty ? .secondary : .primary)
+                .font(.footnote)
         }
     }
     
@@ -51,11 +56,18 @@ struct TagFilterView: View {
     }
 }
 
+struct TagFilterView_Testing: View {
+    @State var filter = Filter()
+    
+    var body: some View {
+        TagFilterView(filter: $filter)
+    }
+}
+
 struct TagFilter_Previews: PreviewProvider {
-    @State static var filter = Filter()
     
     static var previews: some View {
-        TagFilterView(filter: $filter)
+        TagFilterView_Testing()
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 350, height: 400))
