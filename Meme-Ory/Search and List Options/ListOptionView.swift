@@ -94,7 +94,7 @@ struct ListOptionView: View {
     }
 }
 
-struct ListOptionView_Texting: View {
+fileprivate struct ListOptionView_Texting: View {
     @State var filter = Filter()
     
     var body: some View {

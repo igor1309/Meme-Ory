@@ -154,7 +154,7 @@ fileprivate struct StoryListView_Testing: View {
     }
 }
 
-fileprivate struct StoryListView_Previews: PreviewProvider {
+struct StoryListView_Previews: PreviewProvider {
     @State static var filter = Filter()
     
     static var previews: some View {

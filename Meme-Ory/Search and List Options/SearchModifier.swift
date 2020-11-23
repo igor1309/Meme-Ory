@@ -39,7 +39,7 @@ struct SearchModifier: ViewModifier {
     }
 }
 
-struct SearchModifier_Testing: View {
+fileprivate struct SearchModifier_Testing: View {
     @State private var text = ""
     
     var body: some View {

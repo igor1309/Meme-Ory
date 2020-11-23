@@ -69,7 +69,7 @@ struct TagGridWrapperView: View {
     }
 }
 
-struct TagGridWrapperView_Testing: View {
+fileprivate struct TagGridWrapperView_Testing: View {
     @State private var selected = Set<Tag>()
     
     var body: some View {

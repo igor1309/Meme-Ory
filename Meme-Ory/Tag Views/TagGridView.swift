@@ -57,7 +57,7 @@ struct TagGridView: View {
     }
 }
 
-struct TagGridView_Testing: View {
+fileprivate struct TagGridView_Testing: View {
     @State private var selected = Set<Tag>()
     
     var body: some View {
