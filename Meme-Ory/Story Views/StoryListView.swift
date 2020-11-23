@@ -22,11 +22,14 @@ struct StoryListView: View {
     init(filter: Binding<Filter>) {
         _filter = filter
         fetchRequest = Story.fetchRequest(filter.wrappedValue.predicate, areInIncreasingOrder: filter.wrappedValue.areInIncreasingOrder)
+        if filter.wrappedValue.isListLimited {
+            fetchRequest.fetchLimit = filter.wrappedValue.listLimit
+        }
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
     @State private var showFilter = false
-    @State private var showSort = false
+    @State private var showListOptions = false
     @State private var showCreateSheet = false
     
     private var count: Int { context.realCount(for: fetchRequest) }
@@ -42,12 +45,7 @@ struct StoryListView: View {
                     .onDelete(perform: deleteStories)
             }
         }
-        .navigationBarItems(
-            leading: HStack {
-                filterButton()
-                sortButton()
-            },
-            trailing: createStoryButton())
+        .navigationBarItems(leading: optionsButton(), trailing: createStoryButton())
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
     }
@@ -62,21 +60,21 @@ struct StoryListView: View {
         }
     }
     
-    private func filterButton() -> some View {
-        Button {
+    private func optionsButton() -> some View {
+        let image = filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill"
+        
+        return Button {
             let haptics = Haptics()
             haptics.feedback()
             
             withAnimation {
-                showFilter = true
+                showListOptions = true
             }
-            
         } label: {
-            Image(systemName: filter.isTagFilterActive ? "tag.fill" : "tag")
+            Image(systemName: "slider.horizontal.3")//image)
         }
-        .sheet(isPresented: $showFilter) {
-            TagFilterView(filter: $filter)
-                .environment(\.managedObjectContext, context)
+        .sheet(isPresented: $showListOptions) {
+            ListOptionView(filter: $filter)
         }
         .contextMenu {
             if filter.isTagFilterActive {
@@ -93,26 +91,6 @@ struct StoryListView: View {
             } else {
                 EmptyView()
             }
-        }
-    }
-    
-    private func sortButton() -> some View {
-        let image = filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill"
-        
-        return Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
-                showSort = true
-            }
-        } label: {
-            Image(systemName: image)
-        }
-        .sheet(isPresented: $showSort) {
-            SortOptionView(filter: $filter)
-        }
-        .contextMenu {
             Button {
                 let haptics = Haptics()
                 haptics.feedback()
@@ -123,6 +101,17 @@ struct StoryListView: View {
             } label: {
                 Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")",
                       systemImage: image)
+            }
+            Button {
+                let haptics = Haptics()
+                haptics.feedback()
+                
+                withAnimation {
+                    filter.isListLimited.toggle()
+                }
+            } label: {
+                Label("\(filter.isListLimited ? "Reset": "Set") List Limit",
+                      systemImage: filter.isListLimited ? "infinity" : "arrow.up.and.down")
             }
         }
     }

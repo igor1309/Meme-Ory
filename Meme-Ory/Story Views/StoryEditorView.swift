@@ -78,6 +78,7 @@ struct StoryEditorView: View {
                     }
                 } label: {
                     Image(systemName: "tag.circle")
+                        .imageScale(.large)
                 }
                 .sheet(isPresented: $showTagsView) {
                     TagGridWrapperView(selected: $tags)
