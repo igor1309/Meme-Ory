@@ -11,7 +11,7 @@ import MobileCoreServices
 struct StoryRowView: View {
     
     @Environment(\.managedObjectContext) private var context
-
+    
     @ObservedObject var story: Story
     
     @State private var showSheet = false
@@ -22,7 +22,9 @@ struct StoryRowView: View {
         } label: {
             label
         }
-        .buttonStyle(PlainButtonStyle())
+        // .buttonStyle(PlainButtonStyle())
+        .accentColor(.primary)
+        .contentShape(Rectangle())
         .sheet(isPresented: $showSheet) {
             StoryEditorView(story: story)
                 .environment(\.managedObjectContext, context)
@@ -30,7 +32,7 @@ struct StoryRowView: View {
     }
     
     var label: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading) {
             Text(story.text.prefix(100))
                 .font(.subheadline)
             
@@ -52,7 +54,6 @@ struct StoryRowView: View {
                 let haptics = Haptics()
                 haptics.feedback()
                 
-
                 withAnimation {
                     UIPasteboard.general.string = story.text
                 }
