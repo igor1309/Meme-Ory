@@ -18,7 +18,6 @@
 		2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C91256A6B0E004B6E10 /* StoryEditorView.swift */; };
 		2A935C9B256A7717004B6E10 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9A256A7717004B6E10 /* Tag.swift */; };
 		2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9D256A77BE004B6E10 /* SampleData.swift */; };
-		2A935CA3256A807E004B6E10 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA2256A807E004B6E10 /* SearchView.swift */; };
 		2A935CA6256A80C9004B6E10 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA5256A80C9004B6E10 /* Filter.swift */; };
 		2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA8256A83A0004B6E10 /* TagGridView.swift */; };
 		2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CAB256A98C4004B6E10 /* TagView.swift */; };
@@ -26,7 +25,6 @@
 		2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */; };
 		2A935CB8256AEA30004B6E10 /* TagFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB7256AEA30004B6E10 /* TagFilterView.swift */; };
 		2AA8916B256B9E7E0042395A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
-		2AA89171256BDFAE0042395A /* SearchListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89170256BDFAE0042395A /* SearchListRowView.swift */; };
 		2AA89175256BE8080042395A /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89174256BE8080042395A /* SearchModifier.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +42,6 @@
 		2A935C91256A6B0E004B6E10 /* StoryEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditorView.swift; sourceTree = "<group>"; };
 		2A935C9A256A7717004B6E10 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		2A935C9D256A77BE004B6E10 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		2A935CA2256A807E004B6E10 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2A935CA5256A80C9004B6E10 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2A935CA8256A83A0004B6E10 /* TagGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGridView.swift; sourceTree = "<group>"; };
 		2A935CAB256A98C4004B6E10 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -52,7 +49,6 @@
 		2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGridWrapperView.swift; sourceTree = "<group>"; };
 		2A935CB7256AEA30004B6E10 /* TagFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFilterView.swift; sourceTree = "<group>"; };
 		2AA8916A256B9E7E0042395A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
-		2AA89170256BDFAE0042395A /* SearchListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListRowView.swift; sourceTree = "<group>"; };
 		2AA89174256BE8080042395A /* SearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				2AA89174256BE8080042395A /* SearchModifier.swift */,
-				2AA89177256BE9BA0042395A /* old (pre SearchModifier) */,
 				2A935CB7256AEA30004B6E10 /* TagFilterView.swift */,
 			);
 			path = "Search and Filter Views";
@@ -181,15 +176,6 @@
 				2A935CB1256AE742004B6E10 /* Haptics.swift */,
 			);
 			path = Extras;
-			sourceTree = "<group>";
-		};
-		2AA89177256BE9BA0042395A /* old (pre SearchModifier) */ = {
-			isa = PBXGroup;
-			children = (
-				2A935CA2256A807E004B6E10 /* SearchView.swift */,
-				2AA89170256BDFAE0042395A /* SearchListRowView.swift */,
-			);
-			path = "old (pre SearchModifier)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,10 +252,8 @@
 				2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */,
 				2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */,
 				2A935CB8256AEA30004B6E10 /* TagFilterView.swift in Sources */,
-				2AA89171256BDFAE0042395A /* SearchListRowView.swift in Sources */,
 				2A935C9B256A7717004B6E10 /* Tag.swift in Sources */,
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
-				2A935CA3256A807E004B6E10 /* SearchView.swift in Sources */,
 				2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */,
 				2A935C89256A5144004B6E10 /* StoryRowView.swift in Sources */,
 				2A1B5FB9256A4A5D00E3283D /* StoryListView.swift in Sources */,
@@ -408,7 +392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -432,7 +416,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
