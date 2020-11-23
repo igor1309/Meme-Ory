@@ -27,11 +27,13 @@ struct StoryListView: View {
     @State private var showFilter = false
     @State private var showCreateSheet = false
     
+    private var count: Int { context.realCount(for: fetchRequest) }
+    
     var body: some View {
         List {
             SearchView(searchString: $filter.searchString)
             
-            Section(header: Text("Stories: \(context.realCount(for: fetchRequest))")) {
+            Section(header: Text("Stories: \(count)")) {
                 ForEach(stories, content: StoryRowView.init)
                     .onDelete(perform: deleteStorys)
             }

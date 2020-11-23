@@ -23,22 +23,20 @@ struct Filter {
         tags.map { $0.name }.joined(separator: ", ")
     }
     
+    private var tagPredicate: NSPredicate {
+        isTagFilterActive ?
+            NSPredicate(format: "ANY %K IN %@", #keyPath(Story.tags_), Array(tags))
+            : NSPredicate.all
+    }
+    
+    private var searchStringPredicate: NSPredicate {
+        searchString.count >= 3 ?
+            NSPredicate(format: "text_ CONTAINS[cd] %@", searchString)
+            : NSPredicate.all
+    }
+    
     var predicate: NSPredicate {
-        let tagPredicate: NSPredicate
-        if isTagFilterActive {
-            tagPredicate = NSPredicate(format: "ANY %K IN %@", #keyPath(Story.tags_), Array(tags))
-        } else {
-            tagPredicate = NSPredicate.all
-        }
-        
-        let searchStringPredicate: NSPredicate
-        if searchString.count < 3 {
-            searchStringPredicate = NSPredicate.all
-        } else {
-            searchStringPredicate = NSPredicate(format: "text_ CONTAINS[cd] %@", searchString)
-        }
-        
-        return NSCompoundPredicate(andPredicateWithSubpredicates: [tagPredicate, searchStringPredicate])
+        NSCompoundPredicate(andPredicateWithSubpredicates: [tagPredicate, searchStringPredicate])
     }
     
     mutating func reset() {
