@@ -21,11 +21,12 @@ struct StoryListView: View {
     
     init(filter: Binding<Filter>) {
         _filter = filter
-        fetchRequest = Story.fetchRequest(filter.wrappedValue.predicate)
+        fetchRequest = Story.fetchRequest(filter.wrappedValue.predicate, areInIncreasingOrder: filter.wrappedValue.areInIncreasingOrder)
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
     @State private var showFilter = false
+    @State private var showSort = false
     @State private var showCreateSheet = false
     
     private var count: Int { context.realCount(for: fetchRequest) }
@@ -41,7 +42,12 @@ struct StoryListView: View {
                     .onDelete(perform: deleteStories)
             }
         }
-        .navigationBarItems(leading: filterButton(), trailing: createStoryButton())
+        .navigationBarItems(
+            leading: HStack {
+                filterButton()
+                sortButton()
+            },
+            trailing: createStoryButton())
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
     }
@@ -55,6 +61,7 @@ struct StoryListView: View {
                 .environment(\.managedObjectContext, context)
         }
     }
+    
     private func filterButton() -> some View {
         Button {
             let haptics = Haptics()
@@ -70,7 +77,6 @@ struct StoryListView: View {
         .sheet(isPresented: $showFilter) {
             TagFilterView(filter: $filter)
                 .environment(\.managedObjectContext, context)
-            
         }
         .contextMenu {
             if filter.isTagFilterActive {
@@ -86,6 +92,37 @@ struct StoryListView: View {
                 }
             } else {
                 EmptyView()
+            }
+        }
+    }
+    
+    private func sortButton() -> some View {
+        let image = filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill"
+        
+        return Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                showSort = true
+            }
+        } label: {
+            Image(systemName: image)
+        }
+        .sheet(isPresented: $showSort) {
+            SortOptionView(filter: $filter)
+        }
+        .contextMenu {
+            Button {
+                let haptics = Haptics()
+                haptics.feedback()
+                
+                withAnimation {
+                    filter.areInIncreasingOrder.toggle()
+                }
+            } label: {
+                Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")",
+                      systemImage: image)
             }
         }
     }

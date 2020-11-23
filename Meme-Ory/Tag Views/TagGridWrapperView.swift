@@ -31,6 +31,7 @@ struct TagGridWrapperView: View {
                         Image(systemName: "plus.square")
                     }
                     .disabled(newTagName.isEmpty)
+                    .padding(.leading)
                 }
                 .padding(.top)
                 

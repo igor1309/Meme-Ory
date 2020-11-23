@@ -14,6 +14,7 @@ extension NSPredicate {
 
 struct Filter {
     
+    var areInIncreasingOrder: Bool = true
     var searchString = ""
     var tags = Set<Tag>()
     

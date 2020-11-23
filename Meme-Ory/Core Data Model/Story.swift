@@ -22,9 +22,9 @@ extension Story {
         tags.map { $0.name }.joined(separator: ", ")
     }
     
-    static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Story> {
+    static func fetchRequest(_ predicate: NSPredicate, areInIncreasingOrder: Bool) -> NSFetchRequest<Story> {
         let request = NSFetchRequest<Story>(entityName: "Story")
-        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: areInIncreasingOrder)]
         request.predicate = predicate
         return request
     }
