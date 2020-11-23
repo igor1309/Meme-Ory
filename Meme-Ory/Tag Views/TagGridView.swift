@@ -20,30 +20,20 @@ struct TagGridView: View {
     
     @Binding var selected: Set<Tag>
     
-    @State private var showDeleteConfirmation = false
-    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            LazyVGrid(columns: columns) {
-                ForEach(tags) { tag in
-                    Button {
-                        toggleSelection(tag)
-                    } label: {
-                        TagView(tag: tag, isSelected: isSelected(tag))
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .contextMenu {
+            VStack {
+                LazyVGrid(columns: columns) {
+                    ForEach(tags) { tag in
                         Button {
-                            showDeleteConfirmation = true
+                            toggleSelection(tag)
                         } label: {
-                            Label("Delete Tag", systemImage: "trash.circle")
+                            TagView(tag: tag, isSelected: isSelected(tag))
+                                .onDisappear { selected.remove(tag) }
                         }
-                    }
-                    .actionSheet(isPresented: $showDeleteConfirmation) {
-                        actionSheetDelete(tag: tag)
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-                .padding()
             }
         }
     }
@@ -53,45 +43,18 @@ struct TagGridView: View {
         haptics.feedback()
         
         withAnimation {
-            
             if isSelected(tag) {
                 /// remove tag
                 selected.remove(tag)
-                //selected.removeAll { $0 == tag }
             } else {
                 /// add tag
                 selected.insert(tag)
-                //selected.append(tag)
             }
         }
     }
     
     private func isSelected(_ tag: Tag) -> Bool {
         selected.contains(tag)
-    }
-    
-    private func actionSheetDelete(tag: Tag) -> ActionSheet {
-        ActionSheet(
-            title: Text("Delete Tag"),
-            message: Text("Are you sure you want to delete tag '\(tag.name)'"),
-            buttons: [
-                .destructive(Text("Yes, delete!")) { deleteTag(tag) },
-                .cancel()
-            ]
-        )
-    }
-    
-    private func deleteTag(_ tag: Tag) {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            selected.remove(tag)
-            //  MARK: - FINISH THIS NOT WORKING
-            //
-            context.delete(tag)
-            context.saveContext()
-        }
     }
 }
 
@@ -105,10 +68,19 @@ struct TagGridView_Testing: View {
 
 struct TagGridView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            TagGridView_Testing()
+        Group {
+            NavigationView {
+                TagGridView_Testing()
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .previewLayout(.fixed(width: 250, height: 300))
+            
+            NavigationView {
+                TagGridView_Testing()
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .previewLayout(.fixed(width: 400, height: 200))
         }
-        .previewLayout(.fixed(width: 350, height: 500))
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .environment(\.colorScheme, .dark)
     }

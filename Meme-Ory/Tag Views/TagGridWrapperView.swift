@@ -31,12 +31,12 @@ struct TagGridWrapperView: View {
                     }
                     .disabled(newTagName.isEmpty)
                 }
-                .padding()
                 
-                Divider().padding(.horizontal)
+                Divider()
                 
                 TagGridView(selected: $selected)
             }
+            .padding()
             .navigationBarTitle("Tags", displayMode: .inline)
             .navigationBarItems(trailing: Button("Done") {
                 presentation.wrappedValue.dismiss()
@@ -49,7 +49,7 @@ struct TagGridWrapperView: View {
         haptics.feedback()
         
         withAnimation {
-            /// chaech if name is unique
+            /// check if name is unique
             guard !tags.map(\.name).contains(newTagName) else {
                 newTagName = ""
                 return
@@ -77,6 +77,7 @@ struct TagGridWrapperView_Testing: View {
 struct TagGridWrapperView_Previews: PreviewProvider {
     static var previews: some View {
         TagGridWrapperView_Testing()
+            .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .previewLayout(.fixed(width: 350, height: 600))
             .preferredColorScheme(.dark)
     }

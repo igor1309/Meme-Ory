@@ -15,17 +15,16 @@ struct TagFilterView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                Group {
-                    selectedTags()
-                    
-                    Divider()
-                }
-                .padding(.horizontal)
+                selectedTags()
+                
+                Divider()
                 
                 TagGridView(selected: $filter.tags)
             }
+            .padding()
             .navigationTitle("Tag Filter")
-            .navigationBarItems(leading: clearFilterButton(), trailing: doneButton())
+            .navigationBarItems(leading: clearFilterButton(),
+                                trailing: doneButton())
         }
     }
     

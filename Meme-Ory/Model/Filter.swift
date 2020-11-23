@@ -20,7 +20,7 @@ struct Filter {
     var isTagFilterActive: Bool { !tags.isEmpty }
     
     var tagList: String {
-        tags.map { $0.name }.joined(separator: ", ")
+        tags.map { $0.name }.sorted().joined(separator: ", ")
     }
     
     private var tagPredicate: NSPredicate {

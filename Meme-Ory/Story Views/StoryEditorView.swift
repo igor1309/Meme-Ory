@@ -13,7 +13,7 @@ struct StoryEditorView: View {
     @Environment(\.presentationMode) private var presentation
     
     @State private var text: String
-    @State private var tags: Set<Tag>//[Tag]
+    @State private var tags: Set<Tag>
     
     let storyToEdit: Story?
     let title: String
@@ -44,51 +44,11 @@ struct StoryEditorView: View {
         NavigationView {
             VStack(alignment: .leading) {
                 TextEditor(text: $text)
-                    .padding()
                     .onAppear(perform: pasteClipboard)
                 
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text("Tags".uppercased())
-                            .foregroundColor(.secondary)
-                            .font(.caption)
-                        
-                        Button {
-                            let haptics = Haptics()
-                            haptics.feedback()
-                            
-                            withAnimation {
-                                showTagsView = true
-                            }
-                        } label: {
-                            Image(systemName: "tag.circle")
-                        }
-                        .sheet(isPresented: $showTagsView) {
-                            TagGridWrapperView(selected: $tags)
-                                .environment(\.managedObjectContext, context)
-                        }
-                    }
-                    
-                    if !tagList.isEmpty {
-                        Text(tagList)
-                            .foregroundColor(Color(UIColor.systemOrange))
-                            .font(.caption)
-                            .contextMenu {
-                                Button {
-                                    let haptics = Haptics()
-                                    haptics.feedback()
-                                    
-                                    withAnimation {
-                                        showTagsView = true
-                                    }
-                                } label: {
-                                    Label("Edit Tags", systemImage: "tag.circle")
-                                }
-                            }
-                    }
-                }
-                .padding()
+                tagsView()
             }
+            .padding()
             .navigationBarTitle(title, displayMode: .inline)
             .navigationBarItems(
                 leading: Button("Cancel") {
@@ -102,11 +62,53 @@ struct StoryEditorView: View {
         }
     }
     
+    private func tagsView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Tags".uppercased())
+                    .foregroundColor(.secondary)
+                    .font(.caption)
+                
+                Button {
+                    let haptics = Haptics()
+                    haptics.feedback()
+                    
+                    withAnimation {
+                        showTagsView = true
+                    }
+                } label: {
+                    Image(systemName: "tag.circle")
+                }
+                .sheet(isPresented: $showTagsView) {
+                    TagGridWrapperView(selected: $tags)
+                        .environment(\.managedObjectContext, context)
+                }
+            }
+            
+            if !tagList.isEmpty {
+                Text(tagList)
+                    .foregroundColor(Color(UIColor.systemOrange))
+                    .font(.caption)
+                    .contextMenu {
+                        Button {
+                            let haptics = Haptics()
+                            haptics.feedback()
+                            
+                            withAnimation {
+                                showTagsView = true
+                            }
+                        } label: {
+                            Label("Edit Tags", systemImage: "tag.circle")
+                        }
+                    }
+            }
+        }
+    }
     
     private func pasteClipboard() {
         withAnimation {
+            /// if editing try to paste clipboard content
             if storyToEdit == nil {
-                // if editing try to paste clipboard content
                 if UIPasteboard.general.hasStrings,
                    let content = UIPasteboard.general.string {
                     text = content
@@ -123,11 +125,11 @@ struct StoryEditorView: View {
             let story: Story
             
             if let storyToEdit = storyToEdit {
-                // editing here
+                /// editing here
                 story = storyToEdit
                 story.objectWillChange.send()
             } else {
-                // create new story
+                /// create new story
                 story = Story(context: context)
             }
             
