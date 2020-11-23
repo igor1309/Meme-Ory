@@ -18,13 +18,20 @@ struct SortOptionView: View {
             Form {
                 Section(header: Text("Sort")) {
                     Toggle(isOn: $filter.areInIncreasingOrder) {
-                        VStack(alignment: .leading) {
-                            Text("Ascending")
-                            Text("Select sort order")
-                                .foregroundColor(.secondary)
-                                .font(.caption)
+                        Label {
+                            VStack(alignment: .leading) {
+                                Text("Ascending")
+                                Text("Select sort order")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                            }
+                        } icon: {
+                            Image(systemName: "arrow.up.arrow.down.square")
+                                .imageScale(.large)
+                                .offset(y: 6)
                         }
                     }
+                    .accentColor(Color(UIColor.systemOrange))
                 }
             }
             .navigationTitle("Sort Options")

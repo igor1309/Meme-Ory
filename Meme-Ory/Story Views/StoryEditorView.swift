@@ -148,9 +148,9 @@ struct StoryEditorView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             StoryEditorView()
-                .previewLayout(.fixed(width: 350, height: 500))
+                .previewLayout(.fixed(width: 350, height: 400))
             StoryEditorView(story: SampleData.story)
-                .previewLayout(.fixed(width: 350, height: 500))
+                .previewLayout(.fixed(width: 350, height: 400))
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .preferredColorScheme(.dark)

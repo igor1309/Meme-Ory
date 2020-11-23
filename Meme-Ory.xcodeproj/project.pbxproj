@@ -88,7 +88,7 @@
 			children = (
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2A935CC0256AF608004B6E10 /* Story Views */,
-				2A935CBD256AF5EE004B6E10 /* Search and Filter Views */,
+				2A935CBD256AF5EE004B6E10 /* Search, Sort and Filter Views */,
 				2A935CC2256AF61C004B6E10 /* Tag Views */,
 				2A935CC4256AF648004B6E10 /* Extras */,
 				2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */,
@@ -153,14 +153,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		2A935CBD256AF5EE004B6E10 /* Search and Filter Views */ = {
+		2A935CBD256AF5EE004B6E10 /* Search, Sort and Filter Views */ = {
 			isa = PBXGroup;
 			children = (
 				2AA89174256BE8080042395A /* SearchModifier.swift */,
-				2A935CB7256AEA30004B6E10 /* TagFilterView.swift */,
 				2A2CE5A9256C3B7300FBFDB6 /* SortOptionView.swift */,
+				2A935CB7256AEA30004B6E10 /* TagFilterView.swift */,
 			);
-			path = "Search and Filter Views";
+			path = "Search, Sort and Filter Views";
 			sourceTree = "<group>";
 		};
 		2A935CC0256AF608004B6E10 /* Story Views */ = {

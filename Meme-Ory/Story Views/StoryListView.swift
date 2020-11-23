@@ -165,6 +165,6 @@ struct StoryListView_Previews: PreviewProvider {
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .preferredColorScheme(.dark)
-        .previewLayout(.fixed(width: 350, height: 1000))
+        .previewLayout(.fixed(width: 350, height: 800))
     }
 }
