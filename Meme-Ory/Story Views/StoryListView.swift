@@ -12,8 +12,9 @@ struct StoryListView: View {
     
     @Environment(\.managedObjectContext) private var context
     
+    /// used to pass to TagFilterView via filterButton
     @Binding var filter: Filter
-    
+    /// used to count
     private let fetchRequest: NSFetchRequest<Story>
     
     @FetchRequest private var stories: FetchedResults<Story>
