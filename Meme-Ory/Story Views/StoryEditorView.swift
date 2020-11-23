@@ -131,6 +131,7 @@ struct StoryEditorView: View {
             } else {
                 /// create new story
                 story = Story(context: context)
+                story.timestamp = Date()
             }
             
             story.text = text
