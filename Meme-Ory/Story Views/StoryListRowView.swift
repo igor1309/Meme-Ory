@@ -14,6 +14,8 @@ struct StoryListRowView: View {
     
     @ObservedObject var story: Story
     
+    @Binding var filter: Filter
+    
     @State private var showSheet = false
     
     var body: some View {
@@ -58,8 +60,16 @@ struct StoryListRowView: View {
                     UIPasteboard.general.string = story.text
                 }
             } label: {
-                Text("Copy to clipboard")
+                Text("Copy story")
                 Image(systemName: "doc.on.doc")
+            }
+            /// if just one tag - filter by this tag
+            if story.tags.count == 1 {
+                Button {
+                    filter.tags = Set(story.tags)
+                } label: {
+                    Label("Filter by this tag", systemImage: "tag")
+                }
             }
         }
     }
@@ -89,16 +99,24 @@ private let storyFormatter: DateFormatter = {
     return formatter
 }()
 
-struct StoryRowView_Previews: PreviewProvider {
-    static var previews: some View {
+fileprivate struct StoryListRowView_Testing: View {
+    @State var filter = Filter()
+    
+    var body: some View {
         NavigationView {
             List(0..<5) { _ in
-                StoryListRowView(story: SampleData.story)
+                StoryListRowView(story: SampleData.story, filter: $filter)
             }
             .navigationBarTitleDisplayMode(.inline)
         }
-        .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
-        .preferredColorScheme(.dark)
-        .previewLayout(.fixed(width: 350, height: 800))
+    }
+}
+
+struct StoryRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        StoryListRowView_Testing()
+            .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+            .preferredColorScheme(.dark)
+            .previewLayout(.fixed(width: 350, height: 800))
     }
 }

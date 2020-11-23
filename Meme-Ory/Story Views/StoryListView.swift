@@ -41,8 +41,10 @@ struct StoryListView: View {
                 .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
             
             Section(header: Text("Stories: \(count)")) {
-                ForEach(stories, content: StoryListRowView.init)
-                    .onDelete(perform: deleteStories)
+                ForEach(stories) { story in
+                    StoryListRowView(story: story, filter: $filter)
+                }
+                .onDelete(perform: deleteStories)
             }
         }
         .navigationBarItems(leading: optionsButton(), trailing: createStoryButton())
@@ -75,6 +77,7 @@ struct StoryListView: View {
         }
         .sheet(isPresented: $showListOptions) {
             ListOptionView(filter: $filter)
+                .environment(\.managedObjectContext, context)
         }
         .contextMenu {
             if filter.isTagFilterActive {
@@ -110,7 +113,7 @@ struct StoryListView: View {
                     filter.isListLimited.toggle()
                 }
             } label: {
-                Label("\(filter.isListLimited ? "Reset": "Set") List Limit",
+                Label(filter.isListLimited ? "Reset List Limit": "Set last Limit (\(filter.listLimit))",
                       systemImage: filter.isListLimited ? "infinity" : "arrow.up.and.down")
             }
         }
@@ -137,7 +140,7 @@ struct StoryListView: View {
     }
 }
 
-struct StoryListView_Testing: View {
+fileprivate struct StoryListView_Testing: View {
     @State var filter = Filter()
     
     var body: some View {
@@ -145,7 +148,7 @@ struct StoryListView_Testing: View {
     }
 }
 
-struct StoryListView_Previews: PreviewProvider {
+fileprivate struct StoryListView_Previews: PreviewProvider {
     @State static var filter = Filter()
     
     static var previews: some View {

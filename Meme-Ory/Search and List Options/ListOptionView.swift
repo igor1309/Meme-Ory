@@ -74,7 +74,7 @@ struct ListOptionView: View {
     }
     
     private func selectedTags() -> some View {
-        Text(filter.tagList.isEmpty ? "<none>" : filter.tagList)
+        Text(filter.tagList.isEmpty ? "show all" : filter.tagList)
             .foregroundColor(filter.tagList.isEmpty ? .secondary : .primary)
             .font(.footnote)
     }
