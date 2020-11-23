@@ -28,8 +28,7 @@ struct TagGridView: View {
                         Button {
                             toggleSelection(tag)
                         } label: {
-                            TagView(tag: tag, isSelected: isSelected(tag))
-                                .onDisappear { selected.remove(tag) }
+                            TagView(tag: tag, selected: $selected, isSelected: isSelected(tag))
                         }
                         .buttonStyle(PlainButtonStyle())
                     }

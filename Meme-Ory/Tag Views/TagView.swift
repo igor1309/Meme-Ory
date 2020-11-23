@@ -13,6 +13,8 @@ struct TagView: View {
     
     @ObservedObject var tag: Tag
     
+    @Binding var selected: Set<Tag>
+    
     let isSelected: Bool
     
     let cornerRadius: CGFloat = 6
@@ -59,9 +61,8 @@ struct TagView: View {
         haptics.feedback()
         
         withAnimation {
-            //selected.remove(tag)
-            //  MARK: - FINISH THIS NOT WORKING
-            //
+            selected.remove(tag)
+
             context.delete(tag)
             context.saveContext()
         }
@@ -69,12 +70,20 @@ struct TagView: View {
 
 }
 
+struct TagView_Testing: View {
+    @State private var selected = Set<Tag>()
+    
+    var body: some View {
+        TagView(tag: SampleData.tag, selected: $selected, isSelected: true)
+        TagView(tag: SampleData.tag, selected: $selected, isSelected: false)
+    }
+}
+
 struct TagView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             HStack {
-                TagView(tag: SampleData.tag, isSelected: true)
-                TagView(tag: SampleData.tag, isSelected: false)
+                TagView_Testing()
             }
             .navigationBarTitle("Tags", displayMode: .inline)
         }

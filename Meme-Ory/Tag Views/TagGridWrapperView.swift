@@ -31,13 +31,14 @@ struct TagGridWrapperView: View {
                     }
                     .disabled(newTagName.isEmpty)
                 }
+                .padding(.top)
                 
-                Divider()
+                Divider().padding(.vertical)
                 
                 TagGridView(selected: $selected)
             }
             .padding()
-            .navigationBarTitle("Tags", displayMode: .inline)
+            .navigationBarTitle("Tags")//, displayMode: .inline)
             .navigationBarItems(trailing: Button("Done") {
                 presentation.wrappedValue.dismiss()
             })
