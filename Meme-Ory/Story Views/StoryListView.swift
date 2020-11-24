@@ -31,6 +31,8 @@ struct StoryListView: View {
     @State private var showFilter = false
     @State private var showListOptions = false
     @State private var showCreateSheet = false
+    @State private var showConfirmation = false
+    @State private var offsets = IndexSet()
     
     private var count: Int { context.realCount(for: fetchRequest) }
     
@@ -44,7 +46,10 @@ struct StoryListView: View {
                 ForEach(stories) { story in
                     StoryListRowView(story: story, filter: $filter)
                 }
-                .onDelete(perform: deleteStories)
+                .onDelete(perform: confirmDeletion)
+            }
+            .actionSheet(isPresented: $showConfirmation) {
+                confirmationActionSheet()
             }
         }
         .navigationBarItems(leading: optionsButton(), trailing: createStoryButton())
@@ -52,13 +57,30 @@ struct StoryListView: View {
         .navigationBarTitle("Stories")
     }
     
-    private func createStoryButton() -> some View {
-        Button(action: createStory) {
-            Image(systemName: "doc.badge.plus")
-        }
-        .sheet(isPresented: $showCreateSheet) {
-            StoryEditorView()
-                .environment(\.managedObjectContext, context)
+    private func confirmDeletion(offsets: IndexSet) {
+        self.offsets = offsets
+        showConfirmation = true
+    }
+    
+    private func confirmationActionSheet() -> ActionSheet {
+        ActionSheet(
+            title: Text("Delete Story?"),
+            message: Text("Are you sure? This cannot be undone."),
+            buttons: [
+                .destructive(Text("Yes, delete!")) { deleteStories() },
+                .cancel({ offsets = [] })
+            ]
+        )
+    }
+    
+    private func deleteStories() {
+        let haptics = Haptics()
+        haptics.feedback()
+        
+        withAnimation {
+            offsets.map { stories[$0] }.forEach(context.delete)
+            
+            context.saveContext()
         }
     }
     
@@ -125,23 +147,20 @@ struct StoryListView: View {
         }
     }
     
-    private func createStory() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            showCreateSheet = true
-        }
-    }
-    
-    private func deleteStories(offsets: IndexSet) {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {            
-            offsets.map { stories[$0] }.forEach(context.delete)
+    private func createStoryButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
             
-            context.saveContext()
+            withAnimation {
+                showCreateSheet = true
+            }
+        } label: {
+            Image(systemName: "doc.badge.plus")
+        }
+        .sheet(isPresented: $showCreateSheet) {
+            StoryEditorView()
+                .environment(\.managedObjectContext, context)
         }
     }
 }
