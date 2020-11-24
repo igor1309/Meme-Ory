@@ -39,9 +39,14 @@ struct StoryListRowView: View {
                 .font(.subheadline)
             
             if !story.tagList.isEmpty {
-                Text(story.tagList)
-                    .foregroundColor(.orange)
-                    .font(.caption)
+                Label {
+                    Text(story.tagList)
+                } icon: {
+                    Image(systemName: "tag")
+                        .imageScale(.small)
+                }
+                .foregroundColor(.orange)
+                .font(.caption)
             }
             
             if let timestamp = story.timestamp {
