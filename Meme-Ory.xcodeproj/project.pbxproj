@@ -26,7 +26,6 @@
 		2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */; };
 		2AA8916B256B9E7E0042395A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
 		2AA89175256BE8080042395A /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89174256BE8080042395A /* SearchModifier.swift */; };
-		2AB03177256CD25800BEC832 /* RandomStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03176256CD25800BEC832 /* RandomStoryView.swift */; };
 		2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03179256CD35700BEC832 /* StoryTagView.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +52,6 @@
 		2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGridWrapperView.swift; sourceTree = "<group>"; };
 		2AA8916A256B9E7E0042395A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		2AA89174256BE8080042395A /* SearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModifier.swift; sourceTree = "<group>"; };
-		2AB03176256CD25800BEC832 /* RandomStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryView.swift; sourceTree = "<group>"; };
 		2AB03179256CD35700BEC832 /* StoryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTagView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,7 +169,6 @@
 				2A935C88256A5144004B6E10 /* StoryListRowView.swift */,
 				2A935C91256A6B0E004B6E10 /* StoryEditorView.swift */,
 				2AB03179256CD35700BEC832 /* StoryTagView.swift */,
-				2AB03176256CD25800BEC832 /* RandomStoryView.swift */,
 			);
 			path = "Story Views";
 			sourceTree = "<group>";
@@ -264,7 +261,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AA8916B256B9E7E0042395A /* Context.swift in Sources */,
-				2AB03177256CD25800BEC832 /* RandomStoryView.swift in Sources */,
 				2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */,
 				2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */,
 				2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */,
@@ -410,7 +406,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -434,7 +430,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
