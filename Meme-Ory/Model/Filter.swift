@@ -18,7 +18,7 @@ struct Filter {
     
     var searchString: String = ""
     /// Limiting Stories List (number of stories listed))
-    var isListLimited: Bool = true
+    var isListLimited: Bool = false
     var listLimit: Int = 6
     static var listLimitOptions: [Int] = Array(1..<5).map { $0 * 6 }
 

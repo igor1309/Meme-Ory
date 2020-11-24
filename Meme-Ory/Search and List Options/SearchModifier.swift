@@ -13,7 +13,7 @@ extension View {
     }
 }
 
-struct SearchModifier: ViewModifier {
+fileprivate struct SearchModifier: ViewModifier {
     
     @Binding var text: String
     

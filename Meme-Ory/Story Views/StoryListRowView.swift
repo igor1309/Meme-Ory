@@ -100,7 +100,7 @@ struct StoryListRowView: View {
 private let storyFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .short
-    formatter.timeStyle = .medium
+    formatter.timeStyle = .short
     return formatter
 }()
 
