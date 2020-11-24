@@ -14,14 +14,27 @@ extension NSPredicate {
 
 struct Filter {
     /// sort order
-    var areInIncreasingOrder: Bool = true
+    var areInIncreasingOrder: Bool = UserDefaults.standard.bool(forKey: "areInIncreasingOrder") {
+        didSet {
+            UserDefaults.standard.setValue(areInIncreasingOrder, forKey: "areInIncreasingOrder")
+        }
+    }
     
     var searchString: String = ""
     /// Limiting Stories List (number of stories listed))
-    var isListLimited: Bool = false
-    var listLimit: Int = 6
+    var isListLimited: Bool = UserDefaults.standard.bool(forKey: "isListLimited") {
+        didSet {
+            UserDefaults.standard.setValue(isListLimited, forKey: "isListLimited")
+        }
+    }
+    var listLimit: Int = max(6, UserDefaults.standard.integer(forKey: "listLimit")) {
+        didSet {
+            UserDefaults.standard.setValue(listLimit, forKey: "listLimit")
+        }
+    }
+    
     static var listLimitOptions: [Int] = Array(1..<5).map { $0 * 6 }
-
+    
     var tags = Set<Tag>()
     
     var isTagFilterActive: Bool { !tags.isEmpty }
