@@ -16,9 +16,11 @@ struct Meme_OryApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                StoryListView(filter: $filter)
-            }
+            RandomStoryViewWrapper()
+            
+//            NavigationView {
+//                StoryListView(filter: $filter)
+//            }
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
