@@ -27,7 +27,43 @@
 		2AA8916B256B9E7E0042395A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
 		2AA89175256BE8080042395A /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89174256BE8080042395A /* SearchModifier.swift */; };
 		2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03179256CD35700BEC832 /* StoryTagView.swift */; };
+		2ADAD3B3256DA23A00AF463B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */; };
+		2ADAD3B5256DA23A00AF463B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */; };
+		2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */; };
+		2ADAD3BA256DA23B00AF463B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B9256DA23B00AF463B /* Assets.xcassets */; };
+		2ADAD3BE256DA23B00AF463B /* Meme-OryWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2ADAD3C5256DA5CB00AF463B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
+		2ADAD3C8256DA5D300AF463B /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
+		2ADAD3CB256DA5E000AF463B /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
+		2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C8B256A51AC004B6E10 /* Story.swift */; };
+		2ADAD3D1256DA5E700AF463B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9A256A7717004B6E10 /* Tag.swift */; };
+		2ADAD3DB256DA62800AF463B /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA5256A80C9004B6E10 /* Filter.swift */; };
+		2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9D256A77BE004B6E10 /* SampleData.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2ADAD3BC256DA23B00AF463B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A1B5FAB256A4A5D00E3283D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2ADAD3AF256DA23A00AF463B;
+			remoteInfo = "Meme-OryWidgetExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2ADAD3C2256DA23B00AF463B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2ADAD3BE256DA23B00AF463B /* Meme-OryWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meme-Ory.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +89,14 @@
 		2AA8916A256B9E7E0042395A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		2AA89174256BE8080042395A /* SearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModifier.swift; sourceTree = "<group>"; };
 		2AB03179256CD35700BEC832 /* StoryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTagView.swift; sourceTree = "<group>"; };
+		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme_OryWidget.swift; sourceTree = "<group>"; };
+		2ADAD3B9256DA23B00AF463B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2ADAD3BB256DA23B00AF463B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ADAD3E3256DB9A000AF463B /* Meme-OryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Meme-OryWidgetExtension.entitlements"; sourceTree = "<group>"; };
+		2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Meme-Ory.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,14 +107,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2ADAD3AD256DA23A00AF463B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ADAD3B5256DA23A00AF463B /* SwiftUI.framework in Frameworks */,
+				2ADAD3B3256DA23A00AF463B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		2A1B5FAA256A4A5D00E3283D = {
 			isa = PBXGroup;
 			children = (
+				2ADAD3E3256DB9A000AF463B /* Meme-OryWidgetExtension.entitlements */,
 				2A1B5FB5256A4A5D00E3283D /* Meme-Ory */,
 				2A2CE5A3256C00E400FBFDB6 /* Playgrounds */,
+				2ADAD3B6256DA23A00AF463B /* Meme-OryWidget */,
+				2ADAD3B1256DA23A00AF463B /* Frameworks */,
 				2A1B5FB4256A4A5D00E3283D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */,
+				2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,6 +143,7 @@
 		2A1B5FB5256A4A5D00E3283D /* Meme-Ory */ = {
 			isa = PBXGroup;
 			children = (
+				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2A935CC0256AF608004B6E10 /* Story Views */,
 				2A935CBD256AF5EE004B6E10 /* Search and List Options */,
@@ -191,6 +249,25 @@
 			path = Extras;
 			sourceTree = "<group>";
 		};
+		2ADAD3B1256DA23A00AF463B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */,
+				2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2ADAD3B6256DA23A00AF463B /* Meme-OryWidget */ = {
+			isa = PBXGroup;
+			children = (
+				2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */,
+				2ADAD3B9256DA23B00AF463B /* Assets.xcassets */,
+				2ADAD3BB256DA23B00AF463B /* Info.plist */,
+			);
+			path = "Meme-OryWidget";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,15 +278,34 @@
 				2A1B5FAF256A4A5D00E3283D /* Sources */,
 				2A1B5FB0256A4A5D00E3283D /* Frameworks */,
 				2A1B5FB1256A4A5D00E3283D /* Resources */,
+				2ADAD3C2256DA23B00AF463B /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2ADAD3BD256DA23B00AF463B /* PBXTargetDependency */,
 			);
 			name = "Meme-Ory";
 			productName = "Meme-Ory";
 			productReference = 2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */;
 			productType = "com.apple.product-type.application";
+		};
+		2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ADAD3BF256DA23B00AF463B /* Build configuration list for PBXNativeTarget "Meme-OryWidgetExtension" */;
+			buildPhases = (
+				2ADAD3AC256DA23A00AF463B /* Sources */,
+				2ADAD3AD256DA23A00AF463B /* Frameworks */,
+				2ADAD3AE256DA23A00AF463B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Meme-OryWidgetExtension";
+			productName = "Meme-OryWidgetExtension";
+			productReference = 2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -221,6 +317,9 @@
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					2A1B5FB2256A4A5D00E3283D = {
+						CreatedOnToolsVersion = 12.2;
+					};
+					2ADAD3AF256DA23A00AF463B = {
 						CreatedOnToolsVersion = 12.2;
 					};
 				};
@@ -239,6 +338,7 @@
 			projectRoot = "";
 			targets = (
 				2A1B5FB2256A4A5D00E3283D /* Meme-Ory */,
+				2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -250,6 +350,14 @@
 			files = (
 				2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */,
 				2A1B5FBB256A4A5E00E3283D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ADAD3AE256DA23A00AF463B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ADAD3BA256DA23B00AF463B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +389,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2ADAD3AC256DA23A00AF463B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ADAD3DB256DA62800AF463B /* Filter.swift in Sources */,
+				2ADAD3D1256DA5E700AF463B /* Tag.swift in Sources */,
+				2ADAD3C8256DA5D300AF463B /* Context.swift in Sources */,
+				2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */,
+				2ADAD3CB256DA5E000AF463B /* Meme_Ory.xcdatamodeld in Sources */,
+				2ADAD3C5256DA5CB00AF463B /* Persistence.swift in Sources */,
+				2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */,
+				2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2ADAD3BD256DA23B00AF463B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */;
+			targetProxy = 2ADAD3BC256DA23B00AF463B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2A1B5FC5256A4A5E00E3283D /* Debug */ = {
@@ -403,8 +534,10 @@
 		2A1B5FC8256A4A5E00E3283D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
@@ -427,8 +560,10 @@
 		2A1B5FC9256A4A5E00E3283D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
@@ -443,6 +578,50 @@
 				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.photoigor.Meme-Ory";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2ADAD3C0256DA23B00AF463B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.photoigor.Meme-Ory.Meme-OryWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2ADAD3C1256DA23B00AF463B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.photoigor.Meme-Ory.Meme-OryWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -465,6 +644,15 @@
 			buildConfigurations = (
 				2A1B5FC8256A4A5E00E3283D /* Debug */,
 				2A1B5FC9256A4A5E00E3283D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2ADAD3BF256DA23B00AF463B /* Build configuration list for PBXNativeTarget "Meme-OryWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2ADAD3C0256DA23B00AF463B /* Debug */,
+				2ADAD3C1256DA23B00AF463B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

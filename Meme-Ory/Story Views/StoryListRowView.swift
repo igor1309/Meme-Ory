@@ -35,7 +35,7 @@ struct StoryListRowView: View {
     
     var label: some View {
         VStack(alignment: .leading) {
-            Text(storyText())
+            Text(story.storyText())
                 .font(.subheadline)
             
             if !story.tagList.isEmpty {
@@ -77,23 +77,6 @@ struct StoryListRowView: View {
                 }
             }
         }
-    }
-    
-    private func storyText() -> String {
-        let maxCount = 100
-        let maxLines = 3
-        
-        var text = story.text
-        if text.count > maxCount {
-            text = text.prefix(maxCount).appending(" ...")
-        }
-        
-        let lines = text.components(separatedBy: "\n")
-        if lines.count > maxLines {
-            text = lines.prefix(maxLines).joined(separator: "\n").appending(" ...")
-        }
-        
-        return text
     }
 }
 

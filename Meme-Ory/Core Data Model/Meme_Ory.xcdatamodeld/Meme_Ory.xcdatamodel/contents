@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="19H15" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Story" representedClassName="Story" syncable="YES" codeGenerationType="class">
         <attribute name="text_" optional="YES" attributeType="String"/>
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestamp_" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="tags_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="stories_" inverseEntity="Tag"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">

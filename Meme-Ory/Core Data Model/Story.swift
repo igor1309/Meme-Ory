@@ -14,6 +14,11 @@ extension Story {
         set { text_ = newValue }
     }
     
+    var timestamp: Date {
+        get { timestamp_ ?? .distantPast }
+        set { timestamp_ = newValue }
+    }
+    
     var tags: [Tag] {
         get { (tags_ as? Set<Tag> ?? []).sorted() }
         set { tags_ = Set(newValue) as NSSet }
@@ -23,13 +28,27 @@ extension Story {
         tags.map { $0.name }.joined(separator: ", ")
     }
     
+    func storyText(maxCount: Int = 100, maxLines: Int = 3) -> String {
+        var text = self.text
+        if text.count > maxCount {
+            text = text.prefix(maxCount).appending(" ...")
+        }
+        
+        let lines = text.components(separatedBy: "\n")
+        if lines.count > maxLines {
+            text = lines.prefix(maxLines).joined(separator: "\n").appending(" ...")
+        }
+        
+        return text
+    }
+    
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Story> {
         Story.fetchRequest(predicate, areInIncreasingOrder: true)
     }
     
     static func fetchRequest(_ predicate: NSPredicate, areInIncreasingOrder: Bool) -> NSFetchRequest<Story> {
         let request = NSFetchRequest<Story>(entityName: "Story")
-        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: areInIncreasingOrder)]
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp_", ascending: areInIncreasingOrder)]
         request.predicate = predicate
         return request
     }
