@@ -100,7 +100,7 @@ struct StoryEditorView_Previews: PreviewProvider {
         Group {
             StoryEditorView()
                 .previewLayout(.fixed(width: 350, height: 400))
-            StoryEditorView(story: SampleData.story)
+            StoryEditorView(story: SampleData.story(storyIndex: 9, tagIndex: 3))
                 .previewLayout(.fixed(width: 350, height: 400))
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)

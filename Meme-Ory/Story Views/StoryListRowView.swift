@@ -109,8 +109,8 @@ fileprivate struct StoryListRowView_Testing: View {
     
     var body: some View {
         NavigationView {
-            List(0..<5) { _ in
-                StoryListRowView(story: SampleData.story, filter: $filter)
+            List(0..<SampleData.stories.count) { index in
+                StoryListRowView(story: SampleData.story(storyIndex: index), filter: $filter)
             }
             .navigationBarTitleDisplayMode(.inline)
         }

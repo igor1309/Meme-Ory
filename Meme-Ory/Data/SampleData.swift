@@ -13,37 +13,39 @@ struct SampleData {
         let controller = PersistenceController(inMemory: true)
         let context = controller.container.viewContext
         
+        let tags: [Tag] = tagStrings.map {
+            let tag = Tag(context: context)
+            tag.name = $0
+            
+            return tag
+        }
+        
         for sample in stories {
             let story = Story(context: context)
             story.text = sample
             story.timestamp = Date()
             
-            let tag = Tag(context: context)
-            let index = Int(arc4random_uniform(UInt32(tagStrings.count)))
-            tag.name = tagStrings[index]
-            story.tags.append(tag)
+            if let tag = tags.randomElement() {
+                story.tags.append(tag)
+            }
         }
-        
-        context.saveContext()
         
         return controller
     }()
 
-    static let story: Story = {
+    static func story(storyIndex: Int = 4, tagIndex: Int = 2) -> Story {
         let context = preview.container.viewContext
         
         let story = Story(context: context)
-        story.text = stories[4]
+        story.text = stories[storyIndex]
         story.timestamp = Date()
         
         let tag = Tag(context: context)
-        tag.name = SampleData.tagStrings[1]
+        tag.name = SampleData.tagStrings[tagIndex]
         story.tags.append(tag)
         
-        context.saveContext()
-        
         return story
-    }()
+    }
     
     static let tag: Tag = {
         let context = preview.container.viewContext

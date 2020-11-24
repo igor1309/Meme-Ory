@@ -34,6 +34,8 @@ struct RandomStoryView: View {
         _stories = FetchRequest(fetchRequest: request)
     }
     
+    @State private var refresh = false
+    
     var body: some View {
         NavigationView {
             Group {
