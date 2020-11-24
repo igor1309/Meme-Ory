@@ -15,8 +15,8 @@ struct StoryEditorView: View {
     @State private var text: String
     @State private var tags: Set<Tag>
     
-    let storyToEdit: Story?
-    let title: String
+    private let storyToEdit: Story?
+    private let title: String
     
     /// Create new Story
     init() {
@@ -34,19 +34,13 @@ struct StoryEditorView: View {
         title = ""
     }
     
-    @State private var showTagsView = false
-    
-    var tagList: String {
-        tags.map { $0.name }.joined(separator: ", ")
-    }
-    
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
                 TextEditor(text: $text)
                     .onAppear(perform: pasteClipboard)
                 
-                tagsView()
+                StoryTagView(tags: $tags)
             }
             .padding()
             .navigationBarTitle(title, displayMode: .inline)
@@ -59,50 +53,6 @@ struct StoryEditorView: View {
                 }
                 .disabled(text.isEmpty)
             )
-        }
-    }
-    
-    private func tagsView() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text("Tags".uppercased())
-                    .foregroundColor(.secondary)
-                    .font(.caption)
-                
-                Button {
-                    let haptics = Haptics()
-                    haptics.feedback()
-                    
-                    withAnimation {
-                        showTagsView = true
-                    }
-                } label: {
-                    Image(systemName: "tag.circle")
-                        .imageScale(.large)
-                }
-                .sheet(isPresented: $showTagsView) {
-                    TagGridWrapperView(selected: $tags)
-                        .environment(\.managedObjectContext, context)
-                }
-            }
-            
-            if !tagList.isEmpty {
-                Text(tagList)
-                    .foregroundColor(Color(UIColor.systemOrange))
-                    .font(.caption)
-                    .contextMenu {
-                        Button {
-                            let haptics = Haptics()
-                            haptics.feedback()
-                            
-                            withAnimation {
-                                showTagsView = true
-                            }
-                        } label: {
-                            Label("Edit Tags", systemImage: "tag.circle")
-                        }
-                    }
-            }
         }
     }
     

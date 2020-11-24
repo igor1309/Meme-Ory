@@ -19,8 +19,8 @@ struct SampleData {
             story.timestamp = Date()
             
             let tag = Tag(context: context)
-            let index = Int(arc4random_uniform(UInt32(tags.count)))
-            tag.name = tags[index]
+            let index = Int(arc4random_uniform(UInt32(tagStrings.count)))
+            tag.name = tagStrings[index]
             story.tags.append(tag)
         }
         
@@ -37,7 +37,7 @@ struct SampleData {
         story.timestamp = Date()
         
         let tag = Tag(context: context)
-        tag.name = SampleData.tags[1]
+        tag.name = SampleData.tagStrings[1]
         story.tags.append(tag)
         
         context.saveContext()
@@ -54,7 +54,20 @@ struct SampleData {
         return tag
     }()
     
-    static let tags = ["Путин", "евреи и еврейство", "жизнь и судьба", "отношения"]
+    static let tags: Set<Tag> = {
+        let context = preview.container.viewContext
+        
+        let tags: [Tag] = tagStrings.map {
+            let tag = Tag(context: context)
+            tag.name = $0
+            
+            return tag
+        }
+        
+        return Set(tags)
+    }()
+    
+    static let tagStrings = ["Путин", "евреи и еврейство", "жизнь и судьба", "отношения"]
     
     static let stories = [
         """
