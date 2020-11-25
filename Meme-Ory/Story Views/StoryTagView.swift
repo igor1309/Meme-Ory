@@ -11,6 +11,8 @@ struct StoryTagView: View {
     
     @Environment(\.managedObjectContext) private var context
     
+    //@ObservedObject var story: Story
+    
     @Binding var tags: Set<Tag>
     
     private var tagList: String {
@@ -44,21 +46,22 @@ struct StoryTagView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            if !tagList.isEmpty {Text(tagList)
-                .foregroundColor(Color(UIColor.systemOrange))
-                .font(.caption)
-                .contextMenu {
-                    Button {
-                        let haptics = Haptics()
-                        haptics.feedback()
-                        
-                        withAnimation {
-                            showTagsView = true
+            if !tagList.isEmpty {
+                Text(tagList)
+                    .foregroundColor(Color(UIColor.systemOrange))
+                    .font(.caption)
+                    .contextMenu {
+                        Button {
+                            let haptics = Haptics()
+                            haptics.feedback()
+                            
+                            withAnimation {
+                                showTagsView = true
+                            }
+                        } label: {
+                            Label("Edit Tags", systemImage: "tag.circle")
                         }
-                    } label: {
-                        Label("Edit Tags", systemImage: "tag.circle")
                     }
-                }
             }
         }
     }
@@ -82,6 +85,7 @@ struct StoryTagView_Previews: PreviewProvider {
                     .padding()
             }
         }
+        .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .environment(\.colorScheme, .dark)
         .previewLayout(.fixed(width: 350, height: 400))
     }

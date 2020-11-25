@@ -15,7 +15,7 @@ extension NSManagedObjectContext {
     }
     
     func saveContext() {
-        if self.hasChanges {
+        if hasChanges {
             do {
                 try self.save()
             } catch {

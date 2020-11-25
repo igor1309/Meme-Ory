@@ -20,7 +20,8 @@ struct TagView: View {
     let cornerRadius: CGFloat = 6
     
     @State private var showDeleteConfirmation = false
-
+    @State private var showEditTag = false
+    
     var body: some View {
         Text(tag.name)
             .foregroundColor(isSelected ? Color(UIColor.systemOrange) : Color.secondary)
@@ -35,6 +36,11 @@ struct TagView: View {
             )
             .contextMenu {
                 Button {
+                    showEditTag = true
+                } label: {
+                    Label("Rename Tag", systemImage: "square.and.pencil")
+                }
+                Button {
                     showDeleteConfirmation = true
                 } label: {
                     Label("Delete Tag", systemImage: "trash.circle")
@@ -42,6 +48,11 @@ struct TagView: View {
             }
             .actionSheet(isPresented: $showDeleteConfirmation) {
                 actionSheetDelete(tag: tag)
+            }
+            .sheet(isPresented: $showEditTag) {
+                context.saveContext()
+            } content: {
+                TagEditView($tag.name)
             }
     }
     
@@ -55,19 +66,19 @@ struct TagView: View {
             ]
         )
     }
-
+    
     private func deleteTag(_ tag: Tag) {
         let haptics = Haptics()
         haptics.feedback()
         
         withAnimation {
             selected.remove(tag)
-
+            
             context.delete(tag)
             context.saveContext()
         }
     }
-
+    
 }
 
 fileprivate struct TagView_Testing: View {
