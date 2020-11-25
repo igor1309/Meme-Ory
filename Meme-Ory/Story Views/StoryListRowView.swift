@@ -20,11 +20,27 @@ struct StoryListRowView: View {
     
     var body: some View {
         Button {
-            showSheet = true
+            withAnimation {
+                showSheet = true
+            }
         } label: {
             label
         }
-        // .buttonStyle(PlainButtonStyle())
+        .onOpenURL { url in
+            //  MARK: - FINISH THIS
+            /// check that it's correct url
+            guard url.isStoryURL else { return }
+            /// close sheet with story if it's open
+            showSheet = false
+            
+            if story.url == url {
+                withAnimation {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                        showSheet = true
+                    }
+                }
+            }
+        }
         .accentColor(.primary)
         .contentShape(Rectangle())
         .sheet(isPresented: $showSheet) {

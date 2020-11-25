@@ -28,6 +28,13 @@ extension Story {
         tags.map { $0.name }.joined(separator: ", ")
     }
     
+    var url: URL {
+        let absoluteString = objectID.uriRepresentation().absoluteString
+        let url = URL(string: String(format: URL.appDetailsUrlFormat, absoluteString))!
+        
+        return url
+    }
+
     func storyText(maxCount: Int = 100, maxLines: Int = 3) -> String {
         var text = self.text
         if text.count > maxCount {

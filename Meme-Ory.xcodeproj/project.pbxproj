@@ -39,6 +39,8 @@
 		2ADAD3D1256DA5E700AF463B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9A256A7717004B6E10 /* Tag.swift */; };
 		2ADAD3DB256DA62800AF463B /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA5256A80C9004B6E10 /* Filter.swift */; };
 		2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9D256A77BE004B6E10 /* SampleData.swift */; };
+		2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */; };
+		2ADAD409256E4FE800AF463B /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,7 @@
 		2ADAD3BB256DA23B00AF463B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2ADAD3E3256DB9A000AF463B /* Meme-OryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Meme-OryWidgetExtension.entitlements"; sourceTree = "<group>"; };
 		2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Meme-Ory.entitlements"; sourceTree = "<group>"; };
+		2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,7 @@
 				2A935CBD256AF5EE004B6E10 /* Search and List Options */,
 				2A935CC2256AF61C004B6E10 /* Tag Views */,
 				2A935CC4256AF648004B6E10 /* Extras */,
+				2ADAD3F9256E4B6500AF463B /* Extensions */,
 				2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */,
 				2A935CBB256AF5CD004B6E10 /* Model */,
 				2A1B5FD0256A4B1800E3283D /* Core Data Stack */,
@@ -268,6 +272,14 @@
 			path = "Meme-OryWidget";
 			sourceTree = "<group>";
 		};
+		2ADAD3F9256E4B6500AF463B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -379,6 +391,7 @@
 				2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */,
 				2A935C89256A5144004B6E10 /* StoryListRowView.swift in Sources */,
 				2A1B5FB9256A4A5D00E3283D /* StoryListView.swift in Sources */,
+				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,
 				2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */,
 				2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */,
@@ -398,6 +411,7 @@
 				2ADAD3C8256DA5D300AF463B /* Context.swift in Sources */,
 				2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */,
 				2ADAD3CB256DA5E000AF463B /* Meme_Ory.xcdatamodeld in Sources */,
+				2ADAD409256E4FE800AF463B /* URL+Extension.swift in Sources */,
 				2ADAD3C5256DA5CB00AF463B /* Persistence.swift in Sources */,
 				2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */,
 				2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */,
@@ -539,7 +553,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -565,7 +579,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
