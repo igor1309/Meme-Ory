@@ -102,6 +102,7 @@ struct StoryListView: View {
             }
         } label: {
             Image(systemName: "slider.horizontal.3")
+                .padding([.vertical, .trailing])
         }
         .accentColor(optionsButtonColor)
         .sheet(isPresented: $showListOptions) {
@@ -157,6 +158,7 @@ struct StoryListView: View {
             }
         } label: {
             Image(systemName: "doc.badge.plus")
+                .padding([.leading, .vertical])
         }
         .sheet(isPresented: $showCreateSheet) {
             StoryEditorView()

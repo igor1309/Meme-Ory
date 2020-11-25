@@ -14,6 +14,9 @@
 		2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
 		2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
 		2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */; };
+		2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4409256EF19A002C0DFC /* Provider.swift */; };
+		2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */; };
+		2A8E4423256EF256002C0DFC /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E441D256EF24B002C0DFC /* Entry.swift */; };
 		2A935C89256A5144004B6E10 /* StoryListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C88256A5144004B6E10 /* StoryListRowView.swift */; };
 		2A935C8C256A51AC004B6E10 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C8B256A51AC004B6E10 /* Story.swift */; };
 		2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C91256A6B0E004B6E10 /* StoryEditorView.swift */; };
@@ -78,6 +81,9 @@
 		2A1B5FCC256A4AE100E3283D /* Meme_Ory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Meme_Ory.xcdatamodel; sourceTree = "<group>"; };
 		2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StoryText.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionView.swift; sourceTree = "<group>"; };
+		2A8E4409256EF19A002C0DFC /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
+		2A8E441D256EF24B002C0DFC /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		2A935C88256A5144004B6E10 /* StoryListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowView.swift; sourceTree = "<group>"; };
 		2A935C8B256A51AC004B6E10 /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		2A935C91256A6B0E004B6E10 /* StoryEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditorView.swift; sourceTree = "<group>"; };
@@ -266,6 +272,9 @@
 			isa = PBXGroup;
 			children = (
 				2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */,
+				2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */,
+				2A8E4409256EF19A002C0DFC /* Provider.swift */,
+				2A8E441D256EF24B002C0DFC /* Entry.swift */,
 				2ADAD3B9256DA23B00AF463B /* Assets.xcassets */,
 				2ADAD3BB256DA23B00AF463B /* Info.plist */,
 			);
@@ -406,6 +415,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A8E4423256EF256002C0DFC /* Entry.swift in Sources */,
 				2ADAD3DB256DA62800AF463B /* Filter.swift in Sources */,
 				2ADAD3D1256DA5E700AF463B /* Tag.swift in Sources */,
 				2ADAD3C8256DA5D300AF463B /* Context.swift in Sources */,
@@ -414,7 +424,9 @@
 				2ADAD409256E4FE800AF463B /* URL+Extension.swift in Sources */,
 				2ADAD3C5256DA5CB00AF463B /* Persistence.swift in Sources */,
 				2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */,
+				2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */,
 				2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */,
+				2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,7 +565,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -579,7 +591,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
