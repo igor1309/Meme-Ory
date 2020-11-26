@@ -24,6 +24,7 @@ struct SampleData {
             let story = Story(context: context)
             story.text = sample
             story.timestamp = Date()
+            story.isFavorite = Bool.random()
             
             if let tag = tags.randomElement() {
                 story.tags.append(tag)

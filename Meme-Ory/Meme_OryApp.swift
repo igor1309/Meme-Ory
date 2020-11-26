@@ -11,6 +11,7 @@ import SwiftUI
 struct Meme_OryApp: App {
     
     let persistenceController = PersistenceController.shared
+    let eventStore = EventStore()
     
     @State private var filter = Filter()
     
@@ -20,6 +21,7 @@ struct Meme_OryApp: App {
                 StoryListView(filter: $filter)
             }
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            .environmentObject(eventStore)
         }
     }
 }

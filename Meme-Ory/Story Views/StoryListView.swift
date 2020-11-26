@@ -12,6 +12,8 @@ struct StoryListView: View {
     
     @Environment(\.managedObjectContext) private var context
     
+    @EnvironmentObject private var eventStore: EventStore
+    
     /// used to pass to TagFilterView via filterButton
     @Binding var filter: Filter
     /// used to count
@@ -44,14 +46,12 @@ struct StoryListView: View {
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
-                    StoryListRowView(story: story, filter: $filter)
+                    StoryListRowView(story: story, filter: $filter, remindersAccessGranted: eventStore.accessGranted)
                 }
                 .onDelete(perform: confirmDeletion)
             }
-            .actionSheet(isPresented: $showConfirmation) {
-                confirmationActionSheet()
-            }
         }
+        .actionSheet(isPresented: $showConfirmation, content: confirmationActionSheet)
         .navigationBarItems(leading: optionsButton(), trailing: createStoryButton())
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
@@ -183,6 +183,7 @@ struct StoryListView_Previews: PreviewProvider {
             StoryListView_Testing()
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+        .environmentObject(EventStore())
         .preferredColorScheme(.dark)
         .previewLayout(.fixed(width: 350, height: 800))
     }

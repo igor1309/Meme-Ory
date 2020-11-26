@@ -28,6 +28,11 @@ extension Story {
         tags.map { $0.name }.joined(separator: ", ")
     }
     
+    var calendarItemIdentifier: String {
+        get { calendarItemIdentifier_ ?? "" }
+        set { calendarItemIdentifier_ = newValue }
+    }
+    
     var url: URL {
         let absoluteString = objectID.uriRepresentation().absoluteString
         let url = URL(string: String(format: URL.appDetailsUrlFormat, absoluteString))!

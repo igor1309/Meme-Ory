@@ -6,19 +6,23 @@
 //
 
 import SwiftUI
+import EventKit
 
 final class StoryEditorViewModel: ObservableObject {
     @Published var text: String
     @Published var tags: Set<Tag>
+    @Published var isFavorite: Bool
     
     init() {
         text = ""
         tags = []
+        isFavorite = false
     }
     
-    init(text: String, tags: Set<Tag>) {
+    init(text: String, tags: Set<Tag>, isFavorite: Bool) {
         self.text = text
         self.tags = tags
+        self.isFavorite = isFavorite
     }
 }
 
@@ -32,6 +36,8 @@ struct StoryEditorView: View {
     private let storyToEdit: Story?
     private let title: String
     
+    var reminder: EKReminder?
+    
     /// Create new Story
     init() {
         _model = StateObject(wrappedValue: StoryEditorViewModel())
@@ -40,23 +46,46 @@ struct StoryEditorView: View {
     }
     
     /// Edit Existing Story
-    init(story: Story) {
-        let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags))
+    init(story: Story, remindersAccessGranted: Bool) {
+        let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags), isFavorite: story.isFavorite)
         _model = StateObject(wrappedValue: model)
         storyToEdit = story
         title = ""
+        
+        //  MARK: - FINISH THIS
+        // can't access this in init!
+        if remindersAccessGranted {
+            reminder = EKEventStore().calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder
+        }
     }
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                TextEditor(text: $model.text)
-                    .onAppear(perform: pasteClipboard)
-                
-                StoryTagView(tags: $model.tags)
+            ZStack(alignment: .topTrailing) {
+                VStack(alignment: .leading) {
+                    TextEditor(text: $model.text)
+                        .onAppear(perform: pasteClipboard)
+                    
+                    HStack(alignment: .top) {
+                        StoryTagView(tags: $model.tags)
+                        
+                        Spacer()
+                        
+                        toggleFavoriteButton()
+                    }
                     .padding(.top, 6)
+                    
+                }
+                .padding()
+                
+                if reminder != nil {
+                    Image(systemName: "bell.fill")
+                        .foregroundColor(Color(UIColor.systemYellow))
+                        .imageScale(.small)
+                        .font(.caption)
+                        .padding([.top, .trailing])
+                }
             }
-            .padding()
             .navigationBarTitle(title, displayMode: .inline)
             .navigationBarItems(leading: cancelButton(), trailing: saveButton())
         }
@@ -71,6 +100,20 @@ struct StoryEditorView: View {
                     model.text = content
                 }
             }
+        }
+    }
+    
+    private func toggleFavoriteButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                model.isFavorite.toggle()
+            }
+        } label: {
+            Image(systemName: model.isFavorite ? "star.circle" : "star")
+                .foregroundColor(model.isFavorite ? Color(UIColor.systemYellow) : Color(UIColor.systemBlue))
         }
     }
     
@@ -106,6 +149,7 @@ struct StoryEditorView: View {
             
             story.text = model.text
             story.tags = Array(model.tags)
+            story.isFavorite = model.isFavorite
             
             context.saveContext()
             
@@ -119,10 +163,11 @@ struct StoryEditorView_Previews: PreviewProvider {
         Group {
             StoryEditorView()
                 .previewLayout(.fixed(width: 350, height: 400))
-            StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3))
+            StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3), remindersAccessGranted: true)
                 .previewLayout(.fixed(width: 350, height: 400))
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+        .environmentObject(EventStore())
         .preferredColorScheme(.dark)
     }
 }
