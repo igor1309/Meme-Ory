@@ -11,8 +11,6 @@ struct StoryTagView: View {
     
     @Environment(\.managedObjectContext) private var context
     
-    //@ObservedObject var story: Story
-    
     @Binding var tags: Set<Tag>
     
     private var tagList: String {

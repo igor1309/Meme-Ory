@@ -7,29 +7,42 @@
 
 import SwiftUI
 
+final class StoryEditorViewModel: ObservableObject {
+    @Published var text: String
+    @Published var tags: Set<Tag>
+    
+    init() {
+        text = ""
+        tags = []
+    }
+    
+    init(text: String, tags: Set<Tag>) {
+        self.text = text
+        self.tags = tags
+    }
+}
+
 struct StoryEditorView: View {
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
     
-    @State private var text: String
-    @State private var tags: Set<Tag>
+    @StateObject private var model: StoryEditorViewModel
     
     private let storyToEdit: Story?
     private let title: String
     
     /// Create new Story
     init() {
-        _text = State(initialValue: "")
-        _tags = State(initialValue: [])
+        _model = StateObject(wrappedValue: StoryEditorViewModel())
         storyToEdit = nil
         title = "New"
     }
     
     /// Edit Existing Story
     init(story: Story) {
-        _text = State(initialValue: story.text)
-        _tags = State(initialValue: Set(story.tags))
+        let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags))
+        _model = StateObject(wrappedValue: model)
         storyToEdit = story
         title = ""
     }
@@ -37,23 +50,15 @@ struct StoryEditorView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                TextEditor(text: $text)
+                TextEditor(text: $model.text)
                     .onAppear(perform: pasteClipboard)
                 
-                StoryTagView(tags: $tags)
+                StoryTagView(tags: $model.tags)
                     .padding(.top, 6)
             }
             .padding()
             .navigationBarTitle(title, displayMode: .inline)
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    presentation.wrappedValue.dismiss()
-                },
-                trailing: Button("Save") {
-                    saveStory()
-                }
-                .disabled(text.isEmpty)
-            )
+            .navigationBarItems(leading: cancelButton(), trailing: saveButton())
         }
     }
     
@@ -63,10 +68,23 @@ struct StoryEditorView: View {
             if storyToEdit == nil {
                 if UIPasteboard.general.hasStrings,
                    let content = UIPasteboard.general.string {
-                    text = content
+                    model.text = content
                 }
             }
         }
+    }
+    
+    private func cancelButton() -> some View {
+        Button("Cancel") {
+            presentation.wrappedValue.dismiss()
+        }
+    }
+    
+    private func saveButton() -> some View {
+        Button("Save") {
+            saveStory()
+        }
+        .disabled(model.text.isEmpty)
     }
     
     private func saveStory() {
@@ -86,8 +104,8 @@ struct StoryEditorView: View {
                 story.timestamp = Date()
             }
             
-            story.text = text
-            story.tags = Array(tags)
+            story.text = model.text
+            story.tags = Array(model.tags)
             
             context.saveContext()
             
