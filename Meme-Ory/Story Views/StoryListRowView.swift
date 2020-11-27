@@ -23,7 +23,7 @@ struct StoryListRowView: View {
     
     private let components: [Calendar.Component] = [.day, .weekOfYear, .month, .year]
     
-    @State private var showSheet = false
+    @State private var showStorySheet = false
     
     var reminder: EKReminder? {
         EKEventStore().calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder
@@ -32,7 +32,7 @@ struct StoryListRowView: View {
     var body: some View {
         Button {
             withAnimation {
-                showSheet = true
+                showStorySheet = true
             }
         } label: {
             label
@@ -41,7 +41,7 @@ struct StoryListRowView: View {
         .onOpenURL(perform: handleURL)
         .accentColor(.primary)
         .contentShape(Rectangle())
-        .sheet(isPresented: $showSheet) {
+        .sheet(isPresented: $showStorySheet) {
             StoryEditorView(story: story, remindersAccessGranted: eventStore.accessGranted)
                 .environment(\.managedObjectContext, context)
         }
@@ -84,17 +84,19 @@ struct StoryListRowView: View {
             }
         }
         .contextMenu {
-            // toggle favotite
+            /// toggle favotite
             toggleFavoriteButton()
-            // copy story text
+            /// copy story text
             copyStoryTextButton()
-            // share sheet
+            /// share sheet
             shareStorySection()
-            // if story has just one tag - filter by this tag
+            /// setting reminders
+            remindMeButton()
+            //remindMeSection()
+            /// if story has just one tag - filter by this tag
             filterByTagSection()
-            // setting reminders
-            remindMeSection()
         }
+        .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
     }
     
     private func toggleFavoriteButton() -> some View {
@@ -153,19 +155,69 @@ struct StoryListRowView: View {
     
     private func filterByTagSection() -> some View {
         Section {
+            // only for stories with just one tag
             if story.tags.count == 1 {
-                Button {
-                    let haptics = Haptics()
-                    haptics.feedback()
-                    
-                    withAnimation {
-                        filter.tags = Set(story.tags)
+                if filter.tags == Set(story.tags) {
+                    // filter by this tag was already set
+                    Button {
+                        let haptics = Haptics()
+                        haptics.feedback()
+                        
+                        withAnimation {
+                            filter.tags = []
+                        }
+                    } label: {
+                        Label("Reset tags", systemImage: "tag.slash")
                     }
-                } label: {
-                    Label("Filter by this tag", systemImage: "tag")
+                } else {
+                    // set filter by this tag
+                    Button {
+                        let haptics = Haptics()
+                        haptics.feedback()
+                        
+                        withAnimation {
+                            filter.tags = Set(story.tags)
+                        }
+                    } label: {
+                        Label("Filter by this tag", systemImage: "tag")
+                    }
                 }
             }
         }
+    }
+    
+    @State private var showRemindMeActionSheet = false
+    /// using with Action Sheet
+    private func remindMeButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                showRemindMeActionSheet = true
+            }
+        } label: {
+            Label("Remind me...", systemImage: "bell")
+        }
+    }
+    
+    private func remindMeActionSheet() -> ActionSheet {
+        let remindingButtons = components.map { component in
+            ActionSheet.Button.default(Text("\(component.str)")) {
+                let haptics = Haptics()
+                haptics.feedback()
+                
+                withAnimation {
+                    remindMeNext(component)
+                }
+            }
+        }
+        
+        return ActionSheet (
+            title: Text("Remind Me...".uppercased()),
+            message: Text("Select when you want to be reminded."),
+            buttons: remindingButtons + [ActionSheet.Button.cancel()]
+        )
     }
     
     @ViewBuilder
@@ -189,10 +241,9 @@ struct StoryListRowView: View {
     }
     
     private func reminderCleanUp() {
-        //  MARK: - FINISH THIS
         //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
-        /// if story has a pointer to the  reminder but reminder was deleted, clear the pointer
         if remindersAccessGranted {
+            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
             if reminder == nil && story.calendarItemIdentifier_ != nil {
                 story.calendarItemIdentifier_ = nil
                 
@@ -206,12 +257,12 @@ struct StoryListRowView: View {
         /// check that it's correct url
         guard url.isStoryURL else { return }
         /// close sheet with story if it's open
-        showSheet = false
+        showStorySheet = false
         
         if story.url == url {
             withAnimation {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-                    showSheet = true
+                    showStorySheet = true
                 }
             }
         }
@@ -252,7 +303,7 @@ struct StoryListRowView: View {
         newReminder.url = story.url
         //  that's why write to notes
         newReminder.notes = story.url.absoluteString
-
+        
         // delete existing reminder first - only one reminder
         // otherwise can't track reminders from stories
         if let reminder = reminder {
