@@ -55,12 +55,12 @@ extension Story {
     }
     
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Story> {
-        Story.fetchRequest(predicate, areInIncreasingOrder: true)
+        Story.fetchRequest(predicate, sortDescriptors: [NSSortDescriptor(key: "timestamp_", ascending: true)])
     }
     
-    static func fetchRequest(_ predicate: NSPredicate, areInIncreasingOrder: Bool) -> NSFetchRequest<Story> {
+    static func fetchRequest(_ predicate: NSPredicate, sortDescriptors: [NSSortDescriptor]) -> NSFetchRequest<Story> {
         let request = NSFetchRequest<Story>(entityName: "Story")
-        request.sortDescriptors = [NSSortDescriptor(key: "timestamp_", ascending: areInIncreasingOrder)]
+        request.sortDescriptors = sortDescriptors
         request.predicate = predicate
         return request
     }

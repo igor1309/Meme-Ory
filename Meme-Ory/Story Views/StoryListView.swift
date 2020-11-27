@@ -24,7 +24,10 @@ struct StoryListView: View {
     
     init(filter: Binding<Filter>) {
         _filter = filter
-        fetchRequest = Story.fetchRequest(filter.wrappedValue.predicate, areInIncreasingOrder: filter.wrappedValue.areInIncreasingOrder)
+        fetchRequest = Story.fetchRequest(
+            filter.wrappedValue.predicate,
+            sortDescriptors: filter.wrappedValue.sortDescriptors
+        )
         if filter.wrappedValue.isListLimited {
             fetchRequest.fetchLimit = filter.wrappedValue.listLimit
         }
@@ -56,8 +59,8 @@ struct StoryListView: View {
             }
         }
         .onOpenURL(perform: handleURL)
-        .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleImport)
-        .fileExporter(isPresented: $isExporting, document: document, contentType: .json, onCompletion: handlerExport)
+        .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleFileImport)
+        .fileExporter(isPresented: $isExporting, document: document, contentType: .json, onCompletion: handlerFileExport)
         .onDisappear(perform: deleteTemporaryFile)
         .actionSheet(isPresented: $showConfirmation, content: confirmationActionSheet)
         .navigationBarItems(leading: optionsButton(), trailing: createImportExportButton())
@@ -75,9 +78,11 @@ struct StoryListView: View {
     }
     
     private func handleURL(_ url: URL) {
+        //  MARK: - FINISH THIS
+        //  check url if it's json file - proceed
         importFileURL = url
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             withAnimation {
                 showImportSheet = true
             }
@@ -125,8 +130,8 @@ struct StoryListView: View {
             }
         } label: {
             Label("Share Stories", systemImage: "square.and.arrow.up")
-//                .imageScale(.large)
-//                .foregroundColor(Color(UIColor.systemBlue))
+            //                .imageScale(.large)
+            //                .foregroundColor(Color(UIColor.systemBlue))
         }
     }
     
@@ -183,37 +188,37 @@ struct StoryListView: View {
                 .environment(\.managedObjectContext, context)
         }
         .contextMenu {
-            /// reset filter by tag(s)
-            resetFilterByTag()
+            /// change item to sort by
+            changeItemToSortByButton()
             /// toggle sort order
             sortOrderButton()
             /// set list limit (number of stories showing)
-            listLimitButton()
-            
+            Section {
+                listLimitButton()
+            }
             Section {
                 /// filter by favorites
                 filterByFavoritesButton()
                 /// filter by reminders
                 filterByRemindersButton()
             }
+            /// reset filter by tag(s)
+            resetFilterByTagSection()
         }
     }
     
     @ViewBuilder
-    private func resetFilterByTag() -> some View {
-        if filter.isTagFilterActive {
-            Button {
-                let haptics = Haptics()
-                haptics.feedback()
-                
-                withAnimation {
-                    filter.reset()
-                }
-            } label: {
-                Label("Reset Tags", systemImage: "tag.slash.fill")
+    private func changeItemToSortByButton() -> some View {
+        Button {
+            //  MARK: - FINISH THIS
+            //
+            switch filter.itemToSortBy {
+                case .timestamp: filter.itemToSortBy = .text
+                case .text:      filter.itemToSortBy = .timestamp
             }
-        } else {
-            EmptyView()
+        } label: {
+            Label(filter.itemToSortBy == .timestamp ? "Sort by Text" : "Sort by Date",
+                  systemImage: filter.itemToSortBy == .timestamp ? "text.cursor" : "calendar")
         }
     }
     
@@ -226,7 +231,7 @@ struct StoryListView: View {
                 filter.areInIncreasingOrder.toggle()
             }
         } label: {
-            Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")", systemImage: filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill")
+            Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")", systemImage: filter.areInIncreasingOrder ? "textformat" : "textformat.size")
         }
     }
     
@@ -280,6 +285,26 @@ struct StoryListView: View {
         }
     }
     
+    @ViewBuilder
+    private func resetFilterByTagSection() -> some View {
+        if filter.isTagFilterActive {
+            Section {
+                Button {
+                    let haptics = Haptics()
+                    haptics.feedback()
+                    
+                    withAnimation {
+                        filter.reset()
+                    }
+                } label: {
+                    Label("Reset Tags", systemImage: "tag.slash.fill")
+                }
+            }
+        } else {
+            EmptyView()
+        }
+    }
+    
     private func createImportExportButton() -> some View {
         Button {
             let haptics = Haptics()
@@ -324,19 +349,18 @@ struct StoryListView: View {
     @State private var showImportSheet = false
     @State private var importFileURL: URL?
     
-    private func handleImport(_ result: Result<URL, Error>) {
+    private func handleFileImport(_ result: Result<URL, Error>) {
         switch result {
             case .success:
                 guard let fileURL: URL = try? result.get() else { return }
                 
                 importFileURL = fileURL
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
                     withAnimation {
                         showImportSheet = true
                     }
                 }
-            //fileURL.importStories(to: context)
             case .failure(let error):
                 print("Export error \(error.localizedDescription)")
         }
@@ -367,7 +391,7 @@ struct StoryListView: View {
         }
     }
     
-    private func handlerExport(_ result: Result<URL, Error>) {
+    private func handlerFileExport(_ result: Result<URL, Error>) {
         switch result {
             case .success:
                 print("Exported successfully.")

@@ -53,6 +53,18 @@ struct Filter {
 
     //  MARK: Sort
     
+    var itemToSortBy = SortByOptions.text
+    enum SortByOptions: String, CaseIterable {
+        case timestamp, text
+        
+        var rawValue: String {
+            switch self {
+                case .timestamp: return "Date"
+                case .text:      return "Text"
+            }
+        }
+    }
+    
     /// sort order
     var areInIncreasingOrder: Bool = UserDefaults.standard.bool(forKey: "areInIncreasingOrder") {
         didSet {
@@ -91,6 +103,23 @@ struct Filter {
     
     var tagList: String {
         tags.map { $0.name }.sorted().joined(separator: ", ")
+    }
+    
+    
+    //  MARK: SortDescriptors
+    
+    var timestampSortDescriptor: NSSortDescriptor {
+        NSSortDescriptor(key: "timestamp_", ascending: areInIncreasingOrder)
+    }
+        var textSortDescriptor: NSSortDescriptor {
+            NSSortDescriptor(key: "text_", ascending: areInIncreasingOrder)
+        }
+    
+    var sortDescriptors: [NSSortDescriptor] {
+        switch itemToSortBy {
+            case .timestamp: return [timestampSortDescriptor, textSortDescriptor]
+            case .text:      return [textSortDescriptor, timestampSortDescriptor]
+        }
     }
     
     

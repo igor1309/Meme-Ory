@@ -20,6 +20,11 @@ struct ListOptionView: View {
                     Toggle(isOn: $filter.areInIncreasingOrder) {
                         sortToggleLabel()
                     }
+                    Picker(selection: $filter.itemToSortBy, label: sortLabel()) {
+                        ForEach(Filter.SortByOptions.allCases, id: \.self) { item in
+                            Text(item.rawValue)
+                        }
+                    }
                 }
                 
                 Section(header: Text("Limit")) {
@@ -69,6 +74,10 @@ struct ListOptionView: View {
     
     private func sortToggleLabel() -> some View {
         label(title: "Ascending", subtitle: "Select sort order", image: "arrow.up.arrow.down.circle")
+    }
+    
+    private func sortLabel() -> some View {
+        label(title: "Sort Stories by", subtitle: "Sort by", image: filter.itemToSortBy == .timestamp ? "calendar" : "text.cursor")
     }
     
     private func limitLabel() -> some View {

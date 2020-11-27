@@ -8,9 +8,15 @@
 import Foundation
 import CoreData
 
-struct Brief: Codable, Hashable {
+struct Brief: Identifiable, Hashable {
+    let id = UUID()
+    
     let text: String
     var check: Bool = false
+}
+
+extension Brief: Codable {
+    enum CodingKeys: CodingKey { case text }
 }
 
 extension Brief: Comparable {
