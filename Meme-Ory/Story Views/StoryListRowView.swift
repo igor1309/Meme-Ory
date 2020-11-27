@@ -332,7 +332,7 @@ fileprivate struct StoryListRowView_Testing: View {
     
     var body: some View {
         NavigationView {
-            List(0..<SampleData.stories.count) { index in
+            List(0..<SampleData.texts.count) { index in
                 StoryListRowView(story: SampleData.story(storyIndex: index), filter: $filter, remindersAccessGranted: true)
             }
             .navigationBarTitleDisplayMode(.inline)

@@ -78,3 +78,17 @@ extension Story {
         return request
     }
 }
+
+extension Sequence where Element == Story {
+    /// convert [Story] to [Brief] and encode
+    func export() -> Data? {
+        let briefs = map {
+            Brief(text: $0.text)
+        }
+        
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        return try? encoder.encode(briefs)
+    }
+}

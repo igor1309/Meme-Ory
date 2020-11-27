@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import UniformTypeIdentifiers
 
 struct StoryListView: View {
     
@@ -35,6 +36,9 @@ struct StoryListView: View {
     @State private var showCreateSheet = false
     @State private var showConfirmation = false
     @State private var offsets = IndexSet()
+    @State private var document = JSONDocument(data: "".data(using: .utf8)!)
+    @State private var isImporting = false
+    @State private var isExporting = false
     
     private var count: Int { context.realCount(for: fetchRequest) }
     
@@ -44,17 +48,83 @@ struct StoryListView: View {
                 .searchModifier(text: $filter.searchString)
                 .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
             
-            Section(header: Text("Stories: \(count)")) {
+            Section(header: header()) {
                 ForEach(stories) { story in
                     StoryListRowView(story: story, filter: $filter, remindersAccessGranted: eventStore.accessGranted)
                 }
                 .onDelete(perform: confirmDeletion)
             }
         }
+        .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleImport)
+        .fileExporter(isPresented: $isExporting, document: document, contentType: .json, onCompletion: handlerExport)
+        .onDisappear(perform: deleteTemporaryFile)
         .actionSheet(isPresented: $showConfirmation, content: confirmationActionSheet)
-        .navigationBarItems(leading: optionsButton(), trailing: createStoryButton())
+        .navigationBarItems(leading: optionsButton(), trailing: createImportExportButton())
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
+        .sheet(isPresented: $showImportSheet) {
+            if let importFileURL = importFileURL {
+                ImportBriefView(briefs: importFileURL.getBriefs())
+                    .environment(\.managedObjectContext, context)
+            } else {
+                Text("Error getting import File URL.")
+                    .foregroundColor(.red)
+            }
+        }
+    }
+    
+    private func header() -> some View {
+        HStack {
+            Text("Stories: \(count)")
+            Spacer()
+            shareButton()
+        }
+    }
+    
+    @State private var temporaryFileURL: URL?
+    
+    private func deleteTemporaryFile() {
+        guard let temporaryFileURL = temporaryFileURL else { return }
+        
+        do {
+            try FileManager.default.removeItem(at: temporaryFileURL)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// export (share) JSON file via Share Sheet
+    private func shareButton() -> some View {
+        Button {
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let export = stories.export() else { return }
+                
+                /// set temporary file
+                /// https://nshipster.com/temporary-files/
+                let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+                let temporaryFilename = "stories.json"//ProcessInfo().globallyUniqueString
+                temporaryFileURL =
+                    temporaryDirectoryURL.appendingPathComponent(temporaryFilename)
+                
+                /// write to temporary file
+                guard let temporaryFileURL = temporaryFileURL, let _ = try? export.write(to: temporaryFileURL, options: .atomic) else { return }
+                
+                /// present share sheet
+                let items = [temporaryFileURL]
+                
+                let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
+                
+                DispatchQueue.main.async {
+                    withAnimation {
+                        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "square.and.arrow.up")
+                .imageScale(.large)
+                .foregroundColor(Color(UIColor.systemBlue))
+        }
     }
     
     private func confirmDeletion(offsets: IndexSet) {
@@ -207,7 +277,7 @@ struct StoryListView: View {
         }
     }
     
-    private func createStoryButton() -> some View {
+    private func createImportExportButton() -> some View {
         Button {
             let haptics = Haptics()
             haptics.feedback()
@@ -216,12 +286,79 @@ struct StoryListView: View {
                 showCreateSheet = true
             }
         } label: {
-            Image(systemName: "doc.badge.plus")
+            Image(systemName: "doc.badge.ellipsis")
                 .padding([.leading, .vertical])
         }
         .sheet(isPresented: $showCreateSheet) {
             StoryEditorView()
                 .environment(\.managedObjectContext, context)
+        }
+        .contextMenu {
+            importFileButton()
+            exportFileButton()
+        }
+    }
+    
+    /// import File with Stories
+    private func importFileButton() -> some View {
+        Button {
+            isImporting = false
+            
+            //fix broken picker sheet
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isImporting = true
+            }
+        } label: {
+            Label("Import File", systemImage: "arrow.down.doc.fill")
+        }
+    }
+    
+    @State private var showImportSheet = false
+    @State private var importFileURL: URL?
+    
+    private func handleImport(_ result: Result<URL, Error>) {
+        switch result {
+            case .success:
+                guard let fileURL: URL = try? result.get() else { return }
+                importFileURL = fileURL
+                showImportSheet = true
+            //fileURL.importStories(to: context)
+            case .failure(let error):
+                print("Export error \(error.localizedDescription)")
+        }
+    }
+    
+    /// export Stories to JSON File
+    private func exportFileButton() -> some View {
+        Button {
+            DispatchQueue.global(qos: .userInitiated).async {
+                isExporting = false
+                
+                guard let data = stories.export() else {
+                    print("Error creating export from stories")
+                    return
+                }
+                
+                document = JSONDocument(data: data)
+                
+                //fix broken picker sheet
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation {
+                        isExporting = true
+                    }
+                }
+            }
+        } label: {
+            Label("Export File", systemImage: "arrow.up.doc.fill")
+        }
+    }
+    
+    private func handlerExport(_ result: Result<URL, Error>) {
+        switch result {
+            case .success:
+                print("Exported successfully.")
+            case .failure(let error):
+                print("Export error \(error.localizedDescription)")
         }
     }
 }

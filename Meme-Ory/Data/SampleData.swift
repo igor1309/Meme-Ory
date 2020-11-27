@@ -20,7 +20,7 @@ struct SampleData {
             return tag
         }
         
-        for sample in stories {
+        for sample in texts {
             let story = Story(context: context)
             story.text = sample
             story.timestamp = Date()
@@ -38,7 +38,7 @@ struct SampleData {
         let context = preview.container.viewContext
         
         let story = Story(context: context)
-        story.text = stories[storyIndex % stories.count]
+        story.text = texts[storyIndex % texts.count]
         story.timestamp = Date()
         
         let tag = Tag(context: context)
@@ -72,7 +72,7 @@ struct SampleData {
     
     static let tagStrings = ["Путин", "евреи и еврейство", "жизнь и судьба", "отношения"]
     
-    static let stories = [
+    static let texts = [
         """
         — Скажи мне, Сёма , какое самое благоприятное время для сбора яблок?
         — Когда собака привязана.

@@ -10,10 +10,10 @@ import Foundation
 extension URL {
     var isStoryURL: Bool {
         guard scheme == URL.appScheme else {
-            print("scheme is NOT OK")
+            // print("scheme is NOT OK")
             return false }
         guard pathComponents.contains(URL.appDetailsPath) else {
-            print("appDetailsPath is NOT OK")
+            // print("appDetailsPath is NOT OK")
             return false }
 
         return true
