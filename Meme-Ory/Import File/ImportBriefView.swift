@@ -7,31 +7,6 @@
 
 import SwiftUI
 
-final class ImportBriefViewModel: ObservableObject {
-    @Published var briefs: [Brief]
-    
-    var selectedBriefs: [Brief] {
-        briefs.filter { $0.check }
-    }
-    
-    var count: Int {
-        briefs.count
-    }
-    var selectedCount: Int {
-        briefs.filter { $0.check }.count
-    }
-    
-    init(briefs: [Brief]) {
-        self.briefs = briefs
-    }
-    
-    func toggleCheck(for brief: Brief) {
-        if let index = briefs.firstIndex(where: { $0.text == brief.text }) {
-            briefs[index].check.toggle()
-        }
-    }
-}
-
 struct ImportBriefView: View {
     
     @Environment(\.managedObjectContext) private var context
@@ -39,20 +14,24 @@ struct ImportBriefView: View {
     
     @StateObject var model: ImportBriefViewModel
     
-    init(briefs: [Brief]) {
-        _model = StateObject(wrappedValue: ImportBriefViewModel(briefs: briefs))
+    init(url: URL) {
+        _model = StateObject(wrappedValue: ImportBriefViewModel(url: url))
     }
     
     var body: some View {
-        NavigationView {
-            List {
-                Section(header: Text("Selected: \(model.selectedCount)")) {
-                    ForEach(model.briefs, id: \.self, content: briefListRow)
+        if model.briefs.isEmpty {
+            Text("Nothing to import or can't parse.")
+        } else {
+            NavigationView {
+                List {
+                    Section(header: Text("Selected: \(model.selectedCount)")) {
+                        ForEach(model.briefs, id: \.self, content: briefListRow)
+                    }
                 }
+                .listStyle(InsetGroupedListStyle())
+                .navigationBarTitle("Import", displayMode: .inline)
+                .navigationBarItems(leading: cancelButton(), trailing: importButton())
             }
-            .listStyle(InsetGroupedListStyle())
-            .navigationBarTitle("Import", displayMode: .inline)
-            .navigationBarItems(leading: cancelButton(), trailing: importButton())
         }
     }
     
@@ -119,6 +98,11 @@ struct ImportBriefView: View {
     }
 }
 
+fileprivate extension ImportBriefView {
+    init(briefs: [Brief]) {
+        _model = StateObject(wrappedValue: ImportBriefViewModel(briefs: briefs))
+    }
+}
 
 struct ImportBriefView_Previews: PreviewProvider {
     static var previews: some View {

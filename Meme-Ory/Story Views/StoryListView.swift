@@ -48,13 +48,14 @@ struct StoryListView: View {
                 .searchModifier(text: $filter.searchString)
                 .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
             
-            Section(header: header()) {
+            Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
                     StoryListRowView(story: story, filter: $filter, remindersAccessGranted: eventStore.accessGranted)
                 }
                 .onDelete(perform: confirmDeletion)
             }
         }
+        .onOpenURL(perform: handleURL)
         .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleImport)
         .fileExporter(isPresented: $isExporting, document: document, contentType: .json, onCompletion: handlerExport)
         .onDisappear(perform: deleteTemporaryFile)
@@ -62,22 +63,24 @@ struct StoryListView: View {
         .navigationBarItems(leading: optionsButton(), trailing: createImportExportButton())
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
-        .sheet(isPresented: $showImportSheet) {
+        .sheet(isPresented: $showImportSheet, onDismiss: { importFileURL = nil }) {
             if let importFileURL = importFileURL {
-                ImportBriefView(briefs: importFileURL.getBriefs())
+                ImportBriefView(url: importFileURL)
                     .environment(\.managedObjectContext, context)
             } else {
-                Text("Error getting import File URL.")
+                Text("Error getting import File URL.\n\(importFileURL?.getBriefs().map(\.text).joined() ?? "")")
                     .foregroundColor(.red)
             }
         }
     }
     
-    private func header() -> some View {
-        HStack {
-            Text("Stories: \(count)")
-            Spacer()
-            shareButton()
+    private func handleURL(_ url: URL) {
+        importFileURL = url
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+            withAnimation {
+                showImportSheet = true
+            }
         }
     }
     
@@ -121,9 +124,9 @@ struct StoryListView: View {
                 }
             }
         } label: {
-            Image(systemName: "square.and.arrow.up")
-                .imageScale(.large)
-                .foregroundColor(Color(UIColor.systemBlue))
+            Label("Share Stories", systemImage: "square.and.arrow.up")
+//                .imageScale(.large)
+//                .foregroundColor(Color(UIColor.systemBlue))
         }
     }
     
@@ -294,8 +297,11 @@ struct StoryListView: View {
                 .environment(\.managedObjectContext, context)
         }
         .contextMenu {
-            importFileButton()
+            Section {
+                importFileButton()
+            }
             exportFileButton()
+            shareButton()
         }
     }
     
@@ -305,8 +311,10 @@ struct StoryListView: View {
             isImporting = false
             
             //fix broken picker sheet
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                isImporting = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                withAnimation {
+                    isImporting = true
+                }
             }
         } label: {
             Label("Import File", systemImage: "arrow.down.doc.fill")
@@ -320,8 +328,14 @@ struct StoryListView: View {
         switch result {
             case .success:
                 guard let fileURL: URL = try? result.get() else { return }
+                
                 importFileURL = fileURL
-                showImportSheet = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                    withAnimation {
+                        showImportSheet = true
+                    }
+                }
             //fileURL.importStories(to: context)
             case .failure(let error):
                 print("Export error \(error.localizedDescription)")
@@ -342,7 +356,7 @@ struct StoryListView: View {
                 document = JSONDocument(data: data)
                 
                 //fix broken picker sheet
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
                     withAnimation {
                         isExporting = true
                     }
@@ -372,8 +386,6 @@ fileprivate struct StoryListView_Testing: View {
 }
 
 struct StoryListView_Previews: PreviewProvider {
-    @State static var filter = Filter()
-    
     static var previews: some View {
         NavigationView {
             StoryListView_Testing()

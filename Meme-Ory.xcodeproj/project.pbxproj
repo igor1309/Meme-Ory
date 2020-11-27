@@ -16,6 +16,7 @@
 		2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
 		2A33A3E225714DA500538FE3 /* ImportBriefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportBriefView.swift */; };
+		2A5005F3257197B4005E969A /* ImportBriefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5005F2257197B4005E969A /* ImportBriefViewModel.swift */; };
 		2A64D42D257164B900C1817F /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A6A3112257163CC007F2C0D /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A85412B256EFED20051906B /* TagEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A85412A256EFED20051906B /* TagEditView.swift */; };
@@ -92,6 +93,7 @@
 		2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionView.swift; sourceTree = "<group>"; };
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		2A33A3E125714DA500538FE3 /* ImportBriefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportBriefView.swift; sourceTree = "<group>"; };
+		2A5005F2257197B4005E969A /* ImportBriefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportBriefViewModel.swift; sourceTree = "<group>"; };
 		2A85412A256EFED20051906B /* TagEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEditView.swift; sourceTree = "<group>"; };
 		2A8E4409256EF19A002C0DFC /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
@@ -169,11 +171,10 @@
 			children = (
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
-				2A33A3E125714DA500538FE3 /* ImportBriefView.swift */,
-				2A1164A6257102BF000AD487 /* Brief.swift */,
 				2A935CC0256AF608004B6E10 /* Story Views */,
 				2A935CBD256AF5EE004B6E10 /* Search and List Options */,
 				2A935CC2256AF61C004B6E10 /* Tag Views */,
+				2A5005ED2571965A005E969A /* Import File */,
 				2A935CC4256AF648004B6E10 /* Extras */,
 				2ADAD3F9256E4B6500AF463B /* Extensions */,
 				2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */,
@@ -222,6 +223,15 @@
 			path = Playgrounds;
 			sourceTree = "<group>";
 		};
+		2A5005ED2571965A005E969A /* Import File */ = {
+			isa = PBXGroup;
+			children = (
+				2A33A3E125714DA500538FE3 /* ImportBriefView.swift */,
+				2A5005F2257197B4005E969A /* ImportBriefViewModel.swift */,
+			);
+			path = "Import File";
+			sourceTree = "<group>";
+		};
 		2A935CA0256A77D6004B6E10 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +243,7 @@
 		2A935CBB256AF5CD004B6E10 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2A1164A6257102BF000AD487 /* Brief.swift */,
 				2AEEF90525702EBF008D1B31 /* EventStore.swift */,
 				2A935CA5256A80C9004B6E10 /* Filter.swift */,
 				2A33A3D9257139E200538FE3 /* JSONDocument.swift */,
@@ -427,6 +438,7 @@
 				2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */,
 				2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */,
 				2A935C89256A5144004B6E10 /* StoryListRowView.swift in Sources */,
+				2A5005F3257197B4005E969A /* ImportBriefViewModel.swift in Sources */,
 				2A1B5FB9256A4A5D00E3283D /* StoryListView.swift in Sources */,
 				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,
@@ -595,7 +607,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -621,7 +633,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;

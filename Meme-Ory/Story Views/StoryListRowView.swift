@@ -260,8 +260,8 @@ struct StoryListRowView: View {
         showStorySheet = false
         
         if story.url == url {
-            withAnimation {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                withAnimation {
                     showStorySheet = true
                 }
             }
