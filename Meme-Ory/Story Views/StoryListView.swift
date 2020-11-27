@@ -85,7 +85,7 @@ struct StoryListView: View {
     }
     
     private var optionsButtonColor: Color {
-        if filter.isTagFilterActive || filter.isListLimited {
+        if filter.isActive {
             return Color(UIColor.systemOrange)
         } else {
             return Color(UIColor.systemBlue)
@@ -110,41 +110,100 @@ struct StoryListView: View {
                 .environment(\.managedObjectContext, context)
         }
         .contextMenu {
-            if filter.isTagFilterActive {
-                Button {
-                    let haptics = Haptics()
-                    haptics.feedback()
-                    
-                    withAnimation {
-                        filter.reset()
-                    }
-                } label: {
-                    Label("Reset Tags", systemImage: "tag.slash.fill")
-                }
-            } else {
-                EmptyView()
+            /// reset filter by tag(s)
+            resetFilterByTag()
+            /// toggle sort order
+            sortOrderButton()
+            /// set list limit (number of stories showing)
+            listLimitButton()
+            
+            Section {
+                /// filter by favorites
+                filterByFavoritesButton()
+                /// filter by reminders
+                filterByRemindersButton()
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func resetFilterByTag() -> some View {
+        if filter.isTagFilterActive {
             Button {
                 let haptics = Haptics()
                 haptics.feedback()
                 
                 withAnimation {
-                    filter.areInIncreasingOrder.toggle()
+                    filter.reset()
                 }
             } label: {
-                Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")", systemImage: filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill")
+                Label("Reset Tags", systemImage: "tag.slash.fill")
             }
-            Button {
-                let haptics = Haptics()
-                haptics.feedback()
-                
-                withAnimation {
-                    filter.isListLimited.toggle()
+        } else {
+            EmptyView()
+        }
+    }
+    
+    private func sortOrderButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                filter.areInIncreasingOrder.toggle()
+            }
+        } label: {
+            Label("Sort \(filter.areInIncreasingOrder ? "Descending": "Ascending")", systemImage: filter.areInIncreasingOrder ? "arrow.up.arrow.down" : "arrow.up.arrow.down.square.fill")
+        }
+    }
+    
+    private func listLimitButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                filter.isListLimited.toggle()
+            }
+        } label: {
+            Label(filter.isListLimited ? "Reset List Limit": "Set last Limit (\(filter.listLimit))",
+                  systemImage: filter.isListLimited ? "infinity" : "arrow.up.and.down")
+        }
+    }
+    
+    private func filterByFavoritesButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                switch filter.favoritesFilter {
+                    case .all:
+                        filter.favoritesFilter = .fav
+                    default:
+                        filter.favoritesFilter = .all
                 }
-            } label: {
-                Label(filter.isListLimited ? "Reset List Limit": "Set last Limit (\(filter.listLimit))",
-                      systemImage: filter.isListLimited ? "infinity" : "arrow.up.and.down")
             }
+        } label: {
+            Label(filter.favoritesFilter == .all ? "Show Favorites" : "Show all", systemImage: "star.circle")
+        }
+    }
+    
+    private func filterByRemindersButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                switch filter.remindersFilter {
+                    case .all:
+                        filter.remindersFilter = .have
+                    default:
+                        filter.remindersFilter = .all
+                }
+            }
+        } label: {
+            Label(filter.remindersFilter == .all ? "Show with Reminders" : "Show All", systemImage: "bell.circle")
         }
     }
     

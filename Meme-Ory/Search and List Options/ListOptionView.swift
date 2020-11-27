@@ -37,38 +37,67 @@ struct ListOptionView: View {
                     }
                 }
                 
+                Section(header: Text("Extra Filters")) {
+                    Picker(selection: $filter.favoritesFilter, label: favoritesLabel()) {
+                        ForEach(Filter.FavoritesFilterOptions.allCases, id: \.self) { item in
+                            Text(item.rawValue)
+                        }
+                    }
+                    Picker(selection: $filter.remindersFilter, label: remindersLabel()) {
+                        ForEach(Filter.RemindersFilterOptions.allCases, id: \.self) { item in
+                            Text(item.rawValue)
+                        }
+                    }
+                }
+                
                 Section(header: Text("Selected Tags")) {
+                    if !filter.tags.isEmpty {
+                        resetTagsButton()
+                    }
+                    
                     selectedTags()
                     
                     TagGridView(selected: $filter.tags)
                         .padding(.vertical, 6)
+                        .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 }
             }
             .navigationTitle("List Options")
-            .navigationBarItems(leading: resetTagsButton(), trailing: doneButton())
+            .navigationBarItems(trailing: doneButton())
         }
     }
     
     private func sortToggleLabel() -> some View {
-        label(title: "Ascending", subtitle: "Select sort order", image: "arrow.up.arrow.down.square")
+        label(title: "Ascending", subtitle: "Select sort order", image: "arrow.up.arrow.down.circle")
     }
     
     private func limitLabel() -> some View {
-        label(title: "List Limit", subtitle: "Select number or stories to show", image: "arrow.up.and.down.square")
+        label(title: "List Limit", subtitle: "Select number or stories to show", image: "arrow.up.and.down.circle")
     }
     
-    private func label(title: String, subtitle: String, image: String) -> some View {
+    private func favoritesLabel() -> some View {
+        label(title: "Favorites", image: "star.circle")
+    }
+    
+    private func remindersLabel() -> some View {
+        label(title: "Reminders", image: "bell.circle")
+    }
+    
+    private func label(title: String, subtitle: String? = nil, image: String) -> some View {
         Label {
             VStack(alignment: .leading) {
                 Text(title)
-                Text(subtitle)
-                    .foregroundColor(.secondary)
-                    .font(.caption)
+                
+                if let subtitle = subtitle {
+                    Text(subtitle)
+                        .foregroundColor(.secondary)
+                        .font(.caption)
+                }
             }
         } icon: {
             Image(systemName: image)
                 .imageScale(.large)
-                .offset(y: 6)
+                .offset(y: subtitle == nil ? 0 : 6)
         }
         .accentColor(Color(UIColor.systemOrange))
     }

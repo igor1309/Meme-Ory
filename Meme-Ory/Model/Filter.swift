@@ -13,6 +13,46 @@ extension NSPredicate {
 }
 
 struct Filter {
+    
+    var isActive: Bool {
+        isTagFilterActive || isListLimited || favoritesFilter != .all || remindersFilter != .all
+    }
+    
+    
+    //  MARK: Favorites
+
+    var favoritesFilter = FavoritesFilterOptions.all
+    enum FavoritesFilterOptions: String, CaseIterable {
+        case fav, unfav, all
+
+        var rawValue: String {
+            switch self {
+                case .all:   return "All"
+                case .fav:   return "Favorites"
+                case .unfav: return "Non Favorites"
+            }
+        }
+    }
+    
+    
+    //  MARK: Reminders
+
+    var remindersFilter = RemindersFilterOptions.all
+    enum RemindersFilterOptions: String, CaseIterable {
+        case have, notHave, all
+
+        var rawValue: String {
+            switch self {
+                case .all:     return "All"
+                case .have:    return "With"
+                case .notHave: return "Without"
+            }
+        }
+    }
+
+
+    //  MARK: Sort
+    
     /// sort order
     var areInIncreasingOrder: Bool = UserDefaults.standard.bool(forKey: "areInIncreasingOrder") {
         didSet {
@@ -20,7 +60,14 @@ struct Filter {
         }
     }
     
+    
+    //  MARK: Search
+    
     var searchString: String = ""
+    
+    
+    //  MARK: List Limit
+    
     /// Limiting Stories List (number of stories listed))
     var isListLimited: Bool = UserDefaults.standard.bool(forKey: "isListLimited") {
         didSet {
@@ -35,6 +82,9 @@ struct Filter {
     
     static var listLimitOptions: [Int] = Array(1..<5).map { $0 * 6 }
     
+    
+    //  MARK: Tags
+    
     var tags = Set<Tag>()
     
     var isTagFilterActive: Bool { !tags.isEmpty }
@@ -43,10 +93,35 @@ struct Filter {
         tags.map { $0.name }.sorted().joined(separator: ", ")
     }
     
+    
+    //  MARK: Predicates
+    
     private var tagPredicate: NSPredicate {
         isTagFilterActive ?
             NSPredicate(format: "ANY %K IN %@", #keyPath(Story.tags_), Array(tags))
             : NSPredicate.all
+    }
+    
+    private var favoritesPredicate: NSPredicate {
+        switch favoritesFilter {
+            case .all:
+                return NSPredicate.all
+            case .fav:
+                return NSPredicate(format: "isFavorite == %@", NSNumber(value: true))
+            case.unfav:
+                return NSPredicate(format: "isFavorite == %@ OR isFavorite = nil", NSNumber(value: false))
+        }
+    }
+    
+    private var remindersPredicate: NSPredicate {
+        switch remindersFilter {
+            case .all:
+                return NSPredicate.all
+            case .have:
+                return NSPredicate(format: "calendarItemIdentifier_ != nil")
+            case .notHave:
+                return NSPredicate(format: "calendarItemIdentifier_ = nil")
+        }
     }
     
     private var searchStringPredicate: NSPredicate {
@@ -56,8 +131,11 @@ struct Filter {
     }
     
     var predicate: NSPredicate {
-        NSCompoundPredicate(andPredicateWithSubpredicates: [tagPredicate, searchStringPredicate])
+        NSCompoundPredicate(andPredicateWithSubpredicates: [favoritesPredicate, remindersPredicate, tagPredicate, searchStringPredicate])
     }
+    
+    
+    //  MARK: Reset Filter
     
     mutating func reset() {
         tags = Set()
