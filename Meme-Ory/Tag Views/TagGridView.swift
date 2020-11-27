@@ -21,16 +21,21 @@ struct TagGridView: View {
     @Binding var selected: Set<Tag>
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack {
-                LazyVGrid(columns: columns) {
-                    ForEach(tags) { tag in
-                        Button {
-                            toggleSelection(tag)
-                        } label: {
-                            TagView(tag: tag, selected: $selected, isSelected: isSelected(tag))
+        if tags.isEmpty {
+            Text("No tags")
+                .foregroundColor(.secondary)            
+        } else {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    LazyVGrid(columns: columns) {
+                        ForEach(tags) { tag in
+                            Button {
+                                toggleSelection(tag)
+                            } label: {
+                                TagView(tag: tag, selected: $selected, isSelected: isSelected(tag))
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        .buttonStyle(PlainButtonStyle())
                     }
                 }
             }
