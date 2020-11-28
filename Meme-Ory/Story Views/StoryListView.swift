@@ -34,14 +34,15 @@ struct StoryListView: View {
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
-    @State private var showFilter = false
-    @State private var showListOptions = false
-    @State private var showCreateSheet = false
-    @State private var showConfirmation = false
-    @State private var offsets = IndexSet()
-    @State private var document = JSONDocument(data: "".data(using: .utf8)!)
+    @State private var showingListOptions = false
+    @State private var showingCreateSheet = false
+    @State private var showingConfirmation = false
+    @State private var showImportTextView = false
     @State private var isImporting = false
     @State private var isExporting = false
+    @State private var importFileURL: URL?
+    @State private var offsets = IndexSet()
+    @State private var document = JSONDocument(data: "".data(using: .utf8)!)
     
     private var count: Int { context.realCount(for: fetchRequest) }
     
@@ -62,17 +63,26 @@ struct StoryListView: View {
         .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleFileImport)
         .fileExporter(isPresented: $isExporting, document: document, contentType: .json, onCompletion: handlerFileExport)
         .onDisappear(perform: deleteTemporaryFile)
-        .actionSheet(isPresented: $showConfirmation, content: confirmationActionSheet)
+        .actionSheet(isPresented: $showingConfirmation, content: confirmationActionSheet)
         .navigationBarItems(leading: optionsButton(), trailing: createImportExportButton())
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
-        .sheet(isPresented: $showImportSheet, onDismiss: { importFileURL = nil }) {
+        .sheet(isPresented: $showImportTextView, onDismiss: { importFileURL = nil }) {
             if let importFileURL = importFileURL {
-                ImportBriefView(url: importFileURL)
+                ImportTextView(url: importFileURL)
                     .environment(\.managedObjectContext, context)
             } else {
-                Text("Error getting import File URL.\n\(importFileURL?.getBriefs().map(\.text).joined() ?? "")")
-                    .foregroundColor(.red)
+                ErrorSheet(message: "Error getting Import File URL") {
+                    Button("Try again") {
+                        showImportTextView = false
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+                            withAnimation {
+                                showImportTextView = true
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -82,10 +92,27 @@ struct StoryListView: View {
         //  check url if it's json file - proceed
         importFileURL = url
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
             withAnimation {
-                showImportSheet = true
+                showImportTextView = true
             }
+        }
+    }
+    
+    private func handleFileImport(_ result: Result<URL, Error>) {
+        switch result {
+            case .success:
+                guard let fileURL: URL = try? result.get() else { return }
+                
+                importFileURL = fileURL
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
+                    withAnimation {
+                        showImportTextView = true
+                    }
+                }
+            case .failure(let error):
+                print("Export error \(error.localizedDescription)")
         }
     }
     
@@ -105,7 +132,7 @@ struct StoryListView: View {
     private func shareButton() -> some View {
         Button {
             DispatchQueue.global(qos: .userInitiated).async {
-                guard let export = stories.export() else { return }
+                guard let export = stories.exportTexts() else { return }
                 
                 /// set temporary file
                 /// https://nshipster.com/temporary-files/
@@ -137,7 +164,7 @@ struct StoryListView: View {
     
     private func confirmDeletion(offsets: IndexSet) {
         self.offsets = offsets
-        showConfirmation = true
+        showingConfirmation = true
     }
     
     private func confirmationActionSheet() -> ActionSheet {
@@ -162,28 +189,20 @@ struct StoryListView: View {
         }
     }
     
-    private var optionsButtonColor: Color {
-        if filter.isActive {
-            return Color(UIColor.systemOrange)
-        } else {
-            return Color(UIColor.systemBlue)
-        }
-    }
-    
     private func optionsButton() -> some View {
         Button {
             let haptics = Haptics()
             haptics.feedback()
             
             withAnimation {
-                showListOptions = true
+                showingListOptions = true
             }
         } label: {
             Image(systemName: "slider.horizontal.3")
                 .padding([.vertical, .trailing])
         }
-        .accentColor(optionsButtonColor)
-        .sheet(isPresented: $showListOptions) {
+        .accentColor(filter.isActive ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+        .sheet(isPresented: $showingListOptions) {
             ListOptionView(filter: $filter)
                 .environment(\.managedObjectContext, context)
         }
@@ -311,13 +330,13 @@ struct StoryListView: View {
             haptics.feedback()
             
             withAnimation {
-                showCreateSheet = true
+                showingCreateSheet = true
             }
         } label: {
             Image(systemName: "doc.badge.ellipsis")
                 .padding([.leading, .vertical])
         }
-        .sheet(isPresented: $showCreateSheet) {
+        .sheet(isPresented: $showingCreateSheet) {
             StoryEditorView()
                 .environment(\.managedObjectContext, context)
         }
@@ -346,33 +365,13 @@ struct StoryListView: View {
         }
     }
     
-    @State private var showImportSheet = false
-    @State private var importFileURL: URL?
-    
-    private func handleFileImport(_ result: Result<URL, Error>) {
-        switch result {
-            case .success:
-                guard let fileURL: URL = try? result.get() else { return }
-                
-                importFileURL = fileURL
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-                    withAnimation {
-                        showImportSheet = true
-                    }
-                }
-            case .failure(let error):
-                print("Export error \(error.localizedDescription)")
-        }
-    }
-    
     /// export Stories to JSON File
     private func exportFileButton() -> some View {
         Button {
             DispatchQueue.global(qos: .userInitiated).async {
                 isExporting = false
                 
-                guard let data = stories.export() else {
+                guard let data = stories.exportTexts() else {
                     print("Error creating export from stories")
                     return
                 }

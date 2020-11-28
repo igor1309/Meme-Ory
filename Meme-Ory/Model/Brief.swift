@@ -37,31 +37,11 @@ extension Brief {
 
 extension Sequence where Element == Brief {
     func convertToStories(in context: NSManagedObjectContext) {
-        for brief in self {
+        for element in self {
             let story = Story(context: context)
-            story.text = brief.text
+            story.text = element.text
         }
         
         context.saveContext()
-    }
-}
-
-extension URL {
-    func getBriefs() -> [Brief] {
-        guard let data = try? Data(contentsOf: self) else {
-            print("Failed to load file at \(self) from bundle.")
-            return []
-        }
-        
-        let decoder = JSONDecoder()
-        
-        guard let briefs = try? decoder.decode([Brief].self, from: data) else {
-            print("Failed to decode file at \(self).")
-            return []
-        }
-        
-        /// remove duplicates from import
-        /// this doesn't check for duplicates in store
-        return Array(Set(briefs)).sorted()
     }
 }

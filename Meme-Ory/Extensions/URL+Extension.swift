@@ -8,6 +8,45 @@
 import Foundation
 
 extension URL {
+    func getTexts() -> [String] {
+        guard let data = try? Data(contentsOf: self) else {
+            print("Failed to load file from \(self)")
+            return []
+        }
+        
+        let decoder = JSONDecoder()
+        
+        guard let briefs = try? decoder.decode([String].self, from: data) else {
+            print("Failed to decode file at \(self)")
+            return []
+        }
+        
+        /// remove duplicates from import
+        /// this doesn't check for duplicates in store
+        return Array(Set(briefs)).sorted()
+    }
+    
+    func getBriefs() -> [Brief] {
+        guard let data = try? Data(contentsOf: self) else {
+            print("Failed to load file from \(self)")
+            return []
+        }
+        
+        let decoder = JSONDecoder()
+        
+        guard let briefs = try? decoder.decode([Brief].self, from: data) else {
+            print("Failed to decode file at \(self)")
+            return []
+        }
+        
+        /// remove duplicates from import
+        /// this doesn't check for duplicates in store
+        return Array(Set(briefs)).sorted()
+    }
+}
+
+
+extension URL {
     var isStoryURL: Bool {
         guard scheme == URL.appScheme else {
             // print("scheme is NOT OK")
@@ -15,7 +54,7 @@ extension URL {
         guard pathComponents.contains(URL.appDetailsPath) else {
             // print("appDetailsPath is NOT OK")
             return false }
-
+        
         return true
     }
 }

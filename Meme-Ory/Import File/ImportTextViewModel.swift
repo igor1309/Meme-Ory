@@ -1,5 +1,5 @@
 //
-//  ImportBriefViewModel.swift
+//  ImportTextViewModel.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 27.11.2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ImportBriefViewModel: ObservableObject {
+final class ImportTextViewModel: ObservableObject {
     @Published var briefs: [Brief]
     
     var selectedBriefs: [Brief] {
@@ -22,7 +22,15 @@ final class ImportBriefViewModel: ObservableObject {
     }
     
     init(url: URL) {
-        briefs = url.getBriefs()
+        let texts = url.getTexts()
+        
+        if texts.isEmpty {
+            briefs = url.getBriefs()
+        }
+        
+        briefs = texts.map {
+            Brief(text: $0)
+        }
     }
     
     init(briefs: [Brief]) {

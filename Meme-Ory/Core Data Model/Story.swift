@@ -39,9 +39,10 @@ extension Story {
         
         return url
     }
-
+    
     func storyText(maxCount: Int = 100, maxLines: Int = 3) -> String {
         var text = self.text
+        
         if text.count > maxCount {
             text = text.prefix(maxCount).appending(" ...")
         }
@@ -53,7 +54,39 @@ extension Story {
         
         return text
     }
+}
+
+
+//  MARK: Export
+
+extension Sequence where Element == Story {
+    /// convert [Story] to [String] and encode
+    func exportTexts() -> Data? {
+        let briefs = map(\.text)
+        
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        return try? encoder.encode(briefs)
+    }
     
+    /// convert [Story] to [Brief] and encode
+    private func export() -> Data? {
+        let briefs = map {
+            Brief(text: $0.text)
+        }
+        
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        return try? encoder.encode(briefs)
+    }
+}
+
+
+//  MARK: FetchRequest
+
+extension Story {
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Story> {
         Story.fetchRequest(predicate, sortDescriptors: [NSSortDescriptor(key: "timestamp_", ascending: true)])
     }
@@ -65,30 +98,17 @@ extension Story {
         return request
     }
     
-    static func requestRandom(in context: NSManagedObjectContext) -> NSFetchRequest<Story> {
+    //  MARK: - FINISH THIS
+    private static func requestRandom(in context: NSManagedObjectContext) -> NSFetchRequest<Story> {
         let request = Story.fetchRequest(NSPredicate.all)
         
         let count = context.realCount(for: request)
         debugPrint("context.realCount: \(count)")
         request.fetchOffset = Int(arc4random_uniform(UInt32(count)))
         debugPrint("fetchOffset: \(request.fetchOffset)")
-
+        
         request.fetchLimit = 1
-
+        
         return request
-    }
-}
-
-extension Sequence where Element == Story {
-    /// convert [Story] to [Brief] and encode
-    func export() -> Data? {
-        let briefs = map {
-            Brief(text: $0.text)
-        }
-        
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        return try? encoder.encode(briefs)
     }
 }

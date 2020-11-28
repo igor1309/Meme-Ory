@@ -15,8 +15,8 @@
 		2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
 		2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
-		2A33A3E225714DA500538FE3 /* ImportBriefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportBriefView.swift */; };
-		2A5005F3257197B4005E969A /* ImportBriefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5005F2257197B4005E969A /* ImportBriefViewModel.swift */; };
+		2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportTextView.swift */; };
+		2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5005F2257197B4005E969A /* ImportTextViewModel.swift */; };
 		2A64D42D257164B900C1817F /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A6A3112257163CC007F2C0D /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A85412B256EFED20051906B /* TagEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A85412A256EFED20051906B /* TagEditView.swift */; };
@@ -53,6 +53,7 @@
 		2AEEF8FE25700061008D1B31 /* Ext+Calendar.Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF8FD25700061008D1B31 /* Ext+Calendar.Component.swift */; };
 		2AEEF9022570007F008D1B31 /* Ext+EKEventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF9012570007F008D1B31 /* Ext+EKEventStore.swift */; };
 		2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF90525702EBF008D1B31 /* EventStore.swift */; };
+		2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E3E257246270037E8CF /* ErrorSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,8 +93,8 @@
 		2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StoryText.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionView.swift; sourceTree = "<group>"; };
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
-		2A33A3E125714DA500538FE3 /* ImportBriefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportBriefView.swift; sourceTree = "<group>"; };
-		2A5005F2257197B4005E969A /* ImportBriefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportBriefViewModel.swift; sourceTree = "<group>"; };
+		2A33A3E125714DA500538FE3 /* ImportTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextView.swift; sourceTree = "<group>"; };
+		2A5005F2257197B4005E969A /* ImportTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextViewModel.swift; sourceTree = "<group>"; };
 		2A85412A256EFED20051906B /* TagEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEditView.swift; sourceTree = "<group>"; };
 		2A8E4409256EF19A002C0DFC /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 		2AEEF8FD25700061008D1B31 /* Ext+Calendar.Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Calendar.Component.swift"; sourceTree = "<group>"; };
 		2AEEF9012570007F008D1B31 /* Ext+EKEventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+EKEventStore.swift"; sourceTree = "<group>"; };
 		2AEEF90525702EBF008D1B31 /* EventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
+		2AFE9E3E257246270037E8CF /* ErrorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,8 +228,9 @@
 		2A5005ED2571965A005E969A /* Import File */ = {
 			isa = PBXGroup;
 			children = (
-				2A33A3E125714DA500538FE3 /* ImportBriefView.swift */,
-				2A5005F2257197B4005E969A /* ImportBriefViewModel.swift */,
+				2A33A3E125714DA500538FE3 /* ImportTextView.swift */,
+				2A5005F2257197B4005E969A /* ImportTextViewModel.swift */,
+				2AFE9E3E257246270037E8CF /* ErrorSheet.swift */,
 			);
 			path = "Import File";
 			sourceTree = "<group>";
@@ -422,7 +425,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A33A3E225714DA500538FE3 /* ImportBriefView.swift in Sources */,
+				2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */,
 				2AA8916B256B9E7E0042395A /* Context.swift in Sources */,
 				2AEEF8FE25700061008D1B31 /* Ext+Calendar.Component.swift in Sources */,
 				2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */,
@@ -436,9 +439,10 @@
 				2AEEF9022570007F008D1B31 /* Ext+EKEventStore.swift in Sources */,
 				2A85412B256EFED20051906B /* TagEditView.swift in Sources */,
 				2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */,
+				2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */,
 				2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */,
 				2A935C89256A5144004B6E10 /* StoryListRowView.swift in Sources */,
-				2A5005F3257197B4005E969A /* ImportBriefViewModel.swift in Sources */,
+				2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */,
 				2A1B5FB9256A4A5D00E3283D /* StoryListView.swift in Sources */,
 				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,

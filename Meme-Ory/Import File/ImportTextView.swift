@@ -1,5 +1,5 @@
 //
-//  ImportBriefView.swift
+//  ImportTextView.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 27.11.2020.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ImportBriefView: View {
+struct ImportTextView: View {
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
     
-    @StateObject var model: ImportBriefViewModel
+    @StateObject var model: ImportTextViewModel
     
     init(url: URL) {
-        _model = StateObject(wrappedValue: ImportBriefViewModel(url: url))
+        _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
     }
     
     var body: some View {
@@ -98,15 +98,15 @@ struct ImportBriefView: View {
     }
 }
 
-fileprivate extension ImportBriefView {
+fileprivate extension ImportTextView {
     init(briefs: [Brief]) {
-        _model = StateObject(wrappedValue: ImportBriefViewModel(briefs: briefs))
+        _model = StateObject(wrappedValue: ImportTextViewModel(briefs: briefs))
     }
 }
 
 struct ImportBriefView_Previews: PreviewProvider {
     static var previews: some View {
-        ImportBriefView(briefs: Brief.examples)
+        ImportTextView(briefs: Brief.examples)
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environment(\.colorScheme, .dark)
     }
