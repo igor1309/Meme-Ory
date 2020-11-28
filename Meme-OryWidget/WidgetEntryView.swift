@@ -42,12 +42,21 @@ struct WidgetEntryView: View {
     
     @ViewBuilder
     private func storyRowView(_ story: Story) -> some View {
-        Link(destination: story.url) {
-            Text(story.storyText(maxCount: 300, maxLines: 3))
-                .font(.footnote)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
+        switch size {
+            case .systemSmall:
+                rowLabel(story).widgetURL(story.url)
+            case .systemMedium, .systemLarge:
+                Link(destination: story.url, label: { rowLabel(story) })
+            @unknown default:
+                Text("TBD")
         }
+    }
+    
+    private func rowLabel(_ story: Story) -> some View {
+        Text(story.storyText(maxCount: 300, maxLines: 3))
+            .font(.footnote)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
     }
     
     // old version
