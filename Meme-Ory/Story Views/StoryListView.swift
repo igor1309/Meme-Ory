@@ -15,24 +15,24 @@ struct StoryListView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     @EnvironmentObject private var eventStore: EventStore
+
+    @ObservedObject private var filter: Filter
     
-    /// used to pass to TagFilterView via filterButton
-    @Binding var filter: Filter
     /// used to count
     private let fetchRequest: NSFetchRequest<Story>
     
     @FetchRequest private var stories: FetchedResults<Story>
     
-    init(filter: Binding<Filter>) {
-        _filter = filter
+    init(filter: Filter) {
+        self.filter = filter
         
         fetchRequest = Story.fetchRequest(
-            filter.wrappedValue.predicate,
-            sortDescriptors: filter.wrappedValue.sortDescriptors
+            filter.predicate,
+            sortDescriptors: filter.sortDescriptors
         )
         
-        if filter.wrappedValue.isListLimited {
-            fetchRequest.fetchLimit = filter.wrappedValue.listLimit
+        if filter.isListLimited {
+            fetchRequest.fetchLimit = filter.listLimit
         }
         
         _stories = FetchRequest(fetchRequest: fetchRequest)
@@ -60,7 +60,7 @@ struct StoryListView: View {
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
-                    StoryListRowView(story: story, filter: $filter, remindersAccessGranted: eventStore.accessGranted)
+                    StoryListRowView(story: story, remindersAccessGranted: eventStore.accessGranted)
                         .environment(\.storyToShowURL, storyToShowURL)
                 }
                 .onDelete(perform: confirmDeletion)
@@ -224,8 +224,9 @@ struct StoryListView: View {
         }
         .accentColor(filter.isActive ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
         .sheet(isPresented: $showingListOptions) {
-            ListOptionView(filter: $filter)
+            ListOptionView()
                 .environment(\.managedObjectContext, context)
+                .environmentObject(filter)
         }
         .contextMenu {
             /// change item to sort by
@@ -334,7 +335,7 @@ struct StoryListView: View {
                     haptics.feedback()
                     
                     withAnimation {
-                        filter.reset()
+                        filter.resetTags()
                     }
                 } label: {
                     Label("Reset Tags", systemImage: "tag.slash.fill")
@@ -425,6 +426,7 @@ struct StoryListView: View {
         if let importFileURL = importFileURL {
             ImportTextView(url: importFileURL)
                 .environment(\.managedObjectContext, context)
+                .environmentObject(filter)
         } else {
             ErrorSheet(message: "Error getting Import File URL\nPlease try again") {
                 Button("Try again") {
@@ -447,10 +449,10 @@ struct StoryListView: View {
 }
 
 fileprivate struct StoryListView_Testing: View {
-    @State var filter = Filter()
+    @StateObject private var filter = Filter()
     
     var body: some View {
-        StoryListView(filter: $filter)
+        StoryListView(filter: filter)
     }
 }
 
@@ -461,6 +463,7 @@ struct StoryListView_Previews: PreviewProvider {
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .environmentObject(EventStore())
+        .environmentObject(Filter())
         .preferredColorScheme(.dark)
         .previewLayout(.fixed(width: 350, height: 800))
     }

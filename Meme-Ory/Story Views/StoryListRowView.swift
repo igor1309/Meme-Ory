@@ -14,11 +14,10 @@ struct StoryListRowView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.storyToShowURL) private var storyToShowURL
     
+    @EnvironmentObject private var filter: Filter
     @EnvironmentObject private var eventStore: EventStore
     
     @ObservedObject var story: Story
-    
-    @Binding var filter: Filter
     
     let remindersAccessGranted: Bool
     
@@ -106,14 +105,9 @@ struct StoryListRowView: View {
             .padding(.vertical, 3)
             
             if story.isFavorite {
-                ZStack(alignment: .trailing) {
-                    Image(systemName: "circle.fill")
-                        .foregroundColor(Color(UIColor.systemBackground))
-                        .imageScale(.large)
-                    Image(systemName: "star.circle")
-                        .foregroundColor(Color(UIColor.systemOrange))
-                }
-                .offset(x: 6)
+                Image(systemName: "star.circle")
+                    .foregroundColor(Color(UIColor.systemOrange))
+                    .offset(x: 12)
             }
         }
     }
@@ -346,12 +340,10 @@ private let storyFormatter: DateFormatter = {
 }()
 
 fileprivate struct StoryListRowView_Testing: View {
-    @State var filter = Filter()
-    
     var body: some View {
         NavigationView {
             List(0..<SampleData.texts.count) { index in
-                StoryListRowView(story: SampleData.story(storyIndex: index), filter: $filter, remindersAccessGranted: true)
+                StoryListRowView(story: SampleData.story(storyIndex: index), remindersAccessGranted: true)
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
@@ -364,6 +356,7 @@ struct StoryRowView_Previews: PreviewProvider {
         StoryListRowView_Testing()
             .preferredColorScheme(.dark)
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+            .environmentObject(Filter())
             .previewLayout(.fixed(width: 350, height: 800))
     }
 }

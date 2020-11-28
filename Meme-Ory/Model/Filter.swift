@@ -12,7 +12,7 @@ extension NSPredicate {
     static var none = NSPredicate(format: "FALSEPREDICATE")
 }
 
-struct Filter {
+final class Filter: ObservableObject {
     
     var isActive: Bool {
         isTagFilterActive || isListLimited || favoritesFilter != .all || remindersFilter != .all
@@ -21,6 +21,7 @@ struct Filter {
     
     //  MARK: Favorites
 
+    @Published
     var favoritesFilter = FavoritesFilterOptions.all
     enum FavoritesFilterOptions: String, CaseIterable {
         case fav, unfav, all
@@ -37,6 +38,7 @@ struct Filter {
     
     //  MARK: Reminders
 
+    @Published
     var remindersFilter = RemindersFilterOptions.all
     enum RemindersFilterOptions: String, CaseIterable {
         case have, notHave, all
@@ -53,6 +55,7 @@ struct Filter {
 
     //  MARK: Sort
     
+    @Published
     var itemToSortBy = SortByOptions.text
     enum SortByOptions: String, CaseIterable {
         case timestamp, text
@@ -66,6 +69,7 @@ struct Filter {
     }
     
     /// sort order
+    @Published
     var areInIncreasingOrder: Bool = UserDefaults.standard.bool(forKey: "areInIncreasingOrder") {
         didSet {
             UserDefaults.standard.setValue(areInIncreasingOrder, forKey: "areInIncreasingOrder")
@@ -81,11 +85,13 @@ struct Filter {
     //  MARK: List Limit
     
     /// Limiting Stories List (number of stories listed))
+    @Published
     var isListLimited: Bool = UserDefaults.standard.bool(forKey: "isListLimited") {
         didSet {
             UserDefaults.standard.setValue(isListLimited, forKey: "isListLimited")
         }
     }
+    @Published
     var listLimit: Int = max(6, UserDefaults.standard.integer(forKey: "listLimit")) {
         didSet {
             UserDefaults.standard.setValue(listLimit, forKey: "listLimit")
@@ -97,6 +103,7 @@ struct Filter {
     
     //  MARK: Tags
     
+    @Published
     var tags = Set<Tag>()
     
     var isTagFilterActive: Bool { !tags.isEmpty }
@@ -166,7 +173,7 @@ struct Filter {
     
     //  MARK: Reset Filter
     
-    mutating func reset() {
+    func resetTags() {
         tags = Set()
     }
 }

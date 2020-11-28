@@ -11,7 +11,7 @@ struct ListOptionView: View {
     
     @Environment(\.presentationMode) private var presentation
     
-    @Binding var filter: Filter
+    @EnvironmentObject private var filter: Filter
     
     var body: some View {
         NavigationView {
@@ -119,7 +119,7 @@ struct ListOptionView: View {
     
     private func resetTagsButton() -> some View {
         Button("Clear Tags") {
-            filter.reset()
+            filter.resetTags()
             presentation.wrappedValue.dismiss()
         }
         .disabled(filter.tags.isEmpty)
@@ -136,7 +136,7 @@ fileprivate struct ListOptionView_Texting: View {
     @State var filter = Filter()
     
     var body: some View {
-        ListOptionView(filter: $filter)
+        ListOptionView()
     }
 }
 
@@ -144,6 +144,7 @@ struct ListOptionView_Previews: PreviewProvider {
     static var previews: some View {
         ListOptionView_Texting()
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+            .environmentObject(Filter())
             .previewLayout(.fixed(width: 350, height: 800))
             .preferredColorScheme(.dark)
     }
