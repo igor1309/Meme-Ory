@@ -56,7 +56,6 @@ struct StoryListView: View {
         List {
             TextField("Filter (at least 3 letters)", text: $filter.searchString)
                 .searchModifier(text: $filter.searchString)
-                .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in

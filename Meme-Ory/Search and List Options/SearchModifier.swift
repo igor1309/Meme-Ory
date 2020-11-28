@@ -18,24 +18,33 @@ fileprivate struct SearchModifier: ViewModifier {
     @Binding var text: String
     
     func body(content: Content) -> some View {
-        HStack(alignment: .center, spacing: 6) {
+        HStack(spacing: 0) {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.secondary)
-            
-            //TextField(title, text: $text)
+                .frame(width: 34, height: 32)
+                .offset(x: 2)
+            // .background(Color.pink.opacity(0.2))
             content
             
-            Button {
-                withAnimation {
-                    text = ""
-                }
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(Color(UIColor.tertiaryLabel))
-                    .opacity(text.isEmpty ? 0 : 1)
-            }
-            .buttonStyle(PlainButtonStyle())
+            // not workin. don't know why
+            // clearButton()
         }
+        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8))
+    }
+    
+    private func clearButton() -> some View {
+        Button {
+            withAnimation {
+                text = ""
+            }
+        } label: {
+            Image(systemName: "xmark.circle.fill")
+                .foregroundColor(Color(UIColor.tertiaryLabel))
+                .opacity(text.isEmpty ? 0 : 1)
+                .frame(width: 36, height: 38)
+            // .background(Color.pink.opacity(0.2))
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -78,15 +87,15 @@ fileprivate struct SearchModifier_Testing: View {
                 .navigationBarTitle("SearchModifier: in List", displayMode: .inline)
             }
             .previewLayout(.fixed(width: 350, height: 350))
+            .environment(\.colorScheme, .dark)
         }
     }
 }
 
 struct SearchModifier_Previews: PreviewProvider {
-    @State static private var text = ""
+    @State static private var text = "чысма"
     
     static var previews: some View {
         SearchModifier_Testing()
-            .environment(\.colorScheme, .dark)
     }
 }
