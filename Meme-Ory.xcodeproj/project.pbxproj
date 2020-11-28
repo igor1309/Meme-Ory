@@ -56,6 +56,7 @@
 		2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E3E257246270037E8CF /* ErrorSheet.swift */; };
 		2AFE9E46257285D80037E8CF /* Deeplinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E45257285D80037E8CF /* Deeplinker.swift */; };
 		2AFE9E4A2572D5FE0037E8CF /* StoryToShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */; };
+		2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		2AFE9E3E257246270037E8CF /* ErrorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSheet.swift; sourceTree = "<group>"; };
 		2AFE9E45257285D80037E8CF /* Deeplinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplinker.swift; sourceTree = "<group>"; };
 		2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryToShow.swift; sourceTree = "<group>"; };
+		2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditorViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +257,7 @@
 				2AEEF90525702EBF008D1B31 /* EventStore.swift */,
 				2A935CA5256A80C9004B6E10 /* Filter.swift */,
 				2A33A3D9257139E200538FE3 /* JSONDocument.swift */,
+				2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */,
 				2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */,
 			);
 			path = Model;
@@ -461,6 +464,7 @@
 				2A935CB2256AE742004B6E10 /* Haptics.swift in Sources */,
 				2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */,
 				2A935C8C256A51AC004B6E10 /* Story.swift in Sources */,
+				2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,7 +623,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -645,7 +649,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;

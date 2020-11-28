@@ -13,7 +13,7 @@ struct StoryListRowView: View {
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.storyToShowURL) private var storyToShowURL
-
+    
     @EnvironmentObject private var eventStore: EventStore
     
     @ObservedObject var story: Story
@@ -37,6 +37,21 @@ struct StoryListRowView: View {
             }
         } label: {
             label
+                .contextMenu {
+                    /// toggle favotite
+                    toggleFavoriteButton()
+                    /// copy story text
+                    copyStoryTextButton()
+                    /// share sheet
+                    shareStorySection()
+                    /// setting reminders
+                    remindMeButton()
+                    //remindMeSection()
+                    /// if story has just one tag - filter by this tag
+                    filterByTagSection()
+                }
+                .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
+            
         }
         .onChange(of: storyToShowURL, perform: handleStoryURL)
         .onAppear(perform: reminderCleanUp)
@@ -91,29 +106,16 @@ struct StoryListRowView: View {
             .padding(.vertical, 3)
             
             if story.isFavorite {
-                ZStack {
+                ZStack(alignment: .trailing) {
                     Image(systemName: "circle.fill")
                         .foregroundColor(Color(UIColor.systemBackground))
                         .imageScale(.large)
                     Image(systemName: "star.circle")
-                        .foregroundColor(Color(UIColor.systemYellow))
+                        .foregroundColor(Color(UIColor.systemOrange))
                 }
+                .offset(x: 6)
             }
         }
-        .contextMenu {
-            /// toggle favotite
-            toggleFavoriteButton()
-            /// copy story text
-            copyStoryTextButton()
-            /// share sheet
-            shareStorySection()
-            /// setting reminders
-            remindMeButton()
-            //remindMeSection()
-            /// if story has just one tag - filter by this tag
-            filterByTagSection()
-        }
-        .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
     }
     
     private func toggleFavoriteButton() -> some View {
@@ -351,6 +353,7 @@ fileprivate struct StoryListRowView_Testing: View {
             List(0..<SampleData.texts.count) { index in
                 StoryListRowView(story: SampleData.story(storyIndex: index), filter: $filter, remindersAccessGranted: true)
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
         }
     }

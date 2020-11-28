@@ -13,54 +13,52 @@ struct StoryTagView: View {
     
     @Binding var tags: Set<Tag>
     
-    private var tagList: String {
+    private var tagNames: String {
         tags.map { $0.name }.joined(separator: ", ")
     }
     
-    @State private var showTagsView = false
+    @State private var showingTagGrid = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text("Tags".uppercased())
-                    .foregroundColor(.secondary)
-                    .font(.caption)
-                
-                Button {
-                    let haptics = Haptics()
-                    haptics.feedback()
-                    
-                    withAnimation {
-                        showTagsView = true
-                    }
-                } label: {
-                    Image(systemName: "tag.circle")
-                        .imageScale(.large)
-                }
-                .sheet(isPresented: $showTagsView) {
-                    TagGridWrapperView(selected: $tags)
-                        .environment(\.managedObjectContext, context)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            if !tagList.isEmpty {
-                Text(tagList)
+        HStack(alignment: .top) {
+            if !tagNames.isEmpty {
+                Text(tagNames)
                     .foregroundColor(Color(UIColor.systemOrange))
                     .font(.caption)
+                    .padding(.top, 6)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
                     .contextMenu {
-                        Button {
-                            let haptics = Haptics()
-                            haptics.feedback()
-                            
-                            withAnimation {
-                                showTagsView = true
-                            }
-                        } label: {
-                            Label("Edit Tags", systemImage: "tag.circle")
+                        Button(action: showTagGrid) {
+                            Label("Edit Tags", systemImage: "tag")
                         }
                     }
             }
+            
+            Spacer()
+            
+            tagsButton()
+        }
+    }
+    
+    private func tagsButton() -> some View {
+        Button(action: showTagGrid) {
+            Image(systemName: "tag")
+                .imageScale(.large)
+                .frame(width: 44, height: 32, alignment: .trailing)
+        }
+        .sheet(isPresented: $showingTagGrid) {
+            TagGridWrapperView(selected: $tags)
+                .environment(\.managedObjectContext, context)
+        }
+    }
+    
+    private func showTagGrid() {
+        let haptics = Haptics()
+        haptics.feedback()
+        
+        withAnimation {
+            showingTagGrid = true
         }
     }
 }
@@ -80,6 +78,7 @@ struct StoryTagView_Previews: PreviewProvider {
                 Spacer()
                 
                 StoryTagView_Testing()
+                    .border(Color.pink.opacity(0.6))
                     .padding()
             }
         }

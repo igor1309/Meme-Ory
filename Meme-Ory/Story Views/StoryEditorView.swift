@@ -8,24 +8,6 @@
 import SwiftUI
 import EventKit
 
-final class StoryEditorViewModel: ObservableObject {
-    @Published var text: String
-    @Published var tags: Set<Tag>
-    @Published var isFavorite: Bool
-    
-    init() {
-        text = ""
-        tags = []
-        isFavorite = false
-    }
-    
-    init(text: String, tags: Set<Tag>, isFavorite: Bool) {
-        self.text = text
-        self.tags = tags
-        self.isFavorite = isFavorite
-    }
-}
-
 struct StoryEditorView: View {
     
     @Environment(\.managedObjectContext) private var context
@@ -53,7 +35,7 @@ struct StoryEditorView: View {
         title = ""
         
         //  MARK: - FINISH THIS
-        // can't access this in init!
+        // can't access this in init!?
         if remindersAccessGranted {
             reminder = EKEventStore().calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder
         }
@@ -69,22 +51,15 @@ struct StoryEditorView: View {
                     HStack(alignment: .top) {
                         StoryTagView(tags: $model.tags)
                         
-                        Spacer()
-                        
                         toggleFavoriteButton()
+                        
+                        //  MARK: share button not working with presented sheet!
+                        //shareButton()
                     }
-                    .padding(.top, 6)
-                    
                 }
                 .padding()
                 
-                if reminder != nil {
-                    Image(systemName: "bell.fill")
-                        .foregroundColor(Color(UIColor.systemYellow))
-                        .imageScale(.small)
-                        .font(.caption)
-                        .padding([.top, .trailing])
-                }
+                reminderView()
             }
             .navigationBarTitle(title, displayMode: .inline)
             .navigationBarItems(leading: cancelButton(), trailing: saveButton())
@@ -103,6 +78,18 @@ struct StoryEditorView: View {
         }
     }
     
+    private func shareButton() -> some View {
+        Button {
+            let items = [model.text]
+            let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
+        } label: {
+            Image(systemName: "square.and.arrow.up")
+                .imageScale(.large)
+                .frame(width: 44, height: 32, alignment: .trailing)
+        }
+    }
+    
     private func toggleFavoriteButton() -> some View {
         Button {
             let haptics = Haptics()
@@ -112,8 +99,21 @@ struct StoryEditorView: View {
                 model.isFavorite.toggle()
             }
         } label: {
-            Image(systemName: model.isFavorite ? "star.circle" : "star")
-                .foregroundColor(model.isFavorite ? Color(UIColor.systemYellow) : Color(UIColor.systemBlue))
+            Image(systemName: model.isFavorite ? "star.fill" : "star")
+                .foregroundColor(model.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+                .imageScale(.large)
+                .frame(width: 44, height: 32, alignment: .trailing)
+        }
+    }
+    
+    @ViewBuilder
+    private func reminderView() -> some View {
+        if reminder != nil {
+            Image(systemName: "bell.fill")
+                .foregroundColor(Color(UIColor.systemYellow))
+                .imageScale(.small)
+                .font(.caption)
+                .padding([.top, .trailing])
         }
     }
     
