@@ -12,6 +12,7 @@ import UniformTypeIdentifiers
 struct StoryListView: View {
     
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.scenePhase) private var scenePhase
     
     @EnvironmentObject private var eventStore: EventStore
     
@@ -24,13 +25,16 @@ struct StoryListView: View {
     
     init(filter: Binding<Filter>) {
         _filter = filter
+        
         fetchRequest = Story.fetchRequest(
             filter.wrappedValue.predicate,
             sortDescriptors: filter.wrappedValue.sortDescriptors
         )
+        
         if filter.wrappedValue.isListLimited {
             fetchRequest.fetchLimit = filter.wrappedValue.listLimit
         }
+        
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
@@ -44,6 +48,8 @@ struct StoryListView: View {
     @State private var offsets = IndexSet()
     @State private var document = JSONDocument(data: "".data(using: .utf8)!)
     
+    @State private var storyToShowURL = URL(string: "https://www.apple.com")!
+    
     private var count: Int { context.realCount(for: fetchRequest) }
     
     var body: some View {
@@ -55,46 +61,61 @@ struct StoryListView: View {
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
                     StoryListRowView(story: story, filter: $filter, remindersAccessGranted: eventStore.accessGranted)
+                        .environment(\.storyToShowURL, storyToShowURL)
                 }
                 .onDelete(perform: confirmDeletion)
             }
         }
+        .listStyle(InsetGroupedListStyle())
+        .navigationBarTitle("Stories")
+        .navigationBarItems(leading: optionsButton(), trailing: createImportExportButton())
+        .onChange(of: scenePhase, perform: handleScenePhase)
         .onOpenURL(perform: handleURL)
         .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleFileImport)
         .fileExporter(isPresented: $isExporting, document: document, contentType: .json, onCompletion: handlerFileExport)
         .onDisappear(perform: deleteTemporaryFile)
         .actionSheet(isPresented: $showingConfirmation, content: confirmationActionSheet)
-        .navigationBarItems(leading: optionsButton(), trailing: createImportExportButton())
-        .listStyle(InsetGroupedListStyle())
-        .navigationBarTitle("Stories")
-        .sheet(isPresented: $showImportTextView, onDismiss: { importFileURL = nil }) {
-            if let importFileURL = importFileURL {
-                ImportTextView(url: importFileURL)
-                    .environment(\.managedObjectContext, context)
-            } else {
-                ErrorSheet(message: "Error getting Import File URL") {
-                    Button("Try again") {
-                        showImportTextView = false
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-                            withAnimation {
-                                showImportTextView = true
-                            }
-                        }
-                    }
-                }
-            }
+        .sheet(isPresented: $showImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
+        .alert(isPresented: $showingCannotImportAlert, content: failedImportAlert)
+    }
+    
+    private func handleScenePhase(scenePhase: ScenePhase) {
+        if scenePhase == .background {
+            deleteTemporaryFile()
         }
     }
     
     private func handleURL(_ url: URL) {
-        //  MARK: - FINISH THIS
-        //  check url if it's json file - proceed
-        importFileURL = url
+        showingCannotImportAlert = false
+        showImportTextView = false
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
-            withAnimation {
-                showImportTextView = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            
+            let deeplinker = Deeplinker()
+            guard let deeplink = deeplinker.manage(url: url) else {
+                showingCannotImportAlert = true
+                return
+            }
+            
+            switch deeplink {
+                case .home:
+                    //  MARK: - FINISH THIS ANY FEEDBACK TO USER?
+                    /// do nothing we are here
+                    return
+                case let .story(reference):
+                    //  MARK: - FINISH THIS
+                    // WHAT TO DO HERE? PASS TO ROW???
+                    print(reference)
+                    //environment(\.storyToShowURL, reference)
+                    storyToShowURL = reference
+                case let .file(url):
+                    self.importFileURL = url
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                        withAnimation {
+                            showImportTextView = true
+                        }
+                    }
             }
         }
     }
@@ -397,6 +418,31 @@ struct StoryListView: View {
             case .failure(let error):
                 print("Export error \(error.localizedDescription)")
         }
+    }
+    
+    @ViewBuilder
+    private func importTextView() -> some View {
+        if let importFileURL = importFileURL {
+            ImportTextView(url: importFileURL)
+                .environment(\.managedObjectContext, context)
+        } else {
+            ErrorSheet(message: "Error getting Import File URL\nPlease try again") {
+                Button("Try again") {
+                    showImportTextView = false
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+                        withAnimation {
+                            showImportTextView = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @State private var showingCannotImportAlert = false
+    private func failedImportAlert() -> Alert {
+        Alert(title: Text("Error"), message: Text("Can't process yuor request.\nSorry about that"), dismissButton: Alert.Button.cancel(Text("Ok")))
     }
 }
 

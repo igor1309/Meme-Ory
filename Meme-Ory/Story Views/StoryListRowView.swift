@@ -12,7 +12,8 @@ import MobileCoreServices
 struct StoryListRowView: View {
     
     @Environment(\.managedObjectContext) private var context
-    
+    @Environment(\.storyToShowURL) private var storyToShowURL
+
     @EnvironmentObject private var eventStore: EventStore
     
     @ObservedObject var story: Story
@@ -23,7 +24,7 @@ struct StoryListRowView: View {
     
     private let components: [Calendar.Component] = [.day, .weekOfYear, .month, .year]
     
-    @State private var showStorySheet = false
+    @State private var showingStorySheet = false
     
     var reminder: EKReminder? {
         EKEventStore().calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder
@@ -32,18 +33,34 @@ struct StoryListRowView: View {
     var body: some View {
         Button {
             withAnimation {
-                showStorySheet = true
+                showingStorySheet = true
             }
         } label: {
             label
         }
+        .onChange(of: storyToShowURL, perform: handleStoryURL)
         .onAppear(perform: reminderCleanUp)
         .onOpenURL(perform: handleURL)
         .accentColor(.primary)
         .contentShape(Rectangle())
-        .sheet(isPresented: $showStorySheet) {
+        .sheet(isPresented: $showingStorySheet) {
             StoryEditorView(story: story, remindersAccessGranted: eventStore.accessGranted)
                 .environment(\.managedObjectContext, context)
+        }
+    }
+    
+    private func handleStoryURL(url: URL) {
+        showingStorySheet = false
+        
+        let deeplinker = Deeplinker()
+        guard let deeplink = deeplinker.manage(url: url),
+              case .story(let reference) = deeplink,
+              story.url == reference else { return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+            withAnimation {
+                showingStorySheet = true
+            }
         }
     }
     
@@ -253,17 +270,16 @@ struct StoryListRowView: View {
     }
     
     private func handleURL(_ url: URL) {
-        //  MARK: - FINISH THIS
-        /// check that it's correct url
-        guard url.isStoryURL else { return }
-        /// close sheet with story if it's open
-        showStorySheet = false
+        showingStorySheet = false
         
-        if story.url == url {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-                withAnimation {
-                    showStorySheet = true
-                }
+        let deeplinker = Deeplinker()
+        guard let deeplink = deeplinker.manage(url: url),
+              case .story(let reference) = deeplink,
+              story.url == reference else { return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+            withAnimation {
+                showingStorySheet = true
             }
         }
     }

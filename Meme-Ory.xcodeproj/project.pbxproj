@@ -54,6 +54,8 @@
 		2AEEF9022570007F008D1B31 /* Ext+EKEventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF9012570007F008D1B31 /* Ext+EKEventStore.swift */; };
 		2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF90525702EBF008D1B31 /* EventStore.swift */; };
 		2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E3E257246270037E8CF /* ErrorSheet.swift */; };
+		2AFE9E46257285D80037E8CF /* Deeplinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E45257285D80037E8CF /* Deeplinker.swift */; };
+		2AFE9E4A2572D5FE0037E8CF /* StoryToShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,8 @@
 		2AEEF9012570007F008D1B31 /* Ext+EKEventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+EKEventStore.swift"; sourceTree = "<group>"; };
 		2AEEF90525702EBF008D1B31 /* EventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
 		2AFE9E3E257246270037E8CF /* ErrorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSheet.swift; sourceTree = "<group>"; };
+		2AFE9E45257285D80037E8CF /* Deeplinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplinker.swift; sourceTree = "<group>"; };
+		2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryToShow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,9 +251,11 @@
 			isa = PBXGroup;
 			children = (
 				2A1164A6257102BF000AD487 /* Brief.swift */,
+				2AFE9E45257285D80037E8CF /* Deeplinker.swift */,
 				2AEEF90525702EBF008D1B31 /* EventStore.swift */,
 				2A935CA5256A80C9004B6E10 /* Filter.swift */,
 				2A33A3D9257139E200538FE3 /* JSONDocument.swift */,
+				2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -436,6 +442,7 @@
 				2A935C9B256A7717004B6E10 /* Tag.swift in Sources */,
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
+				2AFE9E4A2572D5FE0037E8CF /* StoryToShow.swift in Sources */,
 				2AEEF9022570007F008D1B31 /* Ext+EKEventStore.swift in Sources */,
 				2A85412B256EFED20051906B /* TagEditView.swift in Sources */,
 				2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */,
@@ -444,6 +451,7 @@
 				2A935C89256A5144004B6E10 /* StoryListRowView.swift in Sources */,
 				2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */,
 				2A1B5FB9256A4A5D00E3283D /* StoryListView.swift in Sources */,
+				2AFE9E46257285D80037E8CF /* Deeplinker.swift in Sources */,
 				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,
 				2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */,
@@ -611,7 +619,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -637,7 +645,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
