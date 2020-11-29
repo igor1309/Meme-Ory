@@ -34,6 +34,11 @@ final class EventStore: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    deinit {
+        for cancell in cancellables {
+            cancell.cancel()
+        }
+    }
 }
 
 extension EventStore {
@@ -88,7 +93,7 @@ extension EventStore {
         // let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
         // newReminder.notes = "created by \(appName)"
         
-        //  MARK: setting url property has no effect, it's a known bug
+        //  MARK: setting url property has no effect, it's a known issue
         //  https://developer.apple.com/forums/thread/128140
         newReminder.url = story.url
         //  that's why write to notes

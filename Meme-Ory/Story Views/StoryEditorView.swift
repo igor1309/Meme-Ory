@@ -18,21 +18,18 @@ struct StoryEditorView: View {
     @StateObject private var model: StoryEditorViewModel
     
     private let storyToEdit: Story?
-    private let title: String
     
     /// Create new Story
     init() {
         _model = StateObject(wrappedValue: StoryEditorViewModel())
         storyToEdit = nil
-        title = "New"
     }
     
     /// Edit Existing Story
-    init(story: Story, remindersAccessGranted: Bool) {
+    init(story: Story) {
         let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags), isFavorite: story.isFavorite, calendarItemIdentifier: story.calendarItemIdentifier)
         _model = StateObject(wrappedValue: model)
         storyToEdit = story
-        title = ""
     }
     
     @State private var showingMessage = false
@@ -56,21 +53,48 @@ struct StoryEditorView: View {
                     //  MARK: share button not working with presented sheet!
                     //shareButton()
                 }
+                .padding(.trailing)
             }
-            .navigationBarTitle(title, displayMode: .inline)
+            .navigationBarTitle(model.mode.title, displayMode: .inline)
             .navigationBarItems(leading: cancelButton(), trailing: saveButton())
             .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
+            .onAppear(perform: reminderCleanUp)
         }
     }
     
     private func pasteClipboard() {
         withAnimation {
             /// if editing try to paste clipboard content
-            if storyToEdit == nil {
+            if model.mode == .create {
                 if UIPasteboard.general.hasStrings,
                    let content = UIPasteboard.general.string {
                     model.text = content
                 }
+            }
+        }
+    }
+    
+    private func reminderCleanUp() {
+        //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
+        if model.mode == .edit,
+           eventStore.accessGranted,
+           let storyToEdit = storyToEdit {
+            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer in story and draft
+            let reminder = eventStore.reminder(for: storyToEdit)
+            if storyToEdit.calendarItemIdentifier != "" && reminder == nil {
+                // this cleanup would be saved now, so pretend no changes were made here:
+                // store and re-apply hasChanges value with little delay
+                // to let publishers finish first
+                let hasChanges = model.hasChanges
+                
+                storyToEdit.calendarItemIdentifier_ = nil
+                model.calendarItemIdentifier = ""
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    model.hasChanges = hasChanges
+                }
+                
+                context.saveContext()
             }
         }
     }
@@ -105,6 +129,7 @@ struct StoryEditorView: View {
                 
                 temporaryMessage("Reminder was deleted".uppercased())
             } else {
+                //  MARK: - FINISH THIS ADD REMINDER
                 temporaryMessage("\("Cannot add reminder here".uppercased())\nPlease use Context Menu for row in Stories List.", seconds: 3)
             }
         }
@@ -148,9 +173,10 @@ struct StoryEditorView: View {
     }
     
     private func saveButton() -> some View {
-        Button("Save") {
+        Button(model.hasChanges ? "Save" : "Done") {
             saveStory()
         }
+        .foregroundColor(model.hasChanges ? .orange : .blue)
         .disabled(model.text.isEmpty)
     }
     
@@ -188,7 +214,7 @@ struct StoryEditorView_Previews: PreviewProvider {
         Group {
             StoryEditorView()
                 .previewLayout(.fixed(width: 350, height: 300))
-            StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3), remindersAccessGranted: true)
+            StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3))
             //                .previewLayout(.fixed(width: 350, height: 400))
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)

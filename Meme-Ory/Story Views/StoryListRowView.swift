@@ -52,7 +52,7 @@ struct StoryListRowView: View {
         .accentColor(.primary)
         .contentShape(Rectangle())
         .sheet(isPresented: $showingStorySheet) {
-            StoryEditorView(story: story, remindersAccessGranted: eventStore.accessGranted)
+            StoryEditorView(story: story)
                 .environment(\.managedObjectContext, context)
                 .environmentObject(eventStore)
         }
@@ -253,10 +253,11 @@ struct StoryListRowView: View {
     
     private func reminderCleanUp() {
         //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
-        if eventStore.accessGranted {
+        if story.calendarItemIdentifier != "",
+           eventStore.accessGranted {
             // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
             let reminder = eventStore.reminder(for: story)
-            if reminder == nil && story.calendarItemIdentifier_ != nil {
+            if reminder == nil {
                 story.calendarItemIdentifier_ = nil
                 
                 context.saveContext()
