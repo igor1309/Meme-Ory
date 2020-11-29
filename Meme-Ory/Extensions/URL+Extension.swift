@@ -45,21 +45,6 @@ extension URL {
     }
 }
 
-
-extension URL {
-    var isStoryURL: Bool {
-        guard scheme == URL.appScheme else {
-            // print("scheme is NOT OK")
-            return false }
-        guard pathComponents.contains(URL.appDetailsPath) else {
-            // print("appDetailsPath is NOT OK")
-            return false }
-        
-        return true
-    }
-}
-
-
 /// Deep Links, Universal Links, and the SwiftUI App Life Cycle | by Fernando Moya de Rivas | Better Programming | Medium
 /// https://medium.com/better-programming/deep-links-universal-links-and-the-swiftui-app-life-cycle-e98e38bcef6e
 extension URL {
