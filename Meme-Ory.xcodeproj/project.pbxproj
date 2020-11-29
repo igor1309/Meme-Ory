@@ -57,6 +57,7 @@
 		2AFE9E46257285D80037E8CF /* Deeplinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E45257285D80037E8CF /* Deeplinker.swift */; };
 		2AFE9E4A2572D5FE0037E8CF /* StoryToShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */; };
 		2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */; };
+		2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E5B2573B00D0037E8CF /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		2AFE9E45257285D80037E8CF /* Deeplinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplinker.swift; sourceTree = "<group>"; };
 		2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryToShow.swift; sourceTree = "<group>"; };
 		2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditorViewModel.swift; sourceTree = "<group>"; };
+		2AFE9E5B2573B00D0037E8CF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			children = (
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
+				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
 				2A935CC0256AF608004B6E10 /* Story Views */,
 				2A935CBD256AF5EE004B6E10 /* Search and List Options */,
 				2A935CC2256AF61C004B6E10 /* Tag Views */,
@@ -436,6 +439,7 @@
 			files = (
 				2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */,
 				2AA8916B256B9E7E0042395A /* Context.swift in Sources */,
+				2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */,
 				2AEEF8FE25700061008D1B31 /* Ext+Calendar.Component.swift in Sources */,
 				2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */,
 				2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */,

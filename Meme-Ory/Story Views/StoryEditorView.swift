@@ -12,19 +12,21 @@ struct StoryEditorView: View {
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
-    
+
+    @EnvironmentObject private var eventStore: EventStore
+
     @StateObject private var model: StoryEditorViewModel
     
     private let storyToEdit: Story?
     private let title: String
-    
-    var reminder: EKReminder?
+    private let calendarItemIdentifier: String
     
     /// Create new Story
     init() {
         _model = StateObject(wrappedValue: StoryEditorViewModel())
         storyToEdit = nil
         title = "New"
+        calendarItemIdentifier = ""
     }
     
     /// Edit Existing Story
@@ -33,12 +35,7 @@ struct StoryEditorView: View {
         _model = StateObject(wrappedValue: model)
         storyToEdit = story
         title = ""
-        
-        //  MARK: - FINISH THIS
-        // can't access this in init!?
-        if remindersAccessGranted {
-            reminder = EKEventStore().calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder
-        }
+        calendarItemIdentifier = story.calendarItemIdentifier
     }
     
     var body: some View {
@@ -108,10 +105,9 @@ struct StoryEditorView: View {
     
     @ViewBuilder
     private func reminderView() -> some View {
-        if reminder != nil {
+        if eventStore.hasReminder(with: calendarItemIdentifier) {
             Image(systemName: "bell.fill")
                 .foregroundColor(Color(UIColor.systemYellow))
-                .imageScale(.small)
                 .font(.caption)
                 .padding([.top, .trailing])
         }
@@ -150,6 +146,7 @@ struct StoryEditorView: View {
             story.text = model.text
             story.tags = Array(model.tags)
             story.isFavorite = model.isFavorite
+            story.calendarItemIdentifier = calendarItemIdentifier
             
             context.saveContext()
             

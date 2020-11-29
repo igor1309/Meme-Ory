@@ -19,16 +19,10 @@ struct StoryListRowView: View {
     
     @ObservedObject var story: Story
     
-    let remindersAccessGranted: Bool
-    
-    private let components: [Calendar.Component] = [.day, .weekOfYear, .month, .year]
+    //let remindersAccessGranted: Bool
     
     @State private var showingStorySheet = false
-    
-    var reminder: EKReminder? {
-        EKEventStore().calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder
-    }
-    
+        
     var body: some View {
         Button {
             withAnimation {
@@ -60,6 +54,7 @@ struct StoryListRowView: View {
         .sheet(isPresented: $showingStorySheet) {
             StoryEditorView(story: story, remindersAccessGranted: eventStore.accessGranted)
                 .environment(\.managedObjectContext, context)
+                .environmentObject(eventStore)
         }
     }
     
@@ -215,7 +210,7 @@ struct StoryListRowView: View {
     }
     
     private func remindMeActionSheet() -> ActionSheet {
-        let remindingButtons = components.map { component in
+        let remindingButtons = EventStore.components.map { component in
             ActionSheet.Button.default(Text("\(component.str)")) {
                 let haptics = Haptics()
                 haptics.feedback()
@@ -235,9 +230,9 @@ struct StoryListRowView: View {
     
     @ViewBuilder
     private func remindMeSection() -> some View {
-        if remindersAccessGranted {
+        if eventStore.accessGranted {
             Section {
-                ForEach(components, id: \.self) { component in
+                ForEach(EventStore.components, id: \.self) { component in
                     Button {
                         let haptics = Haptics()
                         haptics.feedback()
@@ -255,8 +250,9 @@ struct StoryListRowView: View {
     
     private func reminderCleanUp() {
         //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
-        if remindersAccessGranted {
+        if eventStore.accessGranted {
             // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
+            let reminder = eventStore.reminder(for: story)
             if reminder == nil && story.calendarItemIdentifier_ != nil {
                 story.calendarItemIdentifier_ = nil
                 
@@ -285,50 +281,12 @@ struct StoryListRowView: View {
     // next weeek: next monday
     // next year: next Jan 1
     //
-    private func remindMeNext(_ component: Calendar.Component, at hour: Int = 9) {
-        let store = EKEventStore()
-        //  MARK: - FINISH THIS
-        //  add option to select calendar?
-        //  https://nemecek.be/blog/16/how-to-use-ekcalendarchooser-in-swift-to-let-user-select-calendar-in-ios
-        //
-        guard let ekCalendar = store.defaultCalendarForNewReminders() else { return }
-        
-        var nextComponent = DateComponents()
-        nextComponent.setValue(1, for: component)
-        
-        let calendar = Calendar(identifier: .gregorian)
-        let nextDate = calendar.date(byAdding: nextComponent, to: Date())!
-        var nextComponents = Calendar.current.dateComponents(Set(components), from: nextDate)
-        nextComponents.hour = hour
-        
-        let newReminder = EKReminder(eventStore: store)
-        newReminder.calendar = ekCalendar
-        newReminder.title = story.text
-        newReminder.dueDateComponents = nextComponents
-        
-        // let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
-        // newReminder.notes = "created by \(appName)"
-        
-        //  MARK: setting url property has no effect
-        //  known bug
-        //  https://developer.apple.com/forums/thread/128140
-        newReminder.url = story.url
-        //  that's why write to notes
-        newReminder.notes = story.url.absoluteString
-        
-        // delete existing reminder first - only one reminder
-        // otherwise can't track reminders from stories
-        if let reminder = reminder {
-            do {
-                try store.remove(reminder, commit: true)
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
+    private func remindMeNext(_ component: Calendar.Component, hour: Int = 9) {
+        if let calendarItemIdentifier = eventStore.addReminder(for: story, component: component, hour: hour) {
+            story.calendarItemIdentifier = calendarItemIdentifier
+            
+            context.saveContext()
         }
-        try! store.save(newReminder, commit: true)
-        
-        story.calendarItemIdentifier = newReminder.calendarItemIdentifier
-        context.saveContext()
     }
 }
 
@@ -343,7 +301,7 @@ fileprivate struct StoryListRowView_Testing: View {
     var body: some View {
         NavigationView {
             List(0..<SampleData.texts.count) { index in
-                StoryListRowView(story: SampleData.story(storyIndex: index), remindersAccessGranted: true)
+                StoryListRowView(story: SampleData.story(storyIndex: index))
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
@@ -357,6 +315,7 @@ struct StoryRowView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environmentObject(Filter())
+            .environmentObject(EventStore())
             .previewLayout(.fixed(width: 350, height: 800))
     }
 }

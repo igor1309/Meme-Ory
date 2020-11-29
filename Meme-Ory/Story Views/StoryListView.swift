@@ -59,7 +59,7 @@ struct StoryListView: View {
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
-                    StoryListRowView(story: story, remindersAccessGranted: eventStore.accessGranted)
+                    StoryListRowView(story: story)
                         .environment(\.storyToShowURL, storyToShowURL)
                 }
                 .onDelete(perform: confirmDeletion)
@@ -360,6 +360,7 @@ struct StoryListView: View {
         .sheet(isPresented: $showingCreateSheet) {
             StoryEditorView()
                 .environment(\.managedObjectContext, context)
+                .environmentObject(eventStore)
         }
         .contextMenu {
             Section {
