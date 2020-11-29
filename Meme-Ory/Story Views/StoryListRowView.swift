@@ -74,8 +74,8 @@ struct StoryListRowView: View {
     }
     
     var label: some View {
-        ZStack(alignment: .topTrailing) {
-            VStack(alignment: .leading) {
+        ZStack(alignment: .bottomTrailing) {
+            VStack(alignment: .leading, spacing: 3) {
                 Text(story.storyText())
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -102,7 +102,8 @@ struct StoryListRowView: View {
             if story.isFavorite {
                 Image(systemName: "star.circle")
                     .foregroundColor(Color(UIColor.systemOrange))
-                    .offset(x: 12)
+                    .imageScale(.small)
+                    .offset(x: 9)
             }
         }
     }
