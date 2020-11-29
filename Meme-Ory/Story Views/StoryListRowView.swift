@@ -74,38 +74,40 @@ struct StoryListRowView: View {
     }
     
     var label: some View {
-        ZStack(alignment: .bottomTrailing) {
-            VStack(alignment: .leading, spacing: 3) {
-                Text(story.storyText())
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                if !story.tagList.isEmpty {
-                    Label {
-                        Text(story.tagList)
-                    } icon: {
-                        Image(systemName: "tag")
-                            .imageScale(.small)
-                    }
-                    .foregroundColor(.orange)
-                    .font(.caption)
+        VStack(alignment: .leading, spacing: 3) {
+            Text(story.storyText())
+                .font(.subheadline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            if !story.tagList.isEmpty {
+                Label {
+                    Text(story.tagList)
+                } icon: {
+                    Image(systemName: "tag")
+                        .imageScale(.small)
                 }
-                
+                .foregroundColor(.orange)
+                .font(.caption)
+            }
+            
+            HStack {
                 if let timestamp = story.timestamp {
                     Text("\(timestamp, formatter: storyFormatter)")
                         .foregroundColor(Color(UIColor.tertiaryLabel))
                         .font(.caption)
                 }
-            }
-            .padding(.vertical, 3)
-            
-            if story.isFavorite {
-                Image(systemName: "star.circle")
-                    .foregroundColor(Color(UIColor.systemOrange))
-                    .imageScale(.small)
-                    .offset(x: 9)
+                
+                Spacer()
+                
+                if story.isFavorite {
+                    Image(systemName: "star.circle")
+                        .foregroundColor(Color(UIColor.systemOrange))
+                        .imageScale(.small)
+                        .offset(x: 9)
+                }
             }
         }
+        .padding(.vertical, 3)
     }
     
     private func toggleFavoriteButton() -> some View {

@@ -12,54 +12,54 @@ struct StoryEditorView: View {
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation
-
+    
     @EnvironmentObject private var eventStore: EventStore
-
+    
     @StateObject private var model: StoryEditorViewModel
     
     private let storyToEdit: Story?
     private let title: String
-    private let calendarItemIdentifier: String
     
     /// Create new Story
     init() {
         _model = StateObject(wrappedValue: StoryEditorViewModel())
         storyToEdit = nil
         title = "New"
-        calendarItemIdentifier = ""
     }
     
     /// Edit Existing Story
     init(story: Story, remindersAccessGranted: Bool) {
-        let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags), isFavorite: story.isFavorite)
+        let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags), isFavorite: story.isFavorite, calendarItemIdentifier: story.calendarItemIdentifier)
         _model = StateObject(wrappedValue: model)
         storyToEdit = story
         title = ""
-        calendarItemIdentifier = story.calendarItemIdentifier
     }
+    
+    @State private var showingMessage = false
+    @State private var message = ""
+    
+    private var hasReminder: Bool { eventStore.hasReminder(with: model.calendarItemIdentifier) }
     
     var body: some View {
         NavigationView {
-            ZStack(alignment: .topTrailing) {
-                VStack(alignment: .leading) {
-                    TextEditor(text: $model.text)
-                        .onAppear(perform: pasteClipboard)
-                    
-                    HStack(alignment: .top) {
-                        StoryTagView(tags: $model.tags)
-                        
-                        toggleFavoriteButton()
-                        
-                        //  MARK: share button not working with presented sheet!
-                        //shareButton()
-                    }
-                }
-                .padding()
+            VStack(alignment: .leading, spacing: 0) {
+                TextEditor(text: $model.text)
+                    .onAppear(perform: pasteClipboard)
+                    .padding([.horizontal, .top])
                 
-                reminderView()
+                HStack(alignment: .top) {
+                    StoryTagView(tags: $model.tags)
+                        .padding(.leading)
+                    
+                    toggleReminderButton()
+                    toggleFavoriteButton()
+                    //  MARK: share button not working with presented sheet!
+                    //shareButton()
+                }
             }
             .navigationBarTitle(title, displayMode: .inline)
             .navigationBarItems(leading: cancelButton(), trailing: saveButton())
+            .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
         }
     }
     
@@ -83,7 +83,45 @@ struct StoryEditorView: View {
         } label: {
             Image(systemName: "square.and.arrow.up")
                 .imageScale(.large)
-                .frame(width: 44, height: 32, alignment: .trailing)
+                .frame(width: 44, height: 32)
+        }
+    }
+    
+    private func toggleReminderButton() -> some View {
+        Button(action: toggleReminder) {
+            Image(systemName: hasReminder ? "bell.fill" : "bell")
+                .foregroundColor(hasReminder ? Color(UIColor.systemOrange) : .accentColor)
+                .imageScale(.large)
+                .frame(width: 44, height: 32)
+        }
+    }
+    
+    private func toggleReminder() {
+        withAnimation {
+            if hasReminder {
+                // delete reminder
+                eventStore.deleteReminder(withIdentifier: model.calendarItemIdentifier)
+                model.calendarItemIdentifier = ""
+                
+                temporaryMessage("Reminder was deleted".uppercased())
+            } else {
+                temporaryMessage("\("Cannot add reminder here".uppercased())\nPlease use Context Menu for row in Stories List.", seconds: 3)
+            }
+        }
+    }
+    
+    private func temporaryMessage(_ message: String, seconds: Int = 2) {
+        self.message = message
+        showingMessage = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                showingMessage = false
+                self.message = ""
+            }
         }
     }
     
@@ -97,19 +135,9 @@ struct StoryEditorView: View {
             }
         } label: {
             Image(systemName: model.isFavorite ? "star.fill" : "star")
-                .foregroundColor(model.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+                .foregroundColor(model.isFavorite ? Color(UIColor.systemOrange) : .accentColor)
                 .imageScale(.large)
-                .frame(width: 44, height: 32, alignment: .trailing)
-        }
-    }
-    
-    @ViewBuilder
-    private func reminderView() -> some View {
-        if eventStore.hasReminder(with: calendarItemIdentifier) {
-            Image(systemName: "bell.fill")
-                .foregroundColor(Color(UIColor.systemYellow))
-                .font(.caption)
-                .padding([.top, .trailing])
+                .frame(width: 44, height: 32)
         }
     }
     
@@ -143,10 +171,10 @@ struct StoryEditorView: View {
                 story.timestamp = Date()
             }
             
-            story.text = model.text
-            story.tags = Array(model.tags)
-            story.isFavorite = model.isFavorite
-            story.calendarItemIdentifier = calendarItemIdentifier
+            story.text                   = model.text
+            story.tags                   = Array(model.tags)
+            story.isFavorite             = model.isFavorite
+            story.calendarItemIdentifier = model.calendarItemIdentifier
             
             context.saveContext()
             
@@ -159,9 +187,9 @@ struct StoryEditorView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             StoryEditorView()
-                .previewLayout(.fixed(width: 350, height: 400))
+                .previewLayout(.fixed(width: 350, height: 300))
             StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3), remindersAccessGranted: true)
-                .previewLayout(.fixed(width: 350, height: 400))
+            //                .previewLayout(.fixed(width: 350, height: 400))
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .environmentObject(EventStore())

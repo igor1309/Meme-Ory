@@ -9,16 +9,17 @@ import Combine
 import EventKit
 
 final class EventStore: ObservableObject {
+    
     @Published var accessGranted: Bool
     
-    private let store = EKEventStore()
-    
-    static let components: [Calendar.Component] = [.day, .weekOfYear, .month, .year]
+    private let store: EKEventStore
     
     init() {
         accessGranted = false
         
-        EKEventStore()
+        store = EKEventStore()
+        
+        store
             .currentAuthorizationStatus()
             .receive(on: DispatchQueue.main)
             // .assign(to: \.accessGranted, on: self)
@@ -29,13 +30,9 @@ final class EventStore: ObservableObject {
             .store(in: &cancellables)
     }
     
+    static let components: [Calendar.Component] = [.day, .weekOfYear, .month, .year]
+    
     private var cancellables = Set<AnyCancellable>()
-    
-    //  MARK: - FINISH THIS
-    // func calendarItem(withIdentifier identifier: String) -> EKCalendarItem?
-    // Returns either the event’s first occurrence or the reminder with the specified identifier.
-    //  MARK: -
-    
     
 }
 
@@ -61,6 +58,8 @@ extension EventStore {
     // next year: next Jan 1
     //
     func addReminder(for story: Story, component: Calendar.Component, hour: Int = 9) -> CalendarItemIdentifier? {
+        
+        guard accessGranted else { return nil }
         
         //let store = EKEventStore()
         
@@ -97,13 +96,7 @@ extension EventStore {
         
         // delete existing reminder first - only one reminder ccould be tracked
         // otherwise can't track reminders from stories
-        if let reminder: EKReminder = store.calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder {
-            do {
-                try store.remove(reminder, commit: true)
-            } catch let error as NSError {
-                print("Error deleting reminder referenced in story\n\(error.localizedDescription)")
-            }
-        }
+        deleteReminder(withIdentifier: story.calendarItemIdentifier)
         
         do {
             try store.save(newReminder, commit: true)
@@ -111,6 +104,18 @@ extension EventStore {
         } catch let error as NSError {
             print("Error saving reminder:\n\(error.localizedDescription)")
             return nil
+        }
+    }
+    
+    func deleteReminder (withIdentifier calendarItemIdentifier: CalendarItemIdentifier) {
+        guard accessGranted else { return }
+        
+        guard let reminder: EKReminder = store.calendarItem(withIdentifier: calendarItemIdentifier) as? EKReminder else { return }
+        
+        do {
+            try store.remove(reminder, commit: true)
+        } catch let error as NSError {
+            print("Error deleting reminder referenced in story\n\(error.localizedDescription)")
         }
     }
 }

@@ -45,7 +45,7 @@ struct StoryTagView: View {
         Button(action: showTagGrid) {
             Image(systemName: "tag")
                 .imageScale(.large)
-                .frame(width: 44, height: 32, alignment: .trailing)
+                .frame(width: 44, height: 32)
         }
         .sheet(isPresented: $showingTagGrid) {
             TagGridWrapperView(selected: $tags)

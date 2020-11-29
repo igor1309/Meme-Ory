@@ -38,6 +38,8 @@ struct TagGridWrapperView: View {
                 Divider().padding(.vertical)
                 
                 TagGridView(selected: $selected)
+                
+                Spacer()
             }
             .padding()
             .navigationBarTitle("Tags")//, displayMode: .inline)
