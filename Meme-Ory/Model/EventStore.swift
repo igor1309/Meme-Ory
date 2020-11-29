@@ -22,7 +22,6 @@ final class EventStore: ObservableObject {
         store
             .currentAuthorizationStatus()
             .receive(on: DispatchQueue.main)
-            // .assign(to: \.accessGranted, on: self)
             .sink { [weak self] in
                 print("EKEventStore access checked in subscription. Access \($0 ? "granted" : "denied").")
                 self?.accessGranted = $0
@@ -65,8 +64,6 @@ extension EventStore {
     func addReminder(for story: Story, component: Calendar.Component, hour: Int = 9) -> CalendarItemIdentifier? {
         
         guard accessGranted else { return nil }
-        
-        //let store = EKEventStore()
         
         //  MARK: - FINISH THIS
         //  add option to select calendar?
