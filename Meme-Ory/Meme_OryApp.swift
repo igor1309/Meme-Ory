@@ -11,17 +11,16 @@ import SwiftUI
 struct Meme_OryApp: App {
     
     let persistenceController = PersistenceController.shared
-    let eventStore = EventStore()
+    
+    @StateObject private var eventStore = EventStore()
     @StateObject private var filter = Filter()
-
+    
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                StoryListView(filter: filter)
-            }
-            .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            .environmentObject(eventStore)
-            .environmentObject(filter)
+            ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(eventStore)
+                .environmentObject(filter)
         }
     }
 }
