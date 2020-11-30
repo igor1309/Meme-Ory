@@ -222,22 +222,38 @@ struct StoryListView: View {
             Section {
                 showOptionsButton()
             }
-            /// change item to sort by
-            changeItemToSortByButton()
-            /// toggle sort order
-            sortOrderButton()
-            /// set list limit (number of stories showing)
+            /// reset filter by tag(s)
+            resetFilterByTagSection()
             Section {
                 listLimitButton()
             }
             Section {
-                /// filter by favorites
-                filterByFavoritesButton()
-                /// filter by reminders
-                filterByRemindersButton()
+                Picker("Reminders", selection: $filter.remindersFilter) {
+                    ForEach(Filter.RemindersFilterOptions.allCases, id: \.self) { option in
+                        Label(option.rawValue, systemImage: option.icon)
+                            .tag(option)
+                    }
+                }
             }
-            /// reset filter by tag(s)
-            resetFilterByTagSection()
+            Section {
+                Picker("Favorites", selection: $filter.favoritesFilter) {
+                    ForEach(Filter.FavoritesFilterOptions.allCases, id: \.self) { option in
+                        Label(option.rawValue, systemImage: option.icon)
+                            .tag(option)
+                    }
+                }
+            }
+            /// toggle sort order
+            sortOrderButton()
+            /// change item to sort by
+            Picker("Sort by", selection: $filter.itemToSortBy) {
+                ForEach(Filter.SortByOptions.allCases, id: \.self) { option in
+                    Label(option.rawValue, systemImage: option.icon)
+                        .tag(option)
+                }
+            }
+            //changeItemToSortByButton()
+            /// set list limit (number of stories showing)
         } label: {
             Image(systemName: "slider.horizontal.3")
                 .labelStyle(IconOnlyLabelStyle())
@@ -259,7 +275,7 @@ struct StoryListView: View {
                 showingListOptions = true
             }
         } label: {
-            Label("Show Options", systemImage: "slider.horizontal.3")
+            Label("List Options", systemImage: "slider.horizontal.3")
                 .padding([.vertical, .trailing])
         }
     }
@@ -303,42 +319,6 @@ struct StoryListView: View {
         } label: {
             Label(filter.isListLimited ? "Reset List Limit": "Set last Limit (\(filter.listLimit))",
                   systemImage: filter.isListLimited ? "infinity" : "arrow.up.and.down")
-        }
-    }
-    
-    private func filterByFavoritesButton() -> some View {
-        Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
-                switch filter.favoritesFilter {
-                    case .all:
-                        filter.favoritesFilter = .fav
-                    default:
-                        filter.favoritesFilter = .all
-                }
-            }
-        } label: {
-            Label(filter.favoritesFilter == .all ? "Show Favorites" : "Favorites or not", systemImage: filter.favoritesFilter == .all ? "star.circle" : "star.slash")
-        }
-    }
-    
-    private func filterByRemindersButton() -> some View {
-        Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
-                switch filter.remindersFilter {
-                    case .all:
-                        filter.remindersFilter = .have
-                    default:
-                        filter.remindersFilter = .all
-                }
-            }
-        } label: {
-            Label(filter.remindersFilter == .all ? "With Reminders" : "With or without Reminders", systemImage: filter.remindersFilter == .all ? "bell.circle": "bell.slash")
         }
     }
     
