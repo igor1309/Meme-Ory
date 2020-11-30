@@ -15,7 +15,7 @@ struct StoryListView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     @EnvironmentObject private var eventStore: EventStore
-
+    
     @ObservedObject private var filter: Filter
     
     /// used to count
@@ -67,7 +67,15 @@ struct StoryListView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
-        .navigationBarItems(leading: optionsButton(), trailing: createImportExportButton())
+        .navigationBarItems(
+            leading: HStack {
+                optionsMenu()
+            },
+            trailing: HStack {
+                importExportShareMenu()
+                createNewStoryButton()
+            }
+        )
         .onChange(of: scenePhase, perform: handleScenePhase)
         .onOpenURL(perform: handleURL)
         .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleFileImport)
@@ -209,25 +217,11 @@ struct StoryListView: View {
         }
     }
     
-    private func optionsButton() -> some View {
-        Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
-                showingListOptions = true
+    private func optionsMenu() -> some View {
+        Menu {
+            Section {
+                showOptionsButton()
             }
-        } label: {
-            Image(systemName: "slider.horizontal.3")
-                .padding([.vertical, .trailing])
-        }
-        .accentColor(filter.isActive ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
-        .sheet(isPresented: $showingListOptions) {
-            ListOptionView()
-                .environment(\.managedObjectContext, context)
-                .environmentObject(filter)
-        }
-        .contextMenu {
             /// change item to sort by
             changeItemToSortByButton()
             /// toggle sort order
@@ -244,6 +238,29 @@ struct StoryListView: View {
             }
             /// reset filter by tag(s)
             resetFilterByTagSection()
+        } label: {
+            Image(systemName: "slider.horizontal.3")
+                .labelStyle(IconOnlyLabelStyle())
+        }
+        .accentColor(filter.isActive ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+        .sheet(isPresented: $showingListOptions) {
+            ListOptionView()
+                .environment(\.managedObjectContext, context)
+                .environmentObject(filter)
+        }
+    }
+    
+    private func showOptionsButton() -> some View {
+        Button {
+            let haptics = Haptics()
+            haptics.feedback()
+            
+            withAnimation {
+                showingListOptions = true
+            }
+        } label: {
+            Label("Show Options", systemImage: "slider.horizontal.3")
+                .padding([.vertical, .trailing])
         }
     }
     
@@ -303,7 +320,7 @@ struct StoryListView: View {
                 }
             }
         } label: {
-            Label(filter.favoritesFilter == .all ? "Show Favorites" : "Show all", systemImage: "star.circle")
+            Label(filter.favoritesFilter == .all ? "Show Favorites" : "Favorites or not", systemImage: filter.favoritesFilter == .all ? "star.circle" : "star.slash")
         }
     }
     
@@ -321,7 +338,7 @@ struct StoryListView: View {
                 }
             }
         } label: {
-            Label(filter.remindersFilter == .all ? "Show with Reminders" : "Show All", systemImage: "bell.circle")
+            Label(filter.remindersFilter == .all ? "With Reminders" : "With or without Reminders", systemImage: filter.remindersFilter == .all ? "bell.circle": "bell.slash")
         }
     }
     
@@ -345,7 +362,7 @@ struct StoryListView: View {
         }
     }
     
-    private func createImportExportButton() -> some View {
+    private func createNewStoryButton() -> some View {
         Button {
             let haptics = Haptics()
             haptics.feedback()
@@ -362,12 +379,18 @@ struct StoryListView: View {
                 .environment(\.managedObjectContext, context)
                 .environmentObject(eventStore)
         }
-        .contextMenu {
+    }
+    
+    private func importExportShareMenu() -> some View {
+        Menu {
+            shareButton()
             Section {
                 importFileButton()
+                exportFileButton()
             }
-            exportFileButton()
-            shareButton()
+        } label: {
+            Label("Create New Import Export", systemImage: "ellipsis.circle")
+                .labelStyle(IconOnlyLabelStyle())
         }
     }
     
