@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-extension NSPredicate {
-    static var all = NSPredicate(format: "TRUEPREDICATE")
-    static var none = NSPredicate(format: "FALSEPREDICATE")
-}
-
 final class Filter: ObservableObject {
     
     var isActive: Bool {

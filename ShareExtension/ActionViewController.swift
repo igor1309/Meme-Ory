@@ -47,13 +47,21 @@ class ActionViewController: UIViewController {
         self.extensionContext!.completeRequest(
             returningItems: [returnItem], completionHandler: nil)
         
-        // Return any edited content to the host app.
-        // This template doesn't do anything, so we just echo the passed in items.
-        //        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
+        
+        //  MARK: save Story
+        //
+        let persistenceController = PersistenceController.shared
+        let context = persistenceController.container.viewContext
+        
+        let story = Story(context: context)
+        story.text_ = textView.text
+        story.timestamp_ = Date()
+        
+        context.saveContext()
     }
     
-    
-    // https://medium.com/@ales.musto/simple-text-action-extension-swift-3-c1ffaf3a197d
+    /// To make an app be able to handle action extensions you want to call completionWithItemsHandler on your activity view controller. I included the code for my entire onShare function in my notes app below, which creates the activity view controller and then the code to accept the action extension.
+    /// https://medium.com/@ales.musto/simple-text-action-extension-swift-3-c1ffaf3a197d
     func onShare(_ button:UIBarButtonItem) {
         var objectsToShare = [String]()
         
