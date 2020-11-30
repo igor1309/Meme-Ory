@@ -17,6 +17,7 @@ class ActionViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         
         if let item = self.extensionContext?.inputItems.first as? NSExtensionItem,
            let provider = item.attachments?.first,
@@ -36,17 +37,11 @@ class ActionViewController: UIViewController {
         }
     }
     
+    @IBAction func cancel() {
+        returnItem()
+    }
+    
     @IBAction func save() {
-        
-        let returnProvider = NSItemProvider(item: textView.text as NSSecureCoding?,
-                                            typeIdentifier: kUTTypeText as String)
-        
-        let returnItem = NSExtensionItem()
-        
-        returnItem.attachments = [returnProvider]
-        self.extensionContext!.completeRequest(
-            returningItems: [returnItem], completionHandler: nil)
-        
         
         //  MARK: save Story
         //
@@ -58,6 +53,22 @@ class ActionViewController: UIViewController {
         story.timestamp_ = Date()
         
         context.saveContext()
+        
+        returnItem()
+    }
+    
+    private func returnItem() {
+        
+        //  MARK: return item
+        
+        let returnProvider = NSItemProvider(item: textView.text as NSSecureCoding?,
+                                            typeIdentifier: kUTTypeText as String)
+        
+        let returnItem = NSExtensionItem()
+        
+        returnItem.attachments = [returnProvider]
+        self.extensionContext!.completeRequest(
+            returningItems: [returnItem], completionHandler: nil)
     }
     
     /// To make an app be able to handle action extensions you want to call completionWithItemsHandler on your activity view controller. I included the code for my entire onShare function in my notes app below, which creates the activity view controller and then the code to accept the action extension.
