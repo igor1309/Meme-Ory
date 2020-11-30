@@ -228,19 +228,27 @@ struct StoryListView: View {
                 listLimitButton()
             }
             Section {
-                Picker("Reminders", selection: $filter.remindersFilter) {
-                    ForEach(Filter.RemindersFilterOptions.allCases, id: \.self) { option in
-                        Label(option.rawValue, systemImage: option.icon)
-                            .tag(option)
+                Menu {
+                    Picker("Reminders", selection: $filter.remindersFilter) {
+                        ForEach(Filter.RemindersFilterOptions.allCases, id: \.self) { option in
+                            Label(option.rawValue, systemImage: option.icon)
+                                .tag(option)
+                        }
                     }
+                } label: {
+                    Label(filter.remindersFilter.rawValue, systemImage: "chevron.right")
                 }
             }
             Section {
-                Picker("Favorites", selection: $filter.favoritesFilter) {
-                    ForEach(Filter.FavoritesFilterOptions.allCases, id: \.self) { option in
-                        Label(option.rawValue, systemImage: option.icon)
-                            .tag(option)
+                Menu {
+                    Picker("Favorites", selection: $filter.favoritesFilter) {
+                        ForEach(Filter.FavoritesFilterOptions.allCases, id: \.self) { option in
+                            Label(option.rawValue, systemImage: option.icon)
+                                .tag(option)
+                        }
                     }
+                } label: {
+                    Label(filter.favoritesFilter.rawValue, systemImage: "chevron.right")
                 }
             }
             /// toggle sort order

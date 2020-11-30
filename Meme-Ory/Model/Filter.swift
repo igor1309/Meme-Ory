@@ -23,7 +23,7 @@ final class Filter: ObservableObject {
 
         var rawValue: String {
             switch self {
-                case .all:   return "All"
+                case .all:   return "Favorites or not"
                 case .fav:   return "Favorites"
                 case .unfav: return "Non Favorites"
             }
@@ -48,7 +48,7 @@ final class Filter: ObservableObject {
 
         var rawValue: String {
             switch self {
-                case .all:     return "All"
+                case .all:     return "With or without"
                 case .have:    return "With reminder"
                 case .notHave: return "Without"
             }
