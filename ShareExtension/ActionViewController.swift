@@ -8,6 +8,7 @@
 import UIKit
 import MobileCoreServices
 
+/// https://stackoverflow.com/questions/44994932/how-to-share-selected-text-with-my-application
 class ActionViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
@@ -15,22 +16,19 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         
-        // Get the item[s] we're handling from the extension context.
-        
-        // For example, look for an image and place it into an image view.
-        // Replace this with something appropriate for the type[s] your extension supports.
         if let item = self.extensionContext?.inputItems.first as? NSExtensionItem,
            let provider = item.attachments?.first,
            provider.hasItemConformingToTypeIdentifier(kUTTypeText as String) {
-            // This is an image. We'll load it, then place it in our image view.
             weak var weakTextView = self.textView
             provider.loadItem(forTypeIdentifier: kUTTypeText as String, options: nil, completionHandler: { (result, error) in
                 DispatchQueue.main.async {
                     if let strongTextView = weakTextView {
                         if let text = result as? String {
                             strongTextView.text = text
+                            //  MARK: - FINISH THIS
+                            //
                         }
                     }
                 }
@@ -38,7 +36,7 @@ class ActionViewController: UIViewController {
         }
     }
     
-    @IBAction func done() {
+    @IBAction func save() {
         
         let returnProvider = NSItemProvider(item: textView.text as NSSecureCoding?,
                                             typeIdentifier: kUTTypeText as String)
@@ -51,9 +49,11 @@ class ActionViewController: UIViewController {
         
         // Return any edited content to the host app.
         // This template doesn't do anything, so we just echo the passed in items.
-//        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
+        //        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
     }
     
+    
+    // https://medium.com/@ales.musto/simple-text-action-extension-swift-3-c1ffaf3a197d
     func onShare(_ button:UIBarButtonItem) {
         var objectsToShare = [String]()
         
