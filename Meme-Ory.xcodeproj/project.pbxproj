@@ -49,6 +49,8 @@
 		2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03179256CD35700BEC832 /* StoryTagView.swift */; };
 		2ABAB1922575010300D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
 		2ABAB1962575010400D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
+		2ABAB1A625753BCB00D9B2F1 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB1256AE742004B6E10 /* Haptics.swift */; };
+		2ABAB1AA25753BCB00D9B2F1 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB1256AE742004B6E10 /* Haptics.swift */; };
 		2ADAD3B3256DA23A00AF463B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */; };
 		2ADAD3B5256DA23A00AF463B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */; };
 		2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */; };
@@ -576,6 +578,7 @@
 				2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */,
 				2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */,
 				2A64D42D257164B900C1817F /* Brief.swift in Sources */,
+				2ABAB1AA25753BCB00D9B2F1 /* Haptics.swift in Sources */,
 				2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */,
 				2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */,
 			);
@@ -587,6 +590,7 @@
 			files = (
 				2A16CDE82574EFF000146F3E /* Meme_Ory.xcdatamodeld in Sources */,
 				2A16CDE32574EFEC00146F3E /* Tag.swift in Sources */,
+				2ABAB1A625753BCB00D9B2F1 /* Haptics.swift in Sources */,
 				2A16CDF92574F0F000146F3E /* NSPredicate+Ext.swift in Sources */,
 				2A16CE102574F12B00146F3E /* URL+Extension.swift in Sources */,
 				2A16CDDF2574EFE700146F3E /* Context.swift in Sources */,

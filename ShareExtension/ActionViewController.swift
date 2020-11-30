@@ -16,8 +16,16 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        textView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        
+        navigationItem.title = "New Story"
+        
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationItem.setLeftBarButton(cancelButton, animated: true)
+        
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        saveButton.style = .done
+        navigationItem.setRightBarButton(saveButton, animated: true)
         
         if let item = self.extensionContext?.inputItems.first as? NSExtensionItem,
            let provider = item.attachments?.first,
@@ -38,7 +46,7 @@ class ActionViewController: UIViewController {
     }
     
     @IBAction func cancel() {
-        returnItem()
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
     }
     
     @IBAction func save() {
@@ -54,58 +62,9 @@ class ActionViewController: UIViewController {
         
         context.saveContext()
         
-        returnItem()
-    }
-    
-    private func returnItem() {
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
         
-        //  MARK: return item
-        
-        let returnProvider = NSItemProvider(item: textView.text as NSSecureCoding?,
-                                            typeIdentifier: kUTTypeText as String)
-        
-        let returnItem = NSExtensionItem()
-        
-        returnItem.attachments = [returnProvider]
-        self.extensionContext!.completeRequest(
-            returningItems: [returnItem], completionHandler: nil)
-    }
-    
-    /// To make an app be able to handle action extensions you want to call completionWithItemsHandler on your activity view controller. I included the code for my entire onShare function in my notes app below, which creates the activity view controller and then the code to accept the action extension.
-    /// https://medium.com/@ales.musto/simple-text-action-extension-swift-3-c1ffaf3a197d
-    func onShare(_ button:UIBarButtonItem) {
-        var objectsToShare = [String]()
-        
-        if let text = textView.text {
-            objectsToShare.append(text)
-        }
-        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-        activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
-        self.present(activityVC, animated: true, completion: nil)
-        
-        activityVC.completionWithItemsHandler =
-            { (activityType, completed, returnedItems, error) in
-                
-                if returnedItems!.count > 0 {
-                    
-                    let textItem: NSExtensionItem =
-                        returnedItems![0] as! NSExtensionItem
-                    
-                    let textItemProvider =
-                        textItem.attachments![0] 
-                    
-                    if textItemProvider.hasItemConformingToTypeIdentifier(
-                        kUTTypeText as String) {
-                        
-                        textItemProvider.loadItem(
-                            forTypeIdentifier: kUTTypeText as String,
-                            options: nil,
-                            completionHandler: {(string, error) -> Void in
-                                let newtext = string as! String
-                                self.textView.text = newtext
-                            })
-                    }
-                }
-            }
+        let haptics = Haptics()
+        haptics.feedback(feedback: .success)
     }
 }
