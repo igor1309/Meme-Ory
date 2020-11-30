@@ -47,6 +47,8 @@
 		2AA8916B256B9E7E0042395A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
 		2AA89175256BE8080042395A /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89174256BE8080042395A /* SearchModifier.swift */; };
 		2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03179256CD35700BEC832 /* StoryTagView.swift */; };
+		2ABAB1922575010300D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
+		2ABAB1962575010400D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
 		2ADAD3B3256DA23A00AF463B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */; };
 		2ADAD3B5256DA23A00AF463B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */; };
 		2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */; };
@@ -498,6 +500,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2ABAB1962575010400D9B2F1 /* Assets.xcassets in Resources */,
 				2ADAD3BA256DA23B00AF463B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AFE9E6C25744F480037E8CF /* Media.xcassets in Resources */,
+				2ABAB1922575010300D9B2F1 /* Assets.xcassets in Resources */,
 				2AFE9E80257458430037E8CF /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -827,6 +831,7 @@
 		2AFE9E7725744F480037E8CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
@@ -848,6 +853,7 @@
 		2AFE9E7825744F480037E8CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
