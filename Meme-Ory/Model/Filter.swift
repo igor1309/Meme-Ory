@@ -28,6 +28,14 @@ final class Filter: ObservableObject {
                 case .unfav: return "Non Favorites"
             }
         }
+        
+        var icon: String {
+            switch self {
+                case .all:   return "star.leadinghalf.fill"
+                case .fav:   return "star.circle"
+                case .unfav: return "star.slash"
+            }
+        }
     }
     
     
@@ -41,8 +49,16 @@ final class Filter: ObservableObject {
         var rawValue: String {
             switch self {
                 case .all:     return "All"
-                case .have:    return "With"
+                case .have:    return "With reminder"
                 case .notHave: return "Without"
+            }
+        }
+        
+        var icon: String {
+            switch self {
+                case .all:   return "bell.slash.circle.fill"
+                case .have:   return "bell.circle"
+                case .notHave: return "bell.slash"
             }
         }
     }
@@ -59,6 +75,13 @@ final class Filter: ObservableObject {
             switch self {
                 case .timestamp: return "Date"
                 case .text:      return "Text"
+            }
+        }
+        
+        var icon: String {
+            switch self {
+                case .timestamp: return "calendar"
+                case .text:      return "text.cursor"
             }
         }
     }
