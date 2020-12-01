@@ -9,21 +9,26 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
     
-    @EnvironmentObject private var filter: Filter
+    let persistenceController = PersistenceController.shared
+    
+    @StateObject private var eventStore = EventStore()
+    @StateObject private var filter = Filter()
     
     var body: some View {
         NavigationView {
             StoryListView(filter: filter)
         }
         .onChange(of: scenePhase, perform: handleScenePhase)
+        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        .environmentObject(eventStore)
+        .environmentObject(filter)
     }
     
     private func handleScenePhase(scenePhase: ScenePhase) {
         if scenePhase == .background {
-            context.saveContext()
+            persistenceController.container.viewContext.saveContext()
         }
     }
 }
@@ -31,11 +36,9 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environmentObject(EventStore())
             .environmentObject(Filter())
             .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 350, height: 800))
-        
     }
 }

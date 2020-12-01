@@ -154,7 +154,7 @@ struct StoryListRowView: View {
             
             Button {
                 //let items = [story.url]
-                let items: [Any] = [story.text, story.url]
+                let items: [Any] = [story.text.appending("\n"), story.url]
                 let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
                 UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
                 

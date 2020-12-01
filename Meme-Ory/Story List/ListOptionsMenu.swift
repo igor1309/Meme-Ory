@@ -135,6 +135,14 @@ struct ListOptionsMenu: View {
 
 struct ListOptionsMenu_Previews: PreviewProvider {
     static var previews: some View {
-        ListOptionsMenu()
+        VStack {
+            ListOptionsMenu()
+                .padding()
+            Spacer()
+        }
+            .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+            .environmentObject(Filter())
+            .preferredColorScheme(.dark)
+            .previewLayout(.fixed(width: 350, height: 800))
     }
 }

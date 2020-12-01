@@ -22,6 +22,10 @@ struct TagView: View {
     @State private var showDeleteConfirmation = false
     @State private var showEditTag = false
     
+    private var strokeBorderColor: Color {
+        isSelected ? Color(UIColor.systemOrange) : Color(UIColor.systemGray3)
+    }
+    
     var body: some View {
         Text(tag.name)
             .foregroundColor(isSelected ? Color(UIColor.systemOrange) : Color.secondary)
@@ -32,7 +36,7 @@ struct TagView: View {
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .strokeBorder(isSelected ? Color(UIColor.systemOrange) : Color(UIColor.systemGray3))
+                    .strokeBorder(strokeBorderColor)
             )
             .contextMenu {
                 Button {
@@ -49,9 +53,7 @@ struct TagView: View {
             .actionSheet(isPresented: $showDeleteConfirmation) {
                 actionSheetDelete(tag: tag)
             }
-            .sheet(isPresented: $showEditTag) {
-                context.saveContext()
-            } content: {
+            .sheet(isPresented: $showEditTag, onDismiss: context.saveContext) {
                 TagEditView($tag.name)
             }
     }
@@ -98,6 +100,7 @@ struct TagView_Previews: PreviewProvider {
             }
             .navigationBarTitle("Tags", displayMode: .inline)
         }
+        .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .previewLayout(.fixed(width: 350, height: 300))
         .environment(\.colorScheme, .dark)
     }
