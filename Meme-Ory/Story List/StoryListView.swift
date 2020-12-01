@@ -26,10 +26,7 @@ struct StoryListView: View {
     init(filter: Filter) {
         self.filter = filter
         
-        fetchRequest = Story.fetchRequest(
-            filter.predicate,
-            sortDescriptors: filter.sortDescriptors
-        )
+        fetchRequest = Story.fetchRequest(filter.predicate, sortDescriptors: filter.sortDescriptors)
         
         if filter.isListLimited {
             fetchRequest.fetchLimit = filter.listLimit

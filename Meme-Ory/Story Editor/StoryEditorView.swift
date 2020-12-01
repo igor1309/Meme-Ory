@@ -51,7 +51,7 @@ struct StoryEditorView: View {
                     toggleReminderButton()
                     toggleFavoriteButton()
                     //  MARK: share button not working with presented sheet!
-                    //shareButton()
+                    shareButton()
                 }
                 .padding(.trailing)
             }
@@ -102,8 +102,13 @@ struct StoryEditorView: View {
     private func shareButton() -> some View {
         Button {
             let items = [model.text]
-            let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
+            
+            presentation.wrappedValue.dismiss()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
+                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
+            }
         } label: {
             Image(systemName: "square.and.arrow.up")
                 .imageScale(.large)
@@ -130,7 +135,7 @@ struct StoryEditorView: View {
                 temporaryMessage("Reminder was deleted".uppercased())
             } else {
                 //  MARK: - FINISH THIS ADD REMINDER
-                temporaryMessage("\("Cannot add reminder here".uppercased())\nPlease use Context Menu for row in Stories List.", seconds: 3)
+                temporaryMessage("\("Cannot add reminder here".uppercased())\nPlease use Context Menu for row in Stories List.", seconds: 4)
             }
         }
     }
