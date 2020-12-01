@@ -35,16 +35,16 @@ struct StoryListView: View {
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
+    @State private var activeURL: URL?
     @State private var showingCreateSheet = false
     @State private var showingConfirmation = false
     @State private var showImportTextView = false
     @State private var isImporting = false
     @State private var isExporting = false
     @State private var importFileURL: URL?
+    @State private var temporaryFileURL: URL?
     @State private var offsets = IndexSet()
     @State private var document = JSONDocument(data: "".data(using: .utf8)!)
-    
-    @State private var storyToShowURL = URL(string: "https://www.apple.com")!
     
     private var count: Int { context.realCount(for: fetchRequest) }
     
@@ -55,8 +55,7 @@ struct StoryListView: View {
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
-                    StoryListRowView(story: story)
-                        .environment(\.storyToShowURL, storyToShowURL)
+                    StoryListRowView(story: story, activeURL: $activeURL)
                 }
                 .onDelete(perform: confirmDeletion)
             }
@@ -101,16 +100,16 @@ struct StoryListView: View {
                     /// do nothing we are here
                     return
                 case let .story(reference):
-                    //  MARK: - FINISH THIS
-                    // WHAT TO DO HERE? PASS TO ROW???
-                    print(reference)
-                    //environment(\.storyToShowURL, reference)
-                    storyToShowURL = reference
-                case let .file(url):
-                    self.importFileURL = url
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
                         withAnimation {
+                            activeURL = reference
+                        }
+                    }
+                case let .file(url):
+                    withAnimation {
+                        self.importFileURL = url
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
                             showImportTextView = true
                         }
                     }
@@ -121,12 +120,12 @@ struct StoryListView: View {
     private func handleFileImport(_ result: Result<URL, Error>) {
         switch result {
             case .success:
-                guard let fileURL: URL = try? result.get() else { return }
-                
-                importFileURL = fileURL
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
-                    withAnimation {
+                withAnimation {
+                    guard let fileURL: URL = try? result.get() else { return }
+                    
+                    importFileURL = fileURL
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
                         showImportTextView = true
                     }
                 }
@@ -134,9 +133,7 @@ struct StoryListView: View {
                 print("Export error \(error.localizedDescription)")
         }
     }
-    
-    @State private var temporaryFileURL: URL?
-    
+        
     private func deleteTemporaryFile() {
         guard let temporaryFileURL = temporaryFileURL else { return }
         

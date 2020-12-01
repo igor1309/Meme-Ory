@@ -12,17 +12,22 @@ import MobileCoreServices
 struct StoryListRowView: View {
     
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.storyToShowURL) private var storyToShowURL
     
     @EnvironmentObject private var filter: Filter
     @EnvironmentObject private var eventStore: EventStore
     
     @ObservedObject var story: Story
     
+    @Binding var activeURL: URL?
+    
     @State private var showingStorySheet = false
-
+    
     var body: some View {
-        NavigationLink(destination: StoryEditorView(story: story)) {
+        NavigationLink(
+            destination: StoryEditorView(story: story),
+            tag: story.url,
+            selection: $activeURL
+        ) {
             label
                 .contextMenu {
                     /// toggle favotite
@@ -30,7 +35,7 @@ struct StoryListRowView: View {
                     /// copy story text
                     copyStoryTextButton()
                     /// share sheet
-                    shareStorySection()
+                    ShareStoryView(text: story.text, url: story.url)
                     /// setting reminders
                     remindMeButton()
                     //remindMeSection()
@@ -40,7 +45,6 @@ struct StoryListRowView: View {
         }
         .contentShape(Rectangle())
         .onAppear(perform: reminderCleanUp)
-        .onChange(of: storyToShowURL, perform: handleStoryURL)
         .onOpenURL(perform: handleURL)
         .sheet(isPresented: $showingStorySheet, content: storySheet)
         .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
@@ -54,16 +58,14 @@ struct StoryListRowView: View {
         .environmentObject(eventStore)
     }
     
-    private func handleStoryURL(url: URL) {
-        showingStorySheet = false
-        
-        guard let deeplink = url.deeplink,
-              case .story(let reference) = deeplink,
-              story.url == reference else { return }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-            withAnimation {
-                showingStorySheet = true
+    private func handleURL(url: URL) {
+        withAnimation {
+            guard let deeplink = url.deeplink,
+                  case .story(let reference) = deeplink,
+                  story.url == reference else { return }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+                activeURL = url
             }
         }
     }
@@ -133,30 +135,6 @@ struct StoryListRowView: View {
         }
     }
     
-    private func shareStorySection() -> some View {
-        /// https://www.hackingwithswift.com/articles/118/uiactivityviewcontroller-by-example
-        
-        Section {
-            Button {
-                let items = [story.text]
-                let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
-            } label: {
-                Label("Share story text", systemImage: "square.and.arrow.up")
-            }
-            
-            Button {
-                //let items = [story.url]
-                let items: [Any] = [story.text.appending("\n"), story.url]
-                let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
-                
-            } label: {
-                Label("Share with link", systemImage: "square.and.arrow.up.on.square")
-            }
-        }
-    }
-    
     private func filterByTagSection() -> some View {
         Section {
             // only for stories with just one tag
@@ -208,12 +186,7 @@ struct StoryListRowView: View {
     private func remindMeActionSheet() -> ActionSheet {
         let remindingButtons = EventStore.components.map { component in
             ActionSheet.Button.default(Text("\(component.str)")) {
-                let haptics = Haptics()
-                haptics.feedback()
-                
-                withAnimation {
-                    remindMeNext(component)
-                }
+                remindMeNext(component)
             }
         }
         
@@ -252,22 +225,7 @@ struct StoryListRowView: View {
             let reminder = eventStore.reminder(for: story)
             if reminder == nil {
                 story.calendarItemIdentifier_ = nil
-                
                 context.saveContext()
-            }
-        }
-    }
-    
-    private func handleURL(_ url: URL) {
-        showingStorySheet = false
-        
-        guard let deeplink = url.deeplink,
-              case .story(let reference) = deeplink,
-              story.url == reference else { return }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-            withAnimation {
-                showingStorySheet = true
             }
         }
     }
@@ -278,9 +236,14 @@ struct StoryListRowView: View {
     // next year: next Jan 1
     //
     private func remindMeNext(_ component: Calendar.Component, hour: Int = 9) {
-        if let calendarItemIdentifier = eventStore.addReminder(for: story, component: component, hour: hour) {
+        guard eventStore.accessGranted,
+              let calendarItemIdentifier = eventStore.addReminder(for: story, component: component, hour: hour) else { return }
+        
+        let haptics = Haptics()
+        haptics.feedback()
+        
+        withAnimation {
             story.calendarItemIdentifier = calendarItemIdentifier
-            
             context.saveContext()
         }
     }
@@ -294,10 +257,12 @@ private let storyFormatter: DateFormatter = {
 }()
 
 fileprivate struct StoryListRowView_Testing: View {
+    @State private var activeURL: URL?
+    
     var body: some View {
         NavigationView {
             List(0..<SampleData.texts.count) { index in
-                StoryListRowView(story: SampleData.story(storyIndex: index))
+                StoryListRowView(story: SampleData.story(storyIndex: index), activeURL: $activeURL)
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)

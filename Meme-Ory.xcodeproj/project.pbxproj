@@ -24,6 +24,7 @@
 		2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBD256A4A5E00E3283D /* Preview Assets.xcassets */; };
 		2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
 		2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
+		2A251B8A25767960004F9218 /* ShareStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A251B8925767960004F9218 /* ShareStoryView.swift */; };
 		2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
 		2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportTextView.swift */; };
@@ -70,7 +71,6 @@
 		2AEEF9022570007F008D1B31 /* EKEventStore+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */; };
 		2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF90525702EBF008D1B31 /* EventStore.swift */; };
 		2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E3E257246270037E8CF /* ErrorSheet.swift */; };
-		2AFE9E4A2572D5FE0037E8CF /* StoryToShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */; };
 		2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */; };
 		2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E5B2573B00D0037E8CF /* ContentView.swift */; };
 		2AFE9E6C25744F480037E8CF /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AFE9E6B25744F480037E8CF /* Media.xcassets */; };
@@ -122,6 +122,7 @@
 		2A1B5FBF256A4A5E00E3283D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2A1B5FC4256A4A5E00E3283D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A1B5FCC256A4AE100E3283D /* Meme_Ory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Meme_Ory.xcdatamodel; sourceTree = "<group>"; };
+		2A251B8925767960004F9218 /* ShareStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareStoryView.swift; sourceTree = "<group>"; };
 		2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StoryText.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionView.swift; sourceTree = "<group>"; };
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
@@ -159,7 +160,6 @@
 		2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore+Ext.swift"; sourceTree = "<group>"; };
 		2AEEF90525702EBF008D1B31 /* EventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
 		2AFE9E3E257246270037E8CF /* ErrorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSheet.swift; sourceTree = "<group>"; };
-		2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryToShow.swift; sourceTree = "<group>"; };
 		2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditorViewModel.swift; sourceTree = "<group>"; };
 		2AFE9E5B2573B00D0037E8CF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2AFE9E6925744F480037E8CF /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,7 +303,6 @@
 				2AEEF90525702EBF008D1B31 /* EventStore.swift */,
 				2A935CA5256A80C9004B6E10 /* Filter.swift */,
 				2A33A3D9257139E200538FE3 /* JSONDocument.swift */,
-				2AFE9E492572D5FE0037E8CF /* StoryToShow.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -358,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				2A935C91256A6B0E004B6E10 /* StoryEditorView.swift */,
+				2A251B8925767960004F9218 /* ShareStoryView.swift */,
 				2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */,
 				2AB03179256CD35700BEC832 /* StoryTagView.swift */,
 			);
@@ -554,9 +554,9 @@
 				2A935C9B256A7717004B6E10 /* Tag.swift in Sources */,
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
-				2AFE9E4A2572D5FE0037E8CF /* StoryToShow.swift in Sources */,
 				2A9CA64A2575B83B00FCD4D0 /* ListOptionsMenu.swift in Sources */,
 				2AEEF9022570007F008D1B31 /* EKEventStore+Ext.swift in Sources */,
+				2A251B8A25767960004F9218 /* ShareStoryView.swift in Sources */,
 				2A85412B256EFED20051906B /* TagEditView.swift in Sources */,
 				2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */,
 				2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */,
@@ -758,7 +758,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -784,7 +784,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -809,7 +809,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -833,7 +833,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -856,7 +856,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -879,7 +879,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -19,13 +19,13 @@ struct StoryEditorView: View {
     
     private let storyToEdit: Story?
     
-    /// Create new Story
+    // Create new Story
     init() {
         _model = StateObject(wrappedValue: StoryEditorViewModel())
         storyToEdit = nil
     }
     
-    /// Edit Existing Story
+    // Edit Existing Story
     init(story: Story) {
         let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags), isFavorite: story.isFavorite, calendarItemIdentifier: story.calendarItemIdentifier)
         _model = StateObject(wrappedValue: model)
@@ -40,14 +40,6 @@ struct StoryEditorView: View {
     
     private var hasReminder: Bool { eventStore.hasReminder(with: model.calendarItemIdentifier) }
     
-    @ViewBuilder
-    private var textBackground: some View {
-        if model.mode == .edit {
-            Color(UIColor.secondarySystemGroupedBackground).edgesIgnoringSafeArea(.all)
-        } else {
-            Color.clear
-        }
-    }
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             TextEditor(text: $model.text)
@@ -73,6 +65,15 @@ struct StoryEditorView: View {
         .navigationBarItems(leading: cancelButton(), trailing: saveButton())
         .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
         .onAppear(perform: reminderCleanUp)
+    }
+    
+    @ViewBuilder
+    private var textBackground: some View {
+        if model.mode == .edit {
+            Color(UIColor.secondarySystemGroupedBackground).edgesIgnoringSafeArea(.all)
+        } else {
+            Color.clear
+        }
     }
     
     private func pasteClipboard() {
