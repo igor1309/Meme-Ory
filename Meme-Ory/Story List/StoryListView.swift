@@ -144,40 +144,6 @@ struct StoryListView: View {
         }
     }
     
-    /// export (share) JSON file via Share Sheet
-    private func shareButton() -> some View {
-        Button {
-            DispatchQueue.global(qos: .userInitiated).async {
-                guard let export = stories.exportTexts() else { return }
-                
-                /// set temporary file
-                /// https://nshipster.com/temporary-files/
-                let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-                let temporaryFilename = "stories.json"//ProcessInfo().globallyUniqueString
-                temporaryFileURL =
-                    temporaryDirectoryURL.appendingPathComponent(temporaryFilename)
-                
-                /// write to temporary file
-                guard let temporaryFileURL = temporaryFileURL, let _ = try? export.write(to: temporaryFileURL, options: .atomic) else { return }
-                
-                /// present share sheet
-                let items = [temporaryFileURL]
-                
-                let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                
-                DispatchQueue.main.async {
-                    withAnimation {
-                        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
-                    }
-                }
-            }
-        } label: {
-            Label("Share Stories", systemImage: "square.and.arrow.up")
-            // .imageScale(.large)
-            // .foregroundColor(Color(UIColor.systemBlue))
-        }
-    }
-    
     private func confirmDeletion(offsets: IndexSet) {
         self.offsets = offsets
         showingConfirmation = true
@@ -228,6 +194,7 @@ struct StoryListView: View {
     
     private func importExportShareMenu() -> some View {
         Menu {
+            pasteClipboardToStoryButton()
             shareButton()
             Section {
                 importFileButton()
@@ -236,6 +203,64 @@ struct StoryListView: View {
         } label: {
             Label("Create New Import Export", systemImage: "ellipsis.circle")
                 .labelStyle(IconOnlyLabelStyle())
+        }
+    }
+    
+    @ViewBuilder
+    private func pasteClipboardToStoryButton() -> some View {
+        // if clipboard has text paste and save story
+        if UIPasteboard.general.hasStrings {
+            Button {
+                let haptics = Haptics()
+                haptics.feedback()
+                
+                withAnimation {
+                    if let content = UIPasteboard.general.string,
+                       !content.isEmpty {
+                        let story = Story(context: context)
+                        story.text = content
+                        story.timestamp = Date()
+                    
+                        context.saveContext()
+                    }
+                }
+            } label: {
+                Label("Paste to story", systemImage: "doc.on.clipboard")
+            }
+        }
+    }
+    
+    /// export (share) JSON file via Share Sheet
+    private func shareButton() -> some View {
+        Button {
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let export = stories.exportTexts() else { return }
+                
+                /// set temporary file
+                /// https://nshipster.com/temporary-files/
+                let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+                let temporaryFilename = "stories.json"//ProcessInfo().globallyUniqueString
+                temporaryFileURL =
+                    temporaryDirectoryURL.appendingPathComponent(temporaryFilename)
+                
+                /// write to temporary file
+                guard let temporaryFileURL = temporaryFileURL, let _ = try? export.write(to: temporaryFileURL, options: .atomic) else { return }
+                
+                /// present share sheet
+                let items = [temporaryFileURL]
+                
+                let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
+                
+                DispatchQueue.main.async {
+                    withAnimation {
+                        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
+                    }
+                }
+            }
+        } label: {
+            Label("Share Stories", systemImage: "square.and.arrow.up")
+            // .imageScale(.large)
+            // .foregroundColor(Color(UIColor.systemBlue))
         }
     }
     

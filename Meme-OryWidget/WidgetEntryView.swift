@@ -16,19 +16,15 @@ struct WidgetEntryView: View {
     
     var stories: [Story] {
         switch size {
-            case .systemSmall:
-                return [entry.stories.first!]
-            case .systemMedium:
-                return Array(entry.stories.prefix(3))
-            case .systemLarge:
-                return entry.stories
-            @unknown default:
-                return entry.stories
+            case .systemSmall:  return entry.stories.isEmpty ? [] : [entry.stories.first!]
+            case .systemMedium: return Array(entry.stories.prefix(3))
+            case .systemLarge:  return entry.stories
+            @unknown default:   return entry.stories
         }
     }
     
     var body: some View {
-        if entry.stories.isEmpty {
+        if stories.isEmpty {
             Text("No stories here ☹️")
                 .font(.title)
                 .widgetURL(URL(string: URL.appHomeUrl))
@@ -53,43 +49,22 @@ struct WidgetEntryView: View {
     }
     
     private func rowLabel(_ story: Story) -> some View {
-        Text(story.storyText(maxCount: 300, maxLines: 3))
+        Text(storyText(of: story))
             .font(.footnote)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
     }
     
-    // old version
-    @ViewBuilder
-    private func storyView(_ story: Story) -> some View {
-        Link(destination: story.url) {
-            switch size {
-                case .systemSmall:
-                    Text(story.storyText(maxCount: 100, maxLines: 3))
-                        .font(.footnote)
-                        .padding()
-                case .systemMedium:
-                    VStack(alignment: .leading) {
-                        Text(story.storyText(maxCount: 180, maxLines: 4))
-                            .font(.footnote)
-                        Text(story.timestamp, style: .relative)
-                            .foregroundColor(Color(UIColor.tertiaryLabel))
-                            .font(.caption)
-                    }
-                    .padding(.horizontal)
-                case .systemLarge:
-                    VStack(alignment: .leading) {
-                        Text(story.storyText(maxCount: 360, maxLines: 8))
-                            .font(.footnote)
-                        Text(story.timestamp, style: .relative)
-                            .foregroundColor(Color(UIColor.tertiaryLabel))
-                            .font(.caption)
-                    }
-                    .padding(.horizontal)
-                @unknown default:
-                    Text(story.storyText(maxCount: 100, maxLines: 3))
-                        .font(.footnote)
-            }
+    private func storyText(of story: Story) -> String {
+        switch size {
+            case .systemSmall:
+                return story.storyText(maxCount: 100, maxLines: 3)
+            case .systemMedium:
+                return story.storyText(maxCount: 180, maxLines: 4)
+            case .systemLarge:
+                return story.storyText(maxCount: 360, maxLines: 8)
+            @unknown default:
+                return story.storyText(maxCount: 100, maxLines: 3)
         }
     }
 }
