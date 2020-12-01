@@ -11,6 +11,8 @@ import UniformTypeIdentifiers
 
 struct StoryListView: View {
     
+    let quickActionPublisher = NotificationCenter.default.publisher(for: Notification.Name("QuickAction"))
+    
     @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
     
@@ -71,6 +73,7 @@ struct StoryListView: View {
                                 importExportShareMenu()
                                 createNewStoryButton()
                             })
+        .onReceive(quickActionPublisher, perform: handleQuickAction)
         .onChange(of: scenePhase, perform: handleScenePhase)
         .onOpenURL(perform: handleURL)
         .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleFileImport)
@@ -79,6 +82,18 @@ struct StoryListView: View {
         .actionSheet(isPresented: $showingConfirmation, content: confirmationActionSheet)
         .sheet(isPresented: $showImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
         .alert(isPresented: $showingCannotImportAlert, content: failedImportAlert)
+    }
+    
+    private func handleQuickAction(_ output: NotificationCenter.Publisher.Output) {
+        let actionType = output.userInfo?["actionType"] as! String
+        if let quickAction = QuickAction(rawValue: actionType) {
+            switch quickAction {
+                case .pasteToNew:
+                    showingCreateSheet = true
+                case .showFavorites:
+                    filter.favoritesFilter = .fav
+            }
+        }
     }
     
     private func handleScenePhase(scenePhase: ScenePhase) {

@@ -9,21 +9,27 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
     
-    @EnvironmentObject private var filter: Filter
+    let persistenceController = PersistenceController.shared
+    
+    @StateObject private var eventStore = EventStore()
+    @StateObject private var filter = Filter()
     
     var body: some View {
         NavigationView {
             StoryListView(filter: filter)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(eventStore)
+                .environmentObject(filter)
+
         }
         .onChange(of: scenePhase, perform: handleScenePhase)
     }
     
     private func handleScenePhase(scenePhase: ScenePhase) {
         if scenePhase == .background {
-            context.saveContext()
+            persistenceController.container.viewContext.saveContext()
         }
     }
 }

@@ -50,6 +50,27 @@
 	<true/>
 	<key>NSRemindersUsageDescription</key>
 	<string>This allows to set story reminders.</string>
+    <key>UIApplicationShortcutItems</key>
+    <array>
+        <dict>
+            <key>UIApplicationShortcutItemType</key>
+            <string>PasteToNewStoryAction</string>
+            <key>UIApplicationShortcutItemIconSymbolName</key>
+            <string>doc.on.clipboard</string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>Paste to new</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string>Clipboard to new Story</string>
+        </dict>
+        <dict>
+            <key>UIApplicationShortcutItemType</key>
+            <string>ShareAction</string>
+            <key>UIApplicationShortcutItemIconSymbolName</key>
+            <string>star.fill</string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>Show Favorites</string>
+        </dict>
+    </array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
