@@ -221,9 +221,11 @@ struct StoryListView: View {
                 .padding([.leading, .vertical])
         }
         .sheet(isPresented: $showingCreateSheet) {
-            StoryEditorView()
-                .environment(\.managedObjectContext, context)
-                .environmentObject(eventStore)
+            NavigationView {
+                StoryEditorView()
+            }
+            .environment(\.managedObjectContext, context)
+            .environmentObject(eventStore)
         }
     }
     

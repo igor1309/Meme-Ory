@@ -52,9 +52,11 @@ struct StoryListRowView: View {
         .accentColor(.primary)
         .contentShape(Rectangle())
         .sheet(isPresented: $showingStorySheet) {
-            StoryEditorView(story: story)
-                .environment(\.managedObjectContext, context)
-                .environmentObject(eventStore)
+            NavigationView {
+                StoryEditorView(story: story)
+            }
+            .environment(\.managedObjectContext, context)
+            .environmentObject(eventStore)
         }
     }
     

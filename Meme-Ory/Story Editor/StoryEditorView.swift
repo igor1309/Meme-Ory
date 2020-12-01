@@ -38,28 +38,26 @@ struct StoryEditorView: View {
     private var hasReminder: Bool { eventStore.hasReminder(with: model.calendarItemIdentifier) }
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 0) {
-                TextEditor(text: $model.text)
-                    .onAppear(perform: pasteClipboard)
-                    .padding([.horizontal, .top])
+        VStack(alignment: .leading, spacing: 0) {
+            TextEditor(text: $model.text)
+                .onAppear(perform: pasteClipboard)
+                .padding([.horizontal, .top])
+            
+            HStack(alignment: .top) {
+                StoryTagView(tags: $model.tags)
+                    .padding(.leading)
                 
-                HStack(alignment: .top) {
-                    StoryTagView(tags: $model.tags)
-                        .padding(.leading)
-                    
-                    toggleReminderButton()
-                    toggleFavoriteButton()
-                    //  MARK: share button not working with presented sheet!
-                    shareButton()
-                }
-                .padding(.trailing)
+                toggleReminderButton()
+                toggleFavoriteButton()
+                //  MARK: share button not working with presented sheet!
+                shareButton()
             }
-            .navigationBarTitle(model.mode.title, displayMode: .inline)
-            .navigationBarItems(leading: cancelButton(), trailing: saveButton())
-            .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
-            .onAppear(perform: reminderCleanUp)
+            .padding(.trailing)
         }
+        .navigationBarTitle(model.mode.title, displayMode: .inline)
+        .navigationBarItems(leading: cancelButton(), trailing: saveButton())
+        .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
+        .onAppear(perform: reminderCleanUp)
     }
     
     private func pasteClipboard() {
