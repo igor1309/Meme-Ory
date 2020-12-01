@@ -8,6 +8,33 @@
 import Foundation
 
 extension URL {
+    /// https://www.donnywals.com/handling-deeplinks-in-ios-14-with-onopenurl/
+    enum Deeplink: Equatable {
+        case home
+        case story(reference: URL)
+        case file(url: URL)
+    }
+    
+    var deeplink: Deeplink? {
+        //  MARK: - FINISH THIS
+        if absoluteString.contains(".json") {
+            print("it's JSON\n", self)
+            return .file(url: self)
+        }
+        
+        //  MARK: - FINISH THIS
+        guard scheme == URL.appScheme else { return nil }
+        guard pathComponents.contains(URL.appDetailsPath) else { return .home }
+        guard let query = query else { return nil }
+        let components = query.split(separator: ",").flatMap { $0.split(separator: "=") }
+        guard let idIndex = components.firstIndex(of: Substring(URL.appReferenceQueryName)) else { return nil }
+        guard idIndex + 1 < components.count else { return nil }
+        
+        return .story(reference: self)
+    }
+}
+
+extension URL {
     func getTexts() -> [String] {
         guard let data = try? Data(contentsOf: self) else {
             print("Failed to load file from \(self)")

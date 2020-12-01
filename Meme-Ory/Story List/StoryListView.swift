@@ -90,8 +90,7 @@ struct StoryListView: View {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             
-            let deeplinker = Deeplinker()
-            guard let deeplink = deeplinker.manage(url: url) else {
+            guard let deeplink = url.deeplink else {
                 showingCannotImportAlert = true
                 return
             }

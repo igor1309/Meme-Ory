@@ -61,8 +61,7 @@ struct StoryListRowView: View {
     private func handleStoryURL(url: URL) {
         showingStorySheet = false
         
-        let deeplinker = Deeplinker()
-        guard let deeplink = deeplinker.manage(url: url),
+        guard let deeplink = url.deeplink,
               case .story(let reference) = deeplink,
               story.url == reference else { return }
         
@@ -268,8 +267,7 @@ struct StoryListRowView: View {
     private func handleURL(_ url: URL) {
         showingStorySheet = false
         
-        let deeplinker = Deeplinker()
-        guard let deeplink = deeplinker.manage(url: url),
+        guard let deeplink = url.deeplink,
               case .story(let reference) = deeplink,
               story.url == reference else { return }
         
