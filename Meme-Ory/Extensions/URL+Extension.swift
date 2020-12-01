@@ -43,14 +43,14 @@ extension URL {
         
         let decoder = JSONDecoder()
         
-        guard let briefs = try? decoder.decode([String].self, from: data) else {
+        guard let texts = try? decoder.decode([String].self, from: data) else {
             print("Failed to decode file at \(self)")
             return []
         }
         
         /// remove duplicates from import
         /// this doesn't check for duplicates in store
-        return Array(Set(briefs)).sorted()
+        return Array(Set(texts)).sorted()
     }
     
     func getBriefs() -> [Brief] {

@@ -18,16 +18,9 @@ struct StoryListRowView: View {
     
     @ObservedObject var story: Story
     
-    @Binding var activeURL: URL?
-    
     @State private var showingStorySheet = false
     
     var body: some View {
-        NavigationLink(
-            destination: StoryEditorView(story: story),
-            tag: story.url,
-            selection: $activeURL
-        ) {
             label
                 .contextMenu {
                     /// toggle favotite
@@ -42,10 +35,8 @@ struct StoryListRowView: View {
                     /// if story has just one tag - filter by this tag
                     filterByTagSection()
                 }
-        }
         .contentShape(Rectangle())
         .onAppear(perform: reminderCleanUp)
-        .onOpenURL(perform: handleURL)
         .sheet(isPresented: $showingStorySheet, content: storySheet)
         .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
     }
@@ -56,18 +47,6 @@ struct StoryListRowView: View {
         }
         .environment(\.managedObjectContext, context)
         .environmentObject(eventStore)
-    }
-    
-    private func handleURL(url: URL) {
-        withAnimation {
-            guard let deeplink = url.deeplink,
-                  case .story(let reference) = deeplink,
-                  story.url == reference else { return }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-                activeURL = url
-            }
-        }
     }
     
     var label: some View {
@@ -262,7 +241,7 @@ fileprivate struct StoryListRowView_Testing: View {
     var body: some View {
         NavigationView {
             List(0..<SampleData.texts.count) { index in
-                StoryListRowView(story: SampleData.story(storyIndex: index), activeURL: $activeURL)
+                StoryListRowView(story: SampleData.story(storyIndex: index))
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)

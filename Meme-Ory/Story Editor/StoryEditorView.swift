@@ -81,7 +81,8 @@ struct StoryEditorView: View {
             /// if editing try to paste clipboard content
             if model.mode == .create {
                 if UIPasteboard.general.hasStrings,
-                   let content = UIPasteboard.general.string {
+                   let content = UIPasteboard.general.string,
+                   !content.isEmpty {
                     model.text = content
                 }
             }

@@ -55,7 +55,13 @@ struct StoryListView: View {
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
-                    StoryListRowView(story: story, activeURL: $activeURL)
+                    NavigationLink(
+                        destination: StoryEditorView(story: story),
+                        tag: story.url,
+                        selection: $activeURL
+                    ) {
+                        StoryListRowView(story: story)
+                    }
                 }
                 .onDelete(perform: confirmDeletion)
             }
@@ -96,14 +102,12 @@ struct StoryListView: View {
             
             switch deeplink {
                 case .home:
-                    //  MARK: - FINISH THIS ANY FEEDBACK TO USER?
+                    //  MARK: - FINISH THIS: ANY FEEDBACK TO USER?
                     /// do nothing we are here
                     return
                 case let .story(reference):
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-                        withAnimation {
-                            activeURL = reference
-                        }
+                    withAnimation {
+                        activeURL = reference
                     }
                 case let .file(url):
                     withAnimation {
@@ -130,10 +134,10 @@ struct StoryListView: View {
                     }
                 }
             case .failure(let error):
-                print("Export error \(error.localizedDescription)")
+                print("Import error \(error.localizedDescription)")
         }
     }
-        
+    
     private func deleteTemporaryFile() {
         guard let temporaryFileURL = temporaryFileURL else { return }
         
@@ -166,7 +170,6 @@ struct StoryListView: View {
         
         withAnimation {
             offsets.map { stories[$0] }.forEach(context.delete)
-            
             context.saveContext()
         }
     }
@@ -194,8 +197,12 @@ struct StoryListView: View {
     
     private func importExportShareMenu() -> some View {
         Menu {
-            pasteClipboardToStoryButton()
-            shareButton()
+            Section {
+                pasteClipboardToStoryButton()
+            }
+            Section {
+                shareButton()
+            }
             Section {
                 importFileButton()
                 exportFileButton()
@@ -220,7 +227,7 @@ struct StoryListView: View {
                         let story = Story(context: context)
                         story.text = content
                         story.timestamp = Date()
-                    
+                        
                         context.saveContext()
                     }
                 }
@@ -251,7 +258,7 @@ struct StoryListView: View {
                 
                 let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
                 
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     withAnimation {
                         UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
                     }
@@ -269,7 +276,7 @@ struct StoryListView: View {
         Button {
             isImporting = false
             
-            //fix broken picker sheet
+            // fix broken picker sheet
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
                 withAnimation {
                     isImporting = true
@@ -293,7 +300,7 @@ struct StoryListView: View {
                 
                 document = JSONDocument(data: data)
                 
-                //fix broken picker sheet
+                // fix broken picker sheet
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
                     withAnimation {
                         isExporting = true
