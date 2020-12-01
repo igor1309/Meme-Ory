@@ -30,10 +30,12 @@ struct Provider: TimelineProvider {
             
             let viewContext = PersistenceController.shared.container.viewContext
             let request = Story.fetchRequest(NSPredicate.all)
-            // request 1 random Story
+            // request # of random stories
             let count = viewContext.realCount(for: request)
-            request.fetchOffset = Int(arc4random_uniform(UInt32(count)))
-            request.fetchLimit = 9
+            let limit = 9
+            let maxOffset = max(0, count - limit)
+            request.fetchOffset = Int(arc4random_uniform(UInt32(maxOffset)))
+            request.fetchLimit = limit
             
             if let results = try? viewContext.fetch(request) {
                 let newEntry = Entry(date: entryDate, stories: results)

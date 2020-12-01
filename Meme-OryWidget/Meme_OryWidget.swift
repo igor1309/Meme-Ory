@@ -18,7 +18,7 @@ struct Meme_OryWidget: Widget {
             WidgetEntryView(entry: entry)
         }
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Story")
+        .description("Some random stories for you.")
     }
 }
