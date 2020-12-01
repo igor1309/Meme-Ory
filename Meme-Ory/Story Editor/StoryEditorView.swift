@@ -30,6 +30,9 @@ struct StoryEditorView: View {
         let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags), isFavorite: story.isFavorite, calendarItemIdentifier: story.calendarItemIdentifier)
         _model = StateObject(wrappedValue: model)
         storyToEdit = story
+        
+        /// TextEditor is backed by UITextView. Get rid of the UITextView's backgroundColor to set  background
+        UITextView.appearance().backgroundColor = .clear
     }
     
     @State private var showingMessage = false
@@ -37,11 +40,22 @@ struct StoryEditorView: View {
     
     private var hasReminder: Bool { eventStore.hasReminder(with: model.calendarItemIdentifier) }
     
+    @ViewBuilder
+    private var textBackground: some View {
+        if model.mode == .edit {
+            Color(UIColor.secondarySystemGroupedBackground).edgesIgnoringSafeArea(.all)
+        } else {
+            Color.clear
+        }
+    }
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             TextEditor(text: $model.text)
                 .onAppear(perform: pasteClipboard)
                 .padding([.horizontal, .top])
+                .background(Color.clear)
+            
+            Divider().padding(.bottom, 6)
             
             HStack(alignment: .top) {
                 StoryTagView(tags: $model.tags)
@@ -54,6 +68,7 @@ struct StoryEditorView: View {
             }
             .padding(.trailing)
         }
+        .background(textBackground)
         .navigationBarTitle(model.mode.title, displayMode: .inline)
         .navigationBarItems(leading: cancelButton(), trailing: saveButton())
         .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
@@ -100,13 +115,8 @@ struct StoryEditorView: View {
     private func shareButton() -> some View {
         Button {
             let items = [model.text]
-            
-            presentation.wrappedValue.dismiss()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
-            }
+            let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
         } label: {
             Image(systemName: "square.and.arrow.up")
                 .imageScale(.large)
@@ -169,9 +179,12 @@ struct StoryEditorView: View {
         }
     }
     
+    @ViewBuilder
     private func cancelButton() -> some View {
-        Button("Cancel") {
-            presentation.wrappedValue.dismiss()
+        if model.mode == .create {
+            Button("Cancel") {
+                presentation.wrappedValue.dismiss()
+            }
         }
     }
     
@@ -179,7 +192,7 @@ struct StoryEditorView: View {
         Button(model.hasChanges ? "Save" : "Done") {
             saveStory()
         }
-        .foregroundColor(model.hasChanges ? .orange : .blue)
+        .foregroundColor(model.hasChanges ? .orange : .clear)
         .disabled(model.text.isEmpty)
     }
     

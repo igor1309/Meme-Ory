@@ -19,16 +19,10 @@ struct StoryListRowView: View {
     
     @ObservedObject var story: Story
     
-    //let remindersAccessGranted: Bool
-    
     @State private var showingStorySheet = false
-        
+
     var body: some View {
-        Button {
-            withAnimation {
-                showingStorySheet = true
-            }
-        } label: {
+        NavigationLink(destination: StoryEditorView(story: story)) {
             label
                 .contextMenu {
                     /// toggle favotite
@@ -43,21 +37,21 @@ struct StoryListRowView: View {
                     /// if story has just one tag - filter by this tag
                     filterByTagSection()
                 }
-                .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
-            
         }
-        .onChange(of: storyToShowURL, perform: handleStoryURL)
-        .onAppear(perform: reminderCleanUp)
-        .onOpenURL(perform: handleURL)
-        .accentColor(.primary)
         .contentShape(Rectangle())
-        .sheet(isPresented: $showingStorySheet) {
-            NavigationView {
-                StoryEditorView(story: story)
-            }
-            .environment(\.managedObjectContext, context)
-            .environmentObject(eventStore)
+        .onAppear(perform: reminderCleanUp)
+        .onChange(of: storyToShowURL, perform: handleStoryURL)
+        .onOpenURL(perform: handleURL)
+        .sheet(isPresented: $showingStorySheet, content: storySheet)
+        .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
+    }
+    
+    private func storySheet() -> some View {
+        NavigationView {
+            StoryEditorView(story: story)
         }
+        .environment(\.managedObjectContext, context)
+        .environmentObject(eventStore)
     }
     
     private func handleStoryURL(url: URL) {
@@ -75,37 +69,35 @@ struct StoryListRowView: View {
     }
     
     var label: some View {
-        VStack(alignment: .leading, spacing: 3) {
-            Text(story.storyText())
-                .font(.subheadline)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            if !story.tagList.isEmpty {
-                Label {
-                    Text(story.tagList)
-                } icon: {
-                    Image(systemName: "tag")
-                        .imageScale(.small)
+        ZStack(alignment: .topTrailing) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(story.storyText())
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                if !story.tagList.isEmpty {
+                    Label {
+                        Text(story.tagList)
+                    } icon: {
+                        Image(systemName: "tag")
+                            .imageScale(.small)
+                    }
+                    .foregroundColor(.orange)
+                    .font(.caption)
                 }
-                .foregroundColor(.orange)
-                .font(.caption)
-            }
-            
-            HStack {
+                
                 if let timestamp = story.timestamp {
                     Text("\(timestamp, formatter: storyFormatter)")
                         .foregroundColor(Color(UIColor.tertiaryLabel))
                         .font(.caption)
                 }
-                
-                Spacer()
-                
-                if story.isFavorite {
-                    Image(systemName: "star.circle")
-                        .foregroundColor(Color(UIColor.systemOrange))
-                        .imageScale(.small)
-                        .offset(x: 9)
-                }
+            }
+            
+            if story.isFavorite {
+                Image(systemName: "star.circle")
+                    .foregroundColor(Color(UIColor.systemOrange))
+                    .imageScale(.small)
+                    .offset(x: 24)
             }
         }
         .padding(.vertical, 3)

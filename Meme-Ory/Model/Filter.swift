@@ -67,7 +67,7 @@ final class Filter: ObservableObject {
     //  MARK: Sort
     
     @Published
-    var itemToSortBy = SortByOptions.text
+    var itemToSortBy = SortByOptions.timestamp
     enum SortByOptions: String, CaseIterable {
         case timestamp, text
         
