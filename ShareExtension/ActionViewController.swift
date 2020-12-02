@@ -27,11 +27,13 @@ class ActionViewController: UIViewController {
         saveButton.style = .done
         navigationItem.setRightBarButton(saveButton, animated: true)
         
-        if let item = self.extensionContext?.inputItems.first as? NSExtensionItem,
-           let provider = item.attachments?.first,
-           provider.hasItemConformingToTypeIdentifier(kUTTypeText as String) {
+        guard let item = self.extensionContext?.inputItems.first as? NSExtensionItem,
+              let provider = item.attachments?.first else { return }
+        
+        // text
+        if provider.hasItemConformingToTypeIdentifier(kUTTypeText as String) {
             weak var weakTextView = self.textView
-            provider.loadItem(forTypeIdentifier: kUTTypeText as String, options: nil, completionHandler: { (result, error) in
+            provider.loadItem(forTypeIdentifier: kUTTypeText as String) { (result, error) in
                 DispatchQueue.main.async {
                     if let strongTextView = weakTextView {
                         if let text = result as? String {
@@ -41,7 +43,25 @@ class ActionViewController: UIViewController {
                         }
                     }
                 }
-            })
+            }
+        }
+        
+        // from web
+        if provider.hasItemConformingToTypeIdentifier(kUTTypePropertyList as String) {
+            weak var weakTextView = self.textView
+            provider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) { (result, error) in
+                guard let itemDictionary = result as? NSDictionary else { return }
+                guard let javaScriptValues = itemDictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
+                
+                let pageTitle = javaScriptValues["title"] as? String ?? ""
+                let pageURL = javaScriptValues["URL"] as? String ?? ""
+                
+                DispatchQueue.main.async {
+                    if let strongTextView = weakTextView {
+                        strongTextView.text = "\(pageTitle)\n\(pageURL)"
+                    }
+                }
+            }
         }
     }
     
