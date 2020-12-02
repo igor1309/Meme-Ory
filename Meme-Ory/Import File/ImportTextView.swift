@@ -24,7 +24,22 @@ struct ImportTextView: View {
     
     var body: some View {
         if model.briefs.isEmpty {
-            Text("Nothing to import or cannot parse this file.")
+            NavigationView {
+                VStack {
+                    Text("Nothing to import or cannot parse this file\n(an array of strings would be ok)")
+                        .padding(.vertical)
+                    
+                    Text(model.string)
+                        .foregroundColor(.secondary)
+                        .font(.caption)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Spacer()
+                }
+                .padding()
+                .navigationBarTitle("Import Fail", displayMode: .inline)
+                .navigationBarItems(trailing: Button("Close") { presentation.wrappedValue.dismiss() })
+            }
         } else {
             NavigationView {
                 List {
@@ -55,9 +70,11 @@ struct ImportTextView: View {
 
                 Text("\(String(story.text.prefix(50)))...")
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(story.check ? Color.primary : .secondary)
                     .font(.subheadline)
                     .padding(.vertical, 3)
             }
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -101,22 +118,9 @@ struct ImportTextView: View {
     }
 }
 
-fileprivate extension ImportTextViewModel {
-    convenience init(briefs: [Brief]) {
-        self.init(url: URL(string: "")!)
-        self.briefs = briefs
-    }
-}
-
-fileprivate extension ImportTextView {
-    init(briefs: [Brief]) {
-        _model = StateObject(wrappedValue: ImportTextViewModel(briefs: briefs))
-    }
-}
-
 struct ImportBriefView_Previews: PreviewProvider {
     static var previews: some View {
-        ImportTextView(briefs: Brief.examples)
+        ImportTextView(texts: SampleData.texts)
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environment(\.colorScheme, .dark)
     }

@@ -9,23 +9,23 @@ import Foundation
 
 final class ImportTextViewModel: ObservableObject {
     @Published var briefs: [Brief]
+    @Published private(set) var string: String
     
     init(url: URL) {
         let texts = url.getTexts()
         
-        if texts.isEmpty {
-            briefs = url.getBriefs()
-        }
-        
         briefs = texts.map {
             Brief(text: $0)
         }
+        
+        string = (try? String(contentsOf: url)) ?? ""
     }
     
     init(texts: [String]) {
         briefs = texts.map {
             Brief(text: $0)
         }
+        string = texts.joined(separator: "\n")
     }
     
     var count: Int {

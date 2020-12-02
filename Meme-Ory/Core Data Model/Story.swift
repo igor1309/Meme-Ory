@@ -69,18 +69,6 @@ extension Sequence where Element == Story {
         
         return try? encoder.encode(briefs)
     }
-    
-    /// convert [Story] to [Brief] and encode
-    private func export() -> Data? {
-        let briefs = map {
-            Brief(text: $0.text)
-        }
-        
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        return try? encoder.encode(briefs)
-    }
 }
 
 

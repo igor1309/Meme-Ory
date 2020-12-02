@@ -15,26 +15,6 @@ struct Brief: Identifiable, Hashable {
     var check: Bool = false
 }
 
-extension Brief: Codable {
-    enum CodingKeys: CodingKey { case text }
-}
-
-extension Brief: Comparable {
-    static func < (lhs: Brief, rhs: Brief) -> Bool {
-        lhs.text < rhs.text
-    }
-}
-
-extension Brief {
-    static var example: Brief {
-        Brief.examples.randomElement()!
-    }
-    
-    static var examples: [Brief] {
-        SampleData.texts.map { Brief(text: $0, check: Bool.random()) }
-    }
-}
-
 extension Sequence where Element == Brief {
     func convertToStories(in context: NSManagedObjectContext) {
         for element in self {
