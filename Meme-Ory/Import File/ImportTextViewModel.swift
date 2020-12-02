@@ -10,17 +10,6 @@ import Foundation
 final class ImportTextViewModel: ObservableObject {
     @Published var briefs: [Brief]
     
-    var selectedBriefs: [Brief] {
-        briefs.filter { $0.check }
-    }
-    
-    var count: Int {
-        briefs.count
-    }
-    var selectedCount: Int {
-        briefs.filter { $0.check }.count
-    }
-    
     init(url: URL) {
         let texts = url.getTexts()
         
@@ -33,8 +22,22 @@ final class ImportTextViewModel: ObservableObject {
         }
     }
     
-    init(briefs: [Brief]) {
-        self.briefs = briefs
+    init(texts: [String]) {
+        briefs = texts.map {
+            Brief(text: $0)
+        }
+    }
+    
+    var count: Int {
+        briefs.count
+    }
+    
+    var selectedBriefs: [Brief] {
+        briefs.filter { $0.check }
+    }
+    
+    var selectedCount: Int {
+        briefs.filter { $0.check }.count
     }
     
     func toggleCheck(for brief: Brief) {

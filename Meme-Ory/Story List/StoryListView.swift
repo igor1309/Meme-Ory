@@ -36,11 +36,12 @@ struct StoryListView: View {
     }
     
     @State private var activeURL: URL?
-    @State private var showingCreateSheet = false
-    @State private var showingConfirmation = false
-    @State private var showImportTextView = false
-    @State private var isImporting = false
-    @State private var isExporting = false
+    @State private var showingCreateNewStorySheet = false
+    @State private var showingDeleteConfirmation = false
+    @State private var showingImportTextView = false
+    @State private var showingFailedImportAlert = false
+    @State private var showingFileImporter = false
+    @State private var showingFileExporter = false
     @State private var importFileURL: URL?
     @State private var temporaryFileURL: URL?
     @State private var offsets = IndexSet()
@@ -75,12 +76,12 @@ struct StoryListView: View {
                             })
         .onChange(of: scenePhase, perform: handleScenePhase)
         .onOpenURL(perform: handleURL)
-        .fileImporter(isPresented: $isImporting, allowedContentTypes: [UTType.json], onCompletion: handleFileImport)
-        .fileExporter(isPresented: $isExporting, document: document, contentType: .json, onCompletion: handlerFileExport)
+        .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
+        .fileExporter(isPresented: $showingFileExporter, document: document, contentType: .json, onCompletion: handlerFileExporter)
+        .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
+        .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
+        .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
         .onDisappear(perform: deleteTemporaryFile)
-        .actionSheet(isPresented: $showingConfirmation, content: confirmationActionSheet)
-        .sheet(isPresented: $showImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
-        .alert(isPresented: $showingCannotImportAlert, content: failedImportAlert)
     }
     
     private func handleScenePhase(scenePhase: ScenePhase) {
@@ -90,15 +91,14 @@ struct StoryListView: View {
     }
     
     private func handleURL(_ url: URL) {
-        showingCannotImportAlert = false
-        showImportTextView = false
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             
             guard let deeplink = url.deeplink else {
-                showingCannotImportAlert = true
+                showingFailedImportAlert = true
                 return
             }
+            
+            print(deeplink)
             
             switch deeplink {
                 case .home:
@@ -113,24 +113,22 @@ struct StoryListView: View {
                     withAnimation {
                         self.importFileURL = url
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-                            showImportTextView = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                            showingImportTextView = true
                         }
                     }
             }
         }
     }
     
-    private func handleFileImport(_ result: Result<URL, Error>) {
+    private func handleFileImporter(_ result: Result<URL, Error>) {
         switch result {
-            case .success:
-                withAnimation {
-                    guard let fileURL: URL = try? result.get() else { return }
-                    
-                    importFileURL = fileURL
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
-                        showImportTextView = true
+            case .success(let url):
+                print("Import success")
+                importFileURL = url
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    withAnimation {
+                        showingImportTextView = true
                     }
                 }
             case .failure(let error):
@@ -150,7 +148,7 @@ struct StoryListView: View {
     
     private func confirmDeletion(offsets: IndexSet) {
         self.offsets = offsets
-        showingConfirmation = true
+        showingDeleteConfirmation = true
     }
     
     private func confirmationActionSheet() -> ActionSheet {
@@ -180,13 +178,13 @@ struct StoryListView: View {
             haptics.feedback()
             
             withAnimation {
-                showingCreateSheet = true
+                showingCreateNewStorySheet = true
             }
         } label: {
             Image(systemName: "doc.badge.ellipsis")
                 .padding([.leading, .vertical])
         }
-        .sheet(isPresented: $showingCreateSheet) {
+        .sheet(isPresented: $showingCreateNewStorySheet) {
             NavigationView {
                 StoryEditorView()
             }
@@ -274,12 +272,10 @@ struct StoryListView: View {
     /// import File with Stories
     private func importFileButton() -> some View {
         Button {
-            isImporting = false
-            
             // fix broken picker sheet
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
                 withAnimation {
-                    isImporting = true
+                    showingFileImporter = true
                 }
             }
         } label: {
@@ -291,8 +287,6 @@ struct StoryListView: View {
     private func exportFileButton() -> some View {
         Button {
             DispatchQueue.global(qos: .userInitiated).async {
-                isExporting = false
-                
                 guard let data = stories.exportTexts() else {
                     print("Error creating export from stories")
                     return
@@ -303,7 +297,7 @@ struct StoryListView: View {
                 // fix broken picker sheet
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
                     withAnimation {
-                        isExporting = true
+                        showingFileExporter = true
                     }
                 }
             }
@@ -312,7 +306,7 @@ struct StoryListView: View {
         }
     }
     
-    private func handlerFileExport(_ result: Result<URL, Error>) {
+    private func handlerFileExporter(_ result: Result<URL, Error>) {
         switch result {
             case .success:
                 print("Exported successfully.")
@@ -330,11 +324,11 @@ struct StoryListView: View {
         } else {
             ErrorSheet(message: "Error getting Import File URL\nPlease try again") {
                 Button("Try again") {
-                    showImportTextView = false
+                    showingImportTextView = false
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
                         withAnimation {
-                            showImportTextView = true
+                            showingImportTextView = true
                         }
                     }
                 }
@@ -342,7 +336,6 @@ struct StoryListView: View {
         }
     }
     
-    @State private var showingCannotImportAlert = false
     private func failedImportAlert() -> Alert {
         Alert(title: Text("Error"), message: Text("Can't process yuor request.\nSorry about that"), dismissButton: Alert.Button.cancel(Text("Ok")))
     }

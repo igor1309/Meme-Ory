@@ -12,7 +12,8 @@ struct Meme_OryApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ImportTextTesting()
+              ContentView()
         }
     }
 }

@@ -18,9 +18,13 @@ struct ImportTextView: View {
         _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
     }
     
+    init(texts: [String]) {
+        _model = StateObject(wrappedValue: ImportTextViewModel(texts: texts))
+    }
+    
     var body: some View {
         if model.briefs.isEmpty {
-            Text("Nothing to import or can't parse.")
+            Text("Nothing to import or cannot parse this file.")
         } else {
             NavigationView {
                 List {
@@ -44,16 +48,15 @@ struct ImportTextView: View {
                 model.toggleCheck(for: story)
             }
         } label: {
-            Label {
+            HStack {
+                Image(systemName: story.check ? "checkmark.circle" : "circle")
+                    .foregroundColor(story.check ? Color.green : .secondary)
+                    .imageScale(.large)
+
                 Text("\(String(story.text.prefix(50)))...")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.subheadline)
                     .padding(.vertical, 3)
-            } icon: {
-                Image(systemName: story.check ? "checkmark.circle" : "circle")
-                    .foregroundColor(story.check ? Color.green : .secondary)
-                    .imageScale(.large)
-                    .offset(y: 6)
             }
         }
         .buttonStyle(PlainButtonStyle())
@@ -95,6 +98,13 @@ struct ImportTextView: View {
     private func importAll() {
         model.briefs.convertToStories(in: context)
         presentation.wrappedValue.dismiss()
+    }
+}
+
+fileprivate extension ImportTextViewModel {
+    convenience init(briefs: [Brief]) {
+        self.init(url: URL(string: "")!)
+        self.briefs = briefs
     }
 }
 
