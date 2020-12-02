@@ -43,6 +43,7 @@ struct StoryListView: View {
     @State private var showingFileImporter = false
     @State private var showingFileExporter = false
     @State private var importFileURL: URL?
+    @State private var texts: [String]?
     @State private var temporaryFileURL: URL?
     @State private var offsets = IndexSet()
     @State private var document = JSONDocument(data: "".data(using: .utf8)!)
@@ -79,7 +80,7 @@ struct StoryListView: View {
         .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
         .fileExporter(isPresented: $showingFileExporter, document: document, contentType: .json, onCompletion: handlerFileExporter)
         .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
-        .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
+        .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil; texts = nil }, content: importTextView)
         .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
         .onDisappear(perform: deleteTemporaryFile)
     }
@@ -122,17 +123,39 @@ struct StoryListView: View {
     }
     
     private func handleFileImporter(_ result: Result<URL, Error>) {
-        switch result {
-            case .success(let url):
-                print("Import success")
+        // for testing and easy switch between passing url and passing texts
+        let useURL = true
+        
+        switch (result, useURL) {
+            // passing url
+            case (.success(let url), true):
+                print("File Importer success: got url \(url)")
+                print("passing url...")
+                texts = nil
                 importFileURL = url
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     withAnimation {
                         showingImportTextView = true
                     }
                 }
-            case .failure(let error):
-                print("Import error \(error.localizedDescription)")
+                
+            // will be passing texts, parsed from url, not url itself
+            case (.success(let url), false):
+                print("File Importer success: got url \(url)")
+                print("passing texts...")
+                importFileURL = nil
+                
+                texts = url.getTexts()
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    withAnimation {
+                        showingImportTextView = true
+                    }
+                }
+                
+            case (.failure(let error), _):
+                print("File Importer error \(error.localizedDescription)")
         }
     }
     
@@ -320,7 +343,10 @@ struct StoryListView: View {
         if let importFileURL = importFileURL {
             ImportTextView(url: importFileURL)
                 .environment(\.managedObjectContext, context)
-                .environmentObject(filter)
+                //.environmentObject(filter)
+        } else if let texts = texts {
+            ImportTextView(texts: texts)
+                .environment(\.managedObjectContext, context)
         } else {
             ErrorSheet(message: "Error getting Import File URL\nPlease try again") {
                 Button("Try again") {

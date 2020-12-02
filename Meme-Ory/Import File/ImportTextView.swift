@@ -24,7 +24,22 @@ struct ImportTextView: View {
     
     var body: some View {
         if model.briefs.isEmpty {
-            Text("Nothing to import or cannot parse this file.")
+            NavigationView {
+                VStack {
+                    Text("Nothing to import or cannot parse this file\n(an array of strings would be ok)")
+                        .padding(.vertical)
+                    
+                    Text(model.string)
+                        .foregroundColor(.secondary)
+                        .font(.caption)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Spacer()
+                }
+                .padding()
+                .navigationBarTitle("Import Fail", displayMode: .inline)
+                .navigationBarItems(trailing: Button("Close") { presentation.wrappedValue.dismiss() })
+            }
         } else {
             NavigationView {
                 List {
@@ -52,12 +67,14 @@ struct ImportTextView: View {
                 Image(systemName: story.check ? "checkmark.circle" : "circle")
                     .foregroundColor(story.check ? Color.green : .secondary)
                     .imageScale(.large)
-
+                
                 Text("\(String(story.text.prefix(50)))...")
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(story.check ? Color.primary : .secondary)
                     .font(.subheadline)
                     .padding(.vertical, 3)
             }
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }

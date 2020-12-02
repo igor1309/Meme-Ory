@@ -36,15 +36,23 @@ extension URL {
 
 extension URL {
     func getTexts() -> [String] {
+        print("getTexts got url \(self)")
+        
+        if let string = try? String(contentsOf: self) {
+            print("getTexts: contents of url (prefix(100)): \(string.prefix(100))")
+        } else {
+            print("getTexts: cannot get string with contents of url")
+        }
+        
         guard let data = try? Data(contentsOf: self) else {
-            print("Failed to load file from \(self)")
+            print("getTexts: Failed to load file from \(self)")
             return []
         }
         
         let decoder = JSONDecoder()
         
         guard let texts = try? decoder.decode([String].self, from: data) else {
-            print("Failed to decode file at \(self)")
+            print("getTexts: Failed to decode file at \(self)")
             return []
         }
         
@@ -55,14 +63,14 @@ extension URL {
     
     func getBriefs() -> [Brief] {
         guard let data = try? Data(contentsOf: self) else {
-            print("Failed to load file from \(self)")
+            print("getTexts: Failed to load file from \(self)")
             return []
         }
         
         let decoder = JSONDecoder()
         
         guard let briefs = try? decoder.decode([Brief].self, from: data) else {
-            print("Failed to decode file at \(self)")
+            print("getTexts: Failed to decode file at \(self)")
             return []
         }
         
