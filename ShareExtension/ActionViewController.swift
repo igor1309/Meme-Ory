@@ -16,9 +16,17 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 8, right: 16)
         
         navigationItem.title = "New Story"
+
+        
+        // fixing keyboard
+        // https://www.hackingwithswift.com/read/19/7/fixing-the-keyboard-notificationcenter
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         navigationItem.setLeftBarButton(cancelButton, animated: true)
@@ -27,6 +35,9 @@ class ActionViewController: UIViewController {
         saveButton.style = .done
         navigationItem.setRightBarButton(saveButton, animated: true)
         
+        
+        //  MARK: Handling Extension Context
+        //
         guard let item = self.extensionContext?.inputItems.first as? NSExtensionItem,
               let provider = item.attachments?.first else { return }
         
@@ -38,8 +49,6 @@ class ActionViewController: UIViewController {
                     if let strongTextView = weakTextView {
                         if let text = result as? String {
                             strongTextView.text = text
-                            //  MARK: - FINISH THIS
-                            //
                         }
                     }
                 }
@@ -47,6 +56,7 @@ class ActionViewController: UIViewController {
         }
         
         // from web
+        // https://www.hackingwithswift.com/read/19/5/establishing-communication
         if provider.hasItemConformingToTypeIdentifier(kUTTypePropertyList as String) {
             weak var weakTextView = self.textView
             provider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) { (result, error) in
@@ -64,6 +74,26 @@ class ActionViewController: UIViewController {
             }
         }
     }
+    
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            textView.contentInset = .zero
+        } else {
+            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+        
+        textView.scrollIndicatorInsets = textView.contentInset
+        
+        let selectedRange = textView.selectedRange
+        textView.scrollRangeToVisible(selectedRange)
+    }
+    
     
     @IBAction func cancel() {
         extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
