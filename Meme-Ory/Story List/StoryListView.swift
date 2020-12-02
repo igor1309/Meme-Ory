@@ -202,7 +202,7 @@ struct StoryListView: View {
                 shareButton()
             }
             Section {
-                importFileButton()
+                importFileButton().disabled(true)
                 exportFileButton()
             }
         } label: {
