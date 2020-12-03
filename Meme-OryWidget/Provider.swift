@@ -12,11 +12,11 @@ import CoreData
 struct Provider: TimelineProvider {
     
     func placeholder(in context: Context) -> Entry {
-        Entry(date: Date(), stories: [SampleData.story(), SampleData.story()])
+        Entry(date: Date(), stories: [SampleData.story()])
     }
     
     func getSnapshot(in context: Context, completion: @escaping (Entry) -> ()) {
-        let entry = Entry(date: Date(), stories: [SampleData.story(), SampleData.story()])
+        let entry = Entry(date: Date(), stories: [SampleData.story()])
         completion(entry)
     }
     

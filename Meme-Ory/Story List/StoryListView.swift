@@ -91,14 +91,14 @@ struct StoryListView: View {
     }
     
     private func handleURL(_ url: URL) {
+        print("onOpenURL fired")
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             
             guard let deeplink = url.deeplink else {
                 showingFailedImportAlert = true
                 return
             }
-            
-            print(deeplink)
             
             switch deeplink {
                 case .home:
@@ -107,11 +107,15 @@ struct StoryListView: View {
                     return
                 case let .story(reference):
                     withAnimation {
-                        activeURL = reference
+                        activeURL = nil
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            activeURL = reference
+                        }
                     }
                 case let .file(url):
                     withAnimation {
-                        self.importFileURL = url
+                        importFileURL = url
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
                             showingImportTextView = true
@@ -197,6 +201,7 @@ struct StoryListView: View {
         Menu {
             Section {
                 pasteClipboardToStoryButton()
+                // PasteClipboardToStoryButton(action: {})
             }
             Section {
                 shareButton()

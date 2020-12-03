@@ -35,7 +35,7 @@ extension Story {
     
     var url: URL {
         let absoluteString = objectID.uriRepresentation().absoluteString
-        let url = URL(string: String(format: URL.appDetailsUrlFormat, absoluteString))!
+        let url = URL(string: String(format: URL.appDetailsURLFormat, absoluteString))!
         
         return url
     }
@@ -98,5 +98,34 @@ extension Story {
         request.fetchLimit = 1
         
         return request
+    }
+}
+
+extension Story {
+    static func last(in context: NSManagedObjectContext) -> Story? {
+        let request = Story.fetchRequest(NSPredicate.all)
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp_", ascending: false)]
+        request.fetchLimit = 1
+        if let fetch = try? context.fetch(request) {
+            return fetch.first
+        } else {
+            return nil
+        }
+    }
+    
+    static func random(_ k: Int = 1, in context: NSManagedObjectContext) -> [Story] {
+        let request = Story.fetchRequest(NSPredicate.all)
+        let count = context.realCount(for: request)
+        request.fetchOffset = Int(arc4random_uniform(UInt32(count)))
+        request.fetchLimit = k
+        if let fetch = try? context.fetch(request) {
+            return fetch
+        } else {
+            return []
+        }
+    }
+    
+    static func oneRandom(in context: NSManagedObjectContext) -> Story? {
+        Story.random(1, in: context).first
     }
 }

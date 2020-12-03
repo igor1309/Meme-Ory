@@ -12,8 +12,9 @@ struct Meme_OryApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            ImportTextTesting()
-              ContentView()
+            StoryView().environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            // ImportTextTesting()
+            // ContentView()
         }
     }
 }

@@ -27,7 +27,7 @@ struct WidgetEntryView: View {
         if stories.isEmpty {
             Text("No stories here ☹️")
                 .font(.title)
-                .widgetURL(URL(string: URL.appHomeUrl))
+                .widgetURL(URL(string: URL.appHomeURL))
         } else {
             VStack(spacing: 12) {
                 ForEach(stories, content: storyRowView)
@@ -53,6 +53,7 @@ struct WidgetEntryView: View {
             .font(.footnote)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            .contentShape(Rectangle())
     }
     
     private func storyText(of story: Story) -> String {

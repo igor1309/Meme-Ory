@@ -40,6 +40,9 @@ struct SampleData {
         let story = Story(context: context)
         story.text = texts[storyIndex % texts.count]
         story.timestamp = Date()
+        #if DEBUG
+        print("Sample Story created with url \(story.url)")
+        #endif
         
         let tag = Tag(context: context)
         tag.name = SampleData.tagStrings[tagIndex % tagStrings.count]

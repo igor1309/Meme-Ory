@@ -29,6 +29,8 @@
 		2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
 		2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportTextView.swift */; };
+		2A4F4A9825786CD7008536DE /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9725786CD7008536DE /* StoryView.swift */; };
+		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
 		2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5005F2257197B4005E969A /* ImportTextViewModel.swift */; };
 		2A64D42D257164B900C1817F /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A6A3112257163CC007F2C0D /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
@@ -130,6 +132,8 @@
 		2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionView.swift; sourceTree = "<group>"; };
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		2A33A3E125714DA500538FE3 /* ImportTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextView.swift; sourceTree = "<group>"; };
+		2A4F4A9725786CD7008536DE /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
+		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
 		2A5005F2257197B4005E969A /* ImportTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextViewModel.swift; sourceTree = "<group>"; };
 		2A85412A256EFED20051906B /* TagEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEditView.swift; sourceTree = "<group>"; };
 		2A8E4409256EF19A002C0DFC /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
+				2A4F4A9725786CD7008536DE /* StoryView.swift */,
 				2A935CC0256AF608004B6E10 /* Story List */,
 				2AC0845C257648A900AFAE1C /* Story Editor */,
 				2A935CBD256AF5EE004B6E10 /* Search */,
@@ -397,6 +402,7 @@
 				2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */,
 				2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */,
 				2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */,
+				2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */,
 				2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */,
 			);
 			path = Extensions;
@@ -559,9 +565,11 @@
 				2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */,
 				2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */,
 				2A935C9B256A7717004B6E10 /* Tag.swift in Sources */,
+				2A4F4A9825786CD7008536DE /* StoryView.swift in Sources */,
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A9CA64A2575B83B00FCD4D0 /* ListOptionsMenu.swift in Sources */,
+				2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */,
 				2AEEF9022570007F008D1B31 /* EKEventStore+Ext.swift in Sources */,
 				2A251B8A25767960004F9218 /* ShareStoryView.swift in Sources */,
 				2A85412B256EFED20051906B /* TagEditView.swift in Sources */,
@@ -766,7 +774,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -792,7 +800,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -817,7 +825,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -841,7 +849,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -864,7 +872,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -887,7 +895,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

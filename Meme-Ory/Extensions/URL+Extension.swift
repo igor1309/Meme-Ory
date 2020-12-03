@@ -27,10 +27,32 @@ extension URL {
         guard pathComponents.contains(URL.appDetailsPath) else { return .home }
         guard let query = query else { return nil }
         let components = query.split(separator: ",").flatMap { $0.split(separator: "=") }
+        
         guard let idIndex = components.firstIndex(of: Substring(URL.appReferenceQueryName)) else { return nil }
         guard idIndex + 1 < components.count else { return nil }
         
         return .story(reference: self)
+    }
+    
+    var coreDataURL: URL? {
+        guard !absoluteString.hasPrefix("x-coredata") else { return self }
+        
+        //  MARK: - FINISH THIS: SAME PART IN var deeplink
+        guard scheme == URL.appScheme else { return nil }
+        guard pathComponents.contains(URL.appDetailsPath) else { return nil }
+        guard let query = query else { return nil }
+        let components = query.split(separator: ",").flatMap { $0.split(separator: "=") }
+        
+        // meme-ory://www.meme-ory.com/details?reference=x-coredata://50A46BEA-26D5-437F-A49D-FD1C7224B041/Story/p3
+        // x-coredata://50A46BEA-26D5-437F-A49D-FD1C7224B041/Story/p3
+        // x-coredata://<UUID>/<EntityName>/p<Key>
+        guard components.count == 2 else { return nil }
+        let coreDataString = components[1]
+        guard coreDataString.hasPrefix("x-coredata") else { return nil }
+        #if DEBUG
+        //print(coreDataString)
+        #endif
+        return URL(string: String(coreDataString))
     }
 }
 
@@ -59,9 +81,9 @@ extension URL {
 extension URL {
     static let appScheme = "meme-ory"
     static let appHost = "www.meme-ory.com"
-    static let appHomeUrl = "\(Self.appScheme)://\(Self.appHost)"
+    static let appHomeURL = "\(Self.appScheme)://\(Self.appHost)"
     static let appDetailsPath = "details"
     static let appReferenceQueryName = "reference"
-    static let appDetailsUrlFormat = "\(Self.appHomeUrl)/\(Self.appDetailsPath)?\(Self.appReferenceQueryName)=%@"
+    static let appDetailsURLFormat = "\(Self.appHomeURL)/\(Self.appDetailsPath)?\(Self.appReferenceQueryName)=%@"
     
 }
