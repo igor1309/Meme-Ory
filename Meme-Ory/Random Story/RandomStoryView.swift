@@ -36,10 +36,6 @@ struct RandomStoryView: View {
                         .contentShape(Rectangle())
                         .gesture(gesture)
                         
-                        Button("Clear tags") {
-                            model.tags = []
-                        }
-                        
                         HStack(alignment: .top) {
                             Button(action: model.showTagGrid) {
                                 Text(model.tagNames)
@@ -213,7 +209,7 @@ struct RandomStoryView: View {
         LongPressGesture(minimumDuration: 1, maximumDistance: 10)
             .updating($isDetectingGesture) { currentstate, gestureState, transaction in
                 gestureState = currentstate
-                //                transaction.animation = Animation.easeIn(duration: 1)
+                // transaction.animation = Animation.easeIn(duration: 1)
             }
             .onEnded { finished in
                 model.getRandomStory()
@@ -222,7 +218,8 @@ struct RandomStoryView: View {
     
     var tapGesture: some Gesture {
         TapGesture(count: 2)
-            .updating($isDetectingGesture) { _, _, _ in }
+            // updating does mix with long text scrolling
+            // .updating($isDetectingGesture) { _, _, _ in }
             .onEnded {
                 model.getRandomStory()
             }

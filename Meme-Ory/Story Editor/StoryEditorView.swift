@@ -17,19 +17,15 @@ struct StoryEditorView: View {
     
     @StateObject private var model: StoryEditorViewModel
     
-    private let storyToEdit: Story?
-    
     // Create new Story
     init() {
         _model = StateObject(wrappedValue: StoryEditorViewModel())
-        storyToEdit = nil
     }
     
     // Edit Existing Story
     init(story: Story) {
-        let model = StoryEditorViewModel(text: story.text, tags: Set(story.tags), isFavorite: story.isFavorite, calendarItemIdentifier: story.calendarItemIdentifier)
+        let model = StoryEditorViewModel(story: story)
         _model = StateObject(wrappedValue: model)
-        storyToEdit = story
         
         /// TextEditor is backed by UITextView. Get rid of the UITextView's backgroundColor to set  background
         UITextView.appearance().backgroundColor = .clear
@@ -64,7 +60,7 @@ struct StoryEditorView: View {
         .navigationBarTitle(model.mode.title, displayMode: .inline)
         .navigationBarItems(leading: cancelButton(), trailing: saveButton())
         .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
-        .onAppear(perform: reminderCleanUp)
+        .onAppear { model.reminderCleanUp(eventStore: eventStore, context: context) }
     }
     
     @ViewBuilder
@@ -85,31 +81,6 @@ struct StoryEditorView: View {
                    !content.isEmpty {
                     model.text = content
                 }
-            }
-        }
-    }
-    
-    private func reminderCleanUp() {
-        //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
-        if model.mode == .edit,
-           eventStore.accessGranted,
-           let storyToEdit = storyToEdit {
-            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer in story and draft
-            let reminder = eventStore.reminder(for: storyToEdit)
-            if storyToEdit.calendarItemIdentifier != "" && reminder == nil {
-                // this cleanup would be saved now, so pretend no changes were made here:
-                // store and re-apply hasChanges value with little delay
-                // to let publishers finish first
-                let hasChanges = model.hasChanges
-                
-                storyToEdit.calendarItemIdentifier_ = nil
-                model.calendarItemIdentifier = ""
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    model.hasChanges = hasChanges
-                }
-                
-                context.saveContext()
             }
         }
     }
@@ -192,40 +163,13 @@ struct StoryEditorView: View {
     
     private func saveButton() -> some View {
         Button(model.hasChanges ? "Save" : "Done") {
-            saveStory()
+            model.saveStory(in: context)
             presentation.wrappedValue.dismiss()
         }
         .foregroundColor(model.hasChanges ? .orange : .clear)
         .disabled(model.text.isEmpty)
     }
     
-    private func saveStory() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            let story: Story
-            
-            if let storyToEdit = storyToEdit {
-                /// editing here
-                story = storyToEdit
-                story.objectWillChange.send()
-            } else {
-                /// create new story
-                story = Story(context: context)
-                story.timestamp = Date()
-            }
-            
-            story.text                   = model.text
-            story.tags                   = Array(model.tags)
-            story.isFavorite             = model.isFavorite
-            story.calendarItemIdentifier = model.calendarItemIdentifier
-            
-            context.saveContext()
-            
-            //            presentation.wrappedValue.dismiss()
-        }
-    }
 }
 
 struct StoryEditorView_Previews: PreviewProvider {

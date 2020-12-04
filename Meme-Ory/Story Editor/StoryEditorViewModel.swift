@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CoreData
 
 final class StoryEditorViewModel: ObservableObject {
     @Published var text: String
@@ -16,6 +17,8 @@ final class StoryEditorViewModel: ObservableObject {
     @Published var mode: Mode
     
     @Published var hasChanges: Bool = false
+    
+    let storyToEdit: Story?
     
     enum Mode {
         case create, edit
@@ -36,16 +39,18 @@ final class StoryEditorViewModel: ObservableObject {
         isFavorite = false
         calendarItemIdentifier = ""
         mode = .create
+        storyToEdit = nil
         
         subscribeToChanges()
     }
     
-    init(text: String, tags: Set<Tag>, isFavorite: Bool, calendarItemIdentifier: String) {
-        self.text = text
-        self.tags = tags
-        self.isFavorite = isFavorite
-        self.calendarItemIdentifier = calendarItemIdentifier
+    init(story: Story) {
+        self.text = story.text
+        self.tags = Set(story.tags)
+        self.isFavorite = story.isFavorite
+        self.calendarItemIdentifier = story.calendarItemIdentifier
         self.mode = .edit
+        storyToEdit = story
         
         subscribeToChanges()
     }
@@ -77,6 +82,63 @@ final class StoryEditorViewModel: ObservableObject {
     deinit {
         for cancell in cancellables {
             cancell.cancel()
+        }
+    }
+    
+    
+    //  MARK: Functions
+    
+    func reminderCleanUp(eventStore: EventStore, context: NSManagedObjectContext) {
+        //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
+        if mode == .edit,
+           eventStore.accessGranted,
+           let storyToEdit = storyToEdit {
+            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer in story and draft
+            let reminder = eventStore.reminder(for: storyToEdit)
+            if storyToEdit.calendarItemIdentifier != "" && reminder == nil {
+                // this cleanup would be saved now, so pretend no changes were made here:
+                // store and re-apply hasChanges value with little delay
+                // to let publishers finish first
+                let hasChanges = self.hasChanges
+                
+                storyToEdit.calendarItemIdentifier_ = nil
+                calendarItemIdentifier = ""
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.hasChanges = hasChanges
+                }
+                
+                context.saveContext()
+            }
+        }
+    }
+    
+    
+    func saveStory(in context: NSManagedObjectContext) {
+        let haptics = Haptics()
+        haptics.feedback()
+        
+        withAnimation {
+            let story: Story
+            
+            if let storyToEdit = storyToEdit {
+                /// editing here
+                story = storyToEdit
+                story.objectWillChange.send()
+            } else {
+                /// create new story
+                story = Story(context: context)
+                story.timestamp = Date()
+            }
+            
+            story.text                   = text
+            story.tags                   = Array(tags)
+            story.isFavorite             = isFavorite
+            story.calendarItemIdentifier = calendarItemIdentifier
+            
+            context.saveContext()
+            
+            //            presentation.wrappedValue.dismiss()
         }
     }
 }

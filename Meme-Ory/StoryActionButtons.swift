@@ -47,13 +47,16 @@ struct StoryActionButtons: View {
                     MyButton(title: "Copy Story text", icon: "doc.on.doc", labelStyle: labelStyle) {
                         UIPasteboard.general.string = story.text
                     }
-                    MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle, action: { shareText(story.text) })
+                    MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle) {
+                        shareText(story.text)
+                    }
                     
-                    MyButton(title:"¿ Edit Story", icon: "square.and.pencil", labelStyle: labelStyle, action: model.showStoryEditor)
+                    MyButton(title:"Edit Story", icon: "square.and.pencil", labelStyle: labelStyle, action: model.showStoryEditor)
                     
-                    MyButton(title: "¿ Edit Tags", icon: "tag", labelStyle: labelStyle, action: model.showTagGrid)
+                    MyButton(title: "Edit Tags", icon: "tag", labelStyle: labelStyle, action: model.showTagGrid)
                     
-                    MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle) { showingDeleteConfirmation = true
+                    MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle) {
+                        showingDeleteConfirmation = true
                     }
                 }
             }
