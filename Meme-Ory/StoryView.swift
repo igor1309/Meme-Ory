@@ -8,136 +8,120 @@
 import SwiftUI
 import CoreData
 
-struct PasteClipboardToStoryButton: View {
-    @Environment(\.managedObjectContext) private var context
-    
-    let action: () -> Void
-    
-    init(action: @escaping () -> Void) {
-        self.action = action
-    }
-    
-    var body: some View {
-        // if clipboard has text paste and save story
-        Button {
-            if UIPasteboard.general.hasStrings {
-                let haptics = Haptics()
-                haptics.feedback()
-                
-                withAnimation {
-                    if let content = UIPasteboard.general.string,
-                       !content.isEmpty {
-                        let story = Story(context: context)
-                        story.text = content
-                        story.timestamp = Date()
-                        
-                        context.saveContext()
-                        
-                        action()
-                    }
-                }
-            }
-        } label: {
-            Label("Paste to story", systemImage: "doc.on.clipboard")
-        }
-        .disabled(!UIPasteboard.general.hasStrings)
-    }
-}
-
-struct CardModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(
-                Capsule()
-                    .foregroundColor(Color(UIColor.secondarySystemBackground))
-            )
-    }
-}
-
-extension View {
-    func cardModifier() -> some View {
-        self.modifier(CardModifier())
-    }
-}
-
-struct StoryMenu: View {
-    
-    let story: Story
-    
-    var body: some View {
-        Button {
-            story.isFavorite.toggle()
-        } label: {
-            Label("Favorite", systemImage: "star")
-        }
-    }
-}
-
 struct StoryView: View {
-    
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @EnvironmentObject private var filter: Filter
+    @EnvironmentObject private var eventStore: EventStore
     
     @State private var storyURL: URL?
+    @State private var title = "no such story"
+    
+    @FetchRequest(
+        sortDescriptors: []
+    )
+    var stories: FetchedResults<Story>
     
     private var story: Story? {
         context.getObject(with: storyURL) as? Story
     }
     
+    @State private var sheetIdentifier: SheetIdentifier?
+    
+    private struct SheetIdentifier: Identifiable {
+        var id: Modal
+        enum Modal { case list, tags }
+    }
     var body: some View {
-        Group {
+        NavigationView {
             if let story = story {
                 VStack {
-                    Group {
-                        randomStoryButton()
-                        
-                        PasteClipboardToStoryButton {
-                            storyURL = Story.last(in: context)?.url
+                    VStack(spacing: 0) {
+                        ScrollView(showsIndicators: false) {
+                            Text(story.text)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
-                    }
-                    .cardModifier()
-                    .padding(.top)
-                    
-                    Divider()
-                    
-                    Image(systemName: story.isFavorite ? "star.fill" : "star")
-                        .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
-                    
-                    Divider()
-                    
-                    ScrollView(.vertical, showsIndicators: false) {
-                        Text(story.text)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
-                            .contentShape(Rectangle())
-                            .contextMenu {
-                                StoryMenu(story: story)
+                        .cardModifier(strokeBorderColor: isDetectingGesture ? Color(UIColor.systemOrange) : Color(UIColor.systemGray3))
+                        .contentShape(Rectangle())
+                        .gesture(gesture)
+                        
+                        HStack(alignment: .top) {
+                            Button(action: showTagGrid) {
+                                Text(tagNames)
+                                    .foregroundColor(Color(UIColor.systemOrange))
+                                    .font(.caption)
+                                    .padding(.top, 6)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .contentShape(Rectangle())
+                                //        .contextMenu {
+                                //            Label("Edit Tags", systemImage: "tag")
+                                //        }
                             }
+                            
+                            Spacer()
+                            
+                            HStack {
+                                favoriteIcon(story)
+                                reminderIcon(story)
+                            }
+                            .imageScale(.small)
+                            .cardModifier(padding: 9)
+                        }
+                        .padding(.top)
+                        
+                        Text("Double tap to get next random story")
+                            .foregroundColor(Color(UIColor.tertiaryLabel))
+                            .font(.caption)
                     }
-                    
-                    Spacer()
+                    .padding()
                 }
+                .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
+                .navigationBarTitle("Randon Story", displayMode: .inline)
+                .navigationBarItems(leading: listMenu(), trailing: menu())
+                .sheet(item: $sheetIdentifier, content: modalView)
             } else {
-                Text("no such story")
-                    .foregroundColor(.secondary)
+                VStack(spacing: 32) {
+                    Text(title)
+                        .foregroundColor(.secondary)
+                    
+                    Button("Show Random Story") {
+                        getRandomStory()
+                    }
+                }
             }
         }
         .onAppear(perform: getRandomStory)
+        .onDisappear(perform: context.saveContext)
+        .onChange(of: scenePhase, perform: handleScenePhase)
         .onOpenURL(perform: handleOpenURL)
+        .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
     }
     
-    private func randomStoryButton() -> some View {
-        Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            getRandomStory()
-        } label: {
-            Label("Random story", systemImage: "wand.and.stars")
+    private func favoriteIcon(_ story: Story) -> some View {
+        Image(systemName: story.isFavorite ? "star.fill" : "star")
+            .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+        //            .padding([.trailing, .bottom], 6)
+    }
+    
+    private func reminderIcon(_ story: Story) -> some View {
+        //  MARK: - FINISH THIS:
+        //
+        Image(systemName: story.hasReminder ? "bell" : "bell.slash")
+            .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
+        //            .padding([.trailing, .bottom], 6)
+    }
+    
+    private func handleScenePhase(scenePhase: ScenePhase) {
+        if scenePhase == .background {
+            context.saveContext()
         }
     }
     
     private func getRandomStory() {
+        let haptics = Haptics()
+        haptics.feedback()
+        
         withAnimation {
             storyURL = Story.oneRandom(in: context)?.url
         }
@@ -151,17 +135,152 @@ struct StoryView: View {
         let haptics = Haptics()
         haptics.feedback()
         
-        //        withAnimation {
+        // withAnimation {
         storyURL = url
-        //        }
+        //        showingList = false
+        // }
+    }
+    
+    
+    
+    //  MARK: Tags Editing
+    
+    private var tags: Binding<Set<Tag>> {
+        Binding(
+            get: { Set(story?.tags ?? []) },
+            set: { story?.tags = Array($0).sorted() }
+        )
+    }
+    
+    private var tagNames: String {
+        story?.tags.map { $0.name }.joined(separator: ", ") ?? ""
+    }
+    
+    private func showTagGrid() {
+        let haptics = Haptics()
+        haptics.feedback()
+        
+        withAnimation {
+            sheetIdentifier = SheetIdentifier(id: .tags)
+        }
+    }
+    
+
+    //  MARK: Modal View
+    
+    @ViewBuilder
+    private func modalView(sheetIdentifier: SheetIdentifier) -> some View {
+        switch sheetIdentifier.id {
+            case .tags:
+                TagGridWrapperView(selected: tags)
+                    .environment(\.managedObjectContext, context)
+                
+            case .list:
+                NavigationView {
+                    StoryListView(filter: filter, showPasteButton: false)
+                        .navigationBarTitleDisplayMode(.inline)
+                }
+                .environment(\.managedObjectContext, context)
+                .environmentObject(eventStore)
+                .environmentObject(filter)
+        }
+    }
+    
+    
+    //  MARK: List Menu
+    
+    private func listMenu() -> some View {
+        Button {
+            sheetIdentifier = SheetIdentifier(id: .list)
+        } label: {
+            Label("List", systemImage: "list.bullet")
+                .labelStyle(IconOnlyLabelStyle())
+                .frame(width: 44, height: 44, alignment: .leading)
+        }
+    }
+    
+    
+    //  MARK: Menu
+    
+    @ViewBuilder
+    private func menu() -> some View {
+        if let story = story {
+            Menu {
+                StoryActionButtons(story: story, storyURL: .constant(nil), showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
+            } label: {
+                Label("Story Actions", systemImage: "ellipsis.circle")
+                    .labelStyle(IconOnlyLabelStyle())
+                    .frame(width: 44, height: 44, alignment: .trailing)
+            }
+        }
+    }
+    
+    
+    //  MARK: Delete Story
+    
+    @State private var showingDeleteConfirmation = false
+        
+    private func confirmationActionSheet() -> ActionSheet {
+        ActionSheet(
+            title: Text("Delete Story?"),
+            message: Text("Are you sure? This cannot be undone."),
+            buttons: [
+                .destructive(Text("Yes, delete!")) { deleteStory() },
+                .cancel()
+            ]
+        )
+    }
+    
+    private func deleteStory() {
+        let haptics = Haptics()
+        haptics.feedback()
+        
+        withAnimation {
+            if let story = story {
+                context.delete(story)
+                context.saveContext()
+                
+                title = "Story was deleted"
+            }
+        }
+    }
+    
+
+    //  MARK: Long Press and Tap Gesture
+    
+    @GestureState var isDetectingGesture = false
+    
+    var gesture: some Gesture {
+        SimultaneousGesture(longPress, tapGesture)
+    }
+    
+    var longPress: some Gesture {
+        LongPressGesture(minimumDuration: 1, maximumDistance: 10)
+            .updating($isDetectingGesture) { currentstate, gestureState, transaction in
+                gestureState = currentstate
+                //                transaction.animation = Animation.easeIn(duration: 1)
+            }
+            .onEnded { finished in
+                getRandomStory()
+            }
+    }
+    
+    var tapGesture: some Gesture {
+        TapGesture(count: 2)
+            .updating($isDetectingGesture) { _, _, _ in }
+            .onEnded {
+                getRandomStory()
+            }
     }
 }
+
 
 struct StoryView_Previews: PreviewProvider {
     static var previews: some View {
         StoryView()
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+            .environmentObject(EventStore())
+            .environmentObject(Filter())
             .preferredColorScheme(.dark)
-            .previewLayout(.fixed(width: 350, height: 800))
     }
 }

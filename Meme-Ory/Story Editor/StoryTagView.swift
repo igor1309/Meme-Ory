@@ -7,11 +7,29 @@
 
 import SwiftUI
 
+struct StoryTadViewWrapper: View {
+    
+    @ObservedObject var story: Story
+    
+    let hasButton: Bool
+    
+    var body: some View {
+        let tags = Binding(
+            get: { Set(story.tags) },
+            set: { story.tags = Array($0).sorted() }
+        )
+        
+        return StoryTagView(tags: tags, hasButton: hasButton)
+    }
+}
+
 struct StoryTagView: View {
     
     @Environment(\.managedObjectContext) private var context
     
     @Binding var tags: Set<Tag>
+    
+    var hasButton: Bool = true
     
     private var tagNames: String {
         tags.map { $0.name }.joined(separator: ", ")
@@ -35,9 +53,11 @@ struct StoryTagView: View {
                     }
             }
             
-            Spacer()
-            
-            tagsButton()
+            if hasButton {
+                Spacer()
+                
+                tagsButton()
+            }
         }
     }
     

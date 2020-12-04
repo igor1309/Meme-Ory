@@ -18,13 +18,15 @@ struct StoryListView: View {
     
     @ObservedObject private var filter: Filter
     
+    private let showPasteButton: Bool
     /// used to count
     private let fetchRequest: NSFetchRequest<Story>
     
     @FetchRequest private var stories: FetchedResults<Story>
     
-    init(filter: Filter) {
+    init(filter: Filter, showPasteButton: Bool = true) {
         self.filter = filter
+        self.showPasteButton = showPasteButton
         
         fetchRequest = Story.fetchRequest(filter.predicate, sortDescriptors: filter.sortDescriptors)
         
@@ -35,7 +37,6 @@ struct StoryListView: View {
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
-    @State private var activeURL: URL?
     @State private var showingCreateNewStorySheet = false
     @State private var showingDeleteConfirmation = false
     @State private var showingImportTextView = false
@@ -56,13 +57,7 @@ struct StoryListView: View {
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
-                    NavigationLink(
-                        destination: StoryEditorView(story: story),
-                        tag: story.url,
-                        selection: $activeURL
-                    ) {
-                        StoryListRowView(story: story)
-                    }
+                    StoryListRowView(story: story)
                 }
                 .onDelete(perform: confirmDeletion)
             }
@@ -72,56 +67,23 @@ struct StoryListView: View {
         .navigationBarItems(leading: ListOptionsMenu(),
                             trailing: HStack {
                                 importExportShareMenu()
-                                createNewStoryButton()
+                                if showPasteButton {
+                                    createNewStoryButton()
+                                }
                             })
         .onChange(of: scenePhase, perform: handleScenePhase)
-        .onOpenURL(perform: handleURL)
         .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
         .fileExporter(isPresented: $showingFileExporter, document: document, contentType: .json, onCompletion: handlerFileExporter)
         .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
         .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
         .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
-        .onDisappear(perform: deleteTemporaryFile)
+        .onDisappear(perform: onDisapperAction)
     }
     
     private func handleScenePhase(scenePhase: ScenePhase) {
         if scenePhase == .background {
             deleteTemporaryFile()
-        }
-    }
-    
-    private func handleURL(_ url: URL) {
-        print("onOpenURL fired")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-            
-            guard let deeplink = url.deeplink else {
-                showingFailedImportAlert = true
-                return
-            }
-            
-            switch deeplink {
-                case .home:
-                    //  MARK: - FINISH THIS: ANY FEEDBACK TO USER?
-                    /// do nothing we are here
-                    return
-                case let .story(reference):
-                    withAnimation {
-                        activeURL = nil
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            activeURL = reference
-                        }
-                    }
-                case let .file(url):
-                    withAnimation {
-                        importFileURL = url
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-                            showingImportTextView = true
-                        }
-                    }
-            }
+            context.saveContext()
         }
     }
     
@@ -138,6 +100,11 @@ struct StoryListView: View {
             case .failure(let error):
                 print("Import error \(error.localizedDescription)")
         }
+    }
+    
+    private func onDisapperAction() {
+        context.saveContext()
+        deleteTemporaryFile()
     }
     
     private func deleteTemporaryFile() {
@@ -320,25 +287,13 @@ struct StoryListView: View {
         }
     }
     
-    @ViewBuilder
+    
+    //  MARK: Import File
+    
     private func importTextView() -> some View {
-        if let importFileURL = importFileURL {
-            ImportTextView(url: importFileURL)
-                .environment(\.managedObjectContext, context)
-                .environmentObject(filter)
-        } else {
-            ErrorSheet(message: "Error getting Import File URL\nPlease try again") {
-                Button("Try again") {
-                    showingImportTextView = false
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-                        withAnimation {
-                            showingImportTextView = true
-                        }
-                    }
-                }
-            }
-        }
+        ImportTextView(url: importFileURL)
+            .environment(\.managedObjectContext, context)
+            .environmentObject(filter)
     }
     
     private func failedImportAlert() -> Alert {

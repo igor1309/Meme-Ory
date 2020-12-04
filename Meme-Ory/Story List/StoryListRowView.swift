@@ -53,6 +53,7 @@ struct StoryListRowView: View {
         ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading, spacing: 3) {
                 Text(story.storyText())
+                    .lineLimit(3)
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 

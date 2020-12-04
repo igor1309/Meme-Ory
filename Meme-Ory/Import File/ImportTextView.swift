@@ -14,8 +14,12 @@ struct ImportTextView: View {
     
     @StateObject var model: ImportTextViewModel
     
-    init(url: URL) {
-        _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
+    init(url: URL?) {
+        if let url = url {
+            _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
+        } else {
+            _model = StateObject(wrappedValue: ImportTextViewModel(texts: []))
+        }
     }
     
     init(texts: [String]) {
@@ -26,7 +30,7 @@ struct ImportTextView: View {
         if model.briefs.isEmpty {
             NavigationView {
                 VStack {
-                    Text("Nothing to import or cannot parse this file\n(an array of strings would be ok)")
+                    Text("Nothing to import or cannot parse this file\n(an array of strings would be ok)\n\nPlease try again if you are sure that file is ok")
                         .padding(.vertical)
                     
                     Text(model.string)

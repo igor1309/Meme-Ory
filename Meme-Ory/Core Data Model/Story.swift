@@ -33,6 +33,10 @@ extension Story {
         set { calendarItemIdentifier_ = newValue }
     }
     
+    var hasReminder: Bool {
+        !calendarItemIdentifier.isEmpty
+    }
+    
     var url: URL {
         let absoluteString = objectID.uriRepresentation().absoluteString
         let url = URL(string: String(format: URL.appDetailsURLFormat, absoluteString))!

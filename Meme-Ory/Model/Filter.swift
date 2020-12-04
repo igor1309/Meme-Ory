@@ -96,7 +96,7 @@ final class Filter: ObservableObject {
     
     
     //  MARK: Search
-    
+    @Published
     var searchString: String = ""
     
     
