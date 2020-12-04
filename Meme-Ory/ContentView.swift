@@ -20,7 +20,7 @@ struct ContentView: View {
         //        StoryListView(filter: filter)
         //    }
         
-        StoryView()
+        RandomStoryView(context: context)
             .onChange(of: scenePhase, perform: handleScenePhase)
             .onOpenURL(perform: handleOpenURL)
             .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)

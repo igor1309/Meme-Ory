@@ -79,7 +79,7 @@ struct StoryListRowView: View {
                 Image(systemName: "star.circle")
                     .foregroundColor(Color(UIColor.systemOrange))
                     .imageScale(.small)
-                    .offset(x: 24)
+                    // .offset(x: 24)
             }
         }
         .padding(.vertical, 3)
