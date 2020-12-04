@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+struct TagsWrapperWrapper: View {
+    @ObservedObject var story: Story
+    
+    var body: some View {
+        let tags = Binding(
+            get: { Set(story.tags) },
+            set: { story.tags = Array($0).sorted() }
+        )
+        
+        return TagGridWrapperView(selected: tags)
+    }
+}
+
 struct TagGridWrapperView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.presentationMode) private var presentation

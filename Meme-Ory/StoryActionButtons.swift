@@ -14,6 +14,7 @@ struct StoryActionButtons: View {
     
     @Binding var storyURL: URL?
     @Binding var showingDeleteConfirmation: Bool
+    @Binding var sheetIdentifier: StoryView.SheetIdentifier?
     
     let labelStyle: MyButton.Style
     
@@ -21,10 +22,10 @@ struct StoryActionButtons: View {
         Group {
             Section(header: Text("View and List")) {
                 MyButton(title:"Show Random Story", icon: "wand.and.stars", labelStyle: labelStyle, action: getRandomStory)
-                MyButton(title: "Filter List by this tag (if one)", icon: "tag.circle", labelStyle: labelStyle) {
+                MyButton(title: "¿ Filter List by this tag (if one)", icon: "tag.circle", labelStyle: labelStyle) {
                     //  MARK: - FINISH THIS:
                 }
-                MyButton(title: "List View Options", icon: "slider.horizontal.3", labelStyle: labelStyle) {
+                MyButton(title: "¿ List View Options", icon: "slider.horizontal.3", labelStyle: labelStyle) {
                     //  MARK: - FINISH THIS:
                 }
             }
@@ -36,7 +37,7 @@ struct StoryActionButtons: View {
             }
             
             Section(header: Text("This Story")) {
-                MyButton(title: "Remind me…", icon: "bell", labelStyle: labelStyle) {
+                MyButton(title: "¿ Remind me…", icon: "bell", labelStyle: labelStyle) {
                     //  MARK: - FINISH THIS:
                 }
                 MyButton(title: story.isFavorite ? "Unfavorite" : "Favorite",
@@ -48,11 +49,12 @@ struct StoryActionButtons: View {
                     UIPasteboard.general.string = story.text
                 }
                 MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle, action: shareText)
-                MyButton(title:"Edit Story", icon: "square.and.pencil", labelStyle: labelStyle) {
+                MyButton(title:"¿ Edit Story", icon: "square.and.pencil", labelStyle: labelStyle) {
                     //  MARK: - FINISH THIS:
                 }
-                MyButton(title: "Edit Tags", icon: "tag", labelStyle: labelStyle) {
+                MyButton(title: "¿ Edit Tags", icon: "tag", labelStyle: labelStyle) {
                     //  MARK: - FINISH THIS:
+                    sheetIdentifier = StoryView.SheetIdentifier(id: .tags)
                 }
                 
                 MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle) { showingDeleteConfirmation = true
@@ -101,7 +103,7 @@ struct StoryActionButtons_Previews: PreviewProvider {
     
     static var previews: some View {
         List {
-            StoryActionButtons(story: SampleData.story(), storyURL: .constant(nil), showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
+            StoryActionButtons(story: SampleData.story(), storyURL: .constant(nil), showingDeleteConfirmation: $showingDeleteConfirmation, sheetIdentifier: .constant(StoryView.SheetIdentifier(id: .list)), labelStyle: .none)
         }
     }
 }

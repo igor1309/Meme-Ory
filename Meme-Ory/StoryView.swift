@@ -8,6 +8,14 @@
 import SwiftUI
 import CoreData
 
+fileprivate struct StoryViewInternal: View {
+    @ObservedObject var story: Story
+    
+    var body: some View {
+        
+    }
+}
+
 struct StoryView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
@@ -29,10 +37,14 @@ struct StoryView: View {
     
     @State private var sheetIdentifier: SheetIdentifier?
     
-    private struct SheetIdentifier: Identifiable {
+    //private
+    struct SheetIdentifier: Identifiable {
         var id: Modal
         enum Modal { case list, tags }
     }
+    
+    let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
+    
     var body: some View {
         NavigationView {
             if let story = story {
@@ -42,9 +54,13 @@ struct StoryView: View {
                             Text(story.text)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
-                        .cardModifier(strokeBorderColor: isDetectingGesture ? Color(UIColor.systemOrange) : Color(UIColor.systemGray3))
+                        .cardModifier(strokeBorderColor: isDetectingGesture ? Color(UIColor.systemOrange) : Color(UIColor.systemGray3), background: cardBackground)
                         .contentShape(Rectangle())
                         .gesture(gesture)
+                        
+                        Button("Clear tags") {
+                            story.tags = []
+                        }
                         
                         HStack(alignment: .top) {
                             Button(action: showTagGrid) {
@@ -54,9 +70,6 @@ struct StoryView: View {
                                     .padding(.top, 6)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .contentShape(Rectangle())
-                                //        .contextMenu {
-                                //            Label("Edit Tags", systemImage: "tag")
-                                //        }
                             }
                             
                             Spacer()
@@ -66,7 +79,7 @@ struct StoryView: View {
                                 reminderIcon(story)
                             }
                             .imageScale(.small)
-                            .cardModifier(padding: 9)
+                            .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
                         }
                         .padding(.top)
                         
@@ -101,15 +114,11 @@ struct StoryView: View {
     private func favoriteIcon(_ story: Story) -> some View {
         Image(systemName: story.isFavorite ? "star.fill" : "star")
             .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
-        //            .padding([.trailing, .bottom], 6)
     }
     
     private func reminderIcon(_ story: Story) -> some View {
-        //  MARK: - FINISH THIS:
-        //
         Image(systemName: story.hasReminder ? "bell" : "bell.slash")
             .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
-        //            .padding([.trailing, .bottom], 6)
     }
     
     private func handleScenePhase(scenePhase: ScenePhase) {
@@ -137,20 +146,12 @@ struct StoryView: View {
         
         // withAnimation {
         storyURL = url
-        //        showingList = false
+        // showingList = false
         // }
     }
     
     
-    
     //  MARK: Tags Editing
-    
-    private var tags: Binding<Set<Tag>> {
-        Binding(
-            get: { Set(story?.tags ?? []) },
-            set: { story?.tags = Array($0).sorted() }
-        )
-    }
     
     private var tagNames: String {
         story?.tags.map { $0.name }.joined(separator: ", ") ?? ""
@@ -172,8 +173,12 @@ struct StoryView: View {
     private func modalView(sheetIdentifier: SheetIdentifier) -> some View {
         switch sheetIdentifier.id {
             case .tags:
-                TagGridWrapperView(selected: tags)
-                    .environment(\.managedObjectContext, context)
+                if let story = story {
+                    TagsWrapperWrapper(story: story)
+                        .environment(\.managedObjectContext, context)
+                } else {
+                    Text("Error editing tags")
+                }
                 
             case .list:
                 NavigationView {
@@ -206,7 +211,7 @@ struct StoryView: View {
     private func menu() -> some View {
         if let story = story {
             Menu {
-                StoryActionButtons(story: story, storyURL: .constant(nil), showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
+                StoryActionButtons(story: story, storyURL: $storyURL, showingDeleteConfirmation: $showingDeleteConfirmation, sheetIdentifier: $sheetIdentifier, labelStyle: .none)
             } label: {
                 Label("Story Actions", systemImage: "ellipsis.circle")
                     .labelStyle(IconOnlyLabelStyle())
