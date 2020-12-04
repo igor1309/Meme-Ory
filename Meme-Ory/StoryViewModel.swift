@@ -1,5 +1,5 @@
 //
-//  RandomStoryViewModel.swift
+//  StoryViewModel.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 04.12.2020.
@@ -11,11 +11,18 @@ import Combine
 
 final class RandomStoryViewModel: ObservableObject {
     
-    @Published var storyURL: URL?
+    @Published
+    var storyURL: URL?
     
-    @Published private(set) var story: Story?
+    @Published
+    private(set) var story: Story?
     
-    @Published var tags = Set<Tag>()
+    //    var story: Story? {
+    //        context.getObject(with: storyURL) as? Story
+    //    }
+    
+    @Published
+    var tags = Set<Tag>()
     
     @Published var title = "no such story"
     
@@ -24,14 +31,7 @@ final class RandomStoryViewModel: ObservableObject {
         tags.map { $0.name }.joined(separator: ", ")
     }
     
-    private let context: NSManagedObjectContext
-    
-    @Published var sheetIdentifier: SheetIdentifier?
-    
-    struct SheetIdentifier: Identifiable {
-        var id: Modal
-        enum Modal { case list, tags, edit }
-    }
+    let context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -68,47 +68,6 @@ final class RandomStoryViewModel: ObservableObject {
         }
     }
     
-    
-    
-    
-    //  MARK: Show Story Editor
-    
-    func showStoryEditor() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            sheetIdentifier = SheetIdentifier(id: .edit)
-        }
-    }
-    
-    
-    //  MARK: Show Story List
-    
-    func showStoryList() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            sheetIdentifier = SheetIdentifier(id: .list)
-        }
-    }
-    
-    
-    //  MARK: Show Tag Grid for Editing
-    
-    func showTagGrid() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            sheetIdentifier = SheetIdentifier(id: .tags)
-        }
-    }
-    
-    
-    //  MARK: Paste clipboard to new story
-    
     func pasteToNewStory() {
         if UIPasteboard.general.hasStrings,
            let content = UIPasteboard.general.string,
@@ -122,9 +81,6 @@ final class RandomStoryViewModel: ObservableObject {
             storyURL = Story.last(in: context)?.url
         }
     }
-    
-    
-    //  MARK: Show some random story
     
     func getRandomStory(noHapticsAndAnimation: Bool = false) {
         var random = Story.oneRandom(in: context)
@@ -146,9 +102,6 @@ final class RandomStoryViewModel: ObservableObject {
             }
         }
     }
-    
-    
-    //  MARK: Delete currently shown Story
     
     func deleteStory() {
         let haptics = Haptics()

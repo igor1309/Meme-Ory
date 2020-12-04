@@ -21,13 +21,6 @@ struct RandomStoryView: View {
         _model = StateObject(wrappedValue: RandomStoryViewModel(context:context))
     }
     
-    @State private var sheetIdentifier: SheetIdentifier?
-    
-    struct SheetIdentifier: Identifiable {
-        var id: Modal
-        enum Modal { case list, tags }
-    }
-    
     let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
     
     var body: some View {
@@ -48,7 +41,7 @@ struct RandomStoryView: View {
                         }
                         
                         HStack(alignment: .top) {
-                            Button(action: showTagGrid) {
+                            Button(action: model.showTagGrid) {
                                 Text(model.tagNames)
                                     .foregroundColor(Color(UIColor.systemOrange))
                                     .font(.caption)
@@ -76,8 +69,8 @@ struct RandomStoryView: View {
                 }
                 .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
                 .navigationBarTitle("Random Story", displayMode: .inline)
-                .navigationBarItems(leading: listMenu(), trailing: menu())
-                .sheet(item: $sheetIdentifier, content: modalView)
+                .navigationBarItems(leading: listButton(), trailing: menu())
+                .sheet(item: $model.sheetIdentifier, content: modalView)
             } else {
                 VStack(spacing: 32) {
                     Text(model.title)
@@ -133,22 +126,10 @@ struct RandomStoryView: View {
     }
     
     
-    //  MARK: Tags Editing
-    
-    private func showTagGrid() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            sheetIdentifier = SheetIdentifier(id: .tags)
-        }
-    }
-    
-    
     //  MARK: Modal View
     
     @ViewBuilder
-    private func modalView(sheetIdentifier: SheetIdentifier) -> some View {
+    private func modalView(sheetIdentifier: RandomStoryViewModel.SheetIdentifier) -> some View {
         switch sheetIdentifier.id {
             case .tags:
                 TagGridWrapperView(selected: $model.tags)
@@ -162,15 +143,26 @@ struct RandomStoryView: View {
                 .environment(\.managedObjectContext, context)
                 .environmentObject(eventStore)
                 .environmentObject(filter)
+                
+            case .edit:
+                if let story = model.story {
+                    NavigationView {
+                        StoryEditorView(story: story)
+                    }
+                    .environment(\.managedObjectContext, context)
+                    .environmentObject(eventStore)
+                } else {
+                    Text("Can't Edit this Story")
+                }
         }
     }
     
     
-    //  MARK: List Menu
+    //  MARK: List Button
     
-    private func listMenu() -> some View {
+    private func listButton() -> some View {
         Button {
-            sheetIdentifier = SheetIdentifier(id: .list)
+            model.showStoryList()
         } label: {
             Label("List", systemImage: "list.bullet")
                 .labelStyle(IconOnlyLabelStyle())
@@ -184,7 +176,7 @@ struct RandomStoryView: View {
     @ViewBuilder
     private func menu() -> some View {
         Menu {
-            StoryActionButtons(model: model, showingDeleteConfirmation: $showingDeleteConfirmation, sheetIdentifier: $sheetIdentifier, labelStyle: .none)
+            StoryActionButtons(model: model, showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
         } label: {
             Label("Story Actions", systemImage: "ellipsis.circle")
                 .labelStyle(IconOnlyLabelStyle())

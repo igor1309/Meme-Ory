@@ -11,7 +11,7 @@ import EventKit
 struct StoryEditorView: View {
     
     @Environment(\.managedObjectContext) private var context
-//    @Environment(\.presentationMode) private var presentation
+    @Environment(\.presentationMode) private var presentation
     
     @EnvironmentObject private var eventStore: EventStore
     
@@ -185,7 +185,7 @@ struct StoryEditorView: View {
     private func cancelButton() -> some View {
         if model.mode == .create {
             Button("Cancel") {
-//                presentation.wrappedValue.dismiss()
+                presentation.wrappedValue.dismiss()
             }
         }
     }
@@ -193,6 +193,7 @@ struct StoryEditorView: View {
     private func saveButton() -> some View {
         Button(model.hasChanges ? "Save" : "Done") {
             saveStory()
+            presentation.wrappedValue.dismiss()
         }
         .foregroundColor(model.hasChanges ? .orange : .clear)
         .disabled(model.text.isEmpty)
@@ -222,7 +223,7 @@ struct StoryEditorView: View {
             
             context.saveContext()
             
-//            presentation.wrappedValue.dismiss()
+            //            presentation.wrappedValue.dismiss()
         }
     }
 }
