@@ -241,8 +241,7 @@
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
-				2A4F4A9725786CD7008536DE /* RandomStoryView.swift */,
-				2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */,
+				2ADAA7AB257AFBDB00EFFE8D /* Random Story */,
 				2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */,
 				2A4CC9FA25795A5E000A21C9 /* MyButton.swift */,
 				2A4CC9F525795269000A21C9 /* CardModifier.swift */,
@@ -384,6 +383,15 @@
 				2AB03179256CD35700BEC832 /* StoryTagView.swift */,
 			);
 			path = "Story Editor";
+			sourceTree = "<group>";
+		};
+		2ADAA7AB257AFBDB00EFFE8D /* Random Story */ = {
+			isa = PBXGroup;
+			children = (
+				2A4F4A9725786CD7008536DE /* RandomStoryView.swift */,
+				2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */,
+			);
+			path = "Random Story";
 			sourceTree = "<group>";
 		};
 		2ADAD3B1256DA23A00AF463B /* Frameworks */ = {
