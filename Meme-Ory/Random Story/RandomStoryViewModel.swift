@@ -17,7 +17,9 @@ final class RandomStoryViewModel: ObservableObject {
     
     @Published var tags = Set<Tag>()
     
-    @Published var title = "no such story"
+    @Published private(set) var isFavorite: Bool = false
+
+    @Published private(set) var title = "no such story"
     
     var tagNames: String {
         //story?.tags.map { $0.name }.joined(separator: ", ") ?? ""
@@ -46,6 +48,7 @@ final class RandomStoryViewModel: ObservableObject {
             .sink { [weak self] in
                 self?.story = $0
                 self?.tags = Set($0.tags)
+                self?.isFavorite = $0.isFavorite
             }
             .store(in: &cancellables)
         
@@ -69,6 +72,14 @@ final class RandomStoryViewModel: ObservableObject {
     }
     
     
+    //  MARK: Toggle Favorite
+    
+    func toggleFavorite() {
+        if let story = story {
+            isFavorite.toggle()
+            story.isFavorite.toggle()
+        }
+    }
     
     
     //  MARK: Show Story Editor

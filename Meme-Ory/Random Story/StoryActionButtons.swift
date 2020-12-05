@@ -39,10 +39,10 @@ struct StoryActionButtons: View {
                     MyButton(title: "¿ Remind me…", icon: "bell", labelStyle: labelStyle) {
                         //  MARK: - FINISH THIS:
                     }
-                    MyButton(title: story.isFavorite ? "Unfavorite" : "Favorite",
-                             icon: story.isFavorite ? "star.slash" : "star",
+                    MyButton(title: model.isFavorite ? "Unfavorite" : "Favorite",
+                             icon: model.isFavorite ? "star.slash" : "star",
                              labelStyle: labelStyle) {
-                        story.isFavorite.toggle()
+                        model.toggleFavorite()
                     }
                     MyButton(title: "Copy Story text", icon: "doc.on.doc", labelStyle: labelStyle) {
                         UIPasteboard.general.string = story.text

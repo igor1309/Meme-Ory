@@ -27,7 +27,7 @@ struct RandomStoryView: View {
         NavigationView {
             if let story = model.story {
                 VStack {
-                    VStack {
+                    VStack(spacing: 16) {
                         ScrollView(showsIndicators: false) {
                             Text(story.text)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -48,8 +48,8 @@ struct RandomStoryView: View {
                             Spacer()
                             
                             HStack {
-                                favoriteIcon(story)
-                                reminderIcon(story)
+                                favoriteIcon()
+                                reminderIcon()
                             }
                             .imageScale(.small)
                             .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
@@ -83,14 +83,20 @@ struct RandomStoryView: View {
         .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
     }
     
-    private func favoriteIcon(_ story: Story) -> some View {
-        Image(systemName: story.isFavorite ? "star.fill" : "star")
-            .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+    @ViewBuilder
+    private func favoriteIcon() -> some View {
+        if let story = model.story {
+            Image(systemName: story.isFavorite ? "star.fill" : "star")
+                .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+        }
     }
     
-    private func reminderIcon(_ story: Story) -> some View {
-        Image(systemName: story.hasReminder ? "bell" : "bell.slash")
-            .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
+    @ViewBuilder
+    private func reminderIcon() -> some View {
+        if let story = model.story {
+            Image(systemName: story.hasReminder ? "bell" : "bell.slash")
+                .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
+        }
     }
     
     

@@ -56,10 +56,8 @@ struct StoryListView: View {
                 .searchModifier(text: $filter.searchString)
             
             Section(header: Text("Stories: \(count)")) {
-                ForEach(stories) { story in
-                    StoryListRowView(story: story)
-                }
-                .onDelete(perform: confirmDeletion)
+                ForEach(stories, content: StoryListRowView.init)
+                    .onDelete(perform: confirmDeletion)
             }
         }
         .listStyle(InsetGroupedListStyle())
