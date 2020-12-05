@@ -90,22 +90,8 @@ extension Story {
         return request
     }
     
-    //  MARK: - FINISH THIS
-    private static func requestRandom(in context: NSManagedObjectContext) -> NSFetchRequest<Story> {
-        let request = Story.fetchRequest(NSPredicate.all)
-        
-        let count = context.realCount(for: request)
-        debugPrint("context.realCount: \(count)")
-        request.fetchOffset = Int(arc4random_uniform(UInt32(count)))
-        debugPrint("fetchOffset: \(request.fetchOffset)")
-        
-        request.fetchLimit = 1
-        
-        return request
-    }
-}
-
-extension Story {
+    
+    //  MARK: - FINISH THIS: NOT SURE THIS IS WORKING RIGHT
     static func last(in context: NSManagedObjectContext) -> Story? {
         let request = Story.fetchRequest(NSPredicate.all)
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp_", ascending: false)]
@@ -115,21 +101,5 @@ extension Story {
         } else {
             return nil
         }
-    }
-    
-    static func random(_ k: Int = 1, in context: NSManagedObjectContext) -> [Story] {
-        let request = Story.fetchRequest(NSPredicate.all)
-        let count = context.realCount(for: request)
-        request.fetchOffset = Int(arc4random_uniform(UInt32(count)))
-        request.fetchLimit = k
-        if let fetch = try? context.fetch(request) {
-            return fetch
-        } else {
-            return []
-        }
-    }
-    
-    static func oneRandom(in context: NSManagedObjectContext) -> Story? {
-        Story.random(1, in: context).first
     }
 }

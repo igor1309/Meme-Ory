@@ -32,7 +32,7 @@ struct RandomStoryView: View {
                             Text(story.text)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
-                        .cardModifier(strokeBorderColor: isDetectingGesture ? Color(UIColor.systemOrange) : Color(UIColor.systemGray3), background: cardBackground)
+                        .cardModifier(strokeBorderColor: Color(UIColor.systemGray3), background: cardBackground)
                         .contentShape(Rectangle())
                         .gesture(gesture)
                         
@@ -199,27 +199,19 @@ struct RandomStoryView: View {
     
     //  MARK: Long Press and Tap Gesture
     
-    @GestureState var isDetectingGesture = false
-    
     var gesture: some Gesture {
         SimultaneousGesture(longPress, tapGesture)
     }
     
     var longPress: some Gesture {
         LongPressGesture(minimumDuration: 1, maximumDistance: 10)
-            .updating($isDetectingGesture) { currentstate, gestureState, transaction in
-                gestureState = currentstate
-                // transaction.animation = Animation.easeIn(duration: 1)
-            }
-            .onEnded { finished in
+            .onEnded { _ in
                 model.getRandomStory()
             }
     }
     
     var tapGesture: some Gesture {
         TapGesture(count: 2)
-            // updating does mix with long text scrolling
-            // .updating($isDetectingGesture) { _, _, _ in }
             .onEnded {
                 model.getRandomStory()
             }

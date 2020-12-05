@@ -127,13 +127,10 @@ final class RandomStoryViewModel: ObservableObject {
     //  MARK: Show some random story
     
     func getRandomStory(noHapticsAndAnimation: Bool = false) {
-        var random = Story.oneRandom(in: context)
-        while random?.text == story?.text {
-            random = Story.oneRandom(in: context)
-        }
+        let random = context.randomObject(ofType: Story.self)
         
         let url = random?.url
-        print("model: getRandomStory \(url?.absoluteString ?? "nil")")
+        //print("model: getRandomStory \(url?.absoluteString ?? "nil")")
         
         if noHapticsAndAnimation {
             storyURL = url
