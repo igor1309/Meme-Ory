@@ -154,10 +154,8 @@ struct StoryEditorView: View {
     
     @ViewBuilder
     private func cancelButton() -> some View {
-        if model.mode == .create {
-            Button("Cancel") {
-                presentation.wrappedValue.dismiss()
-            }
+        Button("Cancel") {
+            presentation.wrappedValue.dismiss()
         }
     }
     
@@ -177,8 +175,11 @@ struct StoryEditorView_Previews: PreviewProvider {
         Group {
             StoryEditorView()
                 .previewLayout(.fixed(width: 350, height: 300))
-            StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3))
-            //                .previewLayout(.fixed(width: 350, height: 400))
+            //StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3))
+            // .previewLayout(.fixed(width: 350, height: 400))
+            NavigationView {
+                StoryEditorView(story: SampleData.story(storyIndex: 10, tagIndex: 3))
+            }
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .environmentObject(EventStore())

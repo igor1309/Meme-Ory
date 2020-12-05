@@ -27,21 +27,20 @@ struct RandomStoryView: View {
         NavigationView {
             if let story = model.story {
                 VStack {
-                    VStack(spacing: 0) {
+                    VStack {
                         ScrollView(showsIndicators: false) {
                             Text(story.text)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
                         .cardModifier(strokeBorderColor: Color(UIColor.systemGray3), background: cardBackground)
                         .contentShape(Rectangle())
-                        .gesture(gesture)
+                        .gesture(tapGesture)
                         
                         HStack(alignment: .top) {
                             Button(action: model.showTagGrid) {
                                 Text(model.tagNames)
                                     .foregroundColor(Color(UIColor.systemOrange))
                                     .font(.caption)
-                                    .padding(.top, 6)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .contentShape(Rectangle())
                             }
@@ -55,13 +54,12 @@ struct RandomStoryView: View {
                             .imageScale(.small)
                             .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
                         }
-                        .padding(.top)
                         
                         Text("Double tap to get next random story")
                             .foregroundColor(Color(UIColor.tertiaryLabel))
                             .font(.caption)
                     }
-                    .padding()
+                    .padding([.top, .horizontal])
                 }
                 .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
                 .navigationBarTitle("Random Story", displayMode: .inline)
@@ -197,18 +195,7 @@ struct RandomStoryView: View {
     }
     
     
-    //  MARK: Long Press and Tap Gesture
-    
-    var gesture: some Gesture {
-        SimultaneousGesture(longPress, tapGesture)
-    }
-    
-    var longPress: some Gesture {
-        LongPressGesture(minimumDuration: 1, maximumDistance: 10)
-            .onEnded { _ in
-                model.getRandomStory()
-            }
-    }
+    //  MARK: Tap Gesture
     
     var tapGesture: some Gesture {
         TapGesture(count: 2)
