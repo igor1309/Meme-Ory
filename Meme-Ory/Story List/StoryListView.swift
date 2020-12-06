@@ -39,11 +39,8 @@ struct StoryListView: View {
     
     @State private var showingCreateNewStorySheet = false
     @State private var showingDeleteConfirmation = false
-    @State private var showingImportTextView = false
-    @State private var showingFailedImportAlert = false
     @State private var showingFileImporter = false
     @State private var showingFileExporter = false
-    @State private var importFileURL: URL?
     @State private var temporaryFileURL: URL?
     @State private var offsets = IndexSet()
     @State private var document = JSONDocument(data: "".data(using: .utf8)!)
@@ -70,11 +67,9 @@ struct StoryListView: View {
                                 }
                             })
         .onChange(of: scenePhase, perform: handleScenePhase)
-        .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
+        .storyFileImporter(isPresented: $showingFileImporter)
         .fileExporter(isPresented: $showingFileExporter, document: document, contentType: .json, onCompletion: handlerFileExporter)
         .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
-        .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
-        .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
         .onDisappear(perform: onDisapperAction)
     }
     
@@ -82,21 +77,6 @@ struct StoryListView: View {
         if scenePhase == .background {
             deleteTemporaryFile()
             context.saveContext()
-        }
-    }
-    
-    private func handleFileImporter(_ result: Result<URL, Error>) {
-        switch result {
-            case .success(let url):
-                print("Import success")
-                importFileURL = url
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    withAnimation {
-                        showingImportTextView = true
-                    }
-                }
-            case .failure(let error):
-                print("Import error \(error.localizedDescription)")
         }
     }
     
@@ -172,7 +152,7 @@ struct StoryListView: View {
                 shareButton()
             }
             Section {
-                importFileButton().disabled(true)
+                importFileButton()//.disabled(true)
                 exportFileButton()
             }
         } label: {
@@ -234,8 +214,6 @@ struct StoryListView: View {
             }
         } label: {
             Label("Share Stories", systemImage: "square.and.arrow.up")
-            // .imageScale(.large)
-            // .foregroundColor(Color(UIColor.systemBlue))
         }
     }
     
@@ -284,19 +262,7 @@ struct StoryListView: View {
                 print("Export error \(error.localizedDescription)")
         }
     }
-    
-    
-    //  MARK: Import File
-    
-    private func importTextView() -> some View {
-        ImportTextView(url: importFileURL)
-            .environment(\.managedObjectContext, context)
-            .environmentObject(filter)
-    }
-    
-    private func failedImportAlert() -> Alert {
-        Alert(title: Text("Error"), message: Text("Can't process yuor request.\nSorry about that"), dismissButton: Alert.Button.cancel(Text("Ok")))
-    }
+        
 }
 
 fileprivate struct StoryListView_Testing: View {

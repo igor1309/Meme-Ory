@@ -8,121 +8,101 @@
 import SwiftUI
 import CoreData
 
-struct RandomStoryView: View {
-    @Environment(\.managedObjectContext) private var context
-    @Environment(\.scenePhase) private var scenePhase
-    
-    @EnvironmentObject private var filter: Filter
-    @EnvironmentObject private var eventStore: EventStore
+struct RandomStoryViewWrapper: View {
     
     @StateObject var model: RandomStoryViewModel
     
     init(context: NSManagedObjectContext) {
-        _model = StateObject(wrappedValue: RandomStoryViewModel(context:context))
+        _model = StateObject(wrappedValue: RandomStoryViewModel(context: context))
     }
     
-    let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
-    
     var body: some View {
-        NavigationView {
-            if let story = model.story {
-                VStack {
-                    VStack(spacing: 16) {
-                        ScrollView(showsIndicators: false) {
-                            Text(story.text)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                        }
-                        .cardModifier(strokeBorderColor: Color(UIColor.systemGray3), background: cardBackground)
-                        .contentShape(Rectangle())
-                        .gesture(tapGesture)
-                        
-                        HStack(alignment: .top) {
-                            Button(action: model.showTagGrid) {
-                                Text(model.tagNames)
-                                    .foregroundColor(Color(UIColor.systemOrange))
-                                    .font(.caption)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .contentShape(Rectangle())
-                            }
-                            
-                            Spacer()
-                            
-                            HStack {
-                                favoriteIcon()
-                                reminderIcon()
-                            }
-                            .imageScale(.small)
-                            .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
-                        }
-                        
-                        Text("Double tap to get next random story")
-                            .foregroundColor(Color(UIColor.tertiaryLabel))
-                            .font(.caption)
-                    }
-                    .padding([.top, .horizontal])
-                }
-                .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
-                .navigationBarTitle("Random Story", displayMode: .inline)
-                .navigationBarItems(leading: listButton(), trailing: menu())
-                .sheet(item: $model.sheetIdentifier, content: modalView)
+        Group {
+            if let story = model.randomStory {
+                RandomStoryView(model: model, story: story)
             } else {
                 VStack(spacing: 32) {
                     Text(model.title)
                         .foregroundColor(.secondary)
                     
-                    Button("Show Random Story") {
-                        model.getRandomStory()
-                    }
+                    Button("Show Random Story", action: model.getRandomStory)
                 }
             }
         }
-        .onAppear(perform: { model.getRandomStory() })
-        .onDisappear(perform: context.saveContext)
-        .onChange(of: scenePhase, perform: handleScenePhase)
-        .onOpenURL(perform: handleOpenURL)
-        .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
+        .onAppear(perform: model.getRandomStory)
     }
+}
+
+struct RandomStoryView: View {
+    @Environment(\.managedObjectContext) private var context
+    
+    @EnvironmentObject private var filter: Filter
+    @EnvironmentObject private var eventStore: EventStore
+    
+    @ObservedObject var model: RandomStoryViewModel
+    @ObservedObject var story: Story
+    
+    let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 16) {
+                ScrollView(showsIndicators: false) {
+                    Text(story.text)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                }
+                .cardModifier(strokeBorderColor: Color(UIColor.systemGray3), background: cardBackground)
+                .contentShape(Rectangle())
+                .gesture(tapGesture)
+                
+                HStack(alignment: .top) {
+                    Button(action: model.showTagGrid) {
+                        Text(story.tagList)
+                            .foregroundColor(Color(UIColor.systemOrange))
+                            .font(.caption)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                    }
+                    
+                    Spacer()
+                    
+                    HStack {
+                        favoriteIcon()
+                        reminderIcon()
+                    }
+                    .imageScale(.small)
+                    .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
+                }
+                
+                Text("Double tap to get next random story")
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .font(.caption)
+            }
+            .padding([.top, .horizontal])
+            .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
+            .navigationBarTitle("Random Story", displayMode: .inline)
+            .navigationBarItems(leading: listButton(), trailing: menu())
+            .sheet(item: $model.sheetIdentifier, content: modalView)
+            .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
+        }
+        .onAppear(perform: model.getRandomStory)
+        .onDisappear(perform: context.saveContext)
+        .onOpenURL(perform: model.handleOpenURL)
+    }
+    
+    
+    //  MARK: Icons
     
     @ViewBuilder
     private func favoriteIcon() -> some View {
-        if let story = model.story {
-            Image(systemName: story.isFavorite ? "star.fill" : "star")
-                .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
-        }
+        Image(systemName: story.isFavorite ? "star.fill" : "star")
+            .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
     }
     
     @ViewBuilder
     private func reminderIcon() -> some View {
-        if let story = model.story {
-            Image(systemName: story.hasReminder ? "bell" : "bell.slash")
-                .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
-        }
-    }
-    
-    
-    //  MARK: Handle Scene Phase
-    
-    private func handleScenePhase(scenePhase: ScenePhase) {
-        if scenePhase == .background {
-            context.saveContext()
-        }
-    }
-    
-    
-    //  MARK: Handle OpenURL
-    
-    private func handleOpenURL(url: URL) {
-        #if DEBUG
-        //print("handleOpenURL: \(url)")
-        #endif
-        
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        // withAnimation {
-        model.storyURL = url
-        // showingList = false
-        // }
+        Image(systemName: story.hasReminder ? "bell" : "bell.slash")
+            .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
     }
     
     
@@ -132,7 +112,7 @@ struct RandomStoryView: View {
     private func modalView(sheetIdentifier: RandomStoryViewModel.SheetIdentifier) -> some View {
         switch sheetIdentifier.id {
             case .tags:
-                TagGridWrapperView(selected: $model.tags)
+                TagsWrapperWrapper(story: story)
                     .environment(\.managedObjectContext, context)
                 
             case .list:
@@ -145,15 +125,11 @@ struct RandomStoryView: View {
                 .environmentObject(filter)
                 
             case .edit:
-                if let story = model.story {
-                    NavigationView {
-                        StoryEditorView(story: story)
-                    }
-                    .environment(\.managedObjectContext, context)
-                    .environmentObject(eventStore)
-                } else {
-                    Text("Can't Edit this Story")
+                NavigationView {
+                    StoryEditorView(story: story)
                 }
+                .environment(\.managedObjectContext, context)
+                .environmentObject(eventStore)
         }
     }
     
@@ -176,7 +152,7 @@ struct RandomStoryView: View {
     @ViewBuilder
     private func menu() -> some View {
         Menu {
-            StoryActionButtons(model: model, showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
+            StoryActionButtons(model: model, story: story, showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
         } label: {
             Label("Story Actions", systemImage: "ellipsis.circle")
                 .labelStyle(IconOnlyLabelStyle())
@@ -201,20 +177,18 @@ struct RandomStoryView: View {
     }
     
     
-    //  MARK: Tap Gesture
+    //  MARK: Douple Tap Gesture
     
     var tapGesture: some Gesture {
         TapGesture(count: 2)
-            .onEnded {
-                model.getRandomStory()
-            }
+            .onEnded(model.getRandomStory)
     }
 }
 
 
 struct StoryView_Previews: PreviewProvider {
     static var previews: some View {
-        RandomStoryView(context: SampleData.preview.container.viewContext)
+        RandomStoryViewWrapper(context: SampleData.preview.container.viewContext)
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environmentObject(EventStore())
             .environmentObject(Filter())

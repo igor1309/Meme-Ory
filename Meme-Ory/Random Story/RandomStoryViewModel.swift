@@ -11,20 +11,11 @@ import Combine
 
 final class RandomStoryViewModel: ObservableObject {
     
-    @Published var storyURL: URL?
+    @Published private(set) var randomStory: Story?
     
-    @Published private(set) var story: Story?
-    
-    @Published var tags = Set<Tag>()
-    
-    @Published private(set) var isFavorite: Bool = false
-
     @Published private(set) var title = "no such story"
     
-    var tagNames: String {
-        //story?.tags.map { $0.name }.joined(separator: ", ") ?? ""
-        tags.map { $0.name }.joined(separator: ", ")
-    }
+    @Published private var storyURL: URL?
     
     private let context: NSManagedObjectContext
     
@@ -46,21 +37,18 @@ final class RandomStoryViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.story = $0
-                self?.tags = Set($0.tags)
-                self?.isFavorite = $0.isFavorite
+                self?.randomStory = $0
             }
             .store(in: &cancellables)
         
-        $tags
-            .map {
-                Array($0).sorted()
-            }
+        $storyURL
+            .filter { $0 == nil }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.story?.tags = $0
+            .sink { [weak self] _ in
+                self?.title = "no such story"
             }
             .store(in: &cancellables)
+        
     }
     
     private var cancellables = Set<AnyCancellable>()
@@ -72,13 +60,22 @@ final class RandomStoryViewModel: ObservableObject {
     }
     
     
-    //  MARK: Toggle Favorite
+    //  MARK: Handle OpenURL
     
-    func toggleFavorite() {
-        if let story = story {
-            isFavorite.toggle()
-            story.isFavorite.toggle()
-        }
+    func handleOpenURL(url: URL) {
+        guard case .story(_) = url.deeplink else { return }
+        
+        #if DEBUG
+        //print("handleOpenURL: \(url)")
+        #endif
+        
+        let haptics = Haptics()
+        haptics.feedback()
+        
+        // withAnimation {
+        storyURL = url
+        // showingList = false
+        // }
     }
     
     
@@ -136,22 +133,25 @@ final class RandomStoryViewModel: ObservableObject {
     
     
     //  MARK: Show some random story
+    func getRandomStory() {
+        getRandomStory(hasHapticsAndAnimation: true)
+    }
     
-    func getRandomStory(noHapticsAndAnimation: Bool = false) {
+    func getRandomStory(hasHapticsAndAnimation: Bool) {
         let random = context.randomObject(ofType: Story.self)
         
         let url = random?.url
         //print("model: getRandomStory \(url?.absoluteString ?? "nil")")
         
-        if noHapticsAndAnimation {
-            storyURL = url
-        } else {
+        if hasHapticsAndAnimation {
             let haptics = Haptics()
             haptics.feedback()
             
             withAnimation {
                 storyURL = url
             }
+        } else {
+            storyURL = url
         }
     }
     
@@ -163,7 +163,7 @@ final class RandomStoryViewModel: ObservableObject {
         haptics.feedback()
         
         withAnimation {
-            if let story = story {
+            if let story = randomStory {
                 context.delete(story)
                 context.saveContext()
                 

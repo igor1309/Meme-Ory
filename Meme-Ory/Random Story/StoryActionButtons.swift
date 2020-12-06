@@ -11,57 +11,54 @@ struct StoryActionButtons: View {
     @Environment(\.managedObjectContext) private var context
     
     @ObservedObject var model: RandomStoryViewModel
+    @ObservedObject var story: Story
     
     @Binding var showingDeleteConfirmation: Bool
     
     let labelStyle: MyButton.Style
     
     var body: some View {
-        if let story = model.story {
-            Group {
-                Section(header: Text("View and List")) {
-                    MyButton(title:"Show Random Story", icon: "wand.and.stars", labelStyle: labelStyle, action: { model.getRandomStory(noHapticsAndAnimation: true) })
-                    MyButton(title: "¿ Filter List by this tag (if one)", icon: "tag.circle", labelStyle: labelStyle) {
-                        //  MARK: - FINISH THIS:
-                    }
-                    MyButton(title: "¿ List View Options", icon: "slider.horizontal.3", labelStyle: labelStyle) {
-                        //  MARK: - FINISH THIS:
-                    }
+        Group {
+            Section(header: Text("View and List")) {
+                MyButton(title:"Show Random Story", icon: "wand.and.stars", labelStyle: labelStyle, action: { model.getRandomStory(hasHapticsAndAnimation: false) })
+                MyButton(title: "¿ Filter List by this tag (if one)", icon: "tag.circle", labelStyle: labelStyle) {
+                    //  MARK: - FINISH THIS:
                 }
-                
-                Section(header: Text("Create")) {
-                    MyButton(title:"Paste to new Story", icon: "doc.on.clipboard", labelStyle: labelStyle, action: model.pasteToNewStory)
-                    // to disable with .hasStrings its value should be updated
-                    //.disabled(!UIPasteboard.general.hasStrings)
-                }
-                
-                Section(header: Text("This Story")) {
-                    MyButton(title: "¿ Remind me…", icon: "bell", labelStyle: labelStyle) {
-                        //  MARK: - FINISH THIS:
-                    }
-                    MyButton(title: model.isFavorite ? "Unfavorite" : "Favorite",
-                             icon: model.isFavorite ? "star.slash" : "star",
-                             labelStyle: labelStyle) {
-                        model.toggleFavorite()
-                    }
-                    MyButton(title: "Copy Story text", icon: "doc.on.doc", labelStyle: labelStyle) {
-                        UIPasteboard.general.string = story.text
-                    }
-                    MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle) {
-                        shareText(story.text)
-                    }
-                    
-                    MyButton(title:"Edit Story", icon: "square.and.pencil", labelStyle: labelStyle, action: model.showStoryEditor)
-                    
-                    MyButton(title: "Edit Tags", icon: "tag", labelStyle: labelStyle, action: model.showTagGrid)
-                    
-                    MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle) {
-                        showingDeleteConfirmation = true
-                    }
+                MyButton(title: "¿ List View Options", icon: "slider.horizontal.3", labelStyle: labelStyle) {
+                    //  MARK: - FINISH THIS:
                 }
             }
-        } else {
-            EmptyView()
+            
+            Section(header: Text("Create")) {
+                MyButton(title:"Paste to new Story", icon: "doc.on.clipboard", labelStyle: labelStyle, action: model.pasteToNewStory)
+                // to disable with .hasStrings its value should be updated
+                //.disabled(!UIPasteboard.general.hasStrings)
+            }
+            
+            Section(header: Text("This Story")) {
+                MyButton(title: "¿ Remind me…", icon: "bell", labelStyle: labelStyle) {
+                    //  MARK: - FINISH THIS:
+                }
+                MyButton(title: story.isFavorite ? "Unfavorite" : "Favorite",
+                         icon: story.isFavorite ? "star.slash" : "star",
+                         labelStyle: labelStyle) {
+                    story.isFavorite.toggle()
+                }
+                MyButton(title: "Copy Story text", icon: "doc.on.doc", labelStyle: labelStyle) {
+                    UIPasteboard.general.string = story.text
+                }
+                MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle) {
+                    shareText(story.text)
+                }
+                
+                MyButton(title:"Edit Story", icon: "square.and.pencil", labelStyle: labelStyle, action: model.showStoryEditor)
+                
+                MyButton(title: "Edit Tags", icon: "tag", labelStyle: labelStyle, action: model.showTagGrid)
+                
+                MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle) {
+                    showingDeleteConfirmation = true
+                }
+            }
         }
     }
     
@@ -81,7 +78,7 @@ struct StoryActionButtons_Previews: PreviewProvider {
     
     static var previews: some View {
         List {
-            StoryActionButtons(model: RandomStoryViewModel(context: SampleData.preview.container.viewContext), showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
+            StoryActionButtons(model: RandomStoryViewModel(context: SampleData.preview.container.viewContext), story: SampleData.story(), showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
         }
     }
 }
