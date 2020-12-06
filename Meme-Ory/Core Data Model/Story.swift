@@ -80,7 +80,8 @@ extension Sequence where Element == Story {
 
 extension Story {
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Story> {
-        Story.fetchRequest(predicate, sortDescriptors: [NSSortDescriptor(key: "timestamp_", ascending: true)])
+        let sortDescriptor = NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: true)
+        return Story.fetchRequest(predicate, sortDescriptors: [sortDescriptor])
     }
     
     static func fetchRequest(_ predicate: NSPredicate, sortDescriptors: [NSSortDescriptor]) -> NSFetchRequest<Story> {
@@ -94,7 +95,7 @@ extension Story {
     //  MARK: - FINISH THIS: NOT SURE THIS IS WORKING RIGHT
     static func last(in context: NSManagedObjectContext) -> Story? {
         let request = Story.fetchRequest(NSPredicate.all)
-        request.sortDescriptors = [NSSortDescriptor(key: "timestamp_", ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: false)]
         request.fetchLimit = 1
         if let fetch = try? context.fetch(request) {
             return fetch.first

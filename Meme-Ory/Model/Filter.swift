@@ -15,12 +15,12 @@ final class Filter: ObservableObject {
     
     
     //  MARK: Favorites
-
+    
     @Published
     var favoritesFilter = FavoritesFilterOptions.all
     enum FavoritesFilterOptions: String, CaseIterable {
         case fav, unfav, all
-
+        
         var rawValue: String {
             switch self {
                 case .all:   return "Favorites or not"
@@ -40,17 +40,17 @@ final class Filter: ObservableObject {
     
     
     //  MARK: Reminders
-
+    
     @Published
     var remindersFilter = RemindersFilterOptions.all
     enum RemindersFilterOptions: String, CaseIterable {
         case have, notHave, all
-
+        
         var rawValue: String {
             switch self {
                 case .all:     return "With or without"
                 case .have:    return "With reminder"
-                case .notHave: return "Without"
+                case .notHave: return "No reminder"
             }
         }
         
@@ -62,8 +62,8 @@ final class Filter: ObservableObject {
             }
         }
     }
-
-
+    
+    
     //  MARK: Sort
     
     @Published
@@ -134,11 +134,11 @@ final class Filter: ObservableObject {
     //  MARK: SortDescriptors
     
     var timestampSortDescriptor: NSSortDescriptor {
-        NSSortDescriptor(key: "timestamp_", ascending: areInIncreasingOrder)
+        NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: areInIncreasingOrder)
     }
-        var textSortDescriptor: NSSortDescriptor {
-            NSSortDescriptor(key: "text_", ascending: areInIncreasingOrder)
-        }
+    var textSortDescriptor: NSSortDescriptor {
+        NSSortDescriptor(key: #keyPath(Story.text_), ascending: areInIncreasingOrder)
+    }
     
     var sortDescriptors: [NSSortDescriptor] {
         switch itemToSortBy {
@@ -161,9 +161,9 @@ final class Filter: ObservableObject {
             case .all:
                 return NSPredicate.all
             case .fav:
-                return NSPredicate(format: "isFavorite == %@", NSNumber(value: true))
+                return NSPredicate(format: "%K == %@", #keyPath(Story.isFavorite), NSNumber(value: true))
             case.unfav:
-                return NSPredicate(format: "isFavorite == %@ OR isFavorite = nil", NSNumber(value: false))
+                return NSPredicate(format: "%K == %@ OR %K = nil", #keyPath(Story.isFavorite), NSNumber(value: false), #keyPath(Story.isFavorite))
         }
     }
     
@@ -172,15 +172,15 @@ final class Filter: ObservableObject {
             case .all:
                 return NSPredicate.all
             case .have:
-                return NSPredicate(format: "calendarItemIdentifier_ != nil")
+                return NSPredicate(format: "%K != nil", #keyPath(Story.calendarItemIdentifier_))
             case .notHave:
-                return NSPredicate(format: "calendarItemIdentifier_ = nil")
+                return NSPredicate(format: "%K = nil", #keyPath(Story.calendarItemIdentifier_))
         }
     }
     
     private var searchStringPredicate: NSPredicate {
         searchString.count >= 3 ?
-            NSPredicate(format: "text_ CONTAINS[cd] %@", searchString)
+            NSPredicate(format: "%K CONTAINS[cd] %@", #keyPath(Story.text_), searchString)
             : NSPredicate.all
     }
     
