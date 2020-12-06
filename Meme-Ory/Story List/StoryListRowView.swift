@@ -21,24 +21,24 @@ struct StoryListRowView: View {
     @State private var showingStorySheet = false
     
     var body: some View {
-            label
-                .contextMenu {
-                    /// toggle favotite
-                    toggleFavoriteButton()
-                    /// copy story text
-                    copyStoryTextButton()
-                    /// share sheet
-                    ShareStoryView(text: story.text, url: story.url)
-                    /// setting reminders
-                    remindMeButton()
-                    //remindMeSection()
-                    /// if story has just one tag - filter by this tag
-                    filterByTagSection()
-                }
-        .contentShape(Rectangle())
-        .onAppear(perform: reminderCleanUp)
-        .sheet(isPresented: $showingStorySheet, content: storySheet)
-        .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
+        label
+            .contextMenu {
+                /// toggle favotite
+                toggleFavoriteButton()
+                /// copy story text
+                copyStoryTextButton()
+                /// share sheet
+                ShareStoryView(text: story.text, url: story.url)
+                /// setting reminders
+                remindMeButton()
+                //remindMeSection()
+                /// if story has just one tag - filter by this tag
+                filterByTagSection()
+            }
+            .contentShape(Rectangle())
+            .onAppear(perform: reminderCleanUp)
+            .sheet(isPresented: $showingStorySheet, content: storySheet)
+            .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
     }
     
     private func storySheet() -> some View {
@@ -50,9 +50,9 @@ struct StoryListRowView: View {
     }
     
     var label: some View {
-        ZStack(alignment: .topTrailing) {
+        ZStack(alignment: .bottomTrailing) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(story.storyText())
+                Text(story.text)//.storyText())
                     .lineLimit(3)
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -75,12 +75,19 @@ struct StoryListRowView: View {
                 }
             }
             
-            if story.isFavorite {
-                Image(systemName: "star.circle")
-                    .foregroundColor(Color(UIColor.systemOrange))
-                    .imageScale(.small)
-                    // .offset(x: 24)
+            HStack {
+                if story.hasReminder {
+                    Image(systemName: "bell")
+                        .foregroundColor(Color(UIColor.systemTeal))
+                    
+                }
+                
+                if story.isFavorite {
+                    Image(systemName: "star.circle")
+                        .foregroundColor(Color(UIColor.systemOrange))
+                }
             }
+            .font(.caption)
         }
         .padding(.vertical, 3)
     }
