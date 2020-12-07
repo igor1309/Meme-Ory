@@ -31,6 +31,8 @@ struct SampleData {
             }
         }
         
+        context.saveContext()
+        
         return controller
     }()
 

@@ -90,7 +90,7 @@ struct RandomStoryView: View {
         .onOpenURL(perform: model.handleOpenURL)
     }
     
-
+    
     //  MARK: Icons
     
     @ViewBuilder
@@ -178,7 +178,7 @@ struct RandomStoryView: View {
                 return eventStore.remindMeActionSheet(for: story, in: context)
         }
     }
-        
+
     private func confirmationActionSheet() -> ActionSheet {
         ActionSheet(
             title: Text("Delete Story?".uppercased()),
@@ -201,11 +201,18 @@ struct RandomStoryView: View {
 
 
 struct StoryView_Previews: PreviewProvider {
+    @State static private var context = SampleData.preview.container.viewContext
+    
     static var previews: some View {
-        RandomStoryViewWrapper(context: SampleData.preview.container.viewContext)
-            .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
-            .environmentObject(EventStore())
-            .environmentObject(Filter())
-            .preferredColorScheme(.dark)
+        Group {
+            RandomStoryView(model: RandomStoryViewModel(context: context), story: SampleData.story())
+            
+            RandomStoryViewWrapper(context: context)
+                .previewLayout(.fixed(width: 350, height: 200))
+        }
+        .environment(\.managedObjectContext, context)
+        .environmentObject(EventStore())
+        .environmentObject(Filter())
+        .preferredColorScheme(.dark)
     }
 }

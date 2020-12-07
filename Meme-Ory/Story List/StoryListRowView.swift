@@ -18,6 +18,8 @@ struct StoryListRowView: View {
     
     @ObservedObject var story: Story
     
+    var lineLimit: Int? = 3
+    
     @State private var showingStorySheet = false
     
     var body: some View {
@@ -57,7 +59,7 @@ struct StoryListRowView: View {
         ZStack(alignment: .bottomTrailing) {
             VStack(alignment: .leading, spacing: 3) {
                 Text(story.text)//.storyText())
-                    .lineLimit(3)
+                    .lineLimit(lineLimit)
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 

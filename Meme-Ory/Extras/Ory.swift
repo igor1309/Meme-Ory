@@ -12,7 +12,7 @@ import CoreHaptics
 //
 enum Ory {
     
-    static let hapticsAvailable: Bool = CHHapticEngine.capabilitiesForHardware().supportsHaptics
+    private static let hapticsAvailable: Bool = CHHapticEngine.capabilitiesForHardware().supportsHaptics
     
     static func feedback(style: UIImpactFeedbackGenerator.FeedbackStyle = .light) {
         if hapticsAvailable {

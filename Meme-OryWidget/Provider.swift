@@ -27,20 +27,11 @@ struct Provider: TimelineProvider {
         let currentDate = Date()
         for offset in 0 ..< 6 {
             let entryDate = Calendar.current.date(byAdding: .minute, value: 10 * offset, to: currentDate)!
-            
             let viewContext = PersistenceController.shared.container.viewContext
-            let request = Story.fetchRequest(NSPredicate.all)
-            // request # of random stories
-            let count = viewContext.realCount(for: request)
             let limit = 9
-            let maxOffset = max(0, count - limit)
-            request.fetchOffset = Int(arc4random_uniform(UInt32(maxOffset)))
-            request.fetchLimit = limit
-            
-            if let results = try? viewContext.fetch(request) {
-                let newEntry = Entry(date: entryDate, stories: results)
-                entries.append(newEntry)
-            }
+            let stories = viewContext.randomObjects(limit, ofType: Story.self)
+            let newEntry = Entry(date: entryDate, stories: stories)
+            entries.append(newEntry)
         }
         
         let timeline = Timeline(entries: entries, policy: .atEnd)
