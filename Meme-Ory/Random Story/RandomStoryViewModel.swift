@@ -23,7 +23,7 @@ final class RandomStoryViewModel: ObservableObject {
     
     struct SheetIdentifier: Identifiable {
         var id: Modal
-        enum Modal { case list, tags, edit }
+        enum Modal { case list, tags, edit, new }
     }
     
     init(context: NSManagedObjectContext) {
@@ -49,6 +49,15 @@ final class RandomStoryViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        NotificationCenter.default.publisher(for: .NewStoryCreated)
+            .compactMap { _ in
+                Story.last(in: context)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.randomStory = $0
+            }
+            .store(in: &cancellables)
     }
     
     private var cancellables = Set<AnyCancellable>()
@@ -109,21 +118,24 @@ final class RandomStoryViewModel: ObservableObject {
     //  MARK: Paste clipboard to new story
     
     func pasteToNewStory() {
-        if UIPasteboard.general.hasStrings,
-           let content = UIPasteboard.general.string,
-           !content.isEmpty {
-            let story = Story(context: context)
-            story.text = content
-            story.timestamp = Date()
-            
-            context.saveContext()
+        if UIPasteboard.general.hasStrings {
+            Story.createStoryFromPasteboard(context: context)
             
             storyURL = Story.last(in: context)?.url
         }
     }
     
     
+    //  MARK: Create new Story
+    
+    func createNewStory() {
+        Ory.withHapticsAndAnimation {
+            self.sheetIdentifier = SheetIdentifier(id: .new)
+        }
+    }
+    
     //  MARK: Show some random story
+    
     func getRandomStory() {
         getRandomStory(hasHapticsAndAnimation: true)
     }

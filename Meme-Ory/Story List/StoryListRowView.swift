@@ -110,7 +110,7 @@ struct StoryListRowView: View {
     private func copyStoryTextButton() -> some View {
         Button {
             Ory.withHapticsAndAnimation {
-                UIPasteboard.general.string = story.text
+                story.copyText()
             }
         } label: {
             Text("Copy story text")

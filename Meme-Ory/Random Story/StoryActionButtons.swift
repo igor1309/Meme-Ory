@@ -27,6 +27,8 @@ struct StoryActionButtons: View {
                 MyButton(title:"Paste to new Story", icon: "doc.on.clipboard", labelStyle: labelStyle, action: model.pasteToNewStory)
                 // to disable with .hasStrings its value should be updated
                 //.disabled(!UIPasteboard.general.hasStrings)
+                
+                MyButton(title:"New Story", icon: "plus", labelStyle: labelStyle, action: model.createNewStory)
             }
             
             Section(header: Text("This Story")) {

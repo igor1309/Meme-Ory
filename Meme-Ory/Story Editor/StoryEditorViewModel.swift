@@ -126,6 +126,8 @@ final class StoryEditorViewModel: ObservableObject {
                 /// create new story
                 story = Story(context: context)
                 story.timestamp = Date()
+                let center = NotificationCenter.default
+                center.post(name: .NewStoryCreated, object: story.url)
             }
             
             story.text                   = self.text
@@ -134,8 +136,10 @@ final class StoryEditorViewModel: ObservableObject {
             story.calendarItemIdentifier = self.calendarItemIdentifier
             
             context.saveContext()
-            
-            //            presentation.wrappedValue.dismiss()
         }
     }
+}
+
+extension Notification.Name {
+    public static let NewStoryCreated = Notification.Name("NewStoryCreated")
 }

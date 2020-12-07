@@ -102,7 +102,7 @@ struct StoryListView: View {
     
     private func confirmationActionSheet() -> ActionSheet {
         ActionSheet(
-            title: Text("Delete Story?"),
+            title: Text("Delete Story?".uppercased()),
             message: Text("Are you sure? This cannot be undone."),
             buttons: [
                 .destructive(Text("Yes, delete!")) { deleteStories() },
