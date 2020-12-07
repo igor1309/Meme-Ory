@@ -81,37 +81,6 @@ extension Story {
     }
     
     
-    //  MARK: Reminder
-    
-    func reminderCleanUp(eventStore: EventStore, context: NSManagedObjectContext) {
-        //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
-        if calendarItemIdentifier != "",
-           eventStore.accessGranted {
-            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
-            let reminder = eventStore.reminder(for: self)
-            if reminder == nil {
-                calendarItemIdentifier_ = nil
-                context.saveContext()
-            }
-        }
-    }
-    
-    //  MARK: - FINISH THIS
-    // next month: next month 1st day
-    // next weeek: next monday
-    // next year: next Jan 1
-    //
-    func remindMeNext(_ component: Calendar.Component, hour: Int = 9, eventStore: EventStore, context: NSManagedObjectContext) {
-        guard eventStore.accessGranted,
-              let calendarItemIdentifier = eventStore.addReminder(for: self, component: component, hour: hour) else { return }
-        
-        Ory.withHapticsAndAnimation {
-            self.calendarItemIdentifier = calendarItemIdentifier
-            context.saveContext()
-        }
-    }
-    
-    
     //  MARK: FetchRequest
     
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Story> {

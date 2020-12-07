@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A031FF8257E4BD8009AF197 /* Calendar.Component+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */; };
+		2A031FFF257E4BDD009AF197 /* Calendar.Component+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */; };
 		2A055C842577EF2F00221367 /* MyJavaScriptFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 2A055C832577EF2F00221367 /* MyJavaScriptFile.js */; };
 		2A16CDDB2574EFDE00146F3E /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
 		2A16CDDF2574EFE700146F3E /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
@@ -636,6 +638,7 @@
 				2ADAD3D1256DA5E700AF463B /* Tag.swift in Sources */,
 				2ACCEE5F257E15760022B752 /* Ory.swift in Sources */,
 				2ADAD3C8256DA5D300AF463B /* Context.swift in Sources */,
+				2A031FFF257E4BDD009AF197 /* Calendar.Component+Ext.swift in Sources */,
 				2ACCEE50257E13740022B752 /* EventStore.swift in Sources */,
 				2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */,
 				2ADAD3CB256DA5E000AF463B /* Meme_Ory.xcdatamodeld in Sources */,
@@ -662,6 +665,7 @@
 				2ACCEE54257E13790022B752 /* EKEventStore+Ext.swift in Sources */,
 				2A16CE102574F12B00146F3E /* URL+Extension.swift in Sources */,
 				2A16CDDF2574EFE700146F3E /* Context.swift in Sources */,
+				2A031FF8257E4BD8009AF197 /* Calendar.Component+Ext.swift in Sources */,
 				2AFE9E6E25744F480037E8CF /* ActionViewController.swift in Sources */,
 				2A16CDDB2574EFDE00146F3E /* Persistence.swift in Sources */,
 				2A16CDEC2574F09C00146F3E /* Brief.swift in Sources */,

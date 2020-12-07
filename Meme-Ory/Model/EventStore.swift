@@ -7,6 +7,8 @@
 
 import Combine
 import EventKit
+import CoreData
+import SwiftUI
 
 final class EventStore: ObservableObject {
     
@@ -43,7 +45,10 @@ final class EventStore: ObservableObject {
 extension EventStore {
     typealias CalendarItemIdentifier = String
     
-    func reminder(for story: Story) -> EKReminder? {
+    
+    //  MARK: Manage Reminders
+    
+    func reminderForStory(_ story: Story) -> EKReminder? {
         accessGranted ? store.calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder : nil
     }
     
@@ -54,6 +59,48 @@ extension EventStore {
         } else {
             return false
         }
+    }
+    
+    func reminderCleanup(for story: Story, in context: NSManagedObjectContext) {
+        //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
+        if story.calendarItemIdentifier != "",
+           accessGranted {
+            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
+            let reminder = reminderForStory(story)
+            if reminder == nil {
+                story.calendarItemIdentifier_ = nil
+                context.saveContext()
+            }
+        }
+    }
+    
+    //  MARK: - FINISH THIS
+    // next month: next month 1st day
+    // next weeek: next monday
+    // next year: next Jan 1
+    //
+    func remindMeNext(_ component: Calendar.Component, hour: Int = 9, story: Story, context: NSManagedObjectContext) {
+        guard accessGranted,
+              let calendarItemIdentifier = addReminder(for: story, component: component, hour: hour) else { return }
+        
+        Ory.withHapticsAndAnimation {
+            story.calendarItemIdentifier = calendarItemIdentifier
+            context.saveContext()
+        }
+    }
+    
+    func remindMeActionSheet(for story: Story, in context: NSManagedObjectContext) -> ActionSheet {
+        let remindingButtons = EventStore.components.map { component in
+            ActionSheet.Button.default(Text("\(component.str)")) {
+                self.remindMeNext(component, story: story, context: context)
+            }
+        }
+        
+        return ActionSheet (
+            title: Text("Remind Me...".uppercased()),
+            message: Text("Select when you want to be reminded."),
+            buttons: remindingButtons + [ActionSheet.Button.cancel()]
+        )
     }
     
     //  MARK: - FINISH THIS

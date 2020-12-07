@@ -136,7 +136,7 @@ final class StoryEditorViewModel: ObservableObject {
         //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
         if mode == .edit,
            let storyToEdit = storyToEdit {
-            storyToEdit.reminderCleanUp(eventStore: eventStore, context: context)
+            eventStore.reminderCleanup(for: storyToEdit, in: context)
         }
     }
     

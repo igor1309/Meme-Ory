@@ -37,10 +37,12 @@ struct StoryListRowView: View {
             }
             .contentShape(Rectangle())
             .onAppear {
-                story.reminderCleanUp(eventStore: eventStore, context: context)
+                eventStore.reminderCleanup(for: story, in: context)
             }
             .sheet(isPresented: $showingStorySheet, content: storySheet)
-            .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
+            .actionSheet(isPresented: $showRemindMeActionSheet) {
+                eventStore.remindMeActionSheet(for: story, in: context)
+            }
     }
     
     private func storySheet() -> some View {
@@ -154,37 +156,6 @@ struct StoryListRowView: View {
             }
         } label: {
             Label("Remind me...", systemImage: "bell")
-        }
-    }
-    
-    private func remindMeActionSheet() -> ActionSheet {
-        let remindingButtons = EventStore.components.map { component in
-            ActionSheet.Button.default(Text("\(component.str)")) {
-                story.remindMeNext(component, eventStore: eventStore, context: context)
-            }
-        }
-        
-        return ActionSheet (
-            title: Text("Remind Me...".uppercased()),
-            message: Text("Select when you want to be reminded."),
-            buttons: remindingButtons + [ActionSheet.Button.cancel()]
-        )
-    }
-    
-    @ViewBuilder
-    private func remindMeSection() -> some View {
-        if eventStore.accessGranted {
-            Section {
-                ForEach(EventStore.components, id: \.self) { component in
-                    Button {
-                        Ory.withHapticsAndAnimation {
-                            story.remindMeNext(component, eventStore: eventStore, context: context)
-                        }
-                    } label: {
-                        Label("Remind me \(component.str)", systemImage: "bell")
-                    }
-                }
-            }
         }
     }
 }
