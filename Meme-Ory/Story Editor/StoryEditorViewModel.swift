@@ -91,28 +91,10 @@ final class StoryEditorViewModel: ObservableObject {
     func reminderCleanUp(eventStore: EventStore, context: NSManagedObjectContext) {
         //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
         if mode == .edit,
-           eventStore.accessGranted,
            let storyToEdit = storyToEdit {
-            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer in story and draft
-            let reminder = eventStore.reminder(for: storyToEdit)
-            if storyToEdit.calendarItemIdentifier != "" && reminder == nil {
-                // this cleanup would be saved now, so pretend no changes were made here:
-                // store and re-apply hasChanges value with little delay
-                // to let publishers finish first
-                let hasChanges = self.hasChanges
-                
-                storyToEdit.calendarItemIdentifier_ = nil
-                calendarItemIdentifier = ""
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.hasChanges = hasChanges
-                }
-                
-                context.saveContext()
-            }
+            storyToEdit.reminderCleanUp(eventStore: eventStore, context: context)
         }
     }
-    
     
     func saveStory(in context: NSManagedObjectContext) {
         Ory.withHapticsAndAnimation {
