@@ -31,15 +31,12 @@ struct StoryEditorView: View {
         UITextView.appearance().backgroundColor = .clear
     }
     
-    @State private var showingMessage = false
-    @State private var message = ""
-    
     private var hasReminder: Bool { eventStore.hasReminder(with: model.calendarItemIdentifier) }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             TextEditor(text: $model.text)
-                .onAppear(perform: pasteClipboard)
+                .onAppear(perform: model.pasteClipboard)
                 .padding([.horizontal, .top])
                 .background(Color.clear)
             
@@ -59,7 +56,7 @@ struct StoryEditorView: View {
         .background(textBackground)
         .navigationBarTitle(model.mode.title, displayMode: .inline)
         .navigationBarItems(leading: cancelButton(), trailing: saveButton())
-        .actionSheet(isPresented: $showingMessage, content: { ActionSheet(title: Text(message), buttons: []) })
+        .actionSheet(isPresented: $model.showingMessage, content: { ActionSheet(title: Text(model.message), buttons: []) })
         .onAppear { model.reminderCleanUp(eventStore: eventStore, context: context) }
     }
     
@@ -71,26 +68,9 @@ struct StoryEditorView: View {
             Color.clear
         }
     }
-    
-    private func pasteClipboard() {
-        withAnimation {
-            /// if editing try to paste clipboard content
-            if model.mode == .create {
-                if UIPasteboard.general.hasStrings,
-                   let content = UIPasteboard.general.string,
-                   !content.isEmpty {
-                    model.text = content
-                }
-            }
-        }
-    }
-    
+
     private func shareButton() -> some View {
-        Button {
-            let items = [model.text]
-            let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
-        } label: {
+        Button(action: model.shareStoryText) {
             Image(systemName: "square.and.arrow.up")
                 .imageScale(.large)
                 .frame(width: 44, height: 32)
@@ -98,38 +78,13 @@ struct StoryEditorView: View {
     }
     
     private func toggleReminderButton() -> some View {
-        Button(action: toggleReminder) {
+        Button {
+            model.toggleReminder(eventStore: eventStore)
+        } label: {
             Image(systemName: hasReminder ? "bell.fill" : "bell")
                 .foregroundColor(hasReminder ? Color(UIColor.systemOrange) : .accentColor)
                 .imageScale(.large)
                 .frame(width: 44, height: 32)
-        }
-    }
-    
-    private func toggleReminder() {
-        withAnimation {
-            if hasReminder {
-                // delete reminder
-                eventStore.deleteReminder(withIdentifier: model.calendarItemIdentifier)
-                model.calendarItemIdentifier = ""
-                
-                temporaryMessage("Reminder was deleted".uppercased())
-            } else {
-                //  MARK: - FINISH THIS ADD REMINDER
-                temporaryMessage("\("Cannot add reminder here".uppercased())\nPlease use Context Menu for row in Stories List.", seconds: 4)
-            }
-        }
-    }
-    
-    private func temporaryMessage(_ message: String, seconds: Int = 2) {
-        self.message = message
-        showingMessage = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) {
-            Ory.withHapticsAndAnimation {
-                showingMessage = false
-                self.message = ""
-            }
         }
     }
     

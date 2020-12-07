@@ -88,12 +88,62 @@ final class StoryEditorViewModel: ObservableObject {
     
     //  MARK: Functions
     
+    func pasteClipboard() {
+        Ory.withHapticsAndAnimation {
+            /// if editing try to paste clipboard content
+            if self.mode == .create {
+                if UIPasteboard.general.hasStrings,
+                   let content = UIPasteboard.general.string,
+                   !content.isEmpty {
+                    self.text = content
+                }
+            }
+        }
+    }
+    
+    func toggleReminder(eventStore: EventStore) {
+        Ory.withHapticsAndAnimation {
+            if let storyToEdit = self.storyToEdit,
+                storyToEdit.hasReminder {
+                // delete reminder
+                eventStore.deleteReminder(withIdentifier: self.calendarItemIdentifier)
+                storyToEdit.calendarItemIdentifier = ""
+                self.calendarItemIdentifier = ""
+                
+                self.temporaryMessage("Reminder was deleted".uppercased())
+            } else {
+                //  MARK: - FINISH THIS ADD REMINDER
+                self.temporaryMessage("\("Cannot add reminder here".uppercased())\nPlease use Context Menu for row in Stories List.", seconds: 4)
+            }
+        }
+    }
+    
+    @Published var showingMessage = false
+    @Published var message = ""
+    func temporaryMessage(_ message: String, seconds: Int = 2) {
+        Ory.withHapticsAndAnimation {
+            self.message = message
+            self.showingMessage = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) {
+                self.showingMessage = false
+                self.message = ""
+            }
+        }
+    }
+    
     func reminderCleanUp(eventStore: EventStore, context: NSManagedObjectContext) {
         //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
         if mode == .edit,
            let storyToEdit = storyToEdit {
             storyToEdit.reminderCleanUp(eventStore: eventStore, context: context)
         }
+    }
+    
+    func shareStoryText() {
+        let items = [text]
+        let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
     }
     
     func saveStory(in context: NSManagedObjectContext) {
