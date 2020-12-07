@@ -83,14 +83,14 @@ struct RandomStoryView: View {
             .navigationBarTitle("Random Story", displayMode: .inline)
             .navigationBarItems(leading: listButton(), trailing: menu())
             .sheet(item: $model.sheetIdentifier, content: modalView)
-            .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
+            .actionSheet(item: $model.actionActionSheetIdentifier, content: actionSheet)
         }
         .onAppear(perform: model.getRandomStory)
         .onDisappear(perform: context.saveContext)
         .onOpenURL(perform: model.handleOpenURL)
     }
     
-    
+
     //  MARK: Icons
     
     @ViewBuilder
@@ -159,7 +159,7 @@ struct RandomStoryView: View {
     @ViewBuilder
     private func menu() -> some View {
         Menu {
-            StoryActionButtons(model: model, story: story, showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
+            StoryActionButtons(model: model, story: story, labelStyle: .none)
         } label: {
             Label("Story Actions", systemImage: "ellipsis.circle")
                 .labelStyle(IconOnlyLabelStyle())
@@ -168,10 +168,17 @@ struct RandomStoryView: View {
     }
     
     
-    //  MARK: Delete Story
+    //  MARK: Action Sheets
     
-    @State private var showingDeleteConfirmation = false
-    
+    private func actionSheet(actionActionSheetIdentifier: RandomStoryViewModel.ActionSheetIdentifier) -> ActionSheet {
+        switch actionActionSheetIdentifier.id {
+            case .delete:
+                return confirmationActionSheet()
+            case .remindMe:
+                return eventStore.remindMeActionSheet(for: story, in: context)
+        }
+    }
+        
     private func confirmationActionSheet() -> ActionSheet {
         ActionSheet(
             title: Text("Delete Story?".uppercased()),

@@ -26,6 +26,13 @@ final class RandomStoryViewModel: ObservableObject {
         enum Modal { case list, tags, edit, new }
     }
     
+    @Published var actionActionSheetIdentifier: ActionSheetIdentifier?
+    
+    struct ActionSheetIdentifier: Identifiable {
+        var id: Modal
+        enum Modal { case delete, remindMe }
+    }
+    
     init(context: NSManagedObjectContext) {
         self.context = context
         
@@ -88,7 +95,7 @@ final class RandomStoryViewModel: ObservableObject {
     }
     
     
-    //  MARK: Show Story Editor
+    //  MARK: Show Sheets: Story Editor, Story List & Tag Grid for Editing
     
     func showStoryEditor() {
         Ory.withHapticsAndAnimation {
@@ -96,18 +103,12 @@ final class RandomStoryViewModel: ObservableObject {
         }
     }
     
-    
-    //  MARK: Show Story List
-    
     func showStoryList() {
         Ory.withHapticsAndAnimation {
             self.sheetIdentifier = SheetIdentifier(id: .list)
         }
     }
-    
-    
-    //  MARK: Show Tag Grid for Editing
-    
+
     func showTagGrid() {
         Ory.withHapticsAndAnimation {
             self.sheetIdentifier = SheetIdentifier(id: .tags)
@@ -115,6 +116,17 @@ final class RandomStoryViewModel: ObservableObject {
     }
     
     
+    //  MARK: Show Action Sheets: Delete Story & RemindMe
+
+    func deleteStoryAction() {
+        actionActionSheetIdentifier = ActionSheetIdentifier(id: .delete)
+    }
+    
+    func remindMeAction() {
+        actionActionSheetIdentifier = ActionSheetIdentifier(id: .remindMe)
+    }
+
+
     //  MARK: Paste clipboard to new story
     
     func pasteToNewStory() {
@@ -133,6 +145,7 @@ final class RandomStoryViewModel: ObservableObject {
             self.sheetIdentifier = SheetIdentifier(id: .new)
         }
     }
+    
     
     //  MARK: Show some random story
     
@@ -166,6 +179,8 @@ final class RandomStoryViewModel: ObservableObject {
                 
                 self.title = "Story was deleted"
             }
+            
+            self.getRandomStory()
         }
     }
 }

@@ -13,8 +13,6 @@ struct StoryActionButtons: View {
     @ObservedObject var model: RandomStoryViewModel
     @ObservedObject var story: Story
     
-    @Binding var showingDeleteConfirmation: Bool
-    
     let labelStyle: MyButton.Style
     
     var body: some View {
@@ -32,14 +30,14 @@ struct StoryActionButtons: View {
             }
             
             Section(header: Text("This Story")) {
-                MyButton(title: "¿ Remind me…", icon: "bell", labelStyle: labelStyle) {
-                    //  MARK: - FINISH THIS:
-                }
+                MyButton(title: "Remind me…", icon: "bell", labelStyle: labelStyle, action: model.remindMeAction)
+                
                 MyButton(title: story.isFavorite ? "Unfavorite" : "Favorite",
                          icon: story.isFavorite ? "star.slash" : "star",
                          labelStyle: labelStyle) {
                     story.isFavorite.toggle()
                 }
+                
                 MyButton(title: "Copy Text", icon: "doc.on.doc", labelStyle: labelStyle, action: story.copyText)
                 
                 MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle) {
@@ -50,9 +48,7 @@ struct StoryActionButtons: View {
                 
                 MyButton(title: "Edit Tags", icon: "tag", labelStyle: labelStyle, action: model.showTagGrid)
                 
-                MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle) {
-                    showingDeleteConfirmation = true
-                }
+                MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle, action: model.deleteStoryAction)
             }
             
             Section(header: Text("List")) {
@@ -78,11 +74,9 @@ struct StoryActionButtons: View {
 }
 
 struct StoryActionButtons_Previews: PreviewProvider {
-    @State static private var showingDeleteConfirmation = false
-    
     static var previews: some View {
         List {
-            StoryActionButtons(model: RandomStoryViewModel(context: SampleData.preview.container.viewContext), story: SampleData.story(), showingDeleteConfirmation: $showingDeleteConfirmation, labelStyle: .none)
+            StoryActionButtons(model: RandomStoryViewModel(context: SampleData.preview.container.viewContext), story: SampleData.story(), labelStyle: .none)
         }
     }
 }
