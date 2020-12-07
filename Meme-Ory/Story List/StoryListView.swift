@@ -161,14 +161,7 @@ struct StoryListView: View {
         if UIPasteboard.general.hasStrings {
             Button {
                 Ory.withHapticsAndAnimation {
-                    if let content = UIPasteboard.general.string,
-                       !content.isEmpty {
-                        let story = Story(context: context)
-                        story.text = content
-                        story.timestamp = Date()
-                        
-                        context.saveContext()
-                    }
+                    Story.createStoryFromPasteboard(context: context)
                 }
             } label: {
                 Label("Paste to story", systemImage: "doc.on.clipboard")

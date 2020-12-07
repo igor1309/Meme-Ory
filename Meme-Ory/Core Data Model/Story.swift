@@ -60,6 +60,27 @@ extension Story {
     }
     
     
+    //  MARK: Copy Story Text
+    
+    func copyText() {
+        Ory.withHapticsAndAnimation {
+            UIPasteboard.general.string = self.text
+        }
+    }
+    
+    
+    static func createStoryFromPasteboard(context: NSManagedObjectContext) {
+        if let content = UIPasteboard.general.string,
+           !content.isEmpty {
+            let story = Story(context: context)
+            story.text = content
+            story.timestamp = Date()
+            
+            context.saveContext()
+        }
+    }
+    
+    
     //  MARK: Reminder
     
     func reminderCleanUp(eventStore: EventStore, context: NSManagedObjectContext) {

@@ -19,14 +19,8 @@ struct StoryActionButtons: View {
     
     var body: some View {
         Group {
-            Section(header: Text("View and List")) {
+            Section(header: Text("View")) {
                 MyButton(title:"Show Random Story", icon: "wand.and.stars", labelStyle: labelStyle, action: { model.getRandomStory(hasHapticsAndAnimation: false) })
-                MyButton(title: "¿ Filter List by this tag (if one)", icon: "tag.circle", labelStyle: labelStyle) {
-                    //  MARK: - FINISH THIS:
-                }
-                MyButton(title: "¿ List View Options", icon: "slider.horizontal.3", labelStyle: labelStyle) {
-                    //  MARK: - FINISH THIS:
-                }
             }
             
             Section(header: Text("Create")) {
@@ -44,9 +38,8 @@ struct StoryActionButtons: View {
                          labelStyle: labelStyle) {
                     story.isFavorite.toggle()
                 }
-                MyButton(title: "Copy Story text", icon: "doc.on.doc", labelStyle: labelStyle) {
-                    UIPasteboard.general.string = story.text
-                }
+                MyButton(title: "Copy Text", icon: "doc.on.doc", labelStyle: labelStyle, action: story.copyText)
+                
                 MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle) {
                     shareText(story.text)
                 }
@@ -57,6 +50,15 @@ struct StoryActionButtons: View {
                 
                 MyButton(title: "Delete Story", icon: "trash", labelStyle: labelStyle) {
                     showingDeleteConfirmation = true
+                }
+            }
+            
+            Section(header: Text("List")) {
+                MyButton(title: "¿ Filter List by this tag (if one)", icon: "tag.circle", labelStyle: labelStyle) {
+                    //  MARK: - FINISH THIS:
+                }
+                MyButton(title: "¿ List View Options", icon: "slider.horizontal.3", labelStyle: labelStyle) {
+                    //  MARK: - FINISH THIS:
                 }
             }
         }
