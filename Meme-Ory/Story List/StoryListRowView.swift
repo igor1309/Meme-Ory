@@ -94,10 +94,7 @@ struct StoryListRowView: View {
     
     private func toggleFavoriteButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 story.isFavorite.toggle()
                 context.saveContext()
             }
@@ -110,10 +107,7 @@ struct StoryListRowView: View {
     
     private func copyStoryTextButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 UIPasteboard.general.string = story.text
             }
         } label: {
@@ -129,10 +123,7 @@ struct StoryListRowView: View {
                 if filter.tags == Set(story.tags) {
                     // filter by this tag was already set
                     Button {
-                        let haptics = Haptics()
-                        haptics.feedback()
-                        
-                        withAnimation {
+                        Ory.withHapticsAndAnimation {
                             filter.tags = []
                         }
                     } label: {
@@ -141,10 +132,7 @@ struct StoryListRowView: View {
                 } else {
                     // set filter by this tag
                     Button {
-                        let haptics = Haptics()
-                        haptics.feedback()
-                        
-                        withAnimation {
+                        Ory.withHapticsAndAnimation {
                             filter.tags = Set(story.tags)
                         }
                     } label: {
@@ -159,10 +147,7 @@ struct StoryListRowView: View {
     /// using with Action Sheet
     private func remindMeButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 showRemindMeActionSheet = true
             }
         } label: {
@@ -190,10 +175,7 @@ struct StoryListRowView: View {
             Section {
                 ForEach(EventStore.components, id: \.self) { component in
                     Button {
-                        let haptics = Haptics()
-                        haptics.feedback()
-                        
-                        withAnimation {
+                        Ory.withHapticsAndAnimation {
                             remindMeNext(component)
                         }
                     } label: {
@@ -226,10 +208,7 @@ struct StoryListRowView: View {
         guard eventStore.accessGranted,
               let calendarItemIdentifier = eventStore.addReminder(for: story, component: component, hour: hour) else { return }
         
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
+        Ory.withHapticsAndAnimation {
             story.calendarItemIdentifier = calendarItemIdentifier
             context.saveContext()
         }

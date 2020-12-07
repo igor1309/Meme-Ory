@@ -69,9 +69,9 @@ final class RandomStoryViewModel: ObservableObject {
         //print("handleOpenURL: \(url)")
         #endif
         
-        let haptics = Haptics()
-        haptics.feedback()
+        Ory.feedback()
         
+        // animation here works bad
         // withAnimation {
         storyURL = url
         // showingList = false
@@ -82,11 +82,8 @@ final class RandomStoryViewModel: ObservableObject {
     //  MARK: Show Story Editor
     
     func showStoryEditor() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            sheetIdentifier = SheetIdentifier(id: .edit)
+        Ory.withHapticsAndAnimation {
+            self.sheetIdentifier = SheetIdentifier(id: .edit)
         }
     }
     
@@ -94,11 +91,8 @@ final class RandomStoryViewModel: ObservableObject {
     //  MARK: Show Story List
     
     func showStoryList() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            sheetIdentifier = SheetIdentifier(id: .list)
+        Ory.withHapticsAndAnimation {
+            self.sheetIdentifier = SheetIdentifier(id: .list)
         }
     }
     
@@ -106,11 +100,8 @@ final class RandomStoryViewModel: ObservableObject {
     //  MARK: Show Tag Grid for Editing
     
     func showTagGrid() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            sheetIdentifier = SheetIdentifier(id: .tags)
+        Ory.withHapticsAndAnimation {
+            self.sheetIdentifier = SheetIdentifier(id: .tags)
         }
     }
     
@@ -144,11 +135,8 @@ final class RandomStoryViewModel: ObservableObject {
         //print("model: getRandomStory \(url?.absoluteString ?? "nil")")
         
         if hasHapticsAndAnimation {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
-                storyURL = url
+            Ory.withHapticsAndAnimation {
+                self.storyURL = url
             }
         } else {
             storyURL = url
@@ -159,15 +147,12 @@ final class RandomStoryViewModel: ObservableObject {
     //  MARK: Delete currently shown Story
     
     func deleteStory() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
-            if let story = randomStory {
-                context.delete(story)
-                context.saveContext()
+        Ory.withHapticsAndAnimation {
+            if let story = self.randomStory {
+                self.context.delete(story)
+                self.context.saveContext()
                 
-                title = "Story was deleted"
+                self.title = "Story was deleted"
             }
         }
     }

@@ -63,10 +63,7 @@ struct TagGridWrapperView: View {
     }
     
     private func createNewTagAndSelect() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
+        Ory.withHapticsAndAnimation {
             /// check if name is unique
             guard !tags.map(\.name).contains(newTagName) else {
                 newTagName = ""

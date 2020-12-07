@@ -73,10 +73,7 @@ struct ListOptionsMenu: View {
     }
     private func showOptionsButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 showingListOptions = true
             }
         } label: {
@@ -90,10 +87,7 @@ struct ListOptionsMenu: View {
         if filter.isTagFilterActive {
             Section {
                 Button {
-                    let haptics = Haptics()
-                    haptics.feedback()
-                    
-                    withAnimation {
+                    Ory.withHapticsAndAnimation {
                         filter.resetTags()
                     }
                 } label: {
@@ -107,10 +101,7 @@ struct ListOptionsMenu: View {
     
     private func listLimitButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 filter.isListLimited.toggle()
             }
         } label: {
@@ -121,10 +112,7 @@ struct ListOptionsMenu: View {
     
     private func sortOrderButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 filter.areInIncreasingOrder.toggle()
             }
         } label: {

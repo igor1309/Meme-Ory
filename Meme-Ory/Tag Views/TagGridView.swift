@@ -43,10 +43,7 @@ struct TagGridView: View {
     }
     
     private func toggleSelection(_ tag: Tag) {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
+        Ory.withHapticsAndAnimation {
             if isSelected(tag) {
                 /// remove tag
                 selected.remove(tag)

@@ -60,10 +60,7 @@ struct ImportTextView: View {
     
     private func briefListRow(_ story: Brief) -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 model.toggleCheck(for: story)
             }
         } label: {

@@ -49,7 +49,6 @@
 		2A935CA6256A80C9004B6E10 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA5256A80C9004B6E10 /* Filter.swift */; };
 		2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA8256A83A0004B6E10 /* TagGridView.swift */; };
 		2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CAB256A98C4004B6E10 /* TagView.swift */; };
-		2A935CB2256AE742004B6E10 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB1256AE742004B6E10 /* Haptics.swift */; };
 		2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */; };
 		2A9CA64A2575B83B00FCD4D0 /* ListOptionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9CA6492575B83B00FCD4D0 /* ListOptionsMenu.swift */; };
 		2AA8916B256B9E7E0042395A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
@@ -59,8 +58,8 @@
 		2AB37295257AD5A900D851C6 /* RandomStoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */; };
 		2ABAB1922575010300D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
 		2ABAB1962575010400D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
-		2ABAB1A625753BCB00D9B2F1 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB1256AE742004B6E10 /* Haptics.swift */; };
-		2ABAB1AA25753BCB00D9B2F1 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB1256AE742004B6E10 /* Haptics.swift */; };
+		2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
+		2ACCEE41257E10AE0022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
 		2ADAD3B3256DA23A00AF463B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */; };
 		2ADAD3B5256DA23A00AF463B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */; };
 		2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */; };
@@ -155,7 +154,6 @@
 		2A935CA5256A80C9004B6E10 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2A935CA8256A83A0004B6E10 /* TagGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGridView.swift; sourceTree = "<group>"; };
 		2A935CAB256A98C4004B6E10 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
-		2A935CB1256AE742004B6E10 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGridWrapperView.swift; sourceTree = "<group>"; };
 		2A9CA6492575B83B00FCD4D0 /* ListOptionsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionsMenu.swift; sourceTree = "<group>"; };
 		2AA8916A256B9E7E0042395A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
@@ -164,6 +162,7 @@
 		2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryActionButtons.swift; sourceTree = "<group>"; };
 		2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryViewModel.swift; sourceTree = "<group>"; };
 		2ABAB1A025750EB700D9B2F1 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		2ACCEE39257E08A40022B752 /* Ory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ory.swift; sourceTree = "<group>"; };
 		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -363,7 +362,7 @@
 		2A935CC4256AF648004B6E10 /* Extras */ = {
 			isa = PBXGroup;
 			children = (
-				2A935CB1256AE742004B6E10 /* Haptics.swift */,
+				2ACCEE39257E08A40022B752 /* Ory.swift */,
 			);
 			path = Extras;
 			sourceTree = "<group>";
@@ -612,10 +611,10 @@
 				2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */,
 				2A935CA6256A80C9004B6E10 /* Filter.swift in Sources */,
 				2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */,
-				2A935CB2256AE742004B6E10 /* Haptics.swift in Sources */,
 				2AF434632576BBB500DB0D2D /* ImportTextTesting.swift in Sources */,
 				2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */,
 				2A4CC9FB25795A5E000A21C9 /* MyButton.swift in Sources */,
+				2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */,
 				2A935C8C256A51AC004B6E10 /* Story.swift in Sources */,
 				2AB3728C257A32D800D851C6 /* StoryActionButtons.swift in Sources */,
 				2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */,
@@ -638,7 +637,6 @@
 				2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */,
 				2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */,
 				2A64D42D257164B900C1817F /* Brief.swift in Sources */,
-				2ABAB1AA25753BCB00D9B2F1 /* Haptics.swift in Sources */,
 				2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */,
 				2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */,
 			);
@@ -649,8 +647,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A16CDE82574EFF000146F3E /* Meme_Ory.xcdatamodeld in Sources */,
+				2ACCEE41257E10AE0022B752 /* Ory.swift in Sources */,
 				2A16CDE32574EFEC00146F3E /* Tag.swift in Sources */,
-				2ABAB1A625753BCB00D9B2F1 /* Haptics.swift in Sources */,
 				2A16CDF92574F0F000146F3E /* NSPredicate+Ext.swift in Sources */,
 				2A16CE102574F12B00146F3E /* URL+Extension.swift in Sources */,
 				2A16CDDF2574EFE700146F3E /* Context.swift in Sources */,

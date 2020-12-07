@@ -74,10 +74,7 @@ struct StoryTagView: View {
     }
     
     private func showTagGrid() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
+        Ory.withHapticsAndAnimation {
             showingTagGrid = true
         }
     }

@@ -32,8 +32,7 @@ struct MyButton: View {
     var body: some View {
         Button {
             if withHaptics {
-                let haptics = Haptics()
-                haptics.feedback()
+                Ory.feedback()
             }
             
             if useAnimation {

@@ -114,7 +114,6 @@ class ActionViewController: UIViewController {
         
         extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
         
-        let haptics = Haptics()
-        haptics.feedback(feedback: .success)
+        Ory.feedback(type: .success)
     }
 }

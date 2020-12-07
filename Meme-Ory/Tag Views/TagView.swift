@@ -70,10 +70,7 @@ struct TagView: View {
     }
     
     private func deleteTag(_ tag: Tag) {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
+        Ory.withHapticsAndAnimation {
             selected.remove(tag)
             
             context.delete(tag)

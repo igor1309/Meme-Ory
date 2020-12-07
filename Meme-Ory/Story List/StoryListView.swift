@@ -112,10 +112,7 @@ struct StoryListView: View {
     }
     
     private func deleteStories() {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
+        Ory.withHapticsAndAnimation {
             offsets.map { stories[$0] }.forEach(context.delete)
             context.saveContext()
         }
@@ -123,10 +120,7 @@ struct StoryListView: View {
     
     private func createNewStoryButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 showingCreateNewStorySheet = true
             }
         } label: {
@@ -166,10 +160,7 @@ struct StoryListView: View {
         // if clipboard has text paste and save story
         if UIPasteboard.general.hasStrings {
             Button {
-                let haptics = Haptics()
-                haptics.feedback()
-                
-                withAnimation {
+                Ory.withHapticsAndAnimation {
                     if let content = UIPasteboard.general.string,
                        !content.isEmpty {
                         let story = Story(context: context)

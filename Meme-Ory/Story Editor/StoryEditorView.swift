@@ -126,10 +126,7 @@ struct StoryEditorView: View {
         showingMessage = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 showingMessage = false
                 self.message = ""
             }
@@ -138,10 +135,7 @@ struct StoryEditorView: View {
     
     private func toggleFavoriteButton() -> some View {
         Button {
-            let haptics = Haptics()
-            haptics.feedback()
-            
-            withAnimation {
+            Ory.withHapticsAndAnimation {
                 model.isFavorite.toggle()
             }
         } label: {

@@ -115,13 +115,10 @@ final class StoryEditorViewModel: ObservableObject {
     
     
     func saveStory(in context: NSManagedObjectContext) {
-        let haptics = Haptics()
-        haptics.feedback()
-        
-        withAnimation {
+        Ory.withHapticsAndAnimation {
             let story: Story
             
-            if let storyToEdit = storyToEdit {
+            if let storyToEdit = self.storyToEdit {
                 /// editing here
                 story = storyToEdit
                 story.objectWillChange.send()
@@ -131,10 +128,10 @@ final class StoryEditorViewModel: ObservableObject {
                 story.timestamp = Date()
             }
             
-            story.text                   = text
-            story.tags                   = Array(tags)
-            story.isFavorite             = isFavorite
-            story.calendarItemIdentifier = calendarItemIdentifier
+            story.text                   = self.text
+            story.tags                   = Array(self.tags)
+            story.isFavorite             = self.isFavorite
+            story.calendarItemIdentifier = self.calendarItemIdentifier
             
             context.saveContext()
             
