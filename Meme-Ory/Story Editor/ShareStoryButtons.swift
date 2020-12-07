@@ -1,5 +1,5 @@
 //
-//  ShareStoryView.swift
+//  ShareStoryButtons.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 01.12.2020.
@@ -9,7 +9,7 @@ import SwiftUI
 
 /// https://www.hackingwithswift.com/articles/118/uiactivityviewcontroller-by-example
 
-struct ShareStoryView: View {
+struct ShareStoryButtons: View {
     let text: String
     let url: URL
     
@@ -38,7 +38,7 @@ struct ShareStoryView: View {
 struct ShareStoryView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ShareStoryView(text: "Some nice story with or witout link", url: URL(string: "https://www.apple.com")!)
+            ShareStoryButtons(text: "Some nice story with or witout link", url: URL(string: "https://www.apple.com")!)
         }
         .preferredColorScheme(.dark)
         .previewLayout(.fixed(width: 350, height: 200))

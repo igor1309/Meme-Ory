@@ -28,7 +28,7 @@ struct StoryListRowView: View {
                 /// copy story text
                 copyStoryTextButton()
                 /// share sheet
-                ShareStoryView(text: story.text, url: story.url)
+                ShareStoryButtons(text: story.text, url: story.url)
                 /// setting reminders
                 remindMeButton()
                 //remindMeSection()
@@ -36,7 +36,9 @@ struct StoryListRowView: View {
                 filterByTagSection()
             }
             .contentShape(Rectangle())
-            .onAppear(perform: reminderCleanUp)
+            .onAppear {
+                story.reminderCleanUp(eventStore: eventStore, context: context)
+            }
             .sheet(isPresented: $showingStorySheet, content: storySheet)
             .actionSheet(isPresented: $showRemindMeActionSheet, content: remindMeActionSheet)
     }
@@ -158,7 +160,7 @@ struct StoryListRowView: View {
     private func remindMeActionSheet() -> ActionSheet {
         let remindingButtons = EventStore.components.map { component in
             ActionSheet.Button.default(Text("\(component.str)")) {
-                remindMeNext(component)
+                story.remindMeNext(component, eventStore: eventStore, context: context)
             }
         }
         
@@ -176,41 +178,13 @@ struct StoryListRowView: View {
                 ForEach(EventStore.components, id: \.self) { component in
                     Button {
                         Ory.withHapticsAndAnimation {
-                            remindMeNext(component)
+                            story.remindMeNext(component, eventStore: eventStore, context: context)
                         }
                     } label: {
                         Label("Remind me \(component.str)", systemImage: "bell")
                     }
                 }
             }
-        }
-    }
-    
-    private func reminderCleanUp() {
-        //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
-        if story.calendarItemIdentifier != "",
-           eventStore.accessGranted {
-            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
-            let reminder = eventStore.reminder(for: story)
-            if reminder == nil {
-                story.calendarItemIdentifier_ = nil
-                context.saveContext()
-            }
-        }
-    }
-    
-    //  MARK: - FINISH THIS
-    // next month: next month 1st day
-    // next weeek: next monday
-    // next year: next Jan 1
-    //
-    private func remindMeNext(_ component: Calendar.Component, hour: Int = 9) {
-        guard eventStore.accessGranted,
-              let calendarItemIdentifier = eventStore.addReminder(for: story, component: component, hour: hour) else { return }
-        
-        Ory.withHapticsAndAnimation {
-            story.calendarItemIdentifier = calendarItemIdentifier
-            context.saveContext()
         }
     }
 }
