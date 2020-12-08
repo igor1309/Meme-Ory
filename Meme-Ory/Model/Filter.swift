@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+protocol Labelable {
+    var rawValue: String { get }
+    var icon: String { get }
+    
+    associatedtype V: View
+    func label(prefix: String) -> V
+}
+extension Labelable {
+    func label(prefix: String = "") -> some View {
+        let title = prefix.isEmpty ? rawValue : "\(prefix) \(rawValue)"
+        return Label(title, systemImage: icon)
+    }
+}
+
 final class Filter: ObservableObject {
     
     var isActive: Bool {
@@ -16,9 +30,9 @@ final class Filter: ObservableObject {
     
     //  MARK: Favorites
     
-    @Published
-    var favoritesFilter = FavoritesFilterOptions.all
-    enum FavoritesFilterOptions: String, CaseIterable {
+    @Published var favoritesFilter = FavoritesFilterOptions.all
+    
+    enum FavoritesFilterOptions: String, CaseIterable, Labelable {
         case fav, unfav, all
         
         var rawValue: String {
@@ -36,14 +50,18 @@ final class Filter: ObservableObject {
                 case .unfav: return "star.slash"
             }
         }
+        
+//        func label() -> some View {
+//            Label(self.rawValue, systemImage: icon)
+//        }
     }
     
     
     //  MARK: Reminders
     
-    @Published
-    var remindersFilter = RemindersFilterOptions.all
-    enum RemindersFilterOptions: String, CaseIterable {
+    @Published var remindersFilter = RemindersFilterOptions.all
+    
+    enum RemindersFilterOptions: String, CaseIterable, Labelable {
         case have, notHave, all
         
         var rawValue: String {
@@ -66,9 +84,9 @@ final class Filter: ObservableObject {
     
     //  MARK: Sort
     
-    @Published
-    var itemToSortBy = SortByOptions.timestamp
-    enum SortByOptions: String, CaseIterable {
+    @Published var itemToSortBy = SortByOptions.timestamp
+    
+    enum SortByOptions: String, CaseIterable, Labelable {
         case timestamp, text
         
         var rawValue: String {
@@ -87,30 +105,39 @@ final class Filter: ObservableObject {
     }
     
     /// sort order
-    @Published
-    var areInIncreasingOrder: Bool = UserDefaults.standard.bool(forKey: "areInIncreasingOrder") {
-        didSet {
-            UserDefaults.standard.setValue(areInIncreasingOrder, forKey: "areInIncreasingOrder")
+    @Published var sortOrder = SortOrder.descending
+    
+    enum SortOrder: String, CaseIterable, Labelable {
+        case ascending, descending
+        
+        var icon: String {
+            switch self {
+                case .ascending:  return "textformat.size"
+                case .descending: return "textformat"
+            }
+        }
+        
+        var areInIncreasingOrder: Bool {
+            get { self == .ascending }
+            set { self = newValue ? .ascending : .descending}
         }
     }
     
     
     //  MARK: Search
-    @Published
-    var searchString: String = ""
+    @Published var searchString: String = ""
     
     
     //  MARK: List Limit
     
     /// Limiting Stories List (number of stories listed))
-    @Published
-    var isListLimited: Bool = UserDefaults.standard.bool(forKey: "isListLimited") {
+    @Published var isListLimited: Bool = UserDefaults.standard.bool(forKey: "isListLimited") {
         didSet {
             UserDefaults.standard.setValue(isListLimited, forKey: "isListLimited")
         }
     }
-    @Published
-    var listLimit: Int = max(6, UserDefaults.standard.integer(forKey: "listLimit")) {
+    
+    @Published var listLimit: Int = max(6, UserDefaults.standard.integer(forKey: "listLimit")) {
         didSet {
             UserDefaults.standard.setValue(listLimit, forKey: "listLimit")
         }
@@ -121,8 +148,7 @@ final class Filter: ObservableObject {
     
     //  MARK: Tags
     
-    @Published
-    var tags = Set<Tag>()
+    @Published var tags = Set<Tag>()
     
     var isTagFilterActive: Bool { !tags.isEmpty }
     
@@ -133,11 +159,12 @@ final class Filter: ObservableObject {
     
     //  MARK: SortDescriptors
     
-    var timestampSortDescriptor: NSSortDescriptor {
-        NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: areInIncreasingOrder)
+    private var timestampSortDescriptor: NSSortDescriptor {
+        NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: sortOrder.areInIncreasingOrder)
     }
-    var textSortDescriptor: NSSortDescriptor {
-        NSSortDescriptor(key: #keyPath(Story.text_), ascending: areInIncreasingOrder)
+    
+    private var textSortDescriptor: NSSortDescriptor {
+        NSSortDescriptor(key: #keyPath(Story.text_), ascending: sortOrder.areInIncreasingOrder)
     }
     
     var sortDescriptors: [NSSortDescriptor] {

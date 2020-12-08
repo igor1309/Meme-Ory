@@ -17,12 +17,14 @@ struct ListOptionView: View {
         NavigationView {
             Form {
                 Section(header: Text("Sort")) {
-                    Toggle(isOn: $filter.areInIncreasingOrder) {
+                    Toggle(isOn: $filter.sortOrder.areInIncreasingOrder) {
                         sortToggleLabel()
                     }
-                    Picker(selection: $filter.itemToSortBy, label: sortLabel()) {
+                    
+                    Picker(selection: $filter.itemToSortBy, label: filter.itemToSortBy.label(prefix: "Sort Stories by ")) {
                         ForEach(Filter.SortByOptions.allCases, id: \.self) { item in
-                            Text(item.rawValue)
+                            Label(item.rawValue, systemImage: item.icon)
+                                .tag(item)
                         }
                     }
                 }
@@ -43,14 +45,17 @@ struct ListOptionView: View {
                 }
                 
                 Section(header: Text("Extra Filters")) {
-                    Picker(selection: $filter.favoritesFilter, label: favoritesLabel()) {
+                    Picker(selection: $filter.favoritesFilter, label: filter.favoritesFilter.label()) {
                         ForEach(Filter.FavoritesFilterOptions.allCases, id: \.self) { item in
-                            Text(item.rawValue)
+                            Label(item.rawValue, systemImage: item.icon)
+                                .tag(item)
                         }
                     }
-                    Picker(selection: $filter.remindersFilter, label: remindersLabel()) {
+                    
+                    Picker(selection: $filter.remindersFilter, label: filter.remindersFilter.label()) {
                         ForEach(Filter.RemindersFilterOptions.allCases, id: \.self) { item in
-                            Text(item.rawValue)
+                            Label(item.rawValue, systemImage: item.icon)
+                                .tag(item)
                         }
                     }
                 }
@@ -64,9 +69,11 @@ struct ListOptionView: View {
                     
                     TagGridView(selected: $filter.tags)
                         .padding(.vertical, 6)
-                        .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
+            .pickerStyle(MenuPickerStyle())
+            .accentColor(Color(UIColor.systemOrange))
             .navigationTitle("List Options")
             .navigationBarItems(trailing: doneButton())
         }
@@ -76,20 +83,8 @@ struct ListOptionView: View {
         label(title: "Ascending", subtitle: "Select sort order", image: "arrow.up.arrow.down.circle")
     }
     
-    private func sortLabel() -> some View {
-        label(title: "Sort Stories by", subtitle: "Sort by", image: filter.itemToSortBy == .timestamp ? "calendar" : "text.cursor")
-    }
-    
     private func limitLabel() -> some View {
-        label(title: "List Limit", subtitle: "Select number or stories to show", image: "arrow.up.and.down.circle")
-    }
-    
-    private func favoritesLabel() -> some View {
-        label(title: "Favorites", image: "star.circle")
-    }
-    
-    private func remindersLabel() -> some View {
-        label(title: "Reminders", image: "bell.circle")
+        label(title: "List Limit: \(filter.listLimit)", subtitle: "Select number or stories to show", image: "arrow.up.and.down.circle")
     }
     
     private func label(title: String, subtitle: String? = nil, image: String) -> some View {
