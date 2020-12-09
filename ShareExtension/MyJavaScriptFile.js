@@ -8,7 +8,7 @@ MyExtensionJavaScriptClass.prototype = {
 //};
 
 run: function(parameters) {
-    parameters.completionFunction({"URL": document.URL, "title": document.title });
+    parameters.completionFunction({"URL": document.URL, "title": document.title, "body": document.body.outerText });
 },
     
 finalize: function(parameters) {

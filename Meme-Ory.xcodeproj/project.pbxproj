@@ -189,6 +189,7 @@
 		2A8AFCE42580FCAE00A0DD94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A8AFCEE2580FF0800A0DD94 /* UILaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILaunchTests.swift; sourceTree = "<group>"; };
 		2A8AFCFD258108FE00A0DD94 /* ContentChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentChooserView.swift; sourceTree = "<group>"; };
+		2A8AFD07258118A100A0DD94 /* ParseThreeStarsSeparators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ParseThreeStarsSeparators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2A8E4409256EF19A002C0DFC /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
 		2A8E441D256EF24B002C0DFC /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
@@ -352,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */,
+				2A8AFD07258118A100A0DD94 /* ParseThreeStarsSeparators.playground */,
 			);
 			path = Playgrounds;
 			sourceTree = "<group>";

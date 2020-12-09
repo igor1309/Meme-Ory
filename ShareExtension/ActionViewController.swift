@@ -65,10 +65,12 @@ class ActionViewController: UIViewController {
                 
                 let pageTitle = javaScriptValues["title"] as? String ?? ""
                 let pageURL = javaScriptValues["URL"] as? String ?? ""
+                let pageBody = javaScriptValues["body"] as? String ?? ""
+                let text = "\(pageTitle)\n\(pageURL)\n\n\(pageBody)".trimmingCharacters(in: .whitespacesAndNewlines)
                 
                 DispatchQueue.main.async {
                     if let strongTextView = weakTextView {
-                        strongTextView.text = "\(pageTitle)\n\(pageURL)"
+                        strongTextView.text = text
                     }
                 }
             }
