@@ -54,6 +54,8 @@
 		2A8AFCC825805D7500A0DD94 /* ListOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCC725805D7500A0DD94 /* ListOptions.swift */; };
 		2A8AFCCD25805DEC00A0DD94 /* ListOptions Enums + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCCC25805DEC00A0DD94 /* ListOptions Enums + Ext.swift */; };
 		2A8AFCD52580623B00A0DD94 /* ListOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCD42580623B00A0DD94 /* ListOptionsView.swift */; };
+		2A8AFCE32580FCAE00A0DD94 /* Meme_OryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCE22580FCAE00A0DD94 /* Meme_OryUITests.swift */; };
+		2A8AFCEF2580FF0800A0DD94 /* UILaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCEE2580FF0800A0DD94 /* UILaunchTests.swift */; };
 		2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4409256EF19A002C0DFC /* Provider.swift */; };
 		2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */; };
 		2A8E4423256EF256002C0DFC /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E441D256EF24B002C0DFC /* Entry.swift */; };
@@ -109,6 +111,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2A8AFCE52580FCAE00A0DD94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A1B5FAB256A4A5D00E3283D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A1B5FB2256A4A5D00E3283D;
+			remoteInfo = "Meme-Ory";
+		};
 		2ADAD3BC256DA23B00AF463B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A1B5FAB256A4A5D00E3283D /* Project object */;
@@ -176,6 +185,10 @@
 		2A8AFCC725805D7500A0DD94 /* ListOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptions.swift; sourceTree = "<group>"; };
 		2A8AFCCC25805DEC00A0DD94 /* ListOptions Enums + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListOptions Enums + Ext.swift"; sourceTree = "<group>"; };
 		2A8AFCD42580623B00A0DD94 /* ListOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionsView.swift; sourceTree = "<group>"; };
+		2A8AFCE02580FCAE00A0DD94 /* Meme-OryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meme-OryUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A8AFCE22580FCAE00A0DD94 /* Meme_OryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme_OryUITests.swift; sourceTree = "<group>"; };
+		2A8AFCE42580FCAE00A0DD94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A8AFCEE2580FF0800A0DD94 /* UILaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILaunchTests.swift; sourceTree = "<group>"; };
 		2A8E4409256EF19A002C0DFC /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
 		2A8E441D256EF24B002C0DFC /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
@@ -227,6 +240,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2A8AFCDD2580FCAE00A0DD94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2ADAD3AD256DA23A00AF463B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -254,6 +274,7 @@
 				2A2CE5A3256C00E400FBFDB6 /* Playgrounds */,
 				2ADAD3B6256DA23A00AF463B /* Meme-OryWidget */,
 				2AFE9E6A25744F480037E8CF /* ShareExtension */,
+				2A8AFCE12580FCAE00A0DD94 /* Meme-OryUITests */,
 				2ADAD3B1256DA23A00AF463B /* Frameworks */,
 				2A1B5FB4256A4A5D00E3283D /* Products */,
 			);
@@ -265,6 +286,7 @@
 				2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */,
 				2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */,
 				2AFE9E6925744F480037E8CF /* ShareExtension.appex */,
+				2A8AFCE02580FCAE00A0DD94 /* Meme-OryUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -367,6 +389,16 @@
 				2AF434622576BBB500DB0D2D /* ImportTextTesting.swift */,
 			);
 			path = "Import File";
+			sourceTree = "<group>";
+		};
+		2A8AFCE12580FCAE00A0DD94 /* Meme-OryUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2A8AFCE22580FCAE00A0DD94 /* Meme_OryUITests.swift */,
+				2A8AFCEE2580FF0800A0DD94 /* UILaunchTests.swift */,
+				2A8AFCE42580FCAE00A0DD94 /* Info.plist */,
+			);
+			path = "Meme-OryUITests";
 			sourceTree = "<group>";
 		};
 		2A935CA0256A77D6004B6E10 /* Data */ = {
@@ -527,6 +559,24 @@
 			productReference = 2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2A8AFCDF2580FCAE00A0DD94 /* Meme-OryUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A8AFCE72580FCAE00A0DD94 /* Build configuration list for PBXNativeTarget "Meme-OryUITests" */;
+			buildPhases = (
+				2A8AFCDC2580FCAE00A0DD94 /* Sources */,
+				2A8AFCDD2580FCAE00A0DD94 /* Frameworks */,
+				2A8AFCDE2580FCAE00A0DD94 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A8AFCE62580FCAE00A0DD94 /* PBXTargetDependency */,
+			);
+			name = "Meme-OryUITests";
+			productName = "Meme-OryUITests";
+			productReference = 2A8AFCE02580FCAE00A0DD94 /* Meme-OryUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2ADAD3BF256DA23B00AF463B /* Build configuration list for PBXNativeTarget "Meme-OryWidgetExtension" */;
@@ -567,11 +617,15 @@
 		2A1B5FAB256A4A5D00E3283D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					2A1B5FB2256A4A5D00E3283D = {
 						CreatedOnToolsVersion = 12.2;
+					};
+					2A8AFCDF2580FCAE00A0DD94 = {
+						CreatedOnToolsVersion = 12.3;
+						TestTargetID = 2A1B5FB2256A4A5D00E3283D;
 					};
 					2ADAD3AF256DA23A00AF463B = {
 						CreatedOnToolsVersion = 12.2;
@@ -597,6 +651,7 @@
 				2A1B5FB2256A4A5D00E3283D /* Meme-Ory */,
 				2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */,
 				2AFE9E6825744F480037E8CF /* ShareExtension */,
+				2A8AFCDF2580FCAE00A0DD94 /* Meme-OryUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -608,6 +663,13 @@
 			files = (
 				2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */,
 				2A1B5FBB256A4A5E00E3283D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A8AFCDE2580FCAE00A0DD94 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +756,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2A8AFCDC2580FCAE00A0DD94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A8AFCEF2580FF0800A0DD94 /* UILaunchTests.swift in Sources */,
+				2A8AFCE32580FCAE00A0DD94 /* Meme_OryUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2ADAD3AC256DA23A00AF463B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -745,6 +816,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2A8AFCE62580FCAE00A0DD94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A1B5FB2256A4A5D00E3283D /* Meme-Ory */;
+			targetProxy = 2A8AFCE52580FCAE00A0DD94 /* PBXContainerItemProxy */;
+		};
 		2ADAD3BD256DA23B00AF463B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */;
@@ -926,6 +1002,46 @@
 			};
 			name = Release;
 		};
+		2A8AFCE82580FCAE00A0DD94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.photoigor.Meme-OryUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Meme-Ory";
+			};
+			name = Debug;
+		};
+		2A8AFCE92580FCAE00A0DD94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.photoigor.Meme-OryUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Meme-Ory";
+			};
+			name = Release;
+		};
 		2ADAD3C0256DA23B00AF463B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1037,6 +1153,15 @@
 			buildConfigurations = (
 				2A1B5FC8256A4A5E00E3283D /* Debug */,
 				2A1B5FC9256A4A5E00E3283D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A8AFCE72580FCAE00A0DD94 /* Build configuration list for PBXNativeTarget "Meme-OryUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A8AFCE82580FCAE00A0DD94 /* Debug */,
+				2A8AFCE92580FCAE00A0DD94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
