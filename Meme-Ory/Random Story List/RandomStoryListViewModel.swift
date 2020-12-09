@@ -22,10 +22,16 @@ final class RandomStoryListViewModel: ObservableObject {
     @Published var lineLimit: Int? = nil
     
     @Published var listOptions = ListOptions()
+    
+    @Published var listType = ListType.random
+    
+    enum ListType: String, CaseIterable {
+        case random, ordered
+    }
 
     private let context: NSManagedObjectContext
     
-    private let updateRequested = PassthroughSubject<Void, Never>()
+    private let refreshRandom = PassthroughSubject<Void, Never>()
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -34,23 +40,41 @@ final class RandomStoryListViewModel: ObservableObject {
     }
     
     private func subscribe() {
+        /// if listOptions change list is ordered
+        $listOptions
+            .compactMap { [weak self] options in
+                let request = Story.fetchRequest(options.predicate, sortDescriptors: options.sortDescriptors)
+                let fetch = try? self?.context.fetch(request)
+                return fetch
+            }
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (stories: [Story]) in
+                self?.stories = stories
+                self?.listType = .ordered
+            }
+            .store(in: &cancellableSet)
+        
         /// sunscribe to change in k (number of stories) or requests for update (fresh random stories)
-        Publishers.CombineLatest($k, updateRequested)
+        Publishers.CombineLatest($k, refreshRandom)
             .map { (k, _) in
                 self.context.randomObjects(k, ofType: Story.self)
             }
+            .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] stories in
                 self?.stories = stories
+                self?.listType = .random
             }
             .store(in: &cancellableSet)
         
         /// subscribe to valid story URLs called by onOpenURL
         $storyURL
-            .compactMap { url in
+            .compactMap { [weak self] url in
                 guard case .story(_) = url?.deeplink else { return nil }
-                return self.context.getObject(with: url) as? Story
+                return self?.context.getObject(with: url) as? Story
             }
+            .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (story: Story) in
                 self?.stories = [story]
@@ -80,6 +104,7 @@ final class RandomStoryListViewModel: ObservableObject {
                 
                 return Array(insertedStories)
             }
+            .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] stories in
                 self?.stories = stories
@@ -102,12 +127,8 @@ final class RandomStoryListViewModel: ObservableObject {
     
     func update() {
         Ory.withHapticsAndAnimation {
-            self.updateRequested.send()
+            self.refreshRandom.send()
         }
-    }
-    
-    func toggleRowLineLimit() {
-        lineLimit = lineLimit == nil ? 4 : nil
     }
     
     func resetTags() {
@@ -238,10 +259,10 @@ final class RandomStoryListViewModel: ObservableObject {
     }
     
     func getRandomStory(hasHapticsAndAnimation: Bool) {
-        let random = context.randomObject(ofType: Story.self)
+        listType = .random
         
+        let random = context.randomObject(ofType: Story.self)
         let url = random?.url
-        //print("model: getRandomStory \(url?.absoluteString ?? "nil")")
         
         if hasHapticsAndAnimation {
             Ory.withHapticsAndAnimation {

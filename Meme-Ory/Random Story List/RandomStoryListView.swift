@@ -26,20 +26,15 @@ struct RandomStoryListView: View {
     var body: some View {
         NavigationView {
             List {
-                MyButton(title: "Text context notification", icon: "sparkles.rectangle.stack") {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        let story = Story(context: context)
-                        story.text = "Test \(Date().description)"
-                        context.saveContext()
-                    }
-                }
-                
+                #if DEBUG
                 Section(header: Text("Testing")) {
                     MyButton(title: "Add Story", icon: "doc.badge.plus", action: model.createNewStory)
-                    
-                    MyButton(title: "Shuffle List", icon: "wand.and.stars", action: model.update)
-                    
-                    MyButton(title: model.lineLimit == nil ? "Set Line Limit" : "Reset Line Limit", icon: model.lineLimit == nil ? "rectangle.arrowtriangle.2.inward" : "rectangle.arrowtriangle.2.outward", action: model.toggleRowLineLimit)
+                }
+                #endif
+                
+                if model.listType == .ordered {
+                    TextField("Search (at least 3 letters)", text: $model.listOptions.searchString)
+                        .searchModifier(text: $model.listOptions.searchString)
                 }
                 
                 Section(header: sectionHeader()) {

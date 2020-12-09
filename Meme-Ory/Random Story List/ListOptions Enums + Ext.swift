@@ -10,6 +10,22 @@ import SwiftUI
 
 //  MARK: - Enum Extensions: Labelable
 
+extension RandomStoryListViewModel.ListType: Labelable {
+    var rawValue: String {
+        switch self {
+            case .random: return "Random"
+            case .ordered: return "Ordered"
+        }
+    }
+
+    var icon: String {
+        switch self {
+            case .random: return "wand.and.stars"
+            case .ordered: return "list.number"
+        }
+    }
+}
+
 extension ListOptions.FavoritesFilterOptions: Labelable {
     var rawValue: String {
         switch self {

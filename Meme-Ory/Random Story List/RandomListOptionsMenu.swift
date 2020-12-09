@@ -7,18 +7,50 @@
 
 import SwiftUI
 
+extension RandomStoryListViewModel {
+    var hasLineLimit: Bool {
+        get { lineLimit != nil }
+        set { lineLimit = newValue ? RandomStoryListViewModel.lineLimitConstant : nil }
+    }
+    
+    private static let lineLimitConstant = 4
+    
+}
+
 struct RandomListOptionsMenu: View {
     
     @Environment(\.managedObjectContext) private var context
     
     @ObservedObject var model: RandomStoryListViewModel
     
-    // list limit and reminders aren't important to be menu, leaving in options sheet
+    /// list limit and reminders aren't important to be menu, leaving them in options sheet
     @State private var showUnimportant = false
     
     var body: some View {
+        #if DEBUG
+        Section(header: Text("Debug")) {
+            MyButton(title: "Test Context Notification", icon: "sparkles.rectangle.stack") {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let story = Story(context: context)
+                    story.text = "Test \(Date().description)"
+                    context.saveContext()
+                }
+            }
+        }
+        #endif
+        
+        Section(header: Text("Random")) {
+            MyButton(title: "Shuffle List", icon: "wand.and.stars", action: model.update)
+            #if DEBUG
+            MyButton(title:"Random Story", icon: "wand.and.stars") { model.getRandomStory(hasHapticsAndAnimation: false)
+            }
+            #endif
+        }
+        
         Section(header: Text("View")) {
-            MyButton(title:"Random Story", icon: "wand.and.stars", action: { model.getRandomStory(hasHapticsAndAnimation: false) })
+            Toggle(isOn: $model.hasLineLimit) {
+                Label("Line Limit", systemImage: "rectangle.arrowtriangle.2.inward")
+            }
         }
         
         /// reset filter by tag(s)
@@ -100,7 +132,7 @@ struct RandomListOptionsMenu_Previews: PreviewProvider {
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
         }
-        .previewLayout(.fixed(width: 350, height: 700))
+        .previewLayout(.fixed(width: 350, height: 800))
         .environment(\.sizeCategory, .extraLarge)
         .environment(\.managedObjectContext, context)
         .environmentObject(Filter())

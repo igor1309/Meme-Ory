@@ -50,7 +50,7 @@ struct ListOptionsView: View {
                         }
                     }
                     
-                    Picker(selection: $model.listOptions.remindersFilter, label: model.listOptions.remindersFilter.label()) {
+                    Picker(selection: $model.listOptions.remindersFilter, label: model.listOptions.remindersFilter.label(prefix: "Reminders: ")) {
                         ForEach(ListOptions.RemindersFilterOptions.allCases) { item in
                             item.label().tag(item)
                         }

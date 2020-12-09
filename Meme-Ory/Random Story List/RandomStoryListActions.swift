@@ -12,26 +12,20 @@ struct RandomStoryListActions: View {
     @ObservedObject var model: RandomStoryListViewModel
     
     var body: some View {
-        Group {
-            Section(header: Text("View")) {
-                MyButton(title:"Show Random Story", icon: "wand.and.stars", action: { model.getRandomStory(hasHapticsAndAnimation: false) })
-            }
+        Section(header: Text("Create")) {
+            MyButton(title:"Paste to New Story", icon: "doc.on.clipboard", action: model.pasteToNewStory)
+            // to disable with .hasStrings its value should be updated
+            //.disabled(!UIPasteboard.general.hasStrings)
             
-            Section(header: Text("Create")) {
-                MyButton(title:"Paste to New Story", icon: "doc.on.clipboard", action: model.pasteToNewStory)
-                    // to disable with .hasStrings its value should be updated
-                    //.disabled(!UIPasteboard.general.hasStrings)
-                
-                MyButton(title:"New Story", icon: "plus", action: model.createNewStory)
-            }
-            
-            Section(header: Text("Import & Export")) {
-                MyButton(title: "Import Stories", icon: "arrow.down.doc.fill", labelStyle: .none, withHaptics: true, useAnimation: true, action: model.importFile)
-                MyButton(title: "Export Stories", icon: "arrow.up.doc.fill", action: model.exportFile)
-                MyButton(title: "Share Stories", icon: "square.and.arrow.up", action: model.shareStories)
-            }
-            
+            MyButton(title:"New Story", icon: "plus", action: model.createNewStory)
         }
+        
+        Section(header: Text("Import & Export")) {
+            MyButton(title: "Import Stories", icon: "arrow.down.doc.fill", labelStyle: .none, withHaptics: true, useAnimation: true, action: model.importFile)
+            MyButton(title: "Export Stories", icon: "arrow.up.doc.fill", action: model.exportFile)
+            MyButton(title: "Share Stories", icon: "square.and.arrow.up", action: model.shareStories)
+        }
+        
     }
 }
 
@@ -42,6 +36,7 @@ struct StoryListActions_Previews: PreviewProvider {
         List {
             RandomStoryListActions(model: RandomStoryListViewModel(context: context))
         }
+        .listStyle(InsetGroupedListStyle())
         .previewLayout(.fixed(width: 350, height: 500))
         .environment(\.sizeCategory, .extraLarge)
         .environment(\.managedObjectContext, context)
