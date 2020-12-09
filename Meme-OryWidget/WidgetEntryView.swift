@@ -73,16 +73,16 @@ struct WidgetEntryView: View {
 struct WidgetEntryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WidgetEntryView(entry: Entry(date: Date(), stories: []))
+            WidgetEntryView(entry: Entry.sampleEmpty)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
             
-            WidgetEntryView(entry: Entry(date: Date(), stories: [SampleData.story(storyIndex: 8), SampleData.story(storyIndex: 6)]))
+            WidgetEntryView(entry: Entry.sampleTwoStories)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
             
-            WidgetEntryView(entry: Entry(date: Date(), stories: [SampleData.story(storyIndex: 8), SampleData.story(storyIndex: 6)]))
+            WidgetEntryView(entry: Entry.sampleTwoStories)
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
             
-            WidgetEntryView(entry: Entry(date: Date(), stories: [SampleData.story(), SampleData.story(storyIndex: 8), SampleData.story(storyIndex: 12), SampleData.story(), SampleData.story(storyIndex: 2), SampleData.story()]))
+            WidgetEntryView(entry: Entry.sampleMany)
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
         }
     }

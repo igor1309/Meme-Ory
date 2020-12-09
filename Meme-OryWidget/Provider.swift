@@ -12,11 +12,20 @@ import CoreData
 struct Provider: TimelineProvider {
     
     func placeholder(in context: Context) -> Entry {
-        Entry(date: Date(), stories: [SampleData.story()])
+        Entry.sampleOneStory
     }
     
     func getSnapshot(in context: Context, completion: @escaping (Entry) -> ()) {
-        let entry = Entry(date: Date(), stories: [SampleData.story()])
+        let entry: Entry
+        
+        if context.isPreview {
+            // In the case of a preview snapshot you need to return quickly so use sample data if necessary
+            entry = Entry.sampleMany
+        } else {
+            // FIXME: what data to return if it's not preview?
+            entry = Entry.sampleMany
+        }
+        
         completion(entry)
     }
     
