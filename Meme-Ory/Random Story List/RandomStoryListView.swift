@@ -26,12 +26,6 @@ struct RandomStoryListView: View {
     var body: some View {
         NavigationView {
             List {
-                #if DEBUG
-                Section(header: Text("Testing")) {
-                    MyButton(title: "Add Story", icon: "doc.badge.plus", action: model.createNewStory)
-                }
-                #endif
-                
                 if model.listType == .ordered {
                     TextField("Search (at least 3 letters)", text: $model.listOptions.searchString)
                         .searchModifier(text: $model.listOptions.searchString)

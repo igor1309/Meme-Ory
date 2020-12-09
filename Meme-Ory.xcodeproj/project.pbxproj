@@ -13,7 +13,6 @@
 		2A03200E257E6B61009AF197 /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
 		2A055C842577EF2F00221367 /* MyJavaScriptFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 2A055C832577EF2F00221367 /* MyJavaScriptFile.js */; };
 		2A16CDDB2574EFDE00146F3E /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
-		2A16CDDF2574EFE700146F3E /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
 		2A16CDE32574EFEC00146F3E /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9A256A7717004B6E10 /* Tag.swift */; };
 		2A16CDE42574EFEC00146F3E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C8B256A51AC004B6E10 /* Story.swift */; };
 		2A16CDE82574EFF000146F3E /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
@@ -56,6 +55,7 @@
 		2A8AFCD52580623B00A0DD94 /* ListOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCD42580623B00A0DD94 /* ListOptionsView.swift */; };
 		2A8AFCE32580FCAE00A0DD94 /* Meme_OryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCE22580FCAE00A0DD94 /* Meme_OryUITests.swift */; };
 		2A8AFCEF2580FF0800A0DD94 /* UILaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCEE2580FF0800A0DD94 /* UILaunchTests.swift */; };
+		2A8AFCF4258100B800A0DD94 /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
 		2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4409256EF19A002C0DFC /* Provider.swift */; };
 		2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */; };
 		2A8E4423256EF256002C0DFC /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E441D256EF24B002C0DFC /* Entry.swift */; };
@@ -69,7 +69,6 @@
 		2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CAB256A98C4004B6E10 /* TagView.swift */; };
 		2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */; };
 		2A9CA64A2575B83B00FCD4D0 /* ListOptionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9CA6492575B83B00FCD4D0 /* ListOptionsMenu.swift */; };
-		2AA8916B256B9E7E0042395A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
 		2AA89175256BE8080042395A /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89174256BE8080042395A /* SearchModifier.swift */; };
 		2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03179256CD35700BEC832 /* StoryTagView.swift */; };
 		2AB3728C257A32D800D851C6 /* StoryActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */; };
@@ -89,7 +88,6 @@
 		2ADAD3BA256DA23B00AF463B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B9256DA23B00AF463B /* Assets.xcassets */; };
 		2ADAD3BE256DA23B00AF463B /* Meme-OryWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2ADAD3C5256DA5CB00AF463B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
-		2ADAD3C8256DA5D300AF463B /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8916A256B9E7E0042395A /* Context.swift */; };
 		2ADAD3CB256DA5E000AF463B /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
 		2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C8B256A51AC004B6E10 /* Story.swift */; };
 		2ADAD3D1256DA5E700AF463B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9A256A7717004B6E10 /* Tag.swift */; };
@@ -202,7 +200,6 @@
 		2A935CAB256A98C4004B6E10 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGridWrapperView.swift; sourceTree = "<group>"; };
 		2A9CA6492575B83B00FCD4D0 /* ListOptionsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionsMenu.swift; sourceTree = "<group>"; };
-		2AA8916A256B9E7E0042395A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		2AA89174256BE8080042395A /* SearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModifier.swift; sourceTree = "<group>"; };
 		2AB03179256CD35700BEC832 /* StoryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTagView.swift; sourceTree = "<group>"; };
 		2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryActionButtons.swift; sourceTree = "<group>"; };
@@ -344,7 +341,6 @@
 			isa = PBXGroup;
 			children = (
 				2A1B5FBF256A4A5E00E3283D /* Persistence.swift */,
-				2AA8916A256B9E7E0042395A /* Context.swift */,
 			);
 			path = "Core Data Stack";
 			sourceTree = "<group>";
@@ -703,7 +699,6 @@
 				2A4FDD86257EB333008C6DEE /* Notification.Name+Ext.swift in Sources */,
 				2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */,
 				2A032007257E6724009AF197 /* RandomStoryListView.swift in Sources */,
-				2AA8916B256B9E7E0042395A /* Context.swift in Sources */,
 				2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */,
 				2AEEF8FE25700061008D1B31 /* Calendar.Component+Ext.swift in Sources */,
 				2A8AFCC825805D7500A0DD94 /* ListOptions.swift in Sources */,
@@ -774,7 +769,6 @@
 				2ADAD3DB256DA62800AF463B /* Filter.swift in Sources */,
 				2ADAD3D1256DA5E700AF463B /* Tag.swift in Sources */,
 				2ACCEE5F257E15760022B752 /* Ory.swift in Sources */,
-				2ADAD3C8256DA5D300AF463B /* Context.swift in Sources */,
 				2A031FFF257E4BDD009AF197 /* Calendar.Component+Ext.swift in Sources */,
 				2ACCEE50257E13740022B752 /* EventStore.swift in Sources */,
 				2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */,
@@ -797,12 +791,12 @@
 			files = (
 				2A16CDE82574EFF000146F3E /* Meme_Ory.xcdatamodeld in Sources */,
 				2ACCEE41257E10AE0022B752 /* Ory.swift in Sources */,
+				2A8AFCF4258100B800A0DD94 /* NSManagedObjectContext+Ext.swift in Sources */,
 				2ACCEE49257E12AF0022B752 /* EventStore.swift in Sources */,
 				2A16CDE32574EFEC00146F3E /* Tag.swift in Sources */,
 				2A16CDF92574F0F000146F3E /* NSPredicate+Ext.swift in Sources */,
 				2ACCEE54257E13790022B752 /* EKEventStore+Ext.swift in Sources */,
 				2A16CE102574F12B00146F3E /* URL+Extension.swift in Sources */,
-				2A16CDDF2574EFE700146F3E /* Context.swift in Sources */,
 				2A031FF8257E4BD8009AF197 /* Calendar.Component+Ext.swift in Sources */,
 				2AFE9E6E25744F480037E8CF /* ActionViewController.swift in Sources */,
 				2A16CDDB2574EFDE00146F3E /* Persistence.swift in Sources */,
