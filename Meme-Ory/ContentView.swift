@@ -21,7 +21,9 @@ struct ContentView: View {
         //    }
         
         //RandomStoryViewWrapper(context: context)
-        RandomStoryListView(context: context)
+        //RandomStoryListView(context: context)
+            
+        ContentChooserView()
             
             .onChange(of: scenePhase, perform: handleScenePhase)
             .onOpenURL(perform: handleOpenURL)
