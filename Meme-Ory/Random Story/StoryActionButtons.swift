@@ -16,7 +16,7 @@ struct StoryActionButtons: View {
     let labelStyle: MyButton.Style
     
     var body: some View {
-        Group {
+//        Group {
             Section(header: Text("View")) {
                 MyButton(title:"Show Random Story", icon: "wand.and.stars", labelStyle: labelStyle, action: { model.getRandomStory(hasHapticsAndAnimation: false) })
             }
@@ -59,7 +59,7 @@ struct StoryActionButtons: View {
                     //  MARK: - FINISH THIS:
                 }
             }
-        }
+//        }
     }
     
     

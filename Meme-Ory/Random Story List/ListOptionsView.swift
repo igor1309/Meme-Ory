@@ -1,42 +1,41 @@
 //
-//  ListOptionView.swift
+//  ListOptionsView.swift
 //  Meme-Ory
 //
-//  Created by Igor Malyarov on 23.11.2020.
+//  Created by Igor Malyarov on 09.12.2020.
 //
 
 import SwiftUI
 
-struct ListOptionView: View {
+struct ListOptionsView: View {
     
     @Environment(\.presentationMode) private var presentation
     
-    @EnvironmentObject private var filter: Filter
+    @ObservedObject var model: RandomStoryListViewModel
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Sort")) {
-                    Toggle(isOn: $filter.sortOrder.areInIncreasingOrder) {
+                    Toggle(isOn: $model.listOptions.sortOrder.areInIncreasingOrder) {
                         sortToggleLabel()
                     }
                     
-                    Picker(selection: $filter.itemToSortBy, label: filter.itemToSortBy.label(prefix: "Sort Stories by ")) {
-                        ForEach(Filter.SortByOptions.allCases, id: \.self) { item in
-                            Label(item.rawValue, systemImage: item.icon)
-                                .tag(item)
+                    Picker(selection: $model.listOptions.itemToSortBy, label: model.listOptions.itemToSortBy.label(prefix: "Sort Stories by ")) {
+                        ForEach(ListOptions.SortByOptions.allCases) { item in
+                            item.label().tag(item)
                         }
                     }
                 }
                 
                 Section(header: Text("Limit")) {
-                    Toggle(isOn: $filter.isListLimited) {
+                    Toggle(isOn: $model.listOptions.isListLimited) {
                         limitLabel()
                     }
                     
-                    if filter.isListLimited {
-                        Picker(selection: $filter.listLimit, label: limitLabel()) {
-                            ForEach(Filter.listLimitOptions, id: \.self) { item in
+                    if model.listOptions.isListLimited {
+                        Picker(selection: $model.listOptions.listLimit, label: limitLabel()) {
+                            ForEach(ListOptions.listLimitOptions, id:\.self) { item in
                                 Text("\(item)").tag(item)
                             }
                         }
@@ -45,29 +44,27 @@ struct ListOptionView: View {
                 }
                 
                 Section(header: Text("Extra Filters")) {
-                    Picker(selection: $filter.favoritesFilter, label: filter.favoritesFilter.label()) {
-                        ForEach(Filter.FavoritesFilterOptions.allCases, id: \.self) { item in
-                            Label(item.rawValue, systemImage: item.icon)
-                                .tag(item)
+                    Picker(selection: $model.listOptions.favoritesFilter, label: model.listOptions.favoritesFilter.label()) {
+                        ForEach(ListOptions.FavoritesFilterOptions.allCases) { item in
+                            item.label().tag(item)
                         }
                     }
                     
-                    Picker(selection: $filter.remindersFilter, label: filter.remindersFilter.label()) {
-                        ForEach(Filter.RemindersFilterOptions.allCases, id: \.self) { item in
-                            Label(item.rawValue, systemImage: item.icon)
-                                .tag(item)
+                    Picker(selection: $model.listOptions.remindersFilter, label: model.listOptions.remindersFilter.label()) {
+                        ForEach(ListOptions.RemindersFilterOptions.allCases) { item in
+                            item.label().tag(item)
                         }
                     }
                 }
                 
                 Section(header: Text("Selected Tags")) {
-                    if !filter.tags.isEmpty {
+                    if !model.listOptions.tags.isEmpty {
                         resetTagsButton()
                     }
                     
                     selectedTags()
                     
-                    TagGridView(selected: $filter.tags)
+                    TagGridView(selected: $model.listOptions.tags)
                         .padding(.vertical, 6)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -84,7 +81,7 @@ struct ListOptionView: View {
     }
     
     private func limitLabel() -> some View {
-        label(title: "List Limit: \(filter.listLimit)", subtitle: "Select number or stories to show", image: "arrow.up.and.down.circle")
+        label(title: "List Limit: \(model.listOptions.listLimit)", subtitle: "Select number or stories to show", image: "arrow.up.and.down.circle")
     }
     
     private func label(title: String, subtitle: String? = nil, image: String) -> some View {
@@ -107,17 +104,17 @@ struct ListOptionView: View {
     }
     
     private func selectedTags() -> some View {
-        Text(filter.tagList.isEmpty ? "show all" : filter.tagList)
-            .foregroundColor(filter.tagList.isEmpty ? .secondary : .primary)
+        Text(model.listOptions.tagList.isEmpty ? "show all" : model.listOptions.tagList)
+            .foregroundColor(model.listOptions.tagList.isEmpty ? .secondary : .primary)
             .font(.footnote)
     }
     
     private func resetTagsButton() -> some View {
         Button("Clear Tags") {
-            filter.resetTags()
+            model.listOptions.resetTags()
             presentation.wrappedValue.dismiss()
         }
-        .disabled(filter.tags.isEmpty)
+        .disabled(model.listOptions.tags.isEmpty)
     }
     
     private func doneButton() -> some View {
@@ -127,17 +124,17 @@ struct ListOptionView: View {
     }
 }
 
-fileprivate struct ListOptionView_Texting: View {
-    @State var filter = Filter()
+fileprivate struct ListOptionsView_Testing: View {
+    @StateObject private var model = RandomStoryListViewModel(context: SampleData.preview.container.viewContext)
     
     var body: some View {
-        ListOptionView()
+        ListOptionsView(model: model)
     }
 }
 
-struct ListOptionView_Previews: PreviewProvider {
+struct ListOptionsView_Previews: PreviewProvider {
     static var previews: some View {
-        ListOptionView_Texting()
+        ListOptionsView_Testing()
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environmentObject(Filter())
             .previewLayout(.fixed(width: 350, height: 800))

@@ -31,17 +31,29 @@
 		2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
 		2A21716F257CEE3C0098681E /* StoryFileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A21716E257CEE3C0098681E /* StoryFileImporter.swift */; };
 		2A251B8A25767960004F9218 /* ShareStoryButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A251B8925767960004F9218 /* ShareStoryButtons.swift */; };
-		2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */; };
+		2A2CE5AA256C3B7300FBFDB6 /* ListFilterOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListFilterOptionView.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
 		2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportTextView.swift */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
 		2A4CC9FB25795A5E000A21C9 /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* MyButton.swift */; };
+		2A4E5D86257F88520085F130 /* StoryListRowContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4E5D85257F88520085F130 /* StoryListRowContextMenu.swift */; };
+		2A4E5D8E257F88CA0085F130 /* StoryListRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4E5D8D257F88CA0085F130 /* StoryListRowViewModel.swift */; };
+		2A4E5D93257F8BDF0085F130 /* RandomStoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4E5D92257F8BDF0085F130 /* RandomStoryListViewModel.swift */; };
+		2A4E5D98257F8C450085F130 /* RandomStoryListActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4E5D97257F8C450085F130 /* RandomStoryListActions.swift */; };
 		2A4F4A9825786CD7008536DE /* RandomStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9725786CD7008536DE /* RandomStoryView.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
+		2A4FDD81257EAE92008C6DEE /* TestingLazyVStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4FDD80257EAE92008C6DEE /* TestingLazyVStackView.swift */; };
+		2A4FDD86257EB333008C6DEE /* Notification.Name+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */; };
+		2A4FDD8A257EB34D008C6DEE /* Notification.Name+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */; };
 		2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5005F2257197B4005E969A /* ImportTextViewModel.swift */; };
+		2A612EE8257F0D1B00D319D2 /* RandomListOptionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A612EE7257F0D1B00D319D2 /* RandomListOptionsMenu.swift */; };
+		2A62525625803EC0007A6BF3 /* Filter Enums + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A62525525803EC0007A6BF3 /* Filter Enums + Ext.swift */; };
 		2A64D42D257164B900C1817F /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A6A3112257163CC007F2C0D /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A85412B256EFED20051906B /* TagEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A85412A256EFED20051906B /* TagEditView.swift */; };
+		2A8AFCC825805D7500A0DD94 /* ListOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCC725805D7500A0DD94 /* ListOptions.swift */; };
+		2A8AFCCD25805DEC00A0DD94 /* ListOptions Enums + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCCC25805DEC00A0DD94 /* ListOptions Enums + Ext.swift */; };
+		2A8AFCD52580623B00A0DD94 /* ListOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AFCD42580623B00A0DD94 /* ListOptionsView.swift */; };
 		2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4409256EF19A002C0DFC /* Provider.swift */; };
 		2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */; };
 		2A8E4423256EF256002C0DFC /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E441D256EF24B002C0DFC /* Entry.swift */; };
@@ -144,15 +156,26 @@
 		2A21716E257CEE3C0098681E /* StoryFileImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFileImporter.swift; sourceTree = "<group>"; };
 		2A251B8925767960004F9218 /* ShareStoryButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareStoryButtons.swift; sourceTree = "<group>"; };
 		2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StoryText.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionView.swift; sourceTree = "<group>"; };
+		2A2CE5A9256C3B7300FBFDB6 /* ListFilterOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFilterOptionView.swift; sourceTree = "<group>"; };
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		2A33A3E125714DA500538FE3 /* ImportTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextView.swift; sourceTree = "<group>"; };
 		2A4CC9F525795269000A21C9 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
 		2A4CC9FA25795A5E000A21C9 /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
+		2A4E5D85257F88520085F130 /* StoryListRowContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowContextMenu.swift; sourceTree = "<group>"; };
+		2A4E5D8D257F88CA0085F130 /* StoryListRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowViewModel.swift; sourceTree = "<group>"; };
+		2A4E5D92257F8BDF0085F130 /* RandomStoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryListViewModel.swift; sourceTree = "<group>"; };
+		2A4E5D97257F8C450085F130 /* RandomStoryListActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryListActions.swift; sourceTree = "<group>"; };
 		2A4F4A9725786CD7008536DE /* RandomStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryView.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
+		2A4FDD80257EAE92008C6DEE /* TestingLazyVStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingLazyVStackView.swift; sourceTree = "<group>"; };
+		2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Ext.swift"; sourceTree = "<group>"; };
 		2A5005F2257197B4005E969A /* ImportTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextViewModel.swift; sourceTree = "<group>"; };
+		2A612EE7257F0D1B00D319D2 /* RandomListOptionsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomListOptionsMenu.swift; sourceTree = "<group>"; };
+		2A62525525803EC0007A6BF3 /* Filter Enums + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Filter Enums + Ext.swift"; sourceTree = "<group>"; };
 		2A85412A256EFED20051906B /* TagEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEditView.swift; sourceTree = "<group>"; };
+		2A8AFCC725805D7500A0DD94 /* ListOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptions.swift; sourceTree = "<group>"; };
+		2A8AFCCC25805DEC00A0DD94 /* ListOptions Enums + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListOptions Enums + Ext.swift"; sourceTree = "<group>"; };
+		2A8AFCD42580623B00A0DD94 /* ListOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionsView.swift; sourceTree = "<group>"; };
 		2A8E4409256EF19A002C0DFC /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		2A8E4414256EF1FB002C0DFC /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
 		2A8E441D256EF24B002C0DFC /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
@@ -252,11 +275,13 @@
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
+				2A4E5D9F257F8CC90085F130 /* Random Story List */,
 				2ADAA7AB257AFBDB00EFFE8D /* Random Story */,
 				2A4CC9FA25795A5E000A21C9 /* MyButton.swift */,
 				2A4CC9F525795269000A21C9 /* CardModifier.swift */,
 				2A21716E257CEE3C0098681E /* StoryFileImporter.swift */,
 				2A935CC0256AF608004B6E10 /* Story List */,
+				2A4E5D81257F88340085F130 /* Story List Row */,
 				2AC0845C257648A900AFAE1C /* Story Editor */,
 				2A935CBD256AF5EE004B6E10 /* Search */,
 				2A935CC2256AF61C004B6E10 /* Tag Views */,
@@ -310,6 +335,30 @@
 			path = Playgrounds;
 			sourceTree = "<group>";
 		};
+		2A4E5D81257F88340085F130 /* Story List Row */ = {
+			isa = PBXGroup;
+			children = (
+				2A935C88256A5144004B6E10 /* StoryListRowView.swift */,
+				2A4E5D85257F88520085F130 /* StoryListRowContextMenu.swift */,
+				2A4E5D8D257F88CA0085F130 /* StoryListRowViewModel.swift */,
+			);
+			path = "Story List Row";
+			sourceTree = "<group>";
+		};
+		2A4E5D9F257F8CC90085F130 /* Random Story List */ = {
+			isa = PBXGroup;
+			children = (
+				2A032006257E6724009AF197 /* RandomStoryListView.swift */,
+				2A4E5D97257F8C450085F130 /* RandomStoryListActions.swift */,
+				2A612EE7257F0D1B00D319D2 /* RandomListOptionsMenu.swift */,
+				2A8AFCC725805D7500A0DD94 /* ListOptions.swift */,
+				2A8AFCD42580623B00A0DD94 /* ListOptionsView.swift */,
+				2A8AFCCC25805DEC00A0DD94 /* ListOptions Enums + Ext.swift */,
+				2A4E5D92257F8BDF0085F130 /* RandomStoryListViewModel.swift */,
+			);
+			path = "Random Story List";
+			sourceTree = "<group>";
+		};
 		2A5005ED2571965A005E969A /* Import File */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,8 +401,8 @@
 			children = (
 				2A1B5FB8256A4A5D00E3283D /* StoryListView.swift */,
 				2A9CA6492575B83B00FCD4D0 /* ListOptionsMenu.swift */,
-				2A2CE5A9256C3B7300FBFDB6 /* ListOptionView.swift */,
-				2A935C88256A5144004B6E10 /* StoryListRowView.swift */,
+				2A2CE5A9256C3B7300FBFDB6 /* ListFilterOptionView.swift */,
+				2A62525525803EC0007A6BF3 /* Filter Enums + Ext.swift */,
 			);
 			path = "Story List";
 			sourceTree = "<group>";
@@ -402,7 +451,7 @@
 				2A4F4A9725786CD7008536DE /* RandomStoryView.swift */,
 				2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */,
 				2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */,
-				2A032006257E6724009AF197 /* RandomStoryListView.swift */,
+				2A4FDD80257EAE92008C6DEE /* TestingLazyVStackView.swift */,
 			);
 			path = "Random Story";
 			sourceTree = "<group>";
@@ -435,6 +484,7 @@
 				2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */,
 				2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */,
 				2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */,
+				2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */,
 				2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */,
 				2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */,
 			);
@@ -588,13 +638,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A4FDD86257EB333008C6DEE /* Notification.Name+Ext.swift in Sources */,
 				2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */,
 				2A032007257E6724009AF197 /* RandomStoryListView.swift in Sources */,
 				2AA8916B256B9E7E0042395A /* Context.swift in Sources */,
 				2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */,
 				2AEEF8FE25700061008D1B31 /* Calendar.Component+Ext.swift in Sources */,
+				2A8AFCC825805D7500A0DD94 /* ListOptions.swift in Sources */,
 				2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */,
-				2A2CE5AA256C3B7300FBFDB6 /* ListOptionView.swift in Sources */,
+				2A2CE5AA256C3B7300FBFDB6 /* ListFilterOptionView.swift in Sources */,
 				2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */,
 				2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */,
 				2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */,
@@ -602,13 +654,17 @@
 				2A4F4A9825786CD7008536DE /* RandomStoryView.swift in Sources */,
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
+				2A4FDD81257EAE92008C6DEE /* TestingLazyVStackView.swift in Sources */,
 				2A21716F257CEE3C0098681E /* StoryFileImporter.swift in Sources */,
 				2A9CA64A2575B83B00FCD4D0 /* ListOptionsMenu.swift in Sources */,
 				2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */,
+				2A4E5D93257F8BDF0085F130 /* RandomStoryListViewModel.swift in Sources */,
 				2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */,
 				2AEEF9022570007F008D1B31 /* EKEventStore+Ext.swift in Sources */,
+				2A8AFCD52580623B00A0DD94 /* ListOptionsView.swift in Sources */,
 				2A251B8A25767960004F9218 /* ShareStoryButtons.swift in Sources */,
 				2A85412B256EFED20051906B /* TagEditView.swift in Sources */,
+				2A4E5D8E257F88CA0085F130 /* StoryListRowViewModel.swift in Sources */,
 				2A935C92256A6B0E004B6E10 /* StoryEditorView.swift in Sources */,
 				2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */,
 				2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */,
@@ -616,17 +672,22 @@
 				2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */,
 				2A16CDF52574F0E400146F3E /* NSPredicate+Ext.swift in Sources */,
 				2A1B5FB9256A4A5D00E3283D /* StoryListView.swift in Sources */,
+				2A4E5D98257F8C450085F130 /* RandomStoryListActions.swift in Sources */,
 				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
+				2A4E5D86257F88520085F130 /* StoryListRowContextMenu.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,
 				2AB37295257AD5A900D851C6 /* RandomStoryViewModel.swift in Sources */,
 				2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */,
+				2A62525625803EC0007A6BF3 /* Filter Enums + Ext.swift in Sources */,
 				2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */,
 				2A935CA6256A80C9004B6E10 /* Filter.swift in Sources */,
 				2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */,
 				2AF434632576BBB500DB0D2D /* ImportTextTesting.swift in Sources */,
 				2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */,
 				2A4CC9FB25795A5E000A21C9 /* MyButton.swift in Sources */,
+				2A612EE8257F0D1B00D319D2 /* RandomListOptionsMenu.swift in Sources */,
 				2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */,
+				2A8AFCCD25805DEC00A0DD94 /* ListOptions Enums + Ext.swift in Sources */,
 				2A935C8C256A51AC004B6E10 /* Story.swift in Sources */,
 				2AB3728C257A32D800D851C6 /* StoryActionButtons.swift in Sources */,
 				2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */,
@@ -675,6 +736,7 @@
 				2AFE9E6E25744F480037E8CF /* ActionViewController.swift in Sources */,
 				2A16CDDB2574EFDE00146F3E /* Persistence.swift in Sources */,
 				2A16CDEC2574F09C00146F3E /* Brief.swift in Sources */,
+				2A4FDD8A257EB34D008C6DEE /* Notification.Name+Ext.swift in Sources */,
 				2A16CDE42574EFEC00146F3E /* Story.swift in Sources */,
 				2A16CDF02574F0A300146F3E /* SampleData.swift in Sources */,
 			);

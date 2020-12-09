@@ -19,20 +19,20 @@ final class RandomStoryViewModel: ObservableObject {
     
     private let context: NSManagedObjectContext
     
-    @Published var sheetIdentifier: SheetIdentifier?
+    @Published var sheetID: SheetID?
     
-    struct SheetIdentifier: Identifiable {
-        var id: Modal
-        enum Modal { case list, tags, edit, new }
+    enum SheetID: Identifiable {
+        case list, tags, edit, new
+        var id: Int { hashValue }
     }
+
+    @Published var actionSheetID: ActionSheetID?
     
-    @Published var actionActionSheetIdentifier: ActionSheetIdentifier?
-    
-    struct ActionSheetIdentifier: Identifiable {
-        var id: Modal
-        enum Modal { case delete, remindMe }
+    enum ActionSheetID: Identifiable {
+        case delete, remindMe
+        var id: Int { hashValue }
     }
-    
+
     init(context: NSManagedObjectContext) {
         self.context = context
         
@@ -99,19 +99,19 @@ final class RandomStoryViewModel: ObservableObject {
     
     func showStoryEditor() {
         Ory.withHapticsAndAnimation {
-            self.sheetIdentifier = SheetIdentifier(id: .edit)
+            self.sheetID = .edit
         }
     }
     
     func showStoryList() {
         Ory.withHapticsAndAnimation {
-            self.sheetIdentifier = SheetIdentifier(id: .list)
+            self.sheetID = .list
         }
     }
 
     func showTagGrid() {
         Ory.withHapticsAndAnimation {
-            self.sheetIdentifier = SheetIdentifier(id: .tags)
+            self.sheetID = .tags
         }
     }
     
@@ -119,11 +119,11 @@ final class RandomStoryViewModel: ObservableObject {
     //  MARK: Show Action Sheets: Delete Story & RemindMe
 
     func deleteStoryAction() {
-        actionActionSheetIdentifier = ActionSheetIdentifier(id: .delete)
+        actionSheetID = .delete
     }
     
     func remindMeAction() {
-        actionActionSheetIdentifier = ActionSheetIdentifier(id: .remindMe)
+        actionSheetID = .remindMe
     }
 
 
@@ -142,7 +142,7 @@ final class RandomStoryViewModel: ObservableObject {
     
     func createNewStory() {
         Ory.withHapticsAndAnimation {
-            self.sheetIdentifier = SheetIdentifier(id: .new)
+            self.sheetID = .new
         }
     }
     

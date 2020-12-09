@@ -48,7 +48,7 @@ struct ImportTextView: View {
             NavigationView {
                 List {
                     Section(header: Text("Selected: \(model.selectedCount)")) {
-                        ForEach(model.briefs, id: \.self, content: briefListRow)
+                        ForEach(model.briefs, content: briefListRow)
                     }
                 }
                 .listStyle(InsetGroupedListStyle())

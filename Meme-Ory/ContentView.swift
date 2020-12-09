@@ -20,8 +20,8 @@ struct ContentView: View {
         //        StoryListView(filter: filter)
         //    }
         
-        RandomStoryViewWrapper(context: context)
-        //RandomStoryListView(context: context)
+        //RandomStoryViewWrapper(context: context)
+        RandomStoryListView(context: context)
             
             .onChange(of: scenePhase, perform: handleScenePhase)
             .onOpenURL(perform: handleOpenURL)
@@ -31,6 +31,7 @@ struct ContentView: View {
     
     private func handleScenePhase(scenePhase: ScenePhase) {
         if scenePhase == .background {
+            print("ContentView: gone to background")
             context.saveContext()
         }
     }

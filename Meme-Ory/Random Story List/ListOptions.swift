@@ -1,13 +1,13 @@
 //
-//  Filter.swift
+//  ListOptions.swift
 //  Meme-Ory
 //
-//  Created by Igor Malyarov on 22.11.2020.
+//  Created by Igor Malyarov on 09.12.2020.
 //
 
-import SwiftUI
+import Foundation
 
-final class Filter: ObservableObject {
+struct ListOptions {
     
     var isActive: Bool {
         isTagFilterActive || isListLimited || favoritesFilter != .all || remindersFilter != .all
@@ -16,7 +16,7 @@ final class Filter: ObservableObject {
     
     //  MARK: - Favorites
     
-    @Published var favoritesFilter = FavoritesFilterOptions.all
+    var favoritesFilter = FavoritesFilterOptions.all
     
     enum FavoritesFilterOptions: String, CaseIterable {
         case fav, unfav, all
@@ -25,7 +25,7 @@ final class Filter: ObservableObject {
     
     //  MARK: - Reminders
     
-    @Published var remindersFilter = RemindersFilterOptions.all
+    var remindersFilter = RemindersFilterOptions.all
     
     enum RemindersFilterOptions: String, CaseIterable {
         case have, notHave, all
@@ -34,14 +34,14 @@ final class Filter: ObservableObject {
     
     //  MARK: - Sort
     
-    @Published var itemToSortBy = SortByOptions.timestamp
+    var itemToSortBy = SortByOptions.timestamp
     
     enum SortByOptions: String, CaseIterable {
         case timestamp, text
     }
     
     /// sort order
-    @Published var sortOrder = SortOrder.descending
+    var sortOrder = SortOrder.descending
     
     enum SortOrder: String, CaseIterable {
         case ascending, descending
@@ -54,19 +54,19 @@ final class Filter: ObservableObject {
     
     
     //  MARK: - Search
-    @Published var searchString: String = ""
+    var searchString: String = ""
     
     
     //  MARK: - List Limit
     
     /// Limiting Stories List (number of stories listed))
-    @Published var isListLimited: Bool = UserDefaults.standard.bool(forKey: "isListLimited") {
+    var isListLimited: Bool = UserDefaults.standard.bool(forKey: "isListLimited") {
         didSet {
             UserDefaults.standard.setValue(isListLimited, forKey: "isListLimited")
         }
     }
     
-    @Published var listLimit: Int = max(6, UserDefaults.standard.integer(forKey: "listLimit")) {
+    var listLimit: Int = max(6, UserDefaults.standard.integer(forKey: "listLimit")) {
         didSet {
             UserDefaults.standard.setValue(listLimit, forKey: "listLimit")
         }
@@ -77,7 +77,7 @@ final class Filter: ObservableObject {
     
     //  MARK: - Tags
     
-    @Published var tags = Set<Tag>()
+    var tags = Set<Tag>()
     
     var isTagFilterActive: Bool { !tags.isEmpty }
     
@@ -147,7 +147,7 @@ final class Filter: ObservableObject {
     
     //  MARK: - Reset Filter
     
-    func resetTags() {
+    mutating func resetTags() {
         tags = Set()
     }
 }

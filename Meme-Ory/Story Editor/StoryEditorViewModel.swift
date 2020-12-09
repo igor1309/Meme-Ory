@@ -172,6 +172,3 @@ final class StoryEditorViewModel: ObservableObject {
     }
 }
 
-extension Notification.Name {
-    public static let NewStoryCreated = Notification.Name("NewStoryCreated")
-}

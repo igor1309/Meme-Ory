@@ -15,21 +15,16 @@ struct ShareStoryButtons: View {
     
     var body: some View {
         Section {
-            Button {
+            MyButton(title: "Share Story Text", icon: "square.and.arrow.up") {
                 let items = [text]
                 let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
                 UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
-            } label: {
-                Label("Share story text", systemImage: "square.and.arrow.up")
             }
             
-            Button {
+            MyButton(title: "Share with Link", icon: "square.and.arrow.up.on.square") {
                 let items: [Any] = [text.appending("\n"), url]
                 let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
                 UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
-                
-            } label: {
-                Label("Share with link", systemImage: "square.and.arrow.up.on.square")
             }
         }
     }

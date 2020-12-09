@@ -82,8 +82,8 @@ struct RandomStoryView: View {
             .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
             .navigationBarTitle("Random Story", displayMode: .inline)
             .navigationBarItems(leading: listButton(), trailing: menu())
-            .sheet(item: $model.sheetIdentifier, content: modalView)
-            .actionSheet(item: $model.actionActionSheetIdentifier, content: actionSheet)
+            .sheet(item: $model.sheetID, content: modalView)
+            .actionSheet(item: $model.actionSheetID, content: actionSheet)
         }
         .onAppear(perform: model.getRandomStory)
         .onDisappear(perform: context.saveContext)
@@ -109,8 +109,8 @@ struct RandomStoryView: View {
     //  MARK: Modal View
     
     @ViewBuilder
-    private func modalView(sheetIdentifier: RandomStoryViewModel.SheetIdentifier) -> some View {
-        switch sheetIdentifier.id {
+    private func modalView(sheetID: RandomStoryViewModel.SheetID) -> some View {
+        switch sheetID {
             case .tags:
                 TagsWrapperWrapper(story: story)
                     .environment(\.managedObjectContext, context)
@@ -170,8 +170,8 @@ struct RandomStoryView: View {
     
     //  MARK: Action Sheets
     
-    private func actionSheet(actionActionSheetIdentifier: RandomStoryViewModel.ActionSheetIdentifier) -> ActionSheet {
-        switch actionActionSheetIdentifier.id {
+    private func actionSheet(actionActionSheetID: RandomStoryViewModel.ActionSheetID) -> ActionSheet {
+        switch actionActionSheetID {
             case .delete:
                 return confirmationActionSheet()
             case .remindMe:
