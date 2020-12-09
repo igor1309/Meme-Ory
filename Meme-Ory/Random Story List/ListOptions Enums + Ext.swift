@@ -8,9 +8,9 @@
 import SwiftUI
 
 
-//  MARK: - Enum Extensions: Labelable
+//  MARK: - Enum Extensions: LabelProvider
 
-extension RandomStoryListViewModel.ListType: Labelable {
+extension RandomStoryListViewModel.ListType: LabelProvider {
     var rawValue: String {
         switch self {
             case .random: return "Random"
@@ -26,7 +26,7 @@ extension RandomStoryListViewModel.ListType: Labelable {
     }
 }
 
-extension ListOptions.FavoritesFilterOptions: Labelable {
+extension ListOptions.FavoritesFilterOptions: LabelProvider {
     var rawValue: String {
         switch self {
             case .all:   return "Favorites or not"
@@ -44,7 +44,7 @@ extension ListOptions.FavoritesFilterOptions: Labelable {
     }
 }
 
-extension ListOptions.RemindersFilterOptions: Labelable {
+extension ListOptions.RemindersFilterOptions: LabelProvider {
     var rawValue: String {
         switch self {
             case .all:     return "With or without"
@@ -62,7 +62,7 @@ extension ListOptions.RemindersFilterOptions: Labelable {
     }
 }
 
-extension ListOptions.SortByOptions: Labelable {
+extension ListOptions.SortByOptions: LabelProvider {
     var rawValue: String {
         switch self {
             case .timestamp: return "Date"
@@ -78,7 +78,7 @@ extension ListOptions.SortByOptions: Labelable {
     }
 }
 
-extension ListOptions.SortOrder: Labelable {
+extension ListOptions.SortOrder: LabelProvider {
     var rawValue: String {
         switch self {
             case .ascending:  return "Ascending"

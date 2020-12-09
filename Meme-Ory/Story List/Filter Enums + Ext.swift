@@ -1,5 +1,5 @@
 //
-//  Labelable.swift
+//  LabelProvider.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 09.12.2020.
@@ -8,16 +8,16 @@
 import SwiftUI
 
 
-//  MARK: Labelable
+//  MARK: LabelProvider
 
-protocol Labelable: RawRepresentable where Self.RawValue == String {
+protocol LabelProvider: RawRepresentable where Self.RawValue == String {
     var icon: String { get }
     
     associatedtype V: View
     func label(prefix: String) -> V
 }
 
-extension Labelable {
+extension LabelProvider {
     func label(prefix: String = "") -> some View {
         let title = prefix.isEmpty ? rawValue : "\(prefix)\(rawValue)"
         return Label(title, systemImage: icon)
@@ -25,9 +25,9 @@ extension Labelable {
 }
 
 
-//  MARK: - Enum Extensions: Labelable
+//  MARK: - Enum Extensions: LabelProvider
 
-extension Filter.FavoritesFilterOptions: Labelable {
+extension Filter.FavoritesFilterOptions: LabelProvider {
     var rawValue: String {
         switch self {
             case .all:   return "Favorites or not"
@@ -45,7 +45,7 @@ extension Filter.FavoritesFilterOptions: Labelable {
     }
 }
 
-extension Filter.RemindersFilterOptions: Labelable {
+extension Filter.RemindersFilterOptions: LabelProvider {
     var rawValue: String {
         switch self {
             case .all:     return "With or without"
@@ -63,7 +63,7 @@ extension Filter.RemindersFilterOptions: Labelable {
     }
 }
 
-extension Filter.SortByOptions: Labelable {
+extension Filter.SortByOptions: LabelProvider {
     var rawValue: String {
         switch self {
             case .timestamp: return "Date"
@@ -79,7 +79,7 @@ extension Filter.SortByOptions: Labelable {
     }
 }
 
-extension Filter.SortOrder: Labelable {
+extension Filter.SortOrder: LabelProvider {
     var rawValue: String {
         switch self {
             case .ascending:  return "Ascending"
