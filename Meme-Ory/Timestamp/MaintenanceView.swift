@@ -21,25 +21,33 @@ struct TimestampPicker: View {
     @ObservedObject var model: MaintenanceViewModel
     
     var body: some View {
-        let selected: Binding<Date> = Binding(
-            get: { model.timestampDate ?? Date.distantPast },
-            set: { model.timestampDate = $0 }
-        )
-        
-        return Picker(selection: selected, label: label()) {
-            ForEach(model.timestamps) { timestamp in
-                Label("\(timestamp.date, formatter: shorterFormatter)", systemImage: "\(timestamp.count).circle")
-                    .tag(timestamp.date)
+        Picker(selection: $model.timestampDate, label: labelForDate()) {
+            Text("All").tag(Date?.none)
+            ForEach(model.timestamps) { (timestamp: Timestamp?) in
+                Label("\(timestamp?.date ?? .distantPast, formatter: shorterFormatter)", systemImage: "\(timestamp?.count ?? 0).circle")
+                    .tag(timestamp?.date)
             }
         }
         .pickerStyle(MenuPickerStyle())
     }
     
-    private func label() -> some View {
-        if let selected = model.timestampDate {
-            return Label("\(selected, formatter: mediumFormatter)", systemImage: "calendar.badge.clock")
+    @ViewBuilder
+    private func label(timestamp: Timestamp?) -> some View {
+        if let timestamp = timestamp {
+            Label("\(timestamp.date, formatter: shorterFormatter)", systemImage: "\(timestamp.count).circle")
+                .tag(timestamp.date)
         } else {
-            return Label("Select date to filter stories...", systemImage: "calendar.badge.clock")
+            Label("Error: no date here", systemImage: "exclamationmark.triangle")
+                .tag(Date?.none)
+        }
+    }
+    
+    @ViewBuilder
+    private func labelForDate() -> some View {
+        if let date = model.timestampDate {
+            Label("\(date, formatter: mediumFormatter)", systemImage: "calendar.badge.clock")
+        } else {
+            Label("Select date to filter stories...", systemImage: "calendar.badge.clock")
         }
     }
 }
@@ -154,7 +162,7 @@ fileprivate struct StorySimpleView: View {
     
     init(story: Story) {
         self.text = story.text
-        self.tags = story.tags.map(\.name).joined(separator: ", ")
+        self.tags = story.tagList
         self.title = "Story"
     }
     
@@ -198,15 +206,23 @@ fileprivate struct StoryListRowSimpleView: View {
     }
     
     var body: some View {
-        Text(story.text)
-            .lineLimit(model.hasTimestampDate ? nil : 2)
-            .font(.subheadline)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            .padding(.vertical, 3)
-            .onTapGesture(perform: showStory)
-            .contextMenu(menuItems: menuContent)
-            .sheet(item: $sheetID, content: splitView)
+        VStack(alignment: .leading, spacing: 6) {
+            Text(story.text)
+                .lineLimit(model.hasTimestampDate ? nil : 2)
+                .font(.subheadline)
+            
+            if !story.tagList.isEmpty {
+                Label(story.tagList, systemImage: "tag")
+                    .foregroundColor(Color(UIColor.systemOrange))
+                    .font(.caption)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
+        .padding(.vertical, 3)
+        .onTapGesture(perform: showStory)
+        .contextMenu(menuItems: menuContent)
+        .sheet(item: $sheetID, content: splitView)
     }
     
     @ViewBuilder
@@ -267,7 +283,7 @@ extension MaintenanceViewModel {
     
     func listHeader(kind: ListKind) -> String {
         switch kind {
-            case .withTimestamp:    return "Sorted by descending timestams"
+            case .withTimestamp:    return "Sorted by descending timestamзs"
             case .withoutTimestamp: return "no timestamp stories"
         }
     }
@@ -275,23 +291,23 @@ extension MaintenanceViewModel {
     func fixNoTimestampStoryDuplicates(stories: FetchedResults<Story>) {
         /// remove text duplicates using Set
         let textsCopy = Set(stories.map(\.text))
-
+        
         for story in stories {
             context.delete(story)
         }
         
         let date = Date()
-
+        
         let tag = Tag(context: context)
         tag.name = "Date Fixing"
-
+        
         for text in textsCopy {
             let story = Story(context: context)
             story.text = text
             story.timestamp = date
             story.tags.append(tag)
         }
-
+        
         context.saveContext()
     }
 }

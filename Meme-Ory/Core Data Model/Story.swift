@@ -25,7 +25,7 @@ extension Story {
     }
     
     var tagList: String {
-        tags.map { $0.name }.joined(separator: ", ")
+        tags.map(\.name).joined(separator: ", ")
     }
     
     var calendarItemIdentifier: String {
