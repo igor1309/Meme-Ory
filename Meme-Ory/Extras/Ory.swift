@@ -12,6 +12,16 @@ import CoreHaptics
 //
 enum Ory {
     
+    static let storyFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
+    
+    //  MARK: - Haptics
+    
     private static let hapticsAvailable: Bool = CHHapticEngine.capabilitiesForHardware().supportsHaptics
     
     static func feedback(style: UIImpactFeedbackGenerator.FeedbackStyle = .light) {
@@ -27,6 +37,9 @@ enum Ory {
             generator.notificationOccurred(type)
         }
     }
+    
+    
+    //  MARK: - with Animation
     
     static func withHapticsAndAnimation(style: UIImpactFeedbackGenerator.FeedbackStyle = .light, action: @escaping () -> Void) {
         feedback(style: style)

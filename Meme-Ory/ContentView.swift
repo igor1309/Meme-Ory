@@ -23,7 +23,8 @@ struct ContentView: View {
         //RandomStoryViewWrapper(context: context)
         //RandomStoryListView(context: context)
             
-        ContentChooserView()
+        //ContentChooserView()
+         MaintenanceView(context: context)
             
             .onChange(of: scenePhase, perform: handleScenePhase)
             .onOpenURL(perform: handleOpenURL)
@@ -78,7 +79,6 @@ struct ContentView: View {
     private func importTextView() -> some View {
         ImportTextView(url: importFileURL)
             .environment(\.managedObjectContext, context)
-            .environmentObject(filter)
     }
     
     private func failedImportAlert() -> Alert {

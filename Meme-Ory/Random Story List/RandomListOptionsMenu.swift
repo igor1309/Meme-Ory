@@ -33,6 +33,7 @@ struct RandomListOptionsMenu: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     let story = Story(context: context)
                     story.text = "Test \(Date().description)"
+                    story.timestamp = Date()
                     context.saveContext()
                 }
             }

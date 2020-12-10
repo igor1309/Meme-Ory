@@ -80,7 +80,7 @@ struct StoryListRowView: View {
                 }
                 
                 if let timestamp = story.timestamp {
-                    Text("\(timestamp, formatter: storyFormatter)")
+                    Text("\(timestamp, formatter: Ory.storyFormatter)")
                         .foregroundColor(Color(UIColor.tertiaryLabel))
                         .font(.caption)
                 }
@@ -103,13 +103,6 @@ struct StoryListRowView: View {
         .padding(.vertical, 3)
     }
 }
-
-private let storyFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .short
-    return formatter
-}()
 
 fileprivate struct StoryListRowView_Testing: View {
     @State private var activeURL: URL?

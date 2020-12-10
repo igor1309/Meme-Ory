@@ -14,16 +14,20 @@ struct ImportTextView: View {
     
     @StateObject var model: ImportTextViewModel
     
-    init(url: URL?) {
+    let title: String
+    
+    init(url: URL?, title: String = "Import") {
         if let url = url {
             _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
         } else {
             _model = StateObject(wrappedValue: ImportTextViewModel(texts: []))
         }
+        self.title = title
     }
     
-    init(texts: [String]) {
+    init(texts: [String], title: String = "Import") {
         _model = StateObject(wrappedValue: ImportTextViewModel(texts: texts))
+        self.title = title
     }
     
     var body: some View {
@@ -52,7 +56,7 @@ struct ImportTextView: View {
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
-                .navigationBarTitle("Import", displayMode: .inline)
+                .navigationBarTitle(title, displayMode: .inline)
                 .navigationBarItems(leading: cancelButton(), trailing: importButton())
             }
         }

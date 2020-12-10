@@ -9,20 +9,17 @@ import SwiftUI
 import CoreData
 
 enum ContentChooser: String, CaseIterable, Identifiable {
-    case randomList, randomStory, orderedList, notSelected
+    case randomList, randomStory, orderedList, notSelected, maintenance
     
     var id: Int { hashValue }
     
     var rawValue: String {
         switch self {
             case .notSelected: return "Select..."
-                
             case .orderedList: return "Ordered List"
-                
             case .randomList:  return "Random List"
-                
             case .randomStory: return "Random Story"
-                
+            case .maintenance: return "Maintenance"
         }
     }
 }
@@ -70,6 +67,8 @@ struct ContentChooserView: View {
                 //}
                 RandomStoryViewWrapper(context: context)
                 
+            case .maintenance:
+                MaintenanceView(context: context)
         }
     }
 }
