@@ -30,7 +30,7 @@ struct StoryTextPicker: View {
     @ObservedObject var model: MaintenanceViewModel
     
     var body: some View {
-        Picker(selection: $model.selectedText, label: labelForText()) {
+        Picker(selection: $model.selectedText, label: label()) {
             Text("None").tag(String?.none)
             ForEach(model.textDuplicates) { (storyText: TextDuplicate?) in
                 Label((storyText?.text ?? "error").oneLinePrefix(30), systemImage: "\(storyText?.count ?? 0).circle")
@@ -40,8 +40,8 @@ struct StoryTextPicker: View {
         .pickerStyle(MenuPickerStyle())
     }
     
-    private func labelForText() -> some View {
-        Label((model.selectedText ?? "Select Story Duplicates...").oneLinePrefix(30), systemImage: "calendar.badge.clock")
+    private func label() -> some View {
+        Label((model.selectedText ?? "Select Story Text Duplicates").oneLinePrefix(30), systemImage: "calendar.badge.clock")
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
     }
@@ -52,8 +52,8 @@ struct TimestampPicker: View {
     @ObservedObject var model: MaintenanceViewModel
     
     var body: some View {
-        Picker(selection: $model.timestampDate, label: labelForDate()) {
-            Text("All").tag(Date?.none)
+        Picker(selection: $model.selectedTimestampDate, label: label()) {
+            Text("All Dates").tag(Date?.none)
             ForEach(model.timestampDuplicates) { (timestamp: TimestampDuplicate?) in
                 Label("\(timestamp?.date ?? .distantPast, formatter: shorterFormatter)", systemImage: "\(timestamp?.count ?? 0).circle")
                     .tag(timestamp?.date)
@@ -61,12 +61,12 @@ struct TimestampPicker: View {
         }
         .pickerStyle(MenuPickerStyle())
     }
-    private func labelForDate() -> some View {
+    private func label() -> some View {
         Group {
-            if let date = model.timestampDate {
+            if let date = model.selectedTimestampDate {
                 Label("\(date, formatter: mediumFormatter)", systemImage: "calendar.badge.clock")
             } else {
-                Label("Select Date to filter Stories...", systemImage: "calendar.badge.clock")
+                Label("Select Date to filter Stories", systemImage: "calendar.badge.clock")
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -77,7 +77,7 @@ struct TimestampPicker: View {
 //  MARK: - Maintenance View Model
 final class MaintenanceViewModel: ObservableObject {
     
-    @Published var timestampDate: Date?
+    @Published var selectedTimestampDate: Date?
     @Published var timestampDuplicates = [TimestampDuplicate]()
     
     @Published var selectedText: String?
@@ -85,9 +85,7 @@ final class MaintenanceViewModel: ObservableObject {
     
     let context: NSManagedObjectContext
     
-    var hasTimestampDate: Bool { timestampDate != nil }
-    var timestampsCount: Int { timestampDuplicates.count }
-    var timestampsTotal: Int { timestampDuplicates.reduce(0) { $0 + $1.count } }
+    var hasTimestampDate: Bool { selectedTimestampDate != nil }
 
     
     //  MARK: - Init & Subscribe
@@ -114,9 +112,9 @@ final class MaintenanceViewModel: ObservableObject {
             .sink { [weak self] (timestampDuplicates: [TimestampDuplicate]) in
                 self?.timestampDuplicates = timestampDuplicates
                 // nullify if timestampDate refers to date not present in timestampDuplicates
-                if let timestampDate = self?.timestampDate,
+                if let timestampDate = self?.selectedTimestampDate,
                    !timestampDuplicates.map(\.date).contains(timestampDate) {
-                    self?.timestampDate = nil
+                    self?.selectedTimestampDate = nil
                 }
             }
             .store(in: &cancellableSet)
@@ -173,11 +171,11 @@ final class MaintenanceViewModel: ObservableObject {
         return TextDuplicate(text: text, count: count)
     }
     
-    private func returnFetch<T, Value>(
-        keyPath: KeyPath<Story, Value>,
-        countMin: Int = 2,
-        transform: (NSDictionary) -> T?
-    ) -> [T] {
+    private func returnFetch<T, Value>(keyPath: KeyPath<Story, Value>, countMin: Int = 2, transform: (NSDictionary) -> T?) -> [T] {
+        
+        // https://stackoverflow.com/a/38150048/11793043
+        // https://stackoverflow.com/a/38313716/11793043
+
         let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
         
         print("running generic returnFetch @ MaintenanceViewModel for \(keyPathString)")
@@ -197,14 +195,12 @@ final class MaintenanceViewModel: ObservableObject {
         request.propertiesToFetch = [keyPathString, count]
         request.propertiesToGroupBy = [keyPathString]
         request.returnsDistinctResults = true
-        // https://stackoverflow.com/a/38150048/11793043
         request.havingPredicate = NSComparisonPredicate(
             leftExpression: countExpression,
             rightExpression: NSExpression(forConstantValue: countMin),
             modifier: NSComparisonPredicate.Modifier.direct,
             type: NSComparisonPredicate.Operator.greaterThanOrEqualTo,
             options: [])
-        
         
         let sortDescriptor = NSSortDescriptor(keyPath: keyPath, ascending: false)
         request.sortDescriptors = [sortDescriptor]
@@ -330,7 +326,7 @@ fileprivate struct StoryListRowSimpleView: View {
     }
 }
 
-
+//  MARK: - Maintenance View Model extension
 extension MaintenanceViewModel {
     
     var predicateForSelectedText: NSPredicate {
@@ -346,7 +342,7 @@ extension MaintenanceViewModel {
     }
     
     private var timestampPredicate: NSPredicate {
-        if let timestampDate = timestampDate {
+        if let timestampDate = selectedTimestampDate {
             return NSPredicate(format: "%K == %@", #keyPath(Story.timestamp_), timestampDate as NSDate)
         } else {
             return NSPredicate.all
@@ -397,6 +393,14 @@ extension MaintenanceViewModel {
     }
 }
 
+extension Int {
+    var storySuffix: String {
+        guard self >= 0 else { return "" }
+        guard self != 1 else { return "1 Story" }
+        return "\(self) Stories"
+    }
+}
+
 //  MARK: - Story List Simple View
 fileprivate struct StoryListSimpleView: View {
     
@@ -414,9 +418,7 @@ fileprivate struct StoryListSimpleView: View {
         self.header = model.listHeader(kind: kind)
         
         let predicate = model.predicate(kind: kind)
-        let sortDescriptor1 = NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: false)
-        let sortDescriptor2 = NSSortDescriptor(key: #keyPath(Story.text_), ascending: false)
-        let fetchRequest = Story.fetchRequest(predicate, sortDescriptors: [sortDescriptor1, sortDescriptor2])
+        let fetchRequest = Story.fetchRequest(predicate)
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
@@ -424,7 +426,7 @@ fileprivate struct StoryListSimpleView: View {
         if !stories.isEmpty {
             Section(header: Text("\(header): \(stories.count)")) {
                 if kind == .withoutTimestamp {
-                    MyButton(title: "Fix No Timestamp Story Duplicates", icon: "wand.and.stars") {
+                    MyButton(title: "Fix Timestamp for \(stories.count.storySuffix)", icon: "wand.and.stars") {
                         model.fixNoTimestampStoryDuplicates(stories: stories)
                     }
                 }
@@ -476,17 +478,20 @@ struct MaintenanceView: View {
     }
     
     var body: some View {
+        NavigationView {
         List {
-            #if DEBUG
-            Section(header: Text("Testing")) {
-                MyButton(title: "Test: add more", icon: "plus.square", action: addMore)
-                MyButton(title: "Test: add more NO DATE", icon: "plus.square.fill", action: addMoreNoDate)
-                MyButton(title: "Test: add special story", icon: "plus.rectangle.on.rectangle", action: addSpecial)
-            }
-            #endif
-            
-            Section(header: Text("Filter")) {
+            Section(
+                header: Text("Filter Stories by Timestamp"),
+                footer: Text("Timestamps for two or more stories. If empty then there is just one story for each timestamp.")
+            ) {
                 TimestampPicker(model: model)
+                
+            }
+            
+            Section(
+                header: Text("Text Duplicates"),
+                footer: Text("If no options to select from then no duplicates of stories' texts.")
+            ) {
                 StoryTextPicker(model: model)
             }
             
@@ -498,6 +503,24 @@ struct MaintenanceView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .environmentObject(model)
+        .navigationBarTitle("Maintenance", displayMode: .inline)
+        .toolbar(content: toolbar)
+    }
+    }
+    
+    @ViewBuilder
+    private func toolbar() -> some View {
+        #if DEBUG
+        Menu {
+            Section(header: Text("Testing")) {
+                MyButton(title: "Add more Stories", icon: "plus.square", action: addMore)
+                MyButton(title: "Add more NO DATE", icon: "plus.diamond", action: addMoreNoDate)
+                MyButton(title: "Add Special Story", icon: "plus.rectangle.on.rectangle", action: addSpecial)
+            }
+        } label: {
+            Image(systemName: "target")
+        }
+        #endif
     }
     
     
@@ -589,9 +612,11 @@ fileprivate let shorterFormatter: DateFormatter = {
 
 struct TimestampListView_Previews: PreviewProvider {
     static var previews: some View {
-        MaintenanceView(context: SampleData.preview.container.viewContext)
-            .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
-            .environment(\.colorScheme, .dark)
+        //NavigationView {
+            MaintenanceView(context: SampleData.preview.container.viewContext)
+        //}
+        .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
+        .environment(\.colorScheme, .dark)
     }
 }
 

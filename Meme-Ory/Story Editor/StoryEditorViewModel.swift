@@ -92,9 +92,10 @@ final class StoryEditorViewModel: ObservableObject {
         Ory.withHapticsAndAnimation {
             /// if editing try to paste clipboard content
             if self.mode == .create {
-                if UIPasteboard.general.hasStrings,
-                   let content = UIPasteboard.general.string,
-                   !content.isEmpty {
+                guard let content = UIPasteboard.general.string else { return }
+                
+                let clean = content.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !clean.isEmpty {
                     self.text = content
                 }
             }

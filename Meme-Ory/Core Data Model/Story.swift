@@ -70,10 +70,12 @@ extension Story {
     
     
     static func createStoryFromPasteboard(context: NSManagedObjectContext) {
-        if let content = UIPasteboard.general.string,
-           !content.isEmpty {
+        guard let content = UIPasteboard.general.string else { return }
+        
+        let clean = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !clean.isEmpty {
             let story = Story(context: context)
-            story.text = content
+            story.text = clean
             story.timestamp = Date()
             
             context.saveContext()
@@ -81,11 +83,13 @@ extension Story {
     }
     
     
-    //  MARK: FetchRequest
+    //  MARK: Fetch Requests
     
+    /// with default sortDescriptors (descending timestmp, then ascending text)
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Story> {
-        let sortDescriptor = NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: true)
-        return Story.fetchRequest(predicate, sortDescriptors: [sortDescriptor])
+        let sortDescriptor1 = NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: false)
+        let sortDescriptor2 = NSSortDescriptor(key: #keyPath(Story.text_), ascending: false)
+        return Story.fetchRequest(predicate, sortDescriptors: [sortDescriptor1, sortDescriptor2])
     }
     
     static func fetchRequest(_ predicate: NSPredicate, sortDescriptors: [NSSortDescriptor]) -> NSFetchRequest<Story> {
