@@ -1,6 +1,7 @@
 import Foundation
 
 let source = """
+
 Вопрос «Есть ли евреи на других планетах?» очень интересовал доктора астрономии и члена-корреспондента Академии Наук Семёна Каца.
 Когда все ушли с работы, он отправил в космос сообщение:
 — Ну?
@@ -68,22 +69,36 @@ let source = """
 
 """
 
-let separator = """
-
-
- ***
-
-
-"""
-
+let separator = "***"
 let components = source.components(separatedBy: separator)
 let first = components[0]
 let trimmedFirst = first.trimmingCharacters(in: .whitespacesAndNewlines)
-print(first)
-print(first == trimmedFirst)
-print(trimmedFirst)
+//print(first)
+//print(first == trimmedFirst)
+//print(trimmedFirst)
+
 //components.map { print($0) }
-for component in components {
-    print(component)
+//for component in components {
+//    print(component)
+//}
+
+extension String {
+    func oneLinePrefix(_ maxLength: Int) -> String {
+        let components = self
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: "\n")
+        
+        guard let first = components.first else { return "" }
+        
+        guard first.count > maxLength else { return first }
+        
+        return String(first.prefix(maxLength)).appending("...")
+    }
 }
 
+var array: [String] = components//=  ["", "***\n\nГерм"]
+array.insert("", at: 2)
+array.insert("short text", at: 4)
+for test in array {
+    print(test.oneLinePrefix(30))
+}

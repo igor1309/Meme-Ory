@@ -20,6 +20,8 @@ extension NSManagedObjectContext {
                 let context = notification.object as? NSManagedObjectContext
                 return context == self
             }
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         
         return sub
@@ -31,6 +33,8 @@ extension NSManagedObjectContext {
                 guard let insertedStories = notification.userInfo?[NSInsertedObjectsKey] as? Set<Story> else { return nil }
                 return insertedStories
             }
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         
         return sub
@@ -42,6 +46,8 @@ extension NSManagedObjectContext {
                 guard let insertedStories = notification.userInfo?[NSDeletedObjectsKey] as? Set<Story> else { return nil }
                 return insertedStories
             }
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         
         return sub
@@ -53,6 +59,8 @@ extension NSManagedObjectContext {
                 guard let insertedStories = notification.userInfo?[NSUpdatedObjectsKey] as? Set<Story> else { return nil }
                 return insertedStories
             }
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         
         return sub

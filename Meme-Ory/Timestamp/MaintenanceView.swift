@@ -31,7 +31,7 @@ struct StoryTextPicker: View {
         Picker(selection: $model.text, label: labelForText()) {
             Text("None").tag(String?.none)
             ForEach(model.textDuplicates) { (storyText: StoryText?) in
-                Label((storyText?.text ?? "error").prefix(30), systemImage: "\(storyText?.count ?? 0).circle")
+                Label((storyText?.text ?? "error").oneLinePrefix(30), systemImage: "\(storyText?.count ?? 0).circle")
                     .tag(storyText?.text)
             }
         }
@@ -39,7 +39,9 @@ struct StoryTextPicker: View {
     }
     
     private func labelForText() -> some View {
-        Label((model.text ?? "Select duplicate story...").prefix(30), systemImage: "calendar.badge.clock")
+        Label((model.text ?? "Select duplicate story...").oneLinePrefix(30), systemImage: "calendar.badge.clock")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
     }
 }
 
@@ -51,32 +53,22 @@ struct TimestampPicker: View {
         Picker(selection: $model.timestampDate, label: labelForDate()) {
             Text("All").tag(Date?.none)
             ForEach(model.timestamps) { (timestamp: Timestamp?) in
-                //                label(timestamp)
                 Label("\(timestamp?.date ?? .distantPast, formatter: shorterFormatter)", systemImage: "\(timestamp?.count ?? 0).circle")
                     .tag(timestamp?.date)
             }
         }
         .pickerStyle(MenuPickerStyle())
     }
-    
-    @ViewBuilder
-    private func label(_ timestamp: Timestamp?) -> some View {
-        if let timestamp = timestamp {
-            Label("\(timestamp.date, formatter: shorterFormatter)", systemImage: "\(timestamp.count).circle")
-                .tag(timestamp.date)
-        } else {
-            Label("Error: no date here", systemImage: "exclamationmark.triangle")
-                .tag(Date?.none)
-        }
-    }
-    
-    @ViewBuilder
     private func labelForDate() -> some View {
-        if let date = model.timestampDate {
-            Label("\(date, formatter: mediumFormatter)", systemImage: "calendar.badge.clock")
-        } else {
-            Label("Select date to filter stories...", systemImage: "calendar.badge.clock")
+        Group {
+            if let date = model.timestampDate {
+                Label("\(date, formatter: mediumFormatter)", systemImage: "calendar.badge.clock")
+            } else {
+                Label("Select date to filter stories...", systemImage: "calendar.badge.clock")
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
 }
 

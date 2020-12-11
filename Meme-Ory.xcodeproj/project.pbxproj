@@ -12,6 +12,7 @@
 		2A032007257E6724009AF197 /* RandomStoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A032006257E6724009AF197 /* RandomStoryListView.swift */; };
 		2A03200E257E6B61009AF197 /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
 		2A055C842577EF2F00221367 /* MyJavaScriptFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 2A055C832577EF2F00221367 /* MyJavaScriptFile.js */; };
+		2A167B9A258316D3007A986B /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A167B99258316D3007A986B /* String+Ext.swift */; };
 		2A16CDDB2574EFDE00146F3E /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
 		2A16CDE32574EFEC00146F3E /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C9A256A7717004B6E10 /* Tag.swift */; };
 		2A16CDE42574EFEC00146F3E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935C8B256A51AC004B6E10 /* Story.swift */; };
@@ -153,6 +154,7 @@
 		2A032006257E6724009AF197 /* RandomStoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryListView.swift; sourceTree = "<group>"; };
 		2A055C832577EF2F00221367 /* MyJavaScriptFile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = MyJavaScriptFile.js; sourceTree = "<group>"; };
 		2A1164A6257102BF000AD487 /* Brief.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brief.swift; sourceTree = "<group>"; };
+		2A167B99258316D3007A986B /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Ext.swift"; sourceTree = "<group>"; };
 		2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meme-Ory.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme_OryApp.swift; sourceTree = "<group>"; };
@@ -525,12 +527,13 @@
 		2ADAD3F9256E4B6500AF463B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */,
 				2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */,
 				2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */,
 				2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */,
 				2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */,
 				2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */,
+				2A167B99258316D3007A986B /* String+Ext.swift */,
+				2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */,
 				2A62525625803EC0007A6BF3 /* Filter Enums + Ext.swift in Sources */,
 				2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */,
+				2A167B9A258316D3007A986B /* String+Ext.swift in Sources */,
 				2A935CA6256A80C9004B6E10 /* Filter.swift in Sources */,
 				2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */,
 				2AF434632576BBB500DB0D2D /* ImportTextTesting.swift in Sources */,
