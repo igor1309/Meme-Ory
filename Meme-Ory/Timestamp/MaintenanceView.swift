@@ -131,7 +131,10 @@ final class MaintenanceViewModel: ObservableObject {
                 // nullify if selectedText refers to text not present in textDuplicates
                 if let selectedText = self?.selectedText,
                    !textDuplicates.map(\.text).contains(selectedText) {
-                    self?.selectedText = nil
+                    // @FetchRequest in StoryListSimpleView is quick to update itself
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self?.selectedText = nil
+                    }
                 }
             }
             .store(in: &cancellableSet)
@@ -326,22 +329,36 @@ fileprivate struct StoryListRowSimpleView: View {
     }
 }
 
-//  MARK: - Maintenance View Model extension
-extension MaintenanceViewModel {
+
+//  MARK: - List Kind enum
+enum ListKind {
+    case withTimestamp, withoutTimestamp, textDuplicates
     
-    var predicateForSelectedText: NSPredicate {
+    var listHeader: String {
+        switch self {
+            case .withTimestamp:    return "Sorted by descending timestamps"
+            case .withoutTimestamp: return "No Timestamp Stories"
+            case .textDuplicates:   return "Stories for Selected Text"
+        }
+    }
+    
+    func predicate(selectedTimestampDate: Date?, selectedText: String?) -> NSPredicate {
+        switch self {
+            case .withTimestamp:    return timestampPredicate(selectedTimestampDate)
+            case .withoutTimestamp: return noTimestampPredicate
+            case .textDuplicates:   return predicateForSelectedText(selectedText)
+        }
+    }
+    
+    private func predicateForSelectedText(_ selectedText: String?) -> NSPredicate {
         if let selectedText = selectedText {
             return NSPredicate(format: "%K == %@", #keyPath(Story.text_), selectedText)
         } else {
             return NSPredicate.none
         }
     }
-    
-    enum ListKind {
-        case withTimestamp, withoutTimestamp, textDuplicates
-    }
-    
-    private var timestampPredicate: NSPredicate {
+
+    private func timestampPredicate(_ selectedTimestampDate: Date?) -> NSPredicate {
         if let timestampDate = selectedTimestampDate {
             return NSPredicate(format: "%K == %@", #keyPath(Story.timestamp_), timestampDate as NSDate)
         } else {
@@ -352,23 +369,12 @@ extension MaintenanceViewModel {
     private var noTimestampPredicate: NSPredicate {
         NSPredicate(format: "%K == null", #keyPath(Story.timestamp_))
     }
-    
-    func predicate(kind: ListKind) -> NSPredicate {
-        switch kind {
-            case .withTimestamp:    return timestampPredicate
-            case .withoutTimestamp: return noTimestampPredicate
-            case .textDuplicates:   return predicateForSelectedText
-        }
-    }
-    
-    func listHeader(kind: ListKind) -> String {
-        switch kind {
-            case .withTimestamp:    return "Sorted by descending timestamps"
-            case .withoutTimestamp: return "No Timestamp Stories"
-            case .textDuplicates:   return "Stories for Selected Text"
-        }
-    }
-    
+}
+
+
+//  MARK: - Maintenance View Model extension
+extension MaintenanceViewModel {
+
     func fixNoTimestampStoryDuplicates(stories: FetchedResults<Story>) {
         /// remove text duplicates using Set
         let textsCopy = Set(stories.map(\.text))
@@ -422,14 +428,20 @@ fileprivate struct StoryListSimpleView: View {
     
     @FetchRequest private var stories: FetchedResults<Story>
     
-    let kind: MaintenanceViewModel.ListKind
-    let header: String
+    let kind: ListKind
+
+    init(selectedDate: Date?, kind: ListKind) {
+        self.init(selectedDate: selectedDate, selectedText: nil, kind: kind)
+    }
     
-    init(model: MaintenanceViewModel, kind: MaintenanceViewModel.ListKind) {
+    init(selectedText: String?, kind: ListKind) {
+        self.init(selectedDate: nil, selectedText: selectedText, kind: kind)
+    }
+    
+    private init(selectedDate: Date? = nil, selectedText: String? = nil, kind: ListKind) {
         self.kind = kind
-        self.header = model.listHeader(kind: kind)
         
-        let predicate = model.predicate(kind: kind)
+        let predicate = kind.predicate(selectedTimestampDate: selectedDate, selectedText: selectedText)
         let fetchRequest = Story.fetchRequest(predicate)
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
@@ -437,7 +449,7 @@ fileprivate struct StoryListSimpleView: View {
     var body: some View {
         if !stories.isEmpty {
             Section(
-                header: Text("\(header): \(stories.count)")
+                header: Text("\(kind.listHeader): \(stories.count)")
                     .if(kind == .withoutTimestamp || kind == .textDuplicates) { $0.foregroundColor(Color(UIColor.systemRed))
                     }
             ) {
@@ -511,11 +523,11 @@ struct MaintenanceView: View {
                 StoryTextPicker(model: model)
             }
             
-            StoryListSimpleView(model: model, kind: .textDuplicates)
+            StoryListSimpleView(selectedText: model.selectedText, kind: .textDuplicates)
             
-            StoryListSimpleView(model: model, kind: .withoutTimestamp)
+            StoryListSimpleView(selectedDate: model.selectedTimestampDate, kind: .withoutTimestamp)
             
-            StoryListSimpleView(model: model, kind: .withTimestamp)
+            StoryListSimpleView(selectedDate: model.selectedTimestampDate, kind: .withTimestamp)
         }
         .listStyle(InsetGroupedListStyle())
         .environmentObject(model)
