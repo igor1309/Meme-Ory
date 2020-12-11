@@ -13,7 +13,21 @@ extension NSManagedObjectContext {
     
     //  MARK: - Publishers
     
-    var anyChangePublisher: AnyPublisher<Notification, Never> {
+    var didSavePublisher: AnyPublisher<Notification, Never> {
+        let sub = NotificationCenter.default
+            .publisher(for: .NSManagedObjectContextDidSave)
+            .filter { notification in
+                let context = notification.object as? NSManagedObjectContext
+                return context == self
+            }
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+        
+        return sub
+    }
+    
+    var didChangePublisher: AnyPublisher<Notification, Never> {
         let sub = NotificationCenter.default
             .publisher(for: .NSManagedObjectContextObjectsDidChange)
             .filter { notification in
@@ -28,7 +42,7 @@ extension NSManagedObjectContext {
     }
     
     var insertedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
-        let sub = anyChangePublisher
+        let sub = didChangePublisher
             .compactMap { notification -> Set<Story>? in
                 guard let insertedStories = notification.userInfo?[NSInsertedObjectsKey] as? Set<Story> else { return nil }
                 return insertedStories
@@ -41,7 +55,7 @@ extension NSManagedObjectContext {
     }
     
     var deletedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
-        let sub = anyChangePublisher
+        let sub = didChangePublisher
             .compactMap { notification -> Set<Story>? in
                 guard let insertedStories = notification.userInfo?[NSDeletedObjectsKey] as? Set<Story> else { return nil }
                 return insertedStories
@@ -54,7 +68,7 @@ extension NSManagedObjectContext {
     }
     
     var updatedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
-        let sub = anyChangePublisher
+        let sub = didChangePublisher
             .compactMap { notification -> Set<Story>? in
                 guard let insertedStories = notification.userInfo?[NSUpdatedObjectsKey] as? Set<Story> else { return nil }
                 return insertedStories

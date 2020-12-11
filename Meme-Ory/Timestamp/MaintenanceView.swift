@@ -116,7 +116,7 @@ final class MaintenanceViewModel: ObservableObject {
     private func subscribe() {
         
         // update timestampDuplicates & timestampDate
-        context.anyChangePublisher
+        context.didSavePublisher
             .delay(for: 0.5, scheduler: DispatchQueue.global())
             .flatMap { _ in
                 Just(self.fetchTimestampDuplicates(countMin: 2))
@@ -128,17 +128,13 @@ final class MaintenanceViewModel: ObservableObject {
                 // nullify if timestampDate refers to date not present in timestampDuplicates
                 if let timestampDate = self?.selectedTimestampDate,
                    !timestampDuplicates.map(\.date).contains(timestampDate) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        self?.selectedTimestampDate = nil
-                    }
+                    self?.selectedTimestampDate = nil
                 }
             }
             .store(in: &cancellableSet)
         
         // update textDuplicates & selectedText
-        context.anyChangePublisher
-            // without delay picker doesn't update after new objects inserted
-            .delay(for: 0.5, scheduler: DispatchQueue.global())
+        context.didSavePublisher
             .flatMap { _ in
                 Just(self.fetchTextDuplicates(countMin: 2))
             }
@@ -149,10 +145,7 @@ final class MaintenanceViewModel: ObservableObject {
                 // nullify if selectedText refers to text not present in textDuplicates
                 if let selectedText = self?.selectedText,
                    !textDuplicates.map(\.text).contains(selectedText) {
-                    // @FetchRequest in StoryListSimpleView is quick to update itself
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        self?.selectedText = nil
-                    }
+                    self?.selectedText = nil
                 }
             }
             .store(in: &cancellableSet)
