@@ -51,7 +51,7 @@ struct TimestampPicker: View {
         Picker(selection: $model.timestampDate, label: labelForDate()) {
             Text("All").tag(Date?.none)
             ForEach(model.timestamps) { (timestamp: Timestamp?) in
-//                label(timestamp)
+                //                label(timestamp)
                 Label("\(timestamp?.date ?? .distantPast, formatter: shorterFormatter)", systemImage: "\(timestamp?.count ?? 0).circle")
                     .tag(timestamp?.date)
             }
@@ -90,13 +90,6 @@ final class MaintenanceViewModel: ObservableObject {
     
     let context: NSManagedObjectContext
     
-    init(context: NSManagedObjectContext) {
-        self.context = context
-        fetchTimestampDuplicates()
-        fetchStoryDuplicates()
-        subscribe()
-    }
-    
     var hasTimestampDate: Bool {
         timestampDate != nil
     }
@@ -104,15 +97,13 @@ final class MaintenanceViewModel: ObservableObject {
     var timestampsCount: Int { timestamps.count }
     var timestampsTotal: Int { timestamps.reduce(0) { $0 + $1.count } }
     
-    func splitText(_ text: String) -> [String] {
-        let separator = "***"
-        let components = text.components(separatedBy: separator)
+    init(context: NSManagedObjectContext) {
+        self.context = context
         
-        let cleaned = components
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
+        fetchTimestampDuplicates()
+        fetchStoryDuplicates()
         
-        return cleaned
+        subscribe()
     }
     
     private var cancellableSet = Set<AnyCancellable>()
@@ -125,7 +116,7 @@ final class MaintenanceViewModel: ObservableObject {
     
     private func subscribe() {
         // subscribe to changes in context
-        NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange)
+        context.anyChangePublisher
             .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -133,31 +124,24 @@ final class MaintenanceViewModel: ObservableObject {
                 self?.fetchStoryDuplicates()
             }
             .store(in: &cancellableSet)
-        
     }
     
-    private func subscribeToInserts() {
-        // subscribe to changes (inserts) in context
-        NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange)
-            .compactMap { notification in
-                let context = notification.object as? NSManagedObjectContext
-                guard context == self.context else { return nil }
-                
-                guard let insertedStories = notification.userInfo?[NSInsertedObjectsKey] as? Set<Story> else { return nil }
-                
-                /// was any story inserted?
-                return !insertedStories.isEmpty
-            }
-            .filter { $0 }
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.fetchTimestampDuplicates()
-                self?.fetchStoryDuplicates()
-            }
-            .store(in: &cancellableSet)
+    
+    //  MARK: - Split Text
+    
+    func splitText(_ text: String) -> [String] {
+        let separator = "***"
+        let components = text.components(separatedBy: separator)
         
+        let cleaned = components
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        
+        return cleaned
     }
+    
+    
+    //  MARK: - Fetch & Transform
     
     private func fetchTimestampDuplicates() {
         fetch(keyPath: \Story.timestamp_, transform: transform) {
@@ -192,7 +176,7 @@ final class MaintenanceViewModel: ObservableObject {
         completion: @escaping ([T]) -> Void
     ) {
         let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
-
+        
         print("running generic fetch @ MaintenanceViewModel for \(keyPathString)")
         
         let attributeExpression = NSExpression(forKeyPath: keyPathString)
@@ -217,7 +201,7 @@ final class MaintenanceViewModel: ObservableObject {
             modifier: NSComparisonPredicate.Modifier.direct,
             type: NSComparisonPredicate.Operator.greaterThanOrEqualTo,
             options: [])
-
+        
         
         let sortDescriptor = NSSortDescriptor(keyPath: keyPath, ascending: false)
         request.sortDescriptors = [sortDescriptor]
@@ -228,44 +212,6 @@ final class MaintenanceViewModel: ObservableObject {
         completion(result)
     }
     
-    
-    //  MARK: - Original Non-generic fetch as reference
-    /// Just a backup `not for use`
-    private func nonGenericFetch() {
-        print("running fetch @ MaintenanceViewModel")
-        
-        let timestampKeyPath = #keyPath(Story.timestamp_)
-        let timestampExpression = NSExpression(forKeyPath: timestampKeyPath)
-        
-        let count = NSExpressionDescription()
-        count.name = "count"
-        count.expression = NSExpression(forFunction: "count:", arguments: [timestampExpression])
-        count.expressionResultType = .integer64AttributeType
-        
-        let countExpression = NSExpression(forVariable: "count")
-        
-        let request = NSFetchRequest<NSDictionary>()
-        request.entity = Story.entity()
-        request.resultType = .dictionaryResultType
-        request.propertiesToFetch = [timestampKeyPath, count]
-        request.propertiesToGroupBy = [timestampKeyPath]
-        request.returnsDistinctResults = true
-        request.havingPredicate = NSPredicate(format: "%@ >= 1", countExpression)
-        
-        let sortDescriptor = NSSortDescriptor(keyPath: \Story.timestamp_, ascending: false)
-        request.sortDescriptors = [sortDescriptor]
-        
-        guard let fetch = try? context.fetch(request) else { return }
-        
-        timestamps = fetch.compactMap { dic -> Timestamp? in
-            guard let count = dic["count"] as? Int,
-                  let date = dic["timestamp_"] as? Date else { return nil }
-            
-            return Timestamp(date: date, count: count)
-        }
-    }
-    
-
 }
 
 fileprivate struct StorySimpleView: View {
@@ -623,3 +569,49 @@ struct TimestampListView_Previews: PreviewProvider {
             .environment(\.colorScheme, .dark)
     }
 }
+
+
+
+
+
+//  MARK: - Original Non-generic fetch as reference
+private extension MaintenanceViewModel {
+    
+    /// Just a backup `not for use`
+    private func nonGenericFetch() {
+        print("running fetch @ MaintenanceViewModel")
+        
+        let timestampKeyPath = #keyPath(Story.timestamp_)
+        let timestampExpression = NSExpression(forKeyPath: timestampKeyPath)
+        
+        let count = NSExpressionDescription()
+        count.name = "count"
+        count.expression = NSExpression(forFunction: "count:", arguments: [timestampExpression])
+        count.expressionResultType = .integer64AttributeType
+        
+        let countExpression = NSExpression(forVariable: "count")
+        
+        let request = NSFetchRequest<NSDictionary>()
+        request.entity = Story.entity()
+        request.resultType = .dictionaryResultType
+        request.propertiesToFetch = [timestampKeyPath, count]
+        request.propertiesToGroupBy = [timestampKeyPath]
+        request.returnsDistinctResults = true
+        request.havingPredicate = NSPredicate(format: "%@ >= 1", countExpression)
+        
+        let sortDescriptor = NSSortDescriptor(keyPath: \Story.timestamp_, ascending: false)
+        request.sortDescriptors = [sortDescriptor]
+        
+        guard let fetch = try? context.fetch(request) else { return }
+        
+        timestamps = fetch.compactMap { dic -> Timestamp? in
+            guard let count = dic["count"] as? Int,
+                  let date = dic["timestamp_"] as? Date else { return nil }
+            
+            return Timestamp(date: date, count: count)
+        }
+    }
+    
+    
+}
+

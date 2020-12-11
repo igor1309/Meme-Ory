@@ -7,13 +7,67 @@
 
 import Foundation
 import CoreData
+import Combine
 
 extension NSManagedObjectContext {
+    
+    //  MARK: - Publishers
+    
+    var anyChangePublisher: AnyPublisher<Notification, Never> {
+        let sub = NotificationCenter.default
+            .publisher(for: .NSManagedObjectContextObjectsDidChange)
+            .filter { notification in
+                let context = notification.object as? NSManagedObjectContext
+                return context == self
+            }
+            .eraseToAnyPublisher()
+        
+        return sub
+    }
+    
+    var insertedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
+        let sub = anyChangePublisher
+            .compactMap { notification -> Set<Story>? in
+                guard let insertedStories = notification.userInfo?[NSInsertedObjectsKey] as? Set<Story> else { return nil }
+                return insertedStories
+            }
+            .eraseToAnyPublisher()
+        
+        return sub
+    }
+    
+    var deletedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
+        let sub = anyChangePublisher
+            .compactMap { notification -> Set<Story>? in
+                guard let insertedStories = notification.userInfo?[NSDeletedObjectsKey] as? Set<Story> else { return nil }
+                return insertedStories
+            }
+            .eraseToAnyPublisher()
+        
+        return sub
+    }
+    
+    var updatedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
+        let sub = anyChangePublisher
+            .compactMap { notification -> Set<Story>? in
+                guard let insertedStories = notification.userInfo?[NSUpdatedObjectsKey] as? Set<Story> else { return nil }
+                return insertedStories
+            }
+            .eraseToAnyPublisher()
+        
+        return sub
+    }
+    
+    
+    //  MARK: - Real Count: non-optional count
     
     /// count func without optionality
     func realCount<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
         (try? count(for: fetchRequest)) ?? 0
     }
+    
+    
+    //  MARK: - Save Context
     
     /// Only save if there are changes
     func saveContext() {
@@ -29,6 +83,9 @@ extension NSManagedObjectContext {
         }
     }
     
+    
+    //  MARK: - Get Object
+    
     func getObject(with url: URL?) -> NSManagedObject? {
         guard let coordinator = persistentStoreCoordinator,
               let url = url,
@@ -38,6 +95,9 @@ extension NSManagedObjectContext {
         
         return object
     }
+    
+    
+    //  MARK: - Random
     
     func randomObject<T: NSManagedObject>(ofType type: T.Type) -> T? {
         guard let objectID = randomObjectID(ofType: type),
