@@ -401,6 +401,18 @@ extension Int {
     }
 }
 
+extension View {
+    
+    @ViewBuilder
+    func `if`<V: View>(_ condition: Bool, transform: (Self) -> V) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
+
 //  MARK: - Story List Simple View
 fileprivate struct StoryListSimpleView: View {
     
@@ -424,7 +436,11 @@ fileprivate struct StoryListSimpleView: View {
     
     var body: some View {
         if !stories.isEmpty {
-            Section(header: Text("\(header): \(stories.count)")) {
+            Section(
+                header: Text("\(header): \(stories.count)")
+                    .if(kind == .withoutTimestamp || kind == .textDuplicates) { $0.foregroundColor(Color(UIColor.systemRed))
+                    }
+            ) {
                 if kind == .withoutTimestamp {
                     MyButton(title: "Fix Timestamp for \(stories.count.storySuffix)", icon: "wand.and.stars") {
                         model.fixNoTimestampStoryDuplicates(stories: stories)
