@@ -407,17 +407,6 @@ extension Int {
     }
 }
 
-extension View {
-    
-    @ViewBuilder
-    func `if`<V: View>(_ condition: Bool, transform: (Self) -> V) -> some View {
-        if condition {
-            transform(self)
-        } else {
-            self
-        }
-    }
-}
 
 //  MARK: - Story List Simple View
 fileprivate struct StoryListSimpleView: View {
