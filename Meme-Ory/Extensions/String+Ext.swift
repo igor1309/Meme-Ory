@@ -8,6 +8,20 @@
 import Foundation
 
 extension String {
+    
+    // FIXME: get more options for separators
+    func splitText() -> [String] {
+        let separator = "***"
+        let components = self.components(separatedBy: separator)
+        
+        let cleaned = components
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        
+        return cleaned
+    }
+    
+    /// get first maxLength symbols of the first line
     func oneLinePrefix(_ maxLength: Int) -> String {
         let components = self
             .trimmingCharacters(in: .whitespacesAndNewlines)

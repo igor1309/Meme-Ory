@@ -9,14 +9,14 @@ import SwiftUI
 import CoreData
 import Combine
 
-struct StoryText: Identifiable {
+struct TextDuplicate: Equatable, Identifiable {
     let id = UUID()
     
     let text: String
     let count: Int
 }
 
-struct Timestamp: Identifiable {
+struct TimestampDuplicate: Equatable, Identifiable {
     let id = UUID()
     
     let date: Date
@@ -28,9 +28,9 @@ struct StoryTextPicker: View {
     @ObservedObject var model: MaintenanceViewModel
     
     var body: some View {
-        Picker(selection: $model.text, label: labelForText()) {
+        Picker(selection: $model.selectedText, label: labelForText()) {
             Text("None").tag(String?.none)
-            ForEach(model.textDuplicates) { (storyText: StoryText?) in
+            ForEach(model.textDuplicates) { (storyText: TextDuplicate?) in
                 Label((storyText?.text ?? "error").oneLinePrefix(30), systemImage: "\(storyText?.count ?? 0).circle")
                     .tag(storyText?.text)
             }
@@ -39,7 +39,7 @@ struct StoryTextPicker: View {
     }
     
     private func labelForText() -> some View {
-        Label((model.text ?? "Select duplicate story...").oneLinePrefix(30), systemImage: "calendar.badge.clock")
+        Label((model.selectedText ?? "Select Story Duplicates...").oneLinePrefix(30), systemImage: "calendar.badge.clock")
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
     }
@@ -52,7 +52,7 @@ struct TimestampPicker: View {
     var body: some View {
         Picker(selection: $model.timestampDate, label: labelForDate()) {
             Text("All").tag(Date?.none)
-            ForEach(model.timestamps) { (timestamp: Timestamp?) in
+            ForEach(model.timestampDuplicates) { (timestamp: TimestampDuplicate?) in
                 Label("\(timestamp?.date ?? .distantPast, formatter: shorterFormatter)", systemImage: "\(timestamp?.count ?? 0).circle")
                     .tag(timestamp?.date)
             }
@@ -64,7 +64,7 @@ struct TimestampPicker: View {
             if let date = model.timestampDate {
                 Label("\(date, formatter: mediumFormatter)", systemImage: "calendar.badge.clock")
             } else {
-                Label("Select date to filter stories...", systemImage: "calendar.badge.clock")
+                Label("Select Date to filter Stories...", systemImage: "calendar.badge.clock")
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -75,27 +75,39 @@ struct TimestampPicker: View {
 final class MaintenanceViewModel: ObservableObject {
     
     @Published var timestampDate: Date?
-    @Published var timestamps = [Timestamp]()
+    @Published var timestampDuplicates = [TimestampDuplicate]()
     
-    @Published var text: String?
-    @Published var textDuplicates = [StoryText]()
+    @Published var selectedText: String?
+    @Published var textDuplicates = [TextDuplicate]()
     
     let context: NSManagedObjectContext
     
-    var hasTimestampDate: Bool {
-        timestampDate != nil
-    }
+    var hasTimestampDate: Bool { timestampDate != nil }
+    var timestampsCount: Int { timestampDuplicates.count }
+    var timestampsTotal: Int { timestampDuplicates.reduce(0) { $0 + $1.count } }
+
     
-    var timestampsCount: Int { timestamps.count }
-    var timestampsTotal: Int { timestamps.reduce(0) { $0 + $1.count } }
+    //  MARK: - Init & Subscribe
     
     init(context: NSManagedObjectContext) {
         self.context = context
         
         fetchTimestampDuplicates()
-        fetchStoryDuplicates()
+        fetchTextDuplicates()
         
         subscribe()
+    }
+    
+    private func subscribe() {
+        // subscribe to changes in context
+        context.anyChangePublisher
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.fetchTimestampDuplicates()
+                self?.fetchTextDuplicates()
+            }
+            .store(in: &cancellableSet)
     }
     
     private var cancellableSet = Set<AnyCancellable>()
@@ -106,59 +118,33 @@ final class MaintenanceViewModel: ObservableObject {
         }
     }
     
-    private func subscribe() {
-        // subscribe to changes in context
-        context.anyChangePublisher
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.fetchTimestampDuplicates()
-                self?.fetchStoryDuplicates()
-            }
-            .store(in: &cancellableSet)
-    }
-    
-    
-    //  MARK: - Split Text
-    
-    func splitText(_ text: String) -> [String] {
-        let separator = "***"
-        let components = text.components(separatedBy: separator)
-        
-        let cleaned = components
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
-        
-        return cleaned
-    }
-    
     
     //  MARK: - Fetch & Transform
     
-    private func fetchTimestampDuplicates() {
-        fetch(keyPath: \Story.timestamp_, transform: transform) {
-            self.timestamps = $0
+    private func fetchTimestampDuplicates(countMin: Int = 2) {
+        fetch(keyPath: \Story.timestamp_, countMin: countMin, transform: transform) {
+            self.timestampDuplicates = $0
         }
     }
     
-    private func fetchStoryDuplicates() {
-        fetch(keyPath: \Story.text_, transform: transform) {
+    private func fetchTextDuplicates(countMin: Int = 2) {
+        fetch(keyPath: \Story.text_, countMin: countMin, transform: transform) {
             self.textDuplicates = $0
         }
     }
     
-    private func transform(_ dic: NSDictionary) -> Timestamp? {
+    private func transform(_ dic: NSDictionary) -> TimestampDuplicate? {
         guard let count = dic["count"] as? Int,
               let date = dic["timestamp_"] as? Date else { return nil }
         
-        return Timestamp(date: date, count: count)
+        return TimestampDuplicate(date: date, count: count)
     }
     
-    private func transform(_ dic: NSDictionary) -> StoryText? {
+    private func transform(_ dic: NSDictionary) -> TextDuplicate? {
         guard let count = dic["count"] as? Int,
               let text = dic["text_"] as? String else { return nil }
         
-        return StoryText(text: text, count: count)
+        return TextDuplicate(text: text, count: count)
     }
     
     private func fetch<T, Value>(
@@ -303,10 +289,11 @@ fileprivate struct StoryListRowSimpleView: View {
     private func splitView(sheetID: SheetID) -> some View {
         switch sheetID {
             case .split:
-                if model.splitText(story.text).count == 1 {
+                let split = story.text.splitText()
+                if split.count == 1 {
                     StorySimpleView(text: story.text, title: "Can't split this story")
                 } else {
-                    ImportTextView(texts: model.splitText(story.text), title: "Story Split")
+                    ImportTextView(texts: split, title: "Story Split")
                         .environment(\.managedObjectContext, context)
                 }
                 
@@ -318,6 +305,15 @@ fileprivate struct StoryListRowSimpleView: View {
 
 
 extension MaintenanceViewModel {
+    
+    var predicateForSelectedText: NSPredicate {
+        if let selectedText = selectedText {
+            return NSPredicate(format: "%K == %@", #keyPath(Story.text_), selectedText)
+        } else {
+            return NSPredicate.none
+        }
+    }
+    
     enum ListKind {
         case withTimestamp, withoutTimestamp
     }
@@ -395,6 +391,18 @@ fileprivate struct StoryListSimpleView: View {
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
+    init(model: MaintenanceViewModel, predicate: NSPredicate) {
+        // FIXME: THIS IS NOT RIGHT!!!
+        self.kind = .withTimestamp
+        self.header = "Stories for Selected Text"
+        
+        let sortDescriptor1 = NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: false)
+        let sortDescriptor2 = NSSortDescriptor(key: #keyPath(Story.text_), ascending: false)
+        // different - to first init - sort order
+        let fetchRequest = Story.fetchRequest(predicate, sortDescriptors: [sortDescriptor2, sortDescriptor1])
+        _stories = FetchRequest(fetchRequest: fetchRequest)
+    }
+    
     var body: some View {
         if !stories.isEmpty {
             Section(header: Text("\(header): \(stories.count)")) {
@@ -434,6 +442,8 @@ fileprivate struct StoryListSimpleView: View {
         for index in indexSet {
             context.delete(stories[index])
         }
+        
+        context.saveContext()
     }
 }
 
@@ -462,6 +472,8 @@ struct MaintenanceView: View {
                 StoryTextPicker(model: model)
             }
             
+            StoryListSimpleView(model: model, predicate: model.predicateForSelectedText)
+            
             StoryListSimpleView(model: model, kind: .withoutTimestamp)
             
             StoryListSimpleView(model: model, kind: .withTimestamp)
@@ -469,6 +481,9 @@ struct MaintenanceView: View {
         .listStyle(InsetGroupedListStyle())
         .environmentObject(model)
     }
+    
+    
+    //  MARK: - Testing
     
     #if DEBUG
     private func addMore() {
@@ -596,11 +611,11 @@ private extension MaintenanceViewModel {
         
         guard let fetch = try? context.fetch(request) else { return }
         
-        timestamps = fetch.compactMap { dic -> Timestamp? in
+        timestampDuplicates = fetch.compactMap { dic -> TimestampDuplicate? in
             guard let count = dic["count"] as? Int,
                   let date = dic["timestamp_"] as? Date else { return nil }
             
-            return Timestamp(date: date, count: count)
+            return TimestampDuplicate(date: date, count: count)
         }
     }
     
