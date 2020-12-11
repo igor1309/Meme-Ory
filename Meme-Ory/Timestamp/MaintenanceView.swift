@@ -23,6 +23,8 @@ struct TimestampDuplicate: Equatable, Identifiable {
     let count: Int
 }
 
+
+//  MARK: - Pickers
 struct StoryTextPicker: View {
     
     @ObservedObject var model: MaintenanceViewModel
@@ -72,6 +74,7 @@ struct TimestampPicker: View {
     }
 }
 
+//  MARK: - Maintenance View Model
 final class MaintenanceViewModel: ObservableObject {
     
     @Published var timestampDate: Date?
@@ -91,23 +94,50 @@ final class MaintenanceViewModel: ObservableObject {
     
     init(context: NSManagedObjectContext) {
         self.context = context
-        
-        fetchTimestampDuplicates()
-        fetchTextDuplicates()
+
+        timestampDuplicates = fetchTimestampDuplicates(countMin: 2)
+        textDuplicates = fetchTextDuplicates(countMin: 2)
         
         subscribe()
     }
     
+    /// subscribe to changes in context
     private func subscribe() {
-        // subscribe to changes in context
+        
+        // update timestampDuplicates & timestampDate
         context.anyChangePublisher
+            .flatMap { _ in
+                Just(self.fetchTimestampDuplicates(countMin: 2))
+            }
             .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.fetchTimestampDuplicates()
-                self?.fetchTextDuplicates()
+            .sink { [weak self] (timestampDuplicates: [TimestampDuplicate]) in
+                self?.timestampDuplicates = timestampDuplicates
+                // nullify if timestampDate refers to date not present in timestampDuplicates
+                if let timestampDate = self?.timestampDate,
+                   !timestampDuplicates.map(\.date).contains(timestampDate) {
+                    self?.timestampDate = nil
+                }
             }
             .store(in: &cancellableSet)
+        
+        // update textDuplicates & selectedText
+        context.anyChangePublisher
+            .flatMap { _ in
+                Just(self.fetchTextDuplicates(countMin: 2))
+            }
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (textDuplicates: [TextDuplicate]) in
+                self?.textDuplicates = textDuplicates
+                // nullify if selectedText refers to text not present in textDuplicates
+                if let selectedText = self?.selectedText,
+                   !textDuplicates.map(\.text).contains(selectedText) {
+                    self?.selectedText = nil
+                }
+            }
+            .store(in: &cancellableSet)
+        
     }
     
     private var cancellableSet = Set<AnyCancellable>()
@@ -121,16 +151,12 @@ final class MaintenanceViewModel: ObservableObject {
     
     //  MARK: - Fetch & Transform
     
-    private func fetchTimestampDuplicates(countMin: Int = 2) {
-        fetch(keyPath: \Story.timestamp_, countMin: countMin, transform: transform) {
-            self.timestampDuplicates = $0
-        }
+    private func fetchTimestampDuplicates(countMin: Int = 2) -> [TimestampDuplicate] {
+        returnFetch(keyPath: \Story.timestamp_, countMin: countMin, transform: transform)
     }
     
-    private func fetchTextDuplicates(countMin: Int = 2) {
-        fetch(keyPath: \Story.text_, countMin: countMin, transform: transform) {
-            self.textDuplicates = $0
-        }
+    private func fetchTextDuplicates(countMin: Int = 2) -> [TextDuplicate]{
+        returnFetch(keyPath: \Story.text_, countMin: countMin, transform: transform)
     }
     
     private func transform(_ dic: NSDictionary) -> TimestampDuplicate? {
@@ -147,15 +173,14 @@ final class MaintenanceViewModel: ObservableObject {
         return TextDuplicate(text: text, count: count)
     }
     
-    private func fetch<T, Value>(
+    private func returnFetch<T, Value>(
         keyPath: KeyPath<Story, Value>,
         countMin: Int = 2,
-        transform: (NSDictionary) -> T?,
-        completion: @escaping ([T]) -> Void
-    ) {
+        transform: (NSDictionary) -> T?
+    ) -> [T] {
         let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
         
-        print("running generic fetch @ MaintenanceViewModel for \(keyPathString)")
+        print("running generic returnFetch @ MaintenanceViewModel for \(keyPathString)")
         
         let attributeExpression = NSExpression(forKeyPath: keyPathString)
         
@@ -184,14 +209,15 @@ final class MaintenanceViewModel: ObservableObject {
         let sortDescriptor = NSSortDescriptor(keyPath: keyPath, ascending: false)
         request.sortDescriptors = [sortDescriptor]
         
-        guard let fetch = try? context.fetch(request) else { return }
+        guard let fetch = try? context.fetch(request) else { return [] }
         
         let result = fetch.compactMap(transform)
-        completion(result)
+        return result
     }
     
 }
 
+//  MARK: - Story Simple View
 fileprivate struct StorySimpleView: View {
     
     @Environment(\.presentationMode) private var presentation
@@ -236,6 +262,7 @@ fileprivate struct StorySimpleView: View {
     }
 }
 
+//  MARK: - Story List Row Simple View
 fileprivate struct StoryListRowSimpleView: View {
     
     @Environment(\.managedObjectContext) private var context
@@ -315,7 +342,7 @@ extension MaintenanceViewModel {
     }
     
     enum ListKind {
-        case withTimestamp, withoutTimestamp
+        case withTimestamp, withoutTimestamp, textDuplicates
     }
     
     private var timestampPredicate: NSPredicate {
@@ -332,15 +359,17 @@ extension MaintenanceViewModel {
     
     func predicate(kind: ListKind) -> NSPredicate {
         switch kind {
-            case .withTimestamp:    return self.timestampPredicate
-            case .withoutTimestamp: return self.noTimestampPredicate
+            case .withTimestamp:    return timestampPredicate
+            case .withoutTimestamp: return noTimestampPredicate
+            case .textDuplicates:   return predicateForSelectedText
         }
     }
     
     func listHeader(kind: ListKind) -> String {
         switch kind {
             case .withTimestamp:    return "Sorted by descending timestamps"
-            case .withoutTimestamp: return "no timestamp stories"
+            case .withoutTimestamp: return "No Timestamp Stories"
+            case .textDuplicates:   return "Stories for Selected Text"
         }
     }
     
@@ -368,7 +397,7 @@ extension MaintenanceViewModel {
     }
 }
 
-
+//  MARK: - Story List Simple View
 fileprivate struct StoryListSimpleView: View {
     
     @Environment(\.managedObjectContext) private var context
@@ -388,18 +417,6 @@ fileprivate struct StoryListSimpleView: View {
         let sortDescriptor1 = NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: false)
         let sortDescriptor2 = NSSortDescriptor(key: #keyPath(Story.text_), ascending: false)
         let fetchRequest = Story.fetchRequest(predicate, sortDescriptors: [sortDescriptor1, sortDescriptor2])
-        _stories = FetchRequest(fetchRequest: fetchRequest)
-    }
-    
-    init(model: MaintenanceViewModel, predicate: NSPredicate) {
-        // FIXME: THIS IS NOT RIGHT!!!
-        self.kind = .withTimestamp
-        self.header = "Stories for Selected Text"
-        
-        let sortDescriptor1 = NSSortDescriptor(key: #keyPath(Story.timestamp_), ascending: false)
-        let sortDescriptor2 = NSSortDescriptor(key: #keyPath(Story.text_), ascending: false)
-        // different - to first init - sort order
-        let fetchRequest = Story.fetchRequest(predicate, sortDescriptors: [sortDescriptor2, sortDescriptor1])
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
     
@@ -447,6 +464,7 @@ fileprivate struct StoryListSimpleView: View {
     }
 }
 
+//  MARK: - Maintenance View
 struct MaintenanceView: View {
     
     @Environment(\.managedObjectContext) private var context
@@ -472,7 +490,7 @@ struct MaintenanceView: View {
                 StoryTextPicker(model: model)
             }
             
-            StoryListSimpleView(model: model, predicate: model.predicateForSelectedText)
+            StoryListSimpleView(model: model, kind: .textDuplicates)
             
             StoryListSimpleView(model: model, kind: .withoutTimestamp)
             
@@ -579,7 +597,64 @@ struct TimestampListView_Previews: PreviewProvider {
 
 
 
-
+//  MARK: - Maintenance View Model extension
+extension MaintenanceViewModel {
+    private func fetchTimestampDuplicates(countMin: Int = 2) {
+        fetch(keyPath: \Story.timestamp_, countMin: countMin, transform: transform) {
+            self.timestampDuplicates = $0
+        }
+    }
+    
+    private func fetchTextDuplicates(countMin: Int = 2) {
+        fetch(keyPath: \Story.text_, countMin: countMin, transform: transform) {
+            self.textDuplicates = $0
+        }
+    }
+    
+    private func fetch<T, Value>(
+        keyPath: KeyPath<Story, Value>,
+        countMin: Int = 2,
+        transform: (NSDictionary) -> T?,
+        completion: @escaping ([T]) -> Void
+    ) {
+        let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
+        
+        print("running generic fetch @ MaintenanceViewModel for \(keyPathString)")
+        
+        let attributeExpression = NSExpression(forKeyPath: keyPathString)
+        
+        let count = NSExpressionDescription()
+        count.name = "count"
+        count.expression = NSExpression(forFunction: "count:", arguments: [attributeExpression])
+        count.expressionResultType = .integer64AttributeType
+        
+        let countExpression = NSExpression(forVariable: "count")
+        
+        let request = NSFetchRequest<NSDictionary>()
+        request.entity = Story.entity()
+        request.resultType = .dictionaryResultType
+        request.propertiesToFetch = [keyPathString, count]
+        request.propertiesToGroupBy = [keyPathString]
+        request.returnsDistinctResults = true
+        // https://stackoverflow.com/a/38150048/11793043
+        request.havingPredicate = NSComparisonPredicate(
+            leftExpression: countExpression,
+            rightExpression: NSExpression(forConstantValue: countMin),
+            modifier: NSComparisonPredicate.Modifier.direct,
+            type: NSComparisonPredicate.Operator.greaterThanOrEqualTo,
+            options: [])
+        
+        
+        let sortDescriptor = NSSortDescriptor(keyPath: keyPath, ascending: false)
+        request.sortDescriptors = [sortDescriptor]
+        
+        guard let fetch = try? context.fetch(request) else { return }
+        
+        let result = fetch.compactMap(transform)
+        completion(result)
+    }
+    
+}
 
 //  MARK: - Original Non-generic fetch as reference
 private extension MaintenanceViewModel {
