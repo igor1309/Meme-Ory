@@ -24,16 +24,26 @@ struct TimestampDuplicate: Equatable, Identifiable {
 }
 
 
-//  MARK: - Pickers
+//  MARK: - Story Text Picker
+
 struct StoryTextPicker: View {
     
     @ObservedObject var model: MaintenanceViewModel
     
     var body: some View {
+        if model.textDuplicates.isEmpty {
+            Text("No Text Duplicates found")
+                .foregroundColor(Color(UIColor.systemGreen))
+        } else {
+            picker()
+        }
+    }
+    
+    private func picker() -> some View {
         Picker(selection: $model.selectedText, label: label()) {
             Text("None").tag(String?.none)
             ForEach(model.textDuplicates) { (storyText: TextDuplicate?) in
-                Label((storyText?.text ?? "error").oneLinePrefix(30), systemImage: "\(storyText?.count ?? 0).circle")
+                Label((storyText?.text ?? "error").oneLinePrefix(20), systemImage: "\(storyText?.count ?? 0).circle")
                     .tag(storyText?.text)
             }
         }
@@ -41,11 +51,14 @@ struct StoryTextPicker: View {
     }
     
     private func label() -> some View {
-        Label((model.selectedText ?? "Select Story Text Duplicates").oneLinePrefix(30), systemImage: "calendar.badge.clock")
+        Label((model.selectedText ?? "Select Duplicates").oneLinePrefix(20), systemImage: "calendar.badge.clock")
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
     }
 }
+
+
+//  MARK: - Timestamp Picker
 
 struct TimestampPicker: View {
     
@@ -104,6 +117,7 @@ final class MaintenanceViewModel: ObservableObject {
         
         // update timestampDuplicates & timestampDate
         context.anyChangePublisher
+            .delay(for: 0.5, scheduler: DispatchQueue.global())
             .flatMap { _ in
                 Just(self.fetchTimestampDuplicates(countMin: 2))
             }
@@ -114,13 +128,17 @@ final class MaintenanceViewModel: ObservableObject {
                 // nullify if timestampDate refers to date not present in timestampDuplicates
                 if let timestampDate = self?.selectedTimestampDate,
                    !timestampDuplicates.map(\.date).contains(timestampDate) {
-                    self?.selectedTimestampDate = nil
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self?.selectedTimestampDate = nil
+                    }
                 }
             }
             .store(in: &cancellableSet)
         
         // update textDuplicates & selectedText
         context.anyChangePublisher
+            // without delay picker doesn't update after new objects inserted
+            .delay(for: 0.5, scheduler: DispatchQueue.global())
             .flatMap { _ in
                 Just(self.fetchTextDuplicates(countMin: 2))
             }
@@ -338,7 +356,7 @@ enum ListKind {
         switch self {
             case .withTimestamp:    return "Sorted by descending timestamps"
             case .withoutTimestamp: return "No Timestamp Stories"
-            case .textDuplicates:   return "Stories for Selected Text"
+            case .textDuplicates:   return "Duplicates with Selected Text"
         }
     }
     
