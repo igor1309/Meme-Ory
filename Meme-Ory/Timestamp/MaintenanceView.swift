@@ -87,6 +87,40 @@ struct TimestampPicker: View {
     }
 }
 
+extension NSManagedObjectContext {
+    
+    func getTag(withName name: String) -> Tag {
+        let predicate = NSPredicate(format: "%K == %@", #keyPath(Tag.name_), name)
+        let request = Tag.fetchRequest(predicate)
+        
+        if let fetch = try? self.fetch(request),
+           let tag = fetch.first {
+            return tag
+        } else {
+            let tag = Tag(context: self)
+            tag.name = name
+            self.saveContext()
+            return tag
+        }
+    }
+    
+    func deleteStories(withTag tag: Tag) {
+        let predicate = NSPredicate(format: "ANY %K == %@", #keyPath(Story.tags_), tag)
+        let request = Story.fetchRequest(predicate)
+        
+        guard let fetch = try? self.fetch(request) else {
+            print("deleteStories: fetch error")
+            return
+        }
+        
+        for story in fetch {
+            self.delete(story)
+        }
+        
+        self.saveContext()
+    }
+}
+
 //  MARK: - Maintenance View Model
 final class MaintenanceViewModel: ObservableObject {
     
@@ -97,7 +131,7 @@ final class MaintenanceViewModel: ObservableObject {
     @Published var textDuplicates = [TextDuplicate]()
     
     let context: NSManagedObjectContext
-    
+    let markDeleteTag: Tag
     var hasTimestampDate: Bool { selectedTimestampDate != nil }
 
     
@@ -105,7 +139,10 @@ final class MaintenanceViewModel: ObservableObject {
     
     init(context: NSManagedObjectContext) {
         self.context = context
-
+        
+        let markDeleteTagName = "##deleteThis##"
+        self.markDeleteTag = context.getTag(withName: markDeleteTagName)
+        
         timestampDuplicates = fetchTimestampDuplicates(countMin: 2)
         textDuplicates = fetchTextDuplicates(countMin: 2)
         
@@ -292,6 +329,7 @@ fileprivate struct StoryListRowSimpleView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(story.text)
                 .lineLimit(model.hasTimestampDate ? nil : 2)
+                .if(hasDeleteMark.wrappedValue) { $0.foregroundColor(Color(UIColor.systemRed)) }
                 .font(.subheadline)
             
             if !story.tagList.isEmpty {
@@ -312,6 +350,7 @@ fileprivate struct StoryListRowSimpleView: View {
     private func menuContent() -> some View {
         MyButton(title: "Show Story", icon: "doc.text.magnifyingglass", action: showStory)
         MyButton(title: "Split Story", icon: "scissors", action: splitStory)
+        MyButton(title: hasDeleteMark.wrappedValue ? "Unmark delete" : "Mark to delete", icon: hasDeleteMark.wrappedValue ? "trash.slash" : "trash", action: toggleMarkDelete)
     }
     
     private func showStory() {
@@ -320,6 +359,23 @@ fileprivate struct StoryListRowSimpleView: View {
     
     private func splitStory() {
         sheetID = .split
+    }
+    
+    private func toggleMarkDelete() {
+        hasDeleteMark.wrappedValue.toggle()
+    }
+    
+    private var hasDeleteMark: Binding<Bool> {
+        Binding(
+            get: { story.tags.contains(model.markDeleteTag) },
+            set: {
+                if $0 {
+                    story.tags.insert(model.markDeleteTag, at: 0)
+                } else {
+                    story.tags.removeAll { $0 == model.markDeleteTag }
+                }
+            }
+        )
     }
     
     @ViewBuilder
@@ -533,22 +589,54 @@ struct MaintenanceView: View {
         .environmentObject(model)
         .navigationBarTitle("Maintenance", displayMode: .inline)
         .toolbar(content: toolbar)
+        .actionSheet(item: $actionID, content: actionSheet)
     }
+    }
+    
+    @State private var actionID: ActionID?
+    
+    enum ActionID: Identifiable {
+        case confirmDelete
+        var id: Int { hashValue }
+    }
+    
+    private func actionSheet(actionID: ActionID) -> ActionSheet {
+        switch actionID {
+            case .confirmDelete:
+                return ActionSheet(
+                    title: Text("Delete Selected Stories?".uppercased()),
+                    message: Text("Are you sure? This cannot be undone."),
+                    buttons: [
+                        .destructive(Text("Yes, delete!"), action: delete),
+                        .cancel()
+                    ]
+                )
+        }
+    }
+    
+    private func delete() {
+        Ory.withHapticsAndAnimation {
+            context.deleteStories(withTag: model.markDeleteTag)
+        }
     }
     
     @ViewBuilder
     private func toolbar() -> some View {
-        #if DEBUG
         Menu {
+            MyButton(title: "Delete Marked", icon: "trash") {
+                actionID = .confirmDelete
+            }
+            
+            #if DEBUG
             Section(header: Text("Testing")) {
                 MyButton(title: "Add more Stories", icon: "plus.square", action: addMore)
                 MyButton(title: "Add more NO DATE", icon: "plus.diamond", action: addMoreNoDate)
                 MyButton(title: "Add Special Story", icon: "plus.rectangle.on.rectangle", action: addSpecial)
             }
+            #endif
         } label: {
             Image(systemName: "target")
         }
-        #endif
     }
     
     

@@ -57,8 +57,10 @@ struct MyButton: View {
 }
 
 
-//struct MyButton_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MyButton()
-//    }
-//}
+struct MyButton_Previews: PreviewProvider {
+    static var previews: some View {
+        List {
+            MyButton(title: "Do this", icon: "star", action: {})
+        }
+    }
+}
