@@ -51,7 +51,7 @@ struct ImportTextView: View {
         } else {
             NavigationView {
                 List {
-                    Section(header: Text("Selected: \(model.selectedCount)")) {
+                    Section(header: Text("Selected: \(model.selectedCount) of \(model.count)")) {
                         ForEach(model.briefs, content: briefListRow)
                     }
                 }
