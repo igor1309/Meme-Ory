@@ -306,7 +306,7 @@
 				2A8AFCFD258108FE00A0DD94 /* ContentChooserView.swift */,
 				2A8AFD0C25814A3600A0DD94 /* Timestamp */,
 				2A4E5D9F257F8CC90085F130 /* Random Story List */,
-				2ADAA7AB257AFBDB00EFFE8D /* Random Story */,
+				2ADAA7AB257AFBDB00EFFE8D /* Single Story */,
 				2A4CC9FA25795A5E000A21C9 /* MyButton.swift */,
 				2A4CC9F525795269000A21C9 /* CardModifier.swift */,
 				2A21716E257CEE3C0098681E /* StoryFileImporter.swift */,
@@ -493,7 +493,7 @@
 			path = "Story Editor";
 			sourceTree = "<group>";
 		};
-		2ADAA7AB257AFBDB00EFFE8D /* Random Story */ = {
+		2ADAA7AB257AFBDB00EFFE8D /* Single Story */ = {
 			isa = PBXGroup;
 			children = (
 				2A4F4A9725786CD7008536DE /* SingleStoryView.swift */,
@@ -501,7 +501,7 @@
 				2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */,
 				2A4FDD80257EAE92008C6DEE /* TestingLazyVStackView.swift */,
 			);
-			path = "Random Story";
+			path = "Single Story";
 			sourceTree = "<group>";
 		};
 		2ADAD3B1256DA23A00AF463B /* Frameworks */ = {
@@ -978,7 +978,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -1004,7 +1004,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -1026,7 +1026,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -1047,7 +1047,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -1071,7 +1071,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1095,7 +1095,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1118,7 +1118,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1141,7 +1141,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

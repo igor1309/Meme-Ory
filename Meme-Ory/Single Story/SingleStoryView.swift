@@ -79,7 +79,7 @@ struct SingleStoryView: View {
                     .font(.caption)
             }
             .padding([.top, .horizontal])
-            .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
+            //.background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
             .navigationBarTitle("Random Story", displayMode: .inline)
             .navigationBarItems(leading: listButton(), trailing: menu())
             .sheet(item: $model.sheetID, content: modalView)
@@ -87,7 +87,7 @@ struct SingleStoryView: View {
         }
         .onAppear(perform: model.getRandomStory)
         .onDisappear(perform: context.saveContext)
-        .onOpenURL(perform: model.handleOpenURL)
+        //.onOpenURL(perform: model.handleOpenURL)
     }
     
     

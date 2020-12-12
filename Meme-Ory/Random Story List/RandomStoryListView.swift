@@ -102,36 +102,35 @@ struct RandomStoryListView: View {
     
     @ViewBuilder
     private func sheetView(sheetIdentifier: RandomStoryListViewModel.SheetID) -> some View {
-        switch sheetIdentifier {
-            case .tags: Text("TBD")
-            //  MARK: - FINISH THIS:
-            //
-            
-            case .listOptions:
-                ListOptionsView(model: model)
-            
-            case .edit: Text("TBD")
-            //  MARK: - FINISH THIS:
-            //
-            
-            case .new:
-                NavigationView {
-                    StoryEditorView()
-                }
-                .environment(\.managedObjectContext, context)
-                .environmentObject(eventStore)
+        Group {
+            switch sheetIdentifier {
+                case .tags: Text("TBD")
+                //  MARK: - FINISH THIS:
+                //
                 
-            case .maintenance:
-                MaintenanceView(context: context)
-                    .environment(\.managedObjectContext, context)
+                case .listOptions:
+                    ListOptionsView(model: model)
+                    
+                case .edit: Text("TBD")
+                //  MARK: - FINISH THIS:
+                //
                 
-            case .singleStoryUI:
-                SingleStoryViewWrapper(context: context)
-                    .environment(\.managedObjectContext, context)
-                    .environmentObject(filter)
-                    .environmentObject(eventStore)
-
+                case .new:
+                    NavigationView {
+                        StoryEditorView()
+                    }
+                    
+                case .maintenance:
+                    MaintenanceView(context: context)
+                    
+                case .singleStoryUI:
+                    SingleStoryViewWrapper(context: context)
+                    
+            }
         }
+        .environment(\.managedObjectContext, context)
+        .environmentObject(filter)
+        .environmentObject(eventStore)
     }
     
     //  MARK: Action Sheets
