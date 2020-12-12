@@ -53,6 +53,7 @@ struct RandomStoryListView: View {
             .fileExporter(isPresented: $model.showingFileExporter, document: model.document, contentType: .json, onCompletion: model.handleFileExporter)
             .actionSheet(item: $actionSheetID, content: actionSheet)
             .sheet(item: $model.sheetID, content: sheetView)
+            .onTapGesture(count: 2, perform: model.update)
         }
         .onAppear(perform: model.update)
         .onDisappear(perform: context.saveContext)

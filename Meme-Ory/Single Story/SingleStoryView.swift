@@ -81,7 +81,7 @@ struct SingleStoryView: View {
             .padding([.top, .horizontal])
             //.background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
             .navigationBarTitle("Random Story", displayMode: .inline)
-            .navigationBarItems(leading: listButton(), trailing: menu())
+            .navigationBarItems(/*leading: listButton(), */trailing: menu())
             .sheet(item: $model.sheetID, content: modalView)
             .actionSheet(item: $model.actionSheetID, content: actionSheet)
         }
