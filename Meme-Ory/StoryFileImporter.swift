@@ -9,40 +9,40 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 fileprivate struct StoryFileImporter: ViewModifier {
+    
     @Environment(\.managedObjectContext) private var context
 
     @Binding var isPresented: Bool
     
-    @State private var importFileURL: URL?
-    @State private var showingImportTextView = false
+    @State private var fileURL: FileURL?
     @State private var showingFailedImportAlert = false
-
+    
+    struct FileURL: Identifiable {
+        let url: URL
+        var id: Int { url.hashValue }
+    }
+    
     func body(content: Content) -> some View {
         content
             .fileImporter(isPresented: $isPresented, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
-            .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
+            .sheet(item: $fileURL, content: importTextView)
             .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
     }
     
     private func handleFileImporter(_ result: Result<URL, Error>) {
         switch result {
             case .success(let url):
-                print("Import success")
-                importFileURL = url
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    withAnimation {
-                        showingImportTextView = true
-                    }
-                }
+                print("StoryFileImporter: Import success")
+                fileURL = FileURL(url: url)
             case .failure(let error):
-                print("Import error \(error.localizedDescription)")
+                print("StoryFileImporter: Import error \(error.localizedDescription)")
         }
     }
     
     //  MARK: Import File
     
-    private func importTextView() -> some View {
-        ImportTextView(url: importFileURL)
+    private func importTextView(fileURL: FileURL) -> some View {
+        ImportTextView(url: fileURL.url)
             .environment(\.managedObjectContext, context)
     }
     

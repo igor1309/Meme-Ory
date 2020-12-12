@@ -16,7 +16,17 @@ struct ImportTextView: View {
     
     let title: String
     
+    init(url: URL, title: String = "Import") {
+        print("ImportTextView.init: \(url)")
+        
+        _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
+        
+        self.title = title
+    }
+    
     init(url: URL?, title: String = "Import") {
+        print("ImportTextView.init: \(url?.absoluteString ?? "url is empty")")
+        
         if let url = url {
             _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
         } else {

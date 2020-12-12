@@ -17,8 +17,9 @@ extension URL {
     
     var deeplink: Deeplink? {
         //  MARK: - FINISH THIS
+        // it's not safe to check just file extension
         if absoluteString.contains(".json") {
-            print("it's JSON\n", self)
+            print("deeplink: it's JSON \(self)")
             return .file(url: self)
         }
         

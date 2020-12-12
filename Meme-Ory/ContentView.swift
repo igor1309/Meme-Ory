@@ -15,20 +15,20 @@ struct ContentView: View {
     
     @EnvironmentObject var filter: Filter
     
+    @State private var fileURL: FileURL?
+    @State private var showingFailedImportAlert = false
+    
+    struct FileURL: Identifiable {
+        let url: URL
+        var id: Int { url.hashValue }
+    }
+    
     var body: some View {
-        //    NavigationView {
-        //        StoryListView(filter: filter)
-        //    }
         
-        //SingleStoryViewWrapper(context: context)
         RandomStoryListView(context: context)
-            
-        //ContentChooserView()
-        // MaintenanceView(context: context)
-            
             .onChange(of: scenePhase, perform: handleScenePhase)
             .onOpenURL(perform: handleOpenURL)
-            .sheet(isPresented: $showingImportTextView, onDismiss: { importFileURL = nil }, content: importTextView)
+            .sheet(item: $fileURL, content: importTextView)
             .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
     }
     
@@ -42,10 +42,6 @@ struct ContentView: View {
     
     //  MARK: Handle Open URL
     
-    @State private var showingFailedImportAlert = false
-    @State private var showingImportTextView = false
-    @State private var importFileURL: URL?
-    
     private func handleOpenURL(url: URL) {
         guard let deeplink = url.deeplink else {
             showingFailedImportAlert = true
@@ -58,26 +54,21 @@ struct ContentView: View {
                 /// do nothing we are here
                 return
             case .story(_):
+                // FIXME: no more StoryView
                 // do nothing here: this case is handled by StoryView
                 return
             case let .file(url):
                 withAnimation {
-                    showingImportTextView = false
-                    importFileURL = url
-                    print("ContentView: handleOpenURL: importing file")
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-                        showingImportTextView = true
-                    }
+                    fileURL = FileURL(url: url)
+                    print("ContentView: handleOpenURL: importing file \(url)")
                 }
         }
     }
     
-    
     //  MARK: Import File
     
-    private func importTextView() -> some View {
-        ImportTextView(url: importFileURL)
+    private func importTextView(fileURL: FileURL) -> some View {
+        ImportTextView(url: fileURL.url)
             .environment(\.managedObjectContext, context)
     }
     
