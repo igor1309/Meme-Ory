@@ -229,7 +229,7 @@ final class MaintenanceViewModel: ObservableObject {
 
         let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
         
-        print("running generic returnFetch @ MaintenanceViewModel for \(keyPathString)")
+        // print("running generic returnFetch @ MaintenanceViewModel for \(keyPathString)")
         
         let attributeExpression = NSExpression(forKeyPath: keyPathString)
         
