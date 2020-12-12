@@ -1,5 +1,5 @@
 //
-//  StoryListRowContextMenu.swift
+//  OLDStoryListRowContextMenu.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 08.12.2020.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct StoryListRowContextMenu: View {
+struct OLDStoryListRowContextMenu: View {
     
     @Environment(\.managedObjectContext) private var context
     
     @EnvironmentObject private var filter: Filter
     
     @ObservedObject var story: Story
-    @ObservedObject var model: StoryListRowViewModel
+    @ObservedObject var model: OLDStoryListRowViewModel
     
     var body: some View {
         Group {
@@ -63,13 +63,13 @@ struct StoryListRowContextMenu: View {
     
 }
 
-struct StoryListRowContextMenu_Previews: PreviewProvider {
-    @StateObject static var model = StoryListRowViewModel()
+struct OLDStoryListRowContextMenu_Previews: PreviewProvider {
+    @StateObject static var model = OLDStoryListRowViewModel()
     
     static var previews: some View {
         Group {
             List {
-                StoryListRowContextMenu(story: SampleData.story(), model: model)
+                OLDStoryListRowContextMenu(story: SampleData.story(), model: model)
             }
             .previewLayout(.fixed(width: 350, height: 400))
         }

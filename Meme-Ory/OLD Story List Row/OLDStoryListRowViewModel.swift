@@ -1,5 +1,5 @@
 //
-//  StoryListRowViewModel.swift
+//  OLDStoryListRowViewModel.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 08.12.2020.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-final class StoryListRowViewModel: ObservableObject {
+final class OLDStoryListRowViewModel: ObservableObject {
     
     @Published var actionSheetID: ActionSheetID?
     

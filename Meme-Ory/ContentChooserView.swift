@@ -50,7 +50,7 @@ struct ContentChooserView: View {
                 //     chooser = .notSelected
                 // }
                 NavigationView {
-                    StoryListView(filter: filter, showPasteButton: true)
+                    OLDStoryListView(filter: filter, showPasteButton: true)
                 }
                 
             case .randomList:
@@ -65,7 +65,7 @@ struct ContentChooserView: View {
                 //Button("Reset") {
                 //    chooser = .notSelected
                 //}
-                SingleStoryViewWrapper(context: context)
+                OLDSingleStoryViewWrapper(context: context)
                 
             case .maintenance:
                 MaintenanceView(context: context)

@@ -1,5 +1,5 @@
 //
-//  ListOptionsMenu.swift
+//  OLDListOptionsMenu.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 01.12.2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListOptionsMenu: View {
+struct OLDListOptionsMenu: View {
     
     @Environment(\.managedObjectContext) private var context
     
@@ -17,20 +17,20 @@ struct ListOptionsMenu: View {
     
     var body: some View {
         Menu {
-            ListOptionsMenuInternals(filter: filter, showingListOptions: $showingListOptions)
+            OLDListOptionsMenuInternals(filter: filter, showingListOptions: $showingListOptions)
         } label: {
             Image(systemName: "slider.horizontal.3")
         }
         .accentColor(filter.isActive ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
         .sheet(isPresented: $showingListOptions) {
-            ListFilterOptionView()
+            OLDListFilterOptionView()
                 .environment(\.managedObjectContext, context)
                 .environmentObject(filter)
         }
     }
 }
 
-fileprivate struct ListOptionsMenuInternals: View {
+fileprivate struct OLDListOptionsMenuInternals: View {
     
     @ObservedObject var filter: Filter
     
@@ -133,19 +133,19 @@ fileprivate struct ListOptionsMenuInternals: View {
     }
 }
 
-struct ListOptionsMenu_Previews: PreviewProvider {
+struct OLDListOptionsMenu_Previews: PreviewProvider {
     @State static private var showingListOptions = false
     
     static var previews: some View {
         Group {
             List {
-                ListOptionsMenuInternals(filter: Filter(), showingListOptions: $showingListOptions)
+                OLDListOptionsMenuInternals(filter: Filter(), showingListOptions: $showingListOptions)
             }
             .listStyle(InsetGroupedListStyle())
             .previewLayout(.fixed(width: 350, height: 500))
             
             VStack {
-                ListOptionsMenu()
+                OLDListOptionsMenu()
                     .padding()
                 Spacer()
             }

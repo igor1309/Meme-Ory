@@ -97,7 +97,7 @@ struct RandomStoryListView: View {
                 }
                 
                 ForEach(model.stories) { story in
-                    StoryListRowView(story: story, lineLimit: model.lineLimit)
+                    OLDStoryListRowView(story: story, lineLimit: model.lineLimit)
                 }
                 .onDelete(perform: confirmDelete)
             }
@@ -185,7 +185,7 @@ struct RandomStoryListView: View {
                     MaintenanceView(context: context)
                     
                 case .singleStoryUI:
-                    SingleStoryViewWrapper(context: context)
+                    OLDSingleStoryViewWrapper(context: context)
                     
                 case .importFile:
                     if let textsStruct = model.textsStruct,

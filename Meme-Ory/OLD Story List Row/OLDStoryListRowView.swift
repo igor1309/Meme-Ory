@@ -1,5 +1,5 @@
 //
-//  StoryListRowView.swift
+//  OLDStoryListRowView.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 22.11.2020.
@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-struct StoryListRowView: View {
+struct OLDStoryListRowView: View {
     
     @Environment(\.managedObjectContext) private var context
     
     @EnvironmentObject private var filter: Filter
     @EnvironmentObject private var eventStore: EventStore
     
-    @StateObject var model: StoryListRowViewModel
+    @StateObject var model: OLDStoryListRowViewModel
     
     @ObservedObject var story: Story
     
     init(story: Story, lineLimit: Int? = nil) {
         self.story = story
         self.lineLimit = lineLimit
-        _model = StateObject(wrappedValue: StoryListRowViewModel())
+        _model = StateObject(wrappedValue: OLDStoryListRowViewModel())
     }
     
     var lineLimit: Int? = 3
@@ -29,7 +29,7 @@ struct StoryListRowView: View {
     var body: some View {
         label
             .contextMenu {
-                StoryListRowContextMenu(story: story, model: model)
+                OLDStoryListRowContextMenu(story: story, model: model)
             }
             .contentShape(Rectangle())
             .onAppear(perform: handleOnApper)
@@ -42,7 +42,7 @@ struct StoryListRowView: View {
     }
     
     @ViewBuilder
-    private func storySheet(sheetID: StoryListRowViewModel.SheetID) -> some View {
+    private func storySheet(sheetID: OLDStoryListRowViewModel.SheetID) -> some View {
         switch sheetID {
             case .edit:
                 NavigationView {
@@ -53,7 +53,7 @@ struct StoryListRowView: View {
         }
     }
     
-    private func actionSheet(actionSheetID: StoryListRowViewModel.ActionSheetID) -> ActionSheet {
+    private func actionSheet(actionSheetID: OLDStoryListRowViewModel.ActionSheetID) -> ActionSheet {
         switch actionSheetID {
             case .remindMe:
                 return eventStore.remindMeActionSheet(for: story, in: context)
@@ -104,13 +104,13 @@ struct StoryListRowView: View {
     }
 }
 
-fileprivate struct StoryListRowView_Testing: View {
+fileprivate struct OLDStoryListRowView_Testing: View {
     @State private var activeURL: URL?
     
     var body: some View {
         NavigationView {
             List(0..<SampleData.texts.count) { index in
-                StoryListRowView(story: SampleData.story(storyIndex: index))
+                OLDStoryListRowView(story: SampleData.story(storyIndex: index))
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
@@ -118,17 +118,17 @@ fileprivate struct StoryListRowView_Testing: View {
     }
 }
 
-struct StoryRowView_Previews: PreviewProvider {
-    @StateObject static var model = StoryListRowViewModel()
+struct OLDStoryRowView_Previews: PreviewProvider {
+    @StateObject static var model = OLDStoryListRowViewModel()
     
     static var previews: some View {
         Group {
             List {
-                StoryListRowContextMenu(story: SampleData.story(), model: model)
+                OLDStoryListRowContextMenu(story: SampleData.story(), model: model)
             }
             .previewLayout(.fixed(width: 350, height: 400))
             
-            StoryListRowView_Testing()
+            OLDStoryListRowView_Testing()
                 .previewLayout(.fixed(width: 350, height: 600))
                 .preferredColorScheme(.dark)
         }

@@ -1,5 +1,5 @@
 //
-//  ListFilterOptionView.swift
+//  OLDListFilterOptionView.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 23.11.2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListFilterOptionView: View {
+struct OLDListFilterOptionView: View {
     
     @Environment(\.presentationMode) private var presentation
     
@@ -124,17 +124,17 @@ struct ListFilterOptionView: View {
     }
 }
 
-fileprivate struct ListFilterOptionView_Testing: View {
+fileprivate struct OLDListFilterOptionView_Testing: View {
     @State var filter = Filter()
     
     var body: some View {
-        ListFilterOptionView()
+        OLDListFilterOptionView()
     }
 }
 
 struct ListOptionView_Previews: PreviewProvider {
     static var previews: some View {
-        ListFilterOptionView_Testing()
+        OLDListFilterOptionView_Testing()
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environmentObject(Filter())
             .previewLayout(.fixed(width: 350, height: 800))

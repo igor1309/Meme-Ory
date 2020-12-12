@@ -1,5 +1,5 @@
 //
-//  SingleStoryViewModel.swift
+//  OLDSingleStoryViewModel.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 04.12.2020.
@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 import Combine
 
-final class SingleStoryViewModel: ObservableObject {
+final class OLDSingleStoryViewModel: ObservableObject {
     
     @Published private(set) var randomStory: Story?
     

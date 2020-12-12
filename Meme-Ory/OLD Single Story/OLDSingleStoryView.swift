@@ -1,5 +1,5 @@
 //
-//  SingleStoryView.swift
+//  OLDSingleStoryView.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 03.12.2020.
@@ -8,18 +8,18 @@
 import SwiftUI
 import CoreData
 
-struct SingleStoryViewWrapper: View {
+struct OLDSingleStoryViewWrapper: View {
     
-    @StateObject var model: SingleStoryViewModel
+    @StateObject var model: OLDSingleStoryViewModel
     
     init(context: NSManagedObjectContext) {
-        _model = StateObject(wrappedValue: SingleStoryViewModel(context: context))
+        _model = StateObject(wrappedValue: OLDSingleStoryViewModel(context: context))
     }
     
     var body: some View {
         Group {
             if let story = model.randomStory {
-                SingleStoryView(model: model, story: story)
+                OLDSingleStoryView(model: model, story: story)
             } else {
                 VStack(spacing: 32) {
                     Text(model.title)
@@ -33,13 +33,13 @@ struct SingleStoryViewWrapper: View {
     }
 }
 
-struct SingleStoryView: View {
+struct OLDSingleStoryView: View {
     @Environment(\.managedObjectContext) private var context
     
     @EnvironmentObject private var filter: Filter
     @EnvironmentObject private var eventStore: EventStore
     
-    @ObservedObject var model: SingleStoryViewModel
+    @ObservedObject var model: OLDSingleStoryViewModel
     @ObservedObject var story: Story
     
     let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
@@ -109,7 +109,7 @@ struct SingleStoryView: View {
     //  MARK: Modal View
     
     @ViewBuilder
-    private func modalView(sheetID: SingleStoryViewModel.SheetID) -> some View {
+    private func modalView(sheetID: OLDSingleStoryViewModel.SheetID) -> some View {
         switch sheetID {
             case .tags:
                 TagsWrapperWrapper(story: story)
@@ -117,7 +117,7 @@ struct SingleStoryView: View {
                 
             case .list:
                 NavigationView {
-                    StoryListView(filter: filter, showPasteButton: false)
+                    OLDStoryListView(filter: filter, showPasteButton: false)
                         .navigationBarTitleDisplayMode(.inline)
                 }
                 .environment(\.managedObjectContext, context)
@@ -159,7 +159,7 @@ struct SingleStoryView: View {
     @ViewBuilder
     private func menu() -> some View {
         Menu {
-            StoryActionButtons(model: model, story: story, labelStyle: .none)
+            OLDStoryActionButtons(model: model, story: story, labelStyle: .none)
         } label: {
             Label("Story Actions", systemImage: "ellipsis.circle")
                 .labelStyle(IconOnlyLabelStyle())
@@ -170,7 +170,7 @@ struct SingleStoryView: View {
     
     //  MARK: Action Sheets
     
-    private func actionSheet(actionActionSheetID: SingleStoryViewModel.ActionSheetID) -> ActionSheet {
+    private func actionSheet(actionActionSheetID: OLDSingleStoryViewModel.ActionSheetID) -> ActionSheet {
         switch actionActionSheetID {
             case .delete:
                 return confirmationActionSheet()
@@ -200,14 +200,14 @@ struct SingleStoryView: View {
 }
 
 
-struct StoryView_Previews: PreviewProvider {
+struct OLDStoryView_Previews: PreviewProvider {
     @State static private var context = SampleData.preview.container.viewContext
     
     static var previews: some View {
         Group {
-            SingleStoryView(model: SingleStoryViewModel(context: context), story: SampleData.story())
+            OLDSingleStoryView(model: OLDSingleStoryViewModel(context: context), story: SampleData.story())
             
-            SingleStoryViewWrapper(context: context)
+            OLDSingleStoryViewWrapper(context: context)
                 .previewLayout(.fixed(width: 350, height: 200))
         }
         .environment(\.managedObjectContext, context)

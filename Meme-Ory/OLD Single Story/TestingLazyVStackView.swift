@@ -42,7 +42,7 @@ struct TestingLazyVStackView: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, pinnedViews: /*@START_MENU_TOKEN@*/[]/*@END_MENU_TOKEN@*/, content: {
                     ForEach(model.stories) { story in
-                        StoryListRowView(story: story, lineLimit: nil)
+                        OLDStoryListRowView(story: story, lineLimit: nil)
                             .padding(.horizontal)
                     }
                 })

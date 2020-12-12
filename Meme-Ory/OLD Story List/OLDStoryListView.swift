@@ -1,5 +1,5 @@
 //
-//  StoryListView.swift
+//  OLDStoryListView.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 22.11.2020.
@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 import UniformTypeIdentifiers
 
-struct StoryListView: View {
+struct OLDStoryListView: View {
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
@@ -54,14 +54,14 @@ struct StoryListView: View {
             
             Section(header: Text("Stories: \(count)")) {
                 ForEach(stories) { story in
-                    StoryListRowView(story: story)
+                    OLDStoryListRowView(story: story)
                 }
                 .onDelete(perform: confirmDeletion)
             }
         }
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle("Stories")
-        .navigationBarItems(leading: ListOptionsMenu(),
+        .navigationBarItems(leading: OLDListOptionsMenu(),
                             trailing: HStack {
                                 importExportShareMenu()
                                 if showPasteButton {
@@ -251,18 +251,18 @@ struct StoryListView: View {
         
 }
 
-fileprivate struct StoryListView_Testing: View {
+fileprivate struct OldStoryListView_Testing: View {
     @StateObject private var filter = Filter()
     
     var body: some View {
-        StoryListView(filter: filter)
+        OLDStoryListView(filter: filter)
     }
 }
 
-struct StoryListView_Previews: PreviewProvider {
+struct OldStoryListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            StoryListView_Testing()
+            OldStoryListView_Testing()
         }
         .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
         .environmentObject(EventStore())

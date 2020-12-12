@@ -1,5 +1,5 @@
 //
-//  StoryActionButtons.swift
+//  OLDStoryActionButtons.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 04.12.2020.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct StoryActionButtons: View {
+struct OLDStoryActionButtons: View {
     
     @Environment(\.managedObjectContext) private var context
     
-    @ObservedObject var model: SingleStoryViewModel
+    @ObservedObject var model: OLDSingleStoryViewModel
     @ObservedObject var story: Story
     
     let labelStyle: MyButton.Style
@@ -63,10 +63,10 @@ struct StoryActionButtons: View {
     
 }
 
-struct StoryActionButtons_Previews: PreviewProvider {
+struct OLDStoryActionButtons_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            StoryActionButtons(model: SingleStoryViewModel(context: SampleData.preview.container.viewContext), story: SampleData.story(), labelStyle: .none)
+            OLDStoryActionButtons(model: OLDSingleStoryViewModel(context: SampleData.preview.container.viewContext), story: SampleData.story(), labelStyle: .none)
         }
     }
 }
