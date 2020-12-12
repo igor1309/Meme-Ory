@@ -27,7 +27,7 @@ fileprivate struct StoryImporter: ViewModifier {
             .fileImporter(isPresented: $isPresented, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
             .sheet(item: $textsStruct, content: importTextView)
             .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
-            .onOpenURL(perform: handleOpenURL)
+            //.onOpenURL(perform: handleOpenURL)
     }
     
     

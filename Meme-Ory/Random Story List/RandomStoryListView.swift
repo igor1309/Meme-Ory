@@ -8,53 +8,27 @@
 import SwiftUI
 import CoreData
 
-struct RandomStoryListView: View {
+struct RandomStoryListViewWrapper: View {
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
 
-    @EnvironmentObject private var filter: Filter
-    @EnvironmentObject private var eventStore: EventStore
     @EnvironmentObject private var model: RandomStoryListViewModel
 
     var body: some View {
         NavigationView {
-            List {
-                if model.listType == .ordered {
-                    TextField("Search (at least 3 letters)", text: $model.listOptions.searchString)
-                        .searchModifier(text: $model.listOptions.searchString)
-                }
-                
-                Section(header: sectionHeader()) {
-                    if model.stories.isEmpty {
-                        Button("Add Story", action: model.createNewStory)
-                    }
-                    
-                    ForEach(model.stories) { story in
-                        StoryListRowView(story: story, lineLimit: model.lineLimit)
-                    }
-                    .onDelete(perform: confirmDelete)
-                }
-            }
-            .listStyle(InsetGroupedListStyle())
-            .navigationBarTitle("Random Stories", displayMode: .inline)
-            .toolbar(content: toolbar)
-            .storyImporter(isPresented: $model.showingFileImporter)
-            .fileExporter(isPresented: $model.showingFileExporter, document: model.document, contentType: .json, onCompletion: model.handleFileExporter)
-            .actionSheet(item: $actionSheetID, content: actionSheet)
-            .sheet(item: $model.sheetID, content: sheetView)
-            .onTapGesture(count: 2, perform: model.update)
+            RandomStoryListView()
+//                .sheet(item: $model.textsStruct, content: importSheetView)
         }
+        .sheet(item: $model.sheetID, content: sheetView)
         .onAppear(perform: model.update)
         .onDisappear(perform: context.saveContext)
-        .onOpenURL(perform: model.handleOpenURL)
+        //.onOpenURL(perform: handleOpenURL)
         .onChange(of: scenePhase, perform: handleScenePhase)
+        .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
+        //.sheet(item: $model.textsStruct, content: importSheetView)
     }
     
-        
-    private func sectionHeader() -> some View {
-        model.stories.isEmpty ? Text("No Stories") : Text("Stories: \(model.stories.count)")
-    }
     
     private func handleScenePhase(scenePhase: ScenePhase) {
         if scenePhase == .background {
@@ -64,8 +38,98 @@ struct RandomStoryListView: View {
         }
     }
     
+    private func importSheetView(textsStruct: RandomStoryListViewModel.TextsStruct) -> some View {
+        ImportTextView(texts: textsStruct.texts)
+            .environment(\.managedObjectContext, context)
+    }
     
-    //  MARK: Toolbar & Toolbar Items
+    @ViewBuilder
+    private func sheetView(sheetID: RandomStoryListViewModel.SheetID) -> some View {
+        Group {
+            switch sheetID {
+                case .importFile:
+                    if let textsStruct = model.textsStruct,
+                       let texts = textsStruct.texts {
+                        ImportTextView(texts: texts)
+                    } else {
+                        Text("Error creating import sheet")
+                    }
+                    
+                default: Text("Error")
+            }
+        }
+        .environment(\.managedObjectContext, context)
+    }
+
+
+    
+    //  MARK: - Failed Import Alert
+    
+    @State private var showingFailedImportAlert = false
+    
+    private func failedImportAlert() -> Alert {
+        Alert(title: Text("Error"), message: Text("Can't process yuor request.\nSorry about that"), dismissButton: Alert.Button.cancel(Text("Ok")))
+    }
+
+}
+
+
+//  MARK: - Random Story List View
+
+struct RandomStoryListView: View {
+    
+    @Environment(\.managedObjectContext) private var context
+    
+    @EnvironmentObject private var filter: Filter
+    @EnvironmentObject private var eventStore: EventStore
+    @EnvironmentObject private var model: RandomStoryListViewModel
+    
+    var body: some View {
+        List {
+            if model.listType == .ordered {
+                TextField("Search (at least 3 letters)", text: $model.listOptions.searchString)
+                    .searchModifier(text: $model.listOptions.searchString)
+            }
+            
+            Section(header: sectionHeader()) {
+                if model.stories.isEmpty {
+                    Button("Add Story", action: model.createNewStory)
+                }
+                
+                ForEach(model.stories) { story in
+                    StoryListRowView(story: story, lineLimit: model.lineLimit)
+                }
+                .onDelete(perform: confirmDelete)
+            }
+        }
+        .listStyle(InsetGroupedListStyle())
+        .navigationTitle("Random Stories")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(content: toolbar)
+        .onTapGesture(count: 2, perform: model.update)
+        .onOpenURL(perform: model.handleOpenURL)
+        .storyImporter(isPresented: $model.showingFileImporter)
+        .fileExporter(isPresented: $model.showingFileExporter, document: model.document, contentType: .json, onCompletion: model.handleFileExporter)
+        .actionSheet(item: $actionSheetID, content: actionSheet)
+        //.sheet(item: $model.sheetID, content: sheetView)
+        //.sheet(item: $model.textsStruct, content: importSheetView)
+
+    }
+    
+    
+    
+    private func importSheetView(textsStruct: RandomStoryListViewModel.TextsStruct) -> some View {
+        ImportTextView(texts: textsStruct.texts)
+            .environment(\.managedObjectContext, context)
+    }
+    
+
+    
+    private func sectionHeader() -> some View {
+        model.stories.isEmpty ? Text("No Stories") : Text("Stories: \(model.stories.count)")
+    }
+    
+    //  MARK: - Toolbar & Toolbar Items
     
     @ToolbarContentBuilder
     private func toolbar() -> some ToolbarContent {
@@ -95,12 +159,12 @@ struct RandomStoryListView: View {
     }
     
     
-    //  MARK: Sheets
+    //  MARK: - Sheets
     
     @ViewBuilder
-    private func sheetView(sheetIdentifier: RandomStoryListViewModel.SheetID) -> some View {
+    private func sheetView(sheetID: RandomStoryListViewModel.SheetID) -> some View {
         Group {
-            switch sheetIdentifier {
+            switch sheetID {
                 case .tags: Text("TBD")
                 //  MARK: - FINISH THIS:
                 //
@@ -123,6 +187,14 @@ struct RandomStoryListView: View {
                 case .singleStoryUI:
                     SingleStoryViewWrapper(context: context)
                     
+                case .importFile:
+                    if let textsStruct = model.textsStruct,
+                       let texts = textsStruct.texts {
+                        ImportTextView(texts: texts)
+                    } else {
+                        Text("Error creating import sheet")
+                    }
+
             }
         }
         .environment(\.managedObjectContext, context)
@@ -130,7 +202,8 @@ struct RandomStoryListView: View {
         .environmentObject(eventStore)
     }
     
-    //  MARK: Action Sheets
+    
+    //  MARK: - Action Sheets
     
     @State private var actionSheetID: ActionSheetID?
     
@@ -168,6 +241,9 @@ struct RandomStoryListView: View {
         )
     }
 }
+
+
+//  MARK: - Preview
 
 struct RamdonStoryListView_Previews: PreviewProvider {
     @State static var context = SampleData.preview.container.viewContext

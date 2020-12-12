@@ -17,7 +17,7 @@ struct ImportTextView: View {
     let title: String
     
     init(url: URL, title: String = "Import") {
-        print("ImportTextView.init: \(url)")
+        print("ImportTextView.init(url:): \(url)")
         
         self.title = title
         
@@ -26,7 +26,7 @@ struct ImportTextView: View {
     
     init(texts: [String], title: String = "Import") {
         #if DEBUG
-        print("ImportTextView.init: \((texts.first ?? "no texts").prefix(30))...")
+        print("ImportTextView.init(texts:): \((texts.first ?? "no texts").prefix(30))...")
         #endif
         
         _model = StateObject(wrappedValue: ImportTextViewModel(texts: texts))

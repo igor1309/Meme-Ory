@@ -28,7 +28,7 @@ final class RandomStoryListViewModel: ObservableObject {
     enum ListType: String, CaseIterable {
         case random, ordered
     }
-
+    
     private let context: NSManagedObjectContext
     
     private let refreshRandom = PassthroughSubject<Void, Never>()
@@ -65,31 +65,6 @@ final class RandomStoryListViewModel: ObservableObject {
             .sink { [weak self] stories in
                 self?.stories = stories
                 self?.listType = .random
-            }
-            .store(in: &cancellableSet)
-        
-        /// subscribe to valid story URLs called by onOpenURL
-        $storyURL
-            .compactMap { [weak self] url in
-                guard case .story(_) = url?.deeplink else { return nil }
-                return self?.context.getObject(with: url) as? Story
-            }
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (story: Story) in
-                self?.stories = [story]
-                /// wil show one story so no line limit
-                self?.lineLimit = nil
-            }
-            .store(in: &cancellableSet)
-        
-        /// subscribe to non-valid story URLs called by onOpenURL
-        $storyURL
-            //  FIXME: - FINISH THIS:
-            .filter { $0 == nil }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.title = "no such story"
             }
             .store(in: &cancellableSet)
         
@@ -138,9 +113,90 @@ final class RandomStoryListViewModel: ObservableObject {
     
     //  MARK: Handle OpenURL
     
+    @Published var textsStruct: TextsStruct?
+    {
+        didSet {
+            print("self.sheetID = .importFile")
+            self.sheetID = .importFile
+    }}
+    
+    struct TextsStruct: Identifiable {
+        let texts: [String]
+        var id: Int { texts.hashValue }
+    }
+    
+    let maxLineLimit = 12
+    
     func handleOpenURL(url: URL) {
         Ory.feedback()
-        storyURL = url
+        
+        guard let deeplink = url.deeplink else {
+            // FIXME: create enum for alerts
+            //showingFailedImportAlert = true
+            
+            #if DEBUG
+            print("RandomStoryListViewModel: handleOpenURL: deeplink error")
+            #endif
+            
+            return
+        }
+        
+        switch deeplink {
+            case .home:
+                //  FIXME: - FINISH THIS: ANY FEEDBACK TO USER?
+                /// do nothing we are here
+                #if DEBUG
+                print("RandomStoryListViewModel: handleOpenURL: deeplink home")
+                #endif
+                
+                return
+                
+            case let .story(url):
+                // storyURL = url
+                #if DEBUG
+                print("RandomStoryListViewModel: handleOpenURL: deeplink storyURL")
+                #endif
+                
+                /// subscribe to valid story URLs called by onOpenURL
+                // FIXME: CHANGE SUBCRIPTIONS!!!???
+                
+                if let story = context.getObject(with: url) as? Story {
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    
+                    self.stories = [story]
+                    /// wil show one story so no line limit
+                        self.lineLimit = self.maxLineLimit
+                        
+                    }
+                    
+                    
+                    
+                } else {
+                    self.title = "no such story"
+                    #if DEBUG
+                    print("RandomStoryListViewModel: handleOpenURL: NO STORY for this deeplink storyURL")
+                    #endif
+                }
+                
+            case let .file(url):
+                withAnimation {
+                    let texts = url.getTexts()
+                    
+                    #if DEBUG
+                    print("RandomStoryListViewModel: handleOpenURL: file with text: \((texts.first ?? "no texts").prefix(30))...")
+                    #endif
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        
+
+                    self.textsStruct = TextsStruct(texts: texts)
+                    //self.sheetID = .importFile
+                        
+                    }
+                        
+                }
+        }
     }
     
     
@@ -280,7 +336,7 @@ final class RandomStoryListViewModel: ObservableObject {
     @Published var sheetID: SheetID?
     
     enum SheetID: Identifiable {
-        case listOptions, tags, edit, new, maintenance, singleStoryUI
+        case listOptions, tags, edit, new, maintenance, singleStoryUI, importFile
         var id: Int { hashValue }
     }
     

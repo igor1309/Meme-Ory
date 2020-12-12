@@ -17,6 +17,7 @@ struct Meme_OryApp: App {
     
     var body: some Scene {
         WindowGroup {
+            //StoryImportTester()
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(eventStore)

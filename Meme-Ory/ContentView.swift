@@ -16,7 +16,7 @@ struct ContentView: View {
     @EnvironmentObject var filter: Filter
     
     var body: some View {
-        RandomStoryListView()
+        RandomStoryListViewWrapper()
             .environmentObject(RandomStoryListViewModel(context: context))
             .onChange(of: scenePhase, perform: handleScenePhase)
     }
