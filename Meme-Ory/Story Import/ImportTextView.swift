@@ -19,23 +19,16 @@ struct ImportTextView: View {
     init(url: URL, title: String = "Import") {
         print("ImportTextView.init: \(url)")
         
+        self.title = title
+        
         _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
-        
-        self.title = title
-    }
-    
-    init(url: URL?, title: String = "Import") {
-        print("ImportTextView.init: \(url?.absoluteString ?? "url is empty")")
-        
-        if let url = url {
-            _model = StateObject(wrappedValue: ImportTextViewModel(url: url))
-        } else {
-            _model = StateObject(wrappedValue: ImportTextViewModel(texts: []))
-        }
-        self.title = title
     }
     
     init(texts: [String], title: String = "Import") {
+        #if DEBUG
+        print("ImportTextView.init: \((texts.first ?? "no texts").prefix(30))...")
+        #endif
+        
         _model = StateObject(wrappedValue: ImportTextViewModel(texts: texts))
         self.title = title
     }
@@ -82,7 +75,7 @@ struct ImportTextView: View {
                 Image(systemName: story.check ? "checkmark.circle" : "circle")
                     .foregroundColor(story.check ? Color.green : .secondary)
                     .imageScale(.large)
-
+                
                 Text("\(String(story.text.prefix(50)))...")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(story.check ? Color.primary : .secondary)

@@ -58,7 +58,7 @@ struct ContentChooserView: View {
                 //Button("Reset") {
                 //    chooser = .notSelected
                 //}
-                RandomStoryListView(context: context)
+                RandomStoryListView()//(context: context)
                 
             case .randomStory:
                 //Text(chooser.rawValue)

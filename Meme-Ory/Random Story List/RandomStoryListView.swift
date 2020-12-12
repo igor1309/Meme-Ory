@@ -15,15 +15,8 @@ struct RandomStoryListView: View {
 
     @EnvironmentObject private var filter: Filter
     @EnvironmentObject private var eventStore: EventStore
-    
-    @StateObject private var model: RandomStoryListViewModel
-    
-    init(context: NSManagedObjectContext) {
-        _model = StateObject(wrappedValue: RandomStoryListViewModel(context: context))
-    }
-    
-    private var columns: [GridItem] = [.init(.flexible())]
-    
+    @EnvironmentObject private var model: RandomStoryListViewModel
+
     var body: some View {
         NavigationView {
             List {
@@ -45,11 +38,8 @@ struct RandomStoryListView: View {
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitle("Random Stories", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading, content: leadingMenu)
-                ToolbarItem(placement: .navigationBarTrailing, content: trailingMenu)
-            }
-            .storyFileImporter(isPresented: $model.showingFileImporter)
+            .toolbar(content: toolbar)
+            .storyImporter(isPresented: $model.showingFileImporter)
             .fileExporter(isPresented: $model.showingFileExporter, document: model.document, contentType: .json, onCompletion: model.handleFileExporter)
             .actionSheet(item: $actionSheetID, content: actionSheet)
             .sheet(item: $model.sheetID, content: sheetView)
@@ -59,9 +49,9 @@ struct RandomStoryListView: View {
         .onDisappear(perform: context.saveContext)
         .onOpenURL(perform: model.handleOpenURL)
         .onChange(of: scenePhase, perform: handleScenePhase)
-        
     }
     
+        
     private func sectionHeader() -> some View {
         model.stories.isEmpty ? Text("No Stories") : Text("Stories: \(model.stories.count)")
     }
@@ -75,23 +65,29 @@ struct RandomStoryListView: View {
     }
     
     
-    //  MARK: Toolbar items
+    //  MARK: Toolbar & Toolbar Items
+    
+    @ToolbarContentBuilder
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .navigationBarLeading, content: leadingMenu)
+        ToolbarItem(placement: .navigationBarTrailing, content: trailingMenu)
+    }
     
     private func leadingMenu() -> some View {
         Menu {
-            RandomListOptionsMenu(model: model)
+            RandomListOptionsMenu()
         } label: {
             Label("List Options", systemImage: "slider.horizontal.3")
                 .labelStyle(IconOnlyLabelStyle())
         }
-        .accentColor(model.listOptions.isActive ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+        .if(model.listOptions.isActive) {
+            $0.accentColor(Color(UIColor.systemOrange))
+        }
     }
     
     private func trailingMenu() -> some View {
         Menu {
-            //  MARK: - FINISH THIS:
-            //
-            RandomStoryListActions(model: model)
+            RandomStoryListActions()
         } label: {
             Label("", systemImage: "ellipsis.circle")
                 .labelStyle(IconOnlyLabelStyle())
@@ -156,7 +152,7 @@ struct RandomStoryListView: View {
                 return confirmationActionSheet()
             case .remindMe:
                 //  MARK: - FINISH THIS:
-                //
+                // FIXME:
                 return ActionSheet(title: Text("TBD"))
         }
     }
@@ -179,15 +175,16 @@ struct RamdonStoryListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             List {
-                RandomStoryListActions(model: RandomStoryListViewModel(context: context))
+                RandomStoryListActions()
             }
             .previewLayout(.fixed(width: 350, height: 500))
             
-            RandomStoryListView(context: context)
+            RandomStoryListView()
                 .preferredColorScheme(.dark)
         }
         .environment(\.sizeCategory, .extraLarge)
         .environment(\.managedObjectContext, context)
+        .environmentObject(RandomStoryListViewModel(context: context))
         .environmentObject(Filter())
         .environmentObject(EventStore())
     }

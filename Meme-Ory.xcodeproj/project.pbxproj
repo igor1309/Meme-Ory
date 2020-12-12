@@ -29,7 +29,7 @@
 		2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBD256A4A5E00E3283D /* Preview Assets.xcassets */; };
 		2A1B5FC0256A4A5E00E3283D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* Persistence.swift */; };
 		2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
-		2A21716F257CEE3C0098681E /* StoryFileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A21716E257CEE3C0098681E /* StoryFileImporter.swift */; };
+		2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A21716E257CEE3C0098681E /* StoryImporter.swift */; };
 		2A251B8A25767960004F9218 /* ShareStoryButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A251B8925767960004F9218 /* ShareStoryButtons.swift */; };
 		2A2CE5AA256C3B7300FBFDB6 /* ListFilterOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CE5A9256C3B7300FBFDB6 /* ListFilterOptionView.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
@@ -101,8 +101,8 @@
 		2AEEF8FE25700061008D1B31 /* Calendar.Component+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */; };
 		2AEEF9022570007F008D1B31 /* EKEventStore+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */; };
 		2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF90525702EBF008D1B31 /* EventStore.swift */; };
-		2AF434632576BBB500DB0D2D /* ImportTextTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF434622576BBB500DB0D2D /* ImportTextTesting.swift */; };
 		2AFD320F25841DCC00334A92 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFD320E25841DCC00334A92 /* View+Ext.swift */; };
+		2AFD326D2584F4EF00334A92 /* StoryImportTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFD326C2584F4EF00334A92 /* StoryImportTester.swift */; };
 		2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E3E257246270037E8CF /* ErrorSheet.swift */; };
 		2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */; };
 		2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE9E5B2573B00D0037E8CF /* ContentView.swift */; };
@@ -165,7 +165,7 @@
 		2A1B5FBF256A4A5E00E3283D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2A1B5FC4256A4A5E00E3283D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A1B5FCC256A4AE100E3283D /* Meme_Ory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Meme_Ory.xcdatamodel; sourceTree = "<group>"; };
-		2A21716E257CEE3C0098681E /* StoryFileImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFileImporter.swift; sourceTree = "<group>"; };
+		2A21716E257CEE3C0098681E /* StoryImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryImporter.swift; sourceTree = "<group>"; };
 		2A251B8925767960004F9218 /* ShareStoryButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareStoryButtons.swift; sourceTree = "<group>"; };
 		2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StoryText.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2A2CE5A9256C3B7300FBFDB6 /* ListFilterOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFilterOptionView.swift; sourceTree = "<group>"; };
@@ -226,8 +226,8 @@
 		2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar.Component+Ext.swift"; sourceTree = "<group>"; };
 		2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore+Ext.swift"; sourceTree = "<group>"; };
 		2AEEF90525702EBF008D1B31 /* EventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
-		2AF434622576BBB500DB0D2D /* ImportTextTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextTesting.swift; sourceTree = "<group>"; };
 		2AFD320E25841DCC00334A92 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
+		2AFD326C2584F4EF00334A92 /* StoryImportTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryImportTester.swift; sourceTree = "<group>"; };
 		2AFE9E3E257246270037E8CF /* ErrorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSheet.swift; sourceTree = "<group>"; };
 		2AFE9E512572F66A0037E8CF /* StoryEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditorViewModel.swift; sourceTree = "<group>"; };
 		2AFE9E5B2573B00D0037E8CF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -309,13 +309,12 @@
 				2ADAA7AB257AFBDB00EFFE8D /* Single Story */,
 				2A4CC9FA25795A5E000A21C9 /* MyButton.swift */,
 				2A4CC9F525795269000A21C9 /* CardModifier.swift */,
-				2A21716E257CEE3C0098681E /* StoryFileImporter.swift */,
 				2A935CC0256AF608004B6E10 /* Story List */,
 				2A4E5D81257F88340085F130 /* Story List Row */,
 				2AC0845C257648A900AFAE1C /* Story Editor */,
 				2A935CBD256AF5EE004B6E10 /* Search */,
 				2A935CC2256AF61C004B6E10 /* Tag Views */,
-				2A5005ED2571965A005E969A /* Import File */,
+				2A5005ED2571965A005E969A /* Story Import */,
 				2AC084552576481F00AFAE1C /* Supporting Views */,
 				2A935CC4256AF648004B6E10 /* Extras */,
 				2ADAD3F9256E4B6500AF463B /* Extensions */,
@@ -379,24 +378,25 @@
 			isa = PBXGroup;
 			children = (
 				2A032006257E6724009AF197 /* RandomStoryListView.swift */,
+				2A4E5D92257F8BDF0085F130 /* RandomStoryListViewModel.swift */,
 				2A4E5D97257F8C450085F130 /* RandomStoryListActions.swift */,
 				2A612EE7257F0D1B00D319D2 /* RandomListOptionsMenu.swift */,
 				2A8AFCC725805D7500A0DD94 /* ListOptions.swift */,
 				2A8AFCD42580623B00A0DD94 /* ListOptionsView.swift */,
 				2A8AFCCC25805DEC00A0DD94 /* ListOptions Enums + Ext.swift */,
-				2A4E5D92257F8BDF0085F130 /* RandomStoryListViewModel.swift */,
 			);
 			path = "Random Story List";
 			sourceTree = "<group>";
 		};
-		2A5005ED2571965A005E969A /* Import File */ = {
+		2A5005ED2571965A005E969A /* Story Import */ = {
 			isa = PBXGroup;
 			children = (
+				2A21716E257CEE3C0098681E /* StoryImporter.swift */,
+				2AFD326C2584F4EF00334A92 /* StoryImportTester.swift */,
 				2A33A3E125714DA500538FE3 /* ImportTextView.swift */,
 				2A5005F2257197B4005E969A /* ImportTextViewModel.swift */,
-				2AF434622576BBB500DB0D2D /* ImportTextTesting.swift */,
 			);
-			path = "Import File";
+			path = "Story Import";
 			sourceTree = "<group>";
 		};
 		2A8AFCE12580FCAE00A0DD94 /* Meme-OryUITests */ = {
@@ -736,7 +736,7 @@
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A4FDD81257EAE92008C6DEE /* TestingLazyVStackView.swift in Sources */,
-				2A21716F257CEE3C0098681E /* StoryFileImporter.swift in Sources */,
+				2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */,
 				2A9CA64A2575B83B00FCD4D0 /* ListOptionsMenu.swift in Sources */,
 				2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */,
 				2A4E5D93257F8BDF0085F130 /* RandomStoryListViewModel.swift in Sources */,
@@ -755,6 +755,7 @@
 				2A16CDF52574F0E400146F3E /* NSPredicate+Ext.swift in Sources */,
 				2A1B5FB9256A4A5D00E3283D /* StoryListView.swift in Sources */,
 				2A4E5D98257F8C450085F130 /* RandomStoryListActions.swift in Sources */,
+				2AFD326D2584F4EF00334A92 /* StoryImportTester.swift in Sources */,
 				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
 				2A4E5D86257F88520085F130 /* StoryListRowContextMenu.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,
@@ -765,7 +766,6 @@
 				2A167B9A258316D3007A986B /* String+Ext.swift in Sources */,
 				2A935CA6256A80C9004B6E10 /* Filter.swift in Sources */,
 				2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */,
-				2AF434632576BBB500DB0D2D /* ImportTextTesting.swift in Sources */,
 				2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */,
 				2A4CC9FB25795A5E000A21C9 /* MyButton.swift in Sources */,
 				2A612EE8257F0D1B00D319D2 /* RandomListOptionsMenu.swift in Sources */,

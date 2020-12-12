@@ -554,6 +554,7 @@ fileprivate struct StoryListSimpleView: View {
 struct MaintenanceView: View {
     
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.presentationMode) private var presentation
     
     @StateObject private var model: MaintenanceViewModel
     
@@ -620,22 +621,30 @@ struct MaintenanceView: View {
         }
     }
     
-    @ViewBuilder
-    private func toolbar() -> some View {
-        Menu {
-            MyButton(title: "Delete Marked", icon: "trash") {
-                actionID = .confirmDelete
+    @ToolbarContentBuilder
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Menu {
+                MyButton(title: "Delete Marked", icon: "trash") {
+                    actionID = .confirmDelete
+                }
+                
+                #if DEBUG
+                Section(header: Text("Testing")) {
+                    MyButton(title: "Add more Stories", icon: "plus.square", action: addMore)
+                    MyButton(title: "Add more NO DATE", icon: "plus.diamond", action: addMoreNoDate)
+                    MyButton(title: "Add Special Story", icon: "plus.rectangle.on.rectangle", action: addSpecial)
+                }
+                #endif
+            } label: {
+                Image(systemName: "target")
             }
-            
-            #if DEBUG
-            Section(header: Text("Testing")) {
-                MyButton(title: "Add more Stories", icon: "plus.square", action: addMore)
-                MyButton(title: "Add more NO DATE", icon: "plus.diamond", action: addMoreNoDate)
-                MyButton(title: "Add Special Story", icon: "plus.rectangle.on.rectangle", action: addSpecial)
+        }
+        
+        ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel") {
+                presentation.wrappedValue.dismiss()
             }
-            #endif
-        } label: {
-            Image(systemName: "target")
         }
     }
     

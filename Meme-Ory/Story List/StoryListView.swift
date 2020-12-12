@@ -69,7 +69,7 @@ struct StoryListView: View {
                                 }
                             })
         .onChange(of: scenePhase, perform: handleScenePhase)
-        .storyFileImporter(isPresented: $showingFileImporter)
+        .storyImporter(isPresented: $showingFileImporter)
         .fileExporter(isPresented: $showingFileExporter, document: document, contentType: .json, onCompletion: handlerFileExporter)
         .actionSheet(isPresented: $showingDeleteConfirmation, content: confirmationActionSheet)
         .onDisappear(perform: onDisapperAction)

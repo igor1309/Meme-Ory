@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RandomStoryListActions: View {
     
-    @ObservedObject var model: RandomStoryListViewModel
+    @EnvironmentObject var model: RandomStoryListViewModel
     
     var body: some View {
         Section(header: Text("Create")) {
@@ -43,7 +43,8 @@ struct StoryListActions_Previews: PreviewProvider {
     
     static var previews: some View {
         List {
-            RandomStoryListActions(model: RandomStoryListViewModel(context: context))
+            RandomStoryListActions()
+                .environmentObject(RandomStoryListViewModel(context: context))
         }
         .listStyle(InsetGroupedListStyle())
         .previewLayout(.fixed(width: 350, height: 500))

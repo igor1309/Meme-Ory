@@ -21,7 +21,7 @@ struct RandomListOptionsMenu: View {
     
     @Environment(\.managedObjectContext) private var context
     
-    @ObservedObject var model: RandomStoryListViewModel
+    @EnvironmentObject var model: RandomStoryListViewModel
     
     /// list limit and reminders aren't important to be menu, leaving them in options sheet
     @State private var showUnimportant = false
@@ -128,7 +128,7 @@ struct RandomListOptionsMenu_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             List {
-                RandomListOptionsMenu(model: RandomStoryListViewModel(context: context))
+                RandomListOptionsMenu()
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
@@ -136,6 +136,7 @@ struct RandomListOptionsMenu_Previews: PreviewProvider {
         .previewLayout(.fixed(width: 350, height: 800))
         .environment(\.sizeCategory, .extraLarge)
         .environment(\.managedObjectContext, context)
+        .environmentObject(RandomStoryListViewModel(context: context))
         .environmentObject(Filter())
         .environmentObject(EventStore())
     }

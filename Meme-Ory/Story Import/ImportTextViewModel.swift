@@ -8,10 +8,15 @@
 import Foundation
 
 final class ImportTextViewModel: ObservableObject {
+    
     @Published var briefs: [Brief]
     @Published private(set) var string: String
     
     init(url: URL) {
+        #if DEBUG
+        print("ImportTextViewModel.init: ...")
+        #endif
+        
         let texts = url.getTexts()
         
         briefs = texts.map {
@@ -19,13 +24,25 @@ final class ImportTextViewModel: ObservableObject {
         }
         
         string = (try? String(contentsOf: url)) ?? ""
+        
+        #if DEBUG
+        print("ImportTextViewModel.init: \((briefs.first ?? Brief(text: "NO BRIEFS")).text.prefix(20))")
+        #endif
     }
     
     init(texts: [String]) {
+        #if DEBUG
+        print("ImportTextViewModel.init: ...")
+        #endif
+        
         briefs = texts.map {
             Brief(text: $0)
         }
         string = texts.joined(separator: "\n")
+        
+        #if DEBUG
+        print("ImportTextViewModel.init: \((texts.first ?? "NO BRIEFS").prefix(20))")
+        #endif
     }
     
     var count: Int {
