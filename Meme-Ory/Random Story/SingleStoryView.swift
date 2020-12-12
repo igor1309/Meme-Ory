@@ -1,5 +1,5 @@
 //
-//  RandomStoryView.swift
+//  SingleStoryView.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 03.12.2020.
@@ -8,18 +8,18 @@
 import SwiftUI
 import CoreData
 
-struct RandomStoryViewWrapper: View {
+struct SingleStoryViewWrapper: View {
     
-    @StateObject var model: RandomStoryViewModel
+    @StateObject var model: SingleStoryViewModel
     
     init(context: NSManagedObjectContext) {
-        _model = StateObject(wrappedValue: RandomStoryViewModel(context: context))
+        _model = StateObject(wrappedValue: SingleStoryViewModel(context: context))
     }
     
     var body: some View {
         Group {
             if let story = model.randomStory {
-                RandomStoryView(model: model, story: story)
+                SingleStoryView(model: model, story: story)
             } else {
                 VStack(spacing: 32) {
                     Text(model.title)
@@ -33,13 +33,13 @@ struct RandomStoryViewWrapper: View {
     }
 }
 
-struct RandomStoryView: View {
+struct SingleStoryView: View {
     @Environment(\.managedObjectContext) private var context
     
     @EnvironmentObject private var filter: Filter
     @EnvironmentObject private var eventStore: EventStore
     
-    @ObservedObject var model: RandomStoryViewModel
+    @ObservedObject var model: SingleStoryViewModel
     @ObservedObject var story: Story
     
     let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
@@ -109,7 +109,7 @@ struct RandomStoryView: View {
     //  MARK: Modal View
     
     @ViewBuilder
-    private func modalView(sheetID: RandomStoryViewModel.SheetID) -> some View {
+    private func modalView(sheetID: SingleStoryViewModel.SheetID) -> some View {
         switch sheetID {
             case .tags:
                 TagsWrapperWrapper(story: story)
@@ -170,7 +170,7 @@ struct RandomStoryView: View {
     
     //  MARK: Action Sheets
     
-    private func actionSheet(actionActionSheetID: RandomStoryViewModel.ActionSheetID) -> ActionSheet {
+    private func actionSheet(actionActionSheetID: SingleStoryViewModel.ActionSheetID) -> ActionSheet {
         switch actionActionSheetID {
             case .delete:
                 return confirmationActionSheet()
@@ -205,9 +205,9 @@ struct StoryView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            RandomStoryView(model: RandomStoryViewModel(context: context), story: SampleData.story())
+            SingleStoryView(model: SingleStoryViewModel(context: context), story: SampleData.story())
             
-            RandomStoryViewWrapper(context: context)
+            SingleStoryViewWrapper(context: context)
                 .previewLayout(.fixed(width: 350, height: 200))
         }
         .environment(\.managedObjectContext, context)

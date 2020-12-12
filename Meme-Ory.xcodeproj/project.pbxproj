@@ -40,7 +40,7 @@
 		2A4E5D8E257F88CA0085F130 /* StoryListRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4E5D8D257F88CA0085F130 /* StoryListRowViewModel.swift */; };
 		2A4E5D93257F8BDF0085F130 /* RandomStoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4E5D92257F8BDF0085F130 /* RandomStoryListViewModel.swift */; };
 		2A4E5D98257F8C450085F130 /* RandomStoryListActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4E5D97257F8C450085F130 /* RandomStoryListActions.swift */; };
-		2A4F4A9825786CD7008536DE /* RandomStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9725786CD7008536DE /* RandomStoryView.swift */; };
+		2A4F4A9825786CD7008536DE /* SingleStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9725786CD7008536DE /* SingleStoryView.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
 		2A4FDD81257EAE92008C6DEE /* TestingLazyVStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4FDD80257EAE92008C6DEE /* TestingLazyVStackView.swift */; };
 		2A4FDD86257EB333008C6DEE /* Notification.Name+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */; };
@@ -75,7 +75,7 @@
 		2AA89175256BE8080042395A /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89174256BE8080042395A /* SearchModifier.swift */; };
 		2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03179256CD35700BEC832 /* StoryTagView.swift */; };
 		2AB3728C257A32D800D851C6 /* StoryActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */; };
-		2AB37295257AD5A900D851C6 /* RandomStoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */; };
+		2AB37295257AD5A900D851C6 /* SingleStoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB37294257AD5A900D851C6 /* SingleStoryViewModel.swift */; };
 		2ABAB1922575010300D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
 		2ABAB1962575010400D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
 		2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
@@ -177,7 +177,7 @@
 		2A4E5D8D257F88CA0085F130 /* StoryListRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowViewModel.swift; sourceTree = "<group>"; };
 		2A4E5D92257F8BDF0085F130 /* RandomStoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryListViewModel.swift; sourceTree = "<group>"; };
 		2A4E5D97257F8C450085F130 /* RandomStoryListActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryListActions.swift; sourceTree = "<group>"; };
-		2A4F4A9725786CD7008536DE /* RandomStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryView.swift; sourceTree = "<group>"; };
+		2A4F4A9725786CD7008536DE /* SingleStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryView.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
 		2A4FDD80257EAE92008C6DEE /* TestingLazyVStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingLazyVStackView.swift; sourceTree = "<group>"; };
 		2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Ext.swift"; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 		2AA89174256BE8080042395A /* SearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModifier.swift; sourceTree = "<group>"; };
 		2AB03179256CD35700BEC832 /* StoryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTagView.swift; sourceTree = "<group>"; };
 		2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryActionButtons.swift; sourceTree = "<group>"; };
-		2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStoryViewModel.swift; sourceTree = "<group>"; };
+		2AB37294257AD5A900D851C6 /* SingleStoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryViewModel.swift; sourceTree = "<group>"; };
 		2ABAB1A025750EB700D9B2F1 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		2ACCEE39257E08A40022B752 /* Ory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ory.swift; sourceTree = "<group>"; };
 		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -496,8 +496,8 @@
 		2ADAA7AB257AFBDB00EFFE8D /* Random Story */ = {
 			isa = PBXGroup;
 			children = (
-				2A4F4A9725786CD7008536DE /* RandomStoryView.swift */,
-				2AB37294257AD5A900D851C6 /* RandomStoryViewModel.swift */,
+				2A4F4A9725786CD7008536DE /* SingleStoryView.swift */,
+				2AB37294257AD5A900D851C6 /* SingleStoryViewModel.swift */,
 				2AB3728B257A32D800D851C6 /* StoryActionButtons.swift */,
 				2A4FDD80257EAE92008C6DEE /* TestingLazyVStackView.swift */,
 			);
@@ -732,7 +732,7 @@
 				2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */,
 				2A8AFD0E25814A8E00A0DD94 /* MaintenanceView.swift in Sources */,
 				2A935C9B256A7717004B6E10 /* Tag.swift in Sources */,
-				2A4F4A9825786CD7008536DE /* RandomStoryView.swift in Sources */,
+				2A4F4A9825786CD7008536DE /* SingleStoryView.swift in Sources */,
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A4FDD81257EAE92008C6DEE /* TestingLazyVStackView.swift in Sources */,
@@ -758,7 +758,7 @@
 				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
 				2A4E5D86257F88520085F130 /* StoryListRowContextMenu.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,
-				2AB37295257AD5A900D851C6 /* RandomStoryViewModel.swift in Sources */,
+				2AB37295257AD5A900D851C6 /* SingleStoryViewModel.swift in Sources */,
 				2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */,
 				2A62525625803EC0007A6BF3 /* Filter Enums + Ext.swift in Sources */,
 				2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */,
@@ -978,7 +978,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -1004,7 +1004,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -1026,7 +1026,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -1047,7 +1047,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -1071,7 +1071,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1095,7 +1095,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1118,7 +1118,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1141,7 +1141,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -13,6 +13,7 @@ struct RandomStoryListView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
 
+    @EnvironmentObject private var filter: Filter
     @EnvironmentObject private var eventStore: EventStore
     
     @StateObject private var model: RandomStoryListViewModel
@@ -119,6 +120,17 @@ struct RandomStoryListView: View {
                 }
                 .environment(\.managedObjectContext, context)
                 .environmentObject(eventStore)
+                
+            case .maintenance:
+                MaintenanceView(context: context)
+                    .environment(\.managedObjectContext, context)
+                
+            case .singleStoryUI:
+                SingleStoryViewWrapper(context: context)
+                    .environment(\.managedObjectContext, context)
+                    .environmentObject(filter)
+                    .environmentObject(eventStore)
+
         }
     }
     

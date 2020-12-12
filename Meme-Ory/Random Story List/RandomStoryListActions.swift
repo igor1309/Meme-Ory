@@ -26,6 +26,15 @@ struct RandomStoryListActions: View {
             MyButton(title: "Share Stories", icon: "square.and.arrow.up", action: model.shareStories)
         }
         
+        Section {
+            MyButton(title: "Maintenance", icon: "wrench.and.screwdriver.fill") {
+                model.sheetID = .maintenance
+            }
+        }
+        
+        MyButton(title: "Single Story UI", icon: "doc.plaintext") {
+            model.sheetID = .singleStoryUI
+        }
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct StoryActionButtons: View {
     @Environment(\.managedObjectContext) private var context
     
-    @ObservedObject var model: RandomStoryViewModel
+    @ObservedObject var model: SingleStoryViewModel
     @ObservedObject var story: Story
     
     let labelStyle: MyButton.Style
@@ -76,7 +76,7 @@ struct StoryActionButtons: View {
 struct StoryActionButtons_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            StoryActionButtons(model: RandomStoryViewModel(context: SampleData.preview.container.viewContext), story: SampleData.story(), labelStyle: .none)
+            StoryActionButtons(model: SingleStoryViewModel(context: SampleData.preview.container.viewContext), story: SampleData.story(), labelStyle: .none)
         }
     }
 }

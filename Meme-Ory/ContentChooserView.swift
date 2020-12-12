@@ -65,7 +65,7 @@ struct ContentChooserView: View {
                 //Button("Reset") {
                 //    chooser = .notSelected
                 //}
-                RandomStoryViewWrapper(context: context)
+                SingleStoryViewWrapper(context: context)
                 
             case .maintenance:
                 MaintenanceView(context: context)

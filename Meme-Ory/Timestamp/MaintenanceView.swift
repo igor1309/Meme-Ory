@@ -341,7 +341,7 @@ fileprivate struct StoryListRowSimpleView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
         .padding(.vertical, 3)
-        .onTapGesture(perform: showStory)
+        .onTapGesture(count: 2, perform: toggleMarkDelete)
         .contextMenu(menuItems: menuContent)
         .sheet(item: $sheetID, content: splitView)
     }

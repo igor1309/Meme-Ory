@@ -20,11 +20,11 @@ struct ContentView: View {
         //        StoryListView(filter: filter)
         //    }
         
-        //RandomStoryViewWrapper(context: context)
-        //RandomStoryListView(context: context)
+        //SingleStoryViewWrapper(context: context)
+        RandomStoryListView(context: context)
             
         //ContentChooserView()
-         MaintenanceView(context: context)
+        // MaintenanceView(context: context)
             
             .onChange(of: scenePhase, perform: handleScenePhase)
             .onOpenURL(perform: handleOpenURL)

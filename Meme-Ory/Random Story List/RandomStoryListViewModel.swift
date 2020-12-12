@@ -280,7 +280,7 @@ final class RandomStoryListViewModel: ObservableObject {
     @Published var sheetID: SheetID?
     
     enum SheetID: Identifiable {
-        case listOptions, tags, edit, new
+        case listOptions, tags, edit, new, maintenance, singleStoryUI
         var id: Int { hashValue }
     }
     
