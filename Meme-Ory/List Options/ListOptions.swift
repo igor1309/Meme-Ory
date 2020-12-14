@@ -9,6 +9,15 @@ import CoreData
 
 struct ListOptions {
     
+    init(limit: Int?) {
+        if let limit = limit {
+            self.listLimit = limit
+            self.isListLimited = true
+        } else {
+            self.isListLimited = false
+        }
+    }
+    
     var isActive: Bool {
         isTagFilterActive || isListLimited || remindersFilter != .all || favoritesFilter != .all
     }

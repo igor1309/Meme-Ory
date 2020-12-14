@@ -63,16 +63,16 @@ final class MainViewModel: ObservableObject {
     
     //  MARK: - Init
     
-    init(context: NSManagedObjectContext, viewMode: ViewMode = .single) {
+    init(context: NSManagedObjectContext, viewMode: ViewMode = .single, limit: Int = 12) {
         self.context = context
         self.viewMode = viewMode
-        self.listOptions = ListOptions()
+        self.listOptions = ListOptions(limit: limit)
         
         //  FIXME: FINISH THIS:
         self.request = {
             let predicate = NSPredicate.all
             let request = Story.fetchRequest(predicate)
-            request.fetchLimit = 12
+            request.fetchLimit = limit
             return request
         }()
         
@@ -101,7 +101,7 @@ final class MainViewModel: ObservableObject {
         $listOptions
             .sink { [weak self] listOptions in
                 #if DEBUG
-                print("MainViewModel: $listOptions subs: SINK")
+                //print("MainViewModel: $listOptions subs: SINK")
                 #endif
                 
                 guard self?.viewMode == .some(.list) else { return }
@@ -110,7 +110,7 @@ final class MainViewModel: ObservableObject {
                     if let self = self {
                         self.request = self.listOptions.fetchRequest
                         #if DEBUG
-                        print("MainViewModel: $listOptions subs: REQUEST CHANGED")
+                        //print("MainViewModel: $listOptions subs: REQUEST CHANGED")
                         #endif
                     }
                 }

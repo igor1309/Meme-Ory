@@ -30,9 +30,6 @@ struct ListActionButtons: View {
                 .disabled(true)
         }
         
-        //  MARK: - FINISH WITH LIST OPTIONS
-        //  FIXME: FINISH THIS:
-        
         /// reset filter by tag(s)
         if model.listOptions.isTagFilterActive {
             Section {

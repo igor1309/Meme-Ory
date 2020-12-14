@@ -72,7 +72,7 @@ final class StoryEditorViewModel: ObservableObject {
         .subscribe(on: DispatchQueue.global())
         .receive(on: DispatchQueue.main)
         .sink { [weak self] _ in
-            print("StoryEditorViewModel: model changed")
+            //print("StoryEditorViewModel: model changed")
             self?.hasChanges = true
         }
         .store(in: &cancellables)

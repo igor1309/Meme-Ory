@@ -68,7 +68,6 @@ struct MainView: View {
                 .padding(.bottom)
             
             Button("Add Story") {
-                //  FIXME: FINISH THIS:
                 model.createNewStory()
             }
             

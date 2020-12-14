@@ -51,6 +51,7 @@ struct StoryListView: View {
                 ListActionButtons()
             } label: {
                 Label("Story Menu", systemImage: "list.bullet")
+                    .if(model.listOptions.isActive) { $0.foregroundColor(Color(UIColor.systemOrange)) }
             }
         }
     }
@@ -68,7 +69,6 @@ struct StoryListView: View {
                 }
                 
             case .delete:
-                //  FIXME: FINISH THIS:
                 return deleteConfirmActionSheet()
         }
     }
