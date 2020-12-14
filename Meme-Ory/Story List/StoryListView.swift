@@ -12,6 +12,7 @@ struct StoryListView: View {
     @Environment(\.managedObjectContext) private var context
     
     @EnvironmentObject private var model: MainViewModel
+    @EnvironmentObject private var eventStore: EventStore
     
     @FetchRequest var stories: FetchedResults<Story>
     
@@ -20,12 +21,12 @@ struct StoryListView: View {
             Section(header: Text("Stories: \(stories.count)")) {
                 ForEach(stories, content: StoryListRowView.init)
                     .onDelete(perform: confirmDelete)
-                    .actionSheet(isPresented: $showingConfirmation, content: confirmActionSheet)
             }
         }
         .listStyle(InsetGroupedListStyle())
         .toolbar(content: toolbar)
         .sheet(item: $model.sheetID, content: sheetView)
+        .actionSheet(item: $model.actionSheetID, content: actionSheet)
     }
     
     
@@ -43,6 +44,7 @@ struct StoryListView: View {
     
     
     //  MARK: - Toolbar
+    
     private func toolbar() -> some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Menu {
@@ -54,17 +56,34 @@ struct StoryListView: View {
     }
     
     
+    //  MARK: - Action Sheets
+    
+    private func actionSheet(actionSheetID: MainViewModel.ActionSheetID) -> ActionSheet {
+        switch actionSheetID {
+            case .remindMe:
+                if let storyToEdit = model.storyToEdit {
+                    return eventStore.remindMeActionSheet(for: storyToEdit, in: context)
+                } else {
+                    return ActionSheet(title: Text("ERROR getting story"))
+                }
+                
+            case .delete:
+                //  FIXME: FINISH THIS:
+                return deleteConfirmActionSheet()
+        }
+    }
+    
+    
     //  MARK: - Handle Delete
     
-    @State private var showingConfirmation = false
     @State private var indexSet = IndexSet()
     
     private func confirmDelete(_ indexSet: IndexSet) {
         self.indexSet = indexSet
-        showingConfirmation = true
+        model.deleteStoryAction()
     }
     
-    private func confirmActionSheet() -> ActionSheet {
+    private func deleteConfirmActionSheet() -> ActionSheet {
         ActionSheet(
             title: Text("Delete Story?".uppercased()),
             message: Text("Are you sure? This cannot be undone."),
@@ -76,13 +95,16 @@ struct StoryListView: View {
     }
     
     private func delete() {
-        for index in indexSet {
-            context.delete(stories[index])
+        Ory.withHapticsAndAnimation {
+            for index in self.indexSet {
+                self.context.delete(self.stories[index])
+            }
+            
+            self.context.saveContext()
         }
-        
-        context.saveContext()
     }
 }
+
 
 struct StoryListView_Previews: PreviewProvider {
     @State static var context = SampleData.preview.container.viewContext

@@ -48,6 +48,9 @@ struct MaintenanceView: View {
             .navigationBarTitle("Maintenance", displayMode: .inline)
             .toolbar(content: toolbar)
             .actionSheet(item: $actionID, content: actionSheet)
+            .confirmAndDelete($actionID, title: "Delete Selected Stories?".uppercased()) { _ in
+                delete()
+            }
         }
     }
     
@@ -75,6 +78,7 @@ struct MaintenanceView: View {
     private func delete() {
         Ory.withHapticsAndAnimation {
             context.deleteStories(withTag: model.markDeleteTag)
+            print("stories with tag '\(model.markDeleteTag.name)' deleted")
         }
     }
     

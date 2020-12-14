@@ -62,14 +62,17 @@ extension EventStore {
     }
     
     func reminderCleanup(for story: Story, in context: NSManagedObjectContext) {
-        //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
-        if story.calendarItemIdentifier != "",
-           accessGranted {
-            // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
-            let reminder = reminderForStory(story)
-            if reminder == nil {
-                story.calendarItemIdentifier_ = nil
-                context.saveContext()
+        
+        DispatchQueue.main.async {
+            //  reminder could be deleted from Reminders but Story still store reference (calendarItemIdentifier)
+            if story.calendarItemIdentifier != "",
+               self.accessGranted {
+                // if story has a pointer to the  reminder but reminder was deleted, clear the pointer
+                let reminder = self.reminderForStory(story)
+                if reminder == nil {
+                    story.calendarItemIdentifier_ = nil
+                    context.saveContext()
+                }
             }
         }
     }
@@ -80,12 +83,15 @@ extension EventStore {
     // next year: next Jan 1
     //
     func remindMeNext(_ component: Calendar.Component, hour: Int = 9, story: Story, context: NSManagedObjectContext) {
-        guard accessGranted,
-              let calendarItemIdentifier = addReminder(for: story, component: component, hour: hour) else { return }
         
-        Ory.withHapticsAndAnimation {
-            story.calendarItemIdentifier = calendarItemIdentifier
-            context.saveContext()
+        DispatchQueue.main.async {
+            guard self.accessGranted,
+                  let calendarItemIdentifier = self.addReminder(for: story, component: component, hour: hour) else { return }
+            
+            Ory.withHapticsAndAnimation {
+                story.calendarItemIdentifier = calendarItemIdentifier
+                context.saveContext()
+            }
         }
     }
     
@@ -108,7 +114,7 @@ extension EventStore {
     // next weeek: next monday
     // next year: next Jan 1
     //
-    func addReminder(for story: Story, component: Calendar.Component, hour: Int = 9) -> CalendarItemIdentifier? {
+    private func addReminder(for story: Story, component: Calendar.Component, hour: Int = 9) -> CalendarItemIdentifier? {
         
         guard accessGranted else { return nil }
         

@@ -86,7 +86,7 @@ final class MainViewModel: ObservableObject {
     
     //  MARK: - Init
     
-    init(context: NSManagedObjectContext, viewMode: ViewMode = .single) {
+    init(context: NSManagedObjectContext, viewMode: ViewMode = .list) {
         self.context = context
         self.viewOptions = .randomStory
         self.viewMode = viewMode
@@ -415,8 +415,11 @@ final class MainViewModel: ObservableObject {
         actionSheetID = .delete
     }
     
-    func remindMeAction() {
-        actionSheetID = .remindMe
+    func remindMeAction(story: Story) {
+        Ory.withHapticsAndAnimation {
+            self.storyToEdit = story
+            self.actionSheetID = .remindMe
+        }
     }
     
     

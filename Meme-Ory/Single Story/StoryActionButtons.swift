@@ -29,7 +29,9 @@ struct StoryActionButtons: View {
         }
         
         Section(header: Text("This Story")) {
-            MyButton(title: "Remind me…", icon: "bell", labelStyle: labelStyle, action: model.remindMeAction)
+            MyButton(title: "Remind me…", icon: "bell", labelStyle: labelStyle) {
+                model.remindMeAction(story: story)
+            }
             
             MyButton(title: story.isFavorite ? "Unfavorite" : "Favorite",
                      icon: story.isFavorite ? "star.slash" : "star",

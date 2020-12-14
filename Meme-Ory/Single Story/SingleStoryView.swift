@@ -55,9 +55,14 @@ struct SingleStoryView: View {
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
         .toolbar(content: toolbar)
         .actionSheet(item: $model.actionSheetID, content: actionSheet)
+        .onAppear(perform: handleOnApper)
     }
     
+    private func handleOnApper() {
+        eventStore.reminderCleanup(for: story, in: context)
+    }
     
+
     //  MARK: - Constants
     
     let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)

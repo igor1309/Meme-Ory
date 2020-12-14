@@ -98,6 +98,8 @@
 		2AB37295257AD5A900D851C6 /* OLDSingleStoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB37294257AD5A900D851C6 /* OLDSingleStoryViewModel.swift */; };
 		2ABAB1922575010300D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
 		2ABAB1962575010400D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
+		2ABAEEAC25877ACA00D59CA2 /* ListRowActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABAEEAB25877ACA00D59CA2 /* ListRowActionButtons.swift */; };
+		2ABAEEBA258798E400D59CA2 /* ConfirmAndDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABAEEB9258798E400D59CA2 /* ConfirmAndDelete.swift */; };
 		2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
 		2ACCEE41257E10AE0022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
 		2ACCEE49257E12AF0022B752 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF90525702EBF008D1B31 /* EventStore.swift */; };
@@ -253,6 +255,8 @@
 		2AB3728B257A32D800D851C6 /* OLDStoryActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLDStoryActionButtons.swift; sourceTree = "<group>"; };
 		2AB37294257AD5A900D851C6 /* OLDSingleStoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLDSingleStoryViewModel.swift; sourceTree = "<group>"; };
 		2ABAB1A025750EB700D9B2F1 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		2ABAEEAB25877ACA00D59CA2 /* ListRowActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowActionButtons.swift; sourceTree = "<group>"; };
+		2ABAEEB9258798E400D59CA2 /* ConfirmAndDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAndDelete.swift; sourceTree = "<group>"; };
 		2ACCEE39257E08A40022B752 /* Ory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ory.swift; sourceTree = "<group>"; };
 		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -312,13 +316,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2A1943EA2587705200E81C73 /* List Options View & Model */ = {
+		2A1943EA2587705200E81C73 /* List Options */ = {
 			isa = PBXGroup;
 			children = (
 				2A6D6C1E2587311300BBA8C7 /* ListOptionsView.swift */,
 				2A8AFCC725805D7500A0DD94 /* ListOptions.swift */,
 			);
-			path = "List Options View & Model";
+			path = "List Options";
 			sourceTree = "<group>";
 		};
 		2A1943F7258770A200E81C73 /* Main Model */ = {
@@ -343,7 +347,6 @@
 			isa = PBXGroup;
 			children = (
 				2A1943D02587527F00E81C73 /* StoryListView.swift */,
-				2A1943CA258751CB00E81C73 /* StoryListRowView.swift */,
 				2A6D6C182586DB3300BBA8C7 /* ListActionButtons.swift */,
 			);
 			path = "Story List";
@@ -391,12 +394,14 @@
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
+				2ABAEEC32587A9B000D59CA2 /* TESTING */,
 				2A8AFCFD258108FE00A0DD94 /* ContentChooserView.swift */,
 				2A6D6BEC258608AC00BBA8C7 /* Main */,
 				2A194400258770D800E81C73 /* Single Story */,
 				2A194405258770E700E81C73 /* Story List */,
+				2ABAEEA625877A9000D59CA2 /* Story List Row */,
 				2A1943F7258770A200E81C73 /* Main Model */,
-				2A1943EA2587705200E81C73 /* List Options View & Model */,
+				2A1943EA2587705200E81C73 /* List Options */,
 				2A8AFD0C25814A3600A0DD94 /* Maintenance */,
 				2A1944142587719100E81C73 /* Maintenance Model */,
 				2A4E5D9F257F8CC90085F130 /* Random Story List */,
@@ -580,6 +585,23 @@
 				2ACCEE39257E08A40022B752 /* Ory.swift */,
 			);
 			path = Extras;
+			sourceTree = "<group>";
+		};
+		2ABAEEA625877A9000D59CA2 /* Story List Row */ = {
+			isa = PBXGroup;
+			children = (
+				2A1943CA258751CB00E81C73 /* StoryListRowView.swift */,
+				2ABAEEAB25877ACA00D59CA2 /* ListRowActionButtons.swift */,
+			);
+			path = "Story List Row";
+			sourceTree = "<group>";
+		};
+		2ABAEEC32587A9B000D59CA2 /* TESTING */ = {
+			isa = PBXGroup;
+			children = (
+				2ABAEEB9258798E400D59CA2 /* ConfirmAndDelete.swift */,
+			);
+			path = TESTING;
 			sourceTree = "<group>";
 		};
 		2AC084552576481F00AFAE1C /* Supporting Views */ = {
@@ -852,6 +874,7 @@
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A4FDD81257EAE92008C6DEE /* TestingLazyVStackView.swift in Sources */,
 				2A6D6BF2258608C500BBA8C7 /* MainViewModel.swift in Sources */,
+				2ABAEEBA258798E400D59CA2 /* ConfirmAndDelete.swift in Sources */,
 				2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */,
 				2A6D6C052586735400BBA8C7 /* MainViewModel Enums + Ext.swift in Sources */,
 				2A9CA64A2575B83B00FCD4D0 /* OLDListOptionsMenu.swift in Sources */,
@@ -898,6 +921,7 @@
 				2A612EE8257F0D1B00D319D2 /* RandomListOptionsMenu.swift in Sources */,
 				2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */,
 				2A8AFCCD25805DEC00A0DD94 /* ListOptions Enums + Ext.swift in Sources */,
+				2ABAEEAC25877ACA00D59CA2 /* ListRowActionButtons.swift in Sources */,
 				2A935C8C256A51AC004B6E10 /* Story.swift in Sources */,
 				2A1943D12587527F00E81C73 /* StoryListView.swift in Sources */,
 				2AB3728C257A32D800D851C6 /* OLDStoryActionButtons.swift in Sources */,

@@ -25,11 +25,9 @@ struct MainViewActionButtons: View {
         
         MyButton(title: "Maintenance", icon: "wrench.and.screwdriver", action: model.showMaintenance)
         
-        MyButton(title: "Backup", icon: "tray.and.arrow.down", action: {})
-        
         Section(header: Text("Import & Export")) {
             MyButton(title: "Import Stories", icon: "arrow.down.doc.fill", labelStyle: .none, action: model.importFile)
-            MyButton(title: "Export Stories", icon: "arrow.up.doc.fill") {
+            MyButton(title: "Backup Stories", icon: "tray.and.arrow.down") {
                 model.exportFile(stories: stories)
             }
             MyButton(title: "Share Stories", icon: "square.and.arrow.up") {
