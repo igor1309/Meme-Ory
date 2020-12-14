@@ -73,12 +73,12 @@ struct SingleStoryView: View {
     @ViewBuilder
     private func favoriteIcon() -> some View {
         Image(systemName: story.isFavorite ? "star.fill" : "star")
-            .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : Color(UIColor.systemBlue))
+            .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : .secondary)
     }
     
     @ViewBuilder
     private func reminderIcon() -> some View {
-        Image(systemName: story.hasReminder ? "bell" : "bell.slash")
+        Image(systemName: story.hasReminder ? "bell.fill" : "bell.slash")
             .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
     }
     

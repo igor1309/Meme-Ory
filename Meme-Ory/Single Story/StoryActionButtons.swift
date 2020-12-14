@@ -10,7 +10,7 @@ import SwiftUI
 struct StoryActionButtons: View {
     
     @EnvironmentObject private var model: MainViewModel
-
+    
     @ObservedObject var story: Story
     
     var labelStyle: MyButton.Style = .none
@@ -22,10 +22,6 @@ struct StoryActionButtons: View {
             //.disabled(!UIPasteboard.general.hasStrings)
             
             MyButton(title:"New Story", icon: "plus", labelStyle: labelStyle, action: model.createNewStory)
-        }
-        
-        Section(header: Text("View")) {
-            MyButton(title:"Show Random Story", icon: "wand.and.stars", labelStyle: labelStyle, action: model.getRandomStory)
         }
         
         Section(header: Text("This Story")) {
@@ -44,7 +40,9 @@ struct StoryActionButtons: View {
             MyButton(title: "Share Story", icon: "square.and.arrow.up", labelStyle: labelStyle) {
                 model.shareText(story.text)
             }
-            
+        }
+        
+        Section(header: Text("Edit")) {
             MyButton(title:"Edit Story", icon: "square.and.pencil", labelStyle: labelStyle) {
                 model.showStoryEditor(story: story)
             }

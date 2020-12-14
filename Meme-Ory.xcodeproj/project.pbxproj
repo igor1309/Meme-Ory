@@ -395,7 +395,6 @@
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
 				2ABAEEC32587A9B000D59CA2 /* TESTING */,
-				2A8AFCFD258108FE00A0DD94 /* ContentChooserView.swift */,
 				2A6D6BEC258608AC00BBA8C7 /* Main */,
 				2A194400258770D800E81C73 /* Single Story */,
 				2A194405258770E700E81C73 /* Story List */,
@@ -600,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				2ABAEEB9258798E400D59CA2 /* ConfirmAndDelete.swift */,
+				2A8AFCFD258108FE00A0DD94 /* ContentChooserView.swift */,
 			);
 			path = TESTING;
 			sourceTree = "<group>";

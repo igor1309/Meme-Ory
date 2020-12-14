@@ -53,6 +53,7 @@ struct MainViewWrapper_Previews: PreviewProvider {
                 .environmentObject(MainViewModel(context: context))
         }
         .environment(\.managedObjectContext, context)
+        .environmentObject(EventStore())
         .environment(\.colorScheme, .dark)
         .previewLayout(.fixed(width: 350, height: 500))
     }

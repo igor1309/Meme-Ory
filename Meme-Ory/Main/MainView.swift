@@ -161,7 +161,6 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     @State static var context = SampleData.preview.container.viewContext
     static let request = Story.fetchRequest(.all, sortDescriptors: [])
-        
     
     static var previews: some View {
         Group {
@@ -172,6 +171,8 @@ struct MainView_Previews: PreviewProvider {
                 .environmentObject(MainViewModel(context: context))
         }
         .environment(\.managedObjectContext, context)
+        .environmentObject(EventStore())
+        .environmentObject(MainViewModel(context: context))
         .environment(\.colorScheme, .dark)
         .previewLayout(.fixed(width: 350, height: 500))
     }

@@ -86,7 +86,7 @@ final class MainViewModel: ObservableObject {
     
     //  MARK: - Init
     
-    init(context: NSManagedObjectContext, viewMode: ViewMode = .list) {
+    init(context: NSManagedObjectContext, viewMode: ViewMode = .single) {
         self.context = context
         self.viewOptions = .randomStory
         self.viewMode = viewMode
