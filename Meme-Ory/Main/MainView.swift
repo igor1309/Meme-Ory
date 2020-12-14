@@ -26,7 +26,7 @@ struct MainView: View {
     
     var body: some View {
         viewSwither()
-            .navigationTitle(model.viewOptions.title)
+            .navigationTitle(model.viewMode.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: toolbar)
             .sheet(item: $model.sheetID, content: sheetView)

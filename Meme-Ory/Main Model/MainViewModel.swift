@@ -11,42 +11,19 @@ import Combine
 
 final class MainViewModel: ObservableObject {
     
-    //  MARK: - View Options
-    
-    @Published private(set) var viewOptions: ViewOptions
-    
-    enum ViewOptions {
-        case list, randomStory, widgetStory
-        
-        var title: String {
-            switch self {
-                case .list:        return "Stories"
-                case .randomStory: return "Random Story"
-                case .widgetStory: return "Story from Widget"
-            }
-        }
-        var font: Font {
-            switch self {
-                case .list:        return .subheadline
-                case .randomStory: return .body
-                case .widgetStory: return .body
-            }
-        }
-        var isList: Bool {
-            switch self {
-                case .list: return true
-                default:    return false
-            }
-        }
-    }
-    
-    
     //  MARK: - View Mode
     
     @Published var viewMode: ViewMode
     
     enum ViewMode: String, CaseIterable {
         case single, list
+        
+        var title: String {
+            switch self {
+                case .single: return "Story"
+                case .list:   return "Stories"
+            }
+        }
     }
     
     
@@ -88,7 +65,6 @@ final class MainViewModel: ObservableObject {
     
     init(context: NSManagedObjectContext, viewMode: ViewMode = .single) {
         self.context = context
-        self.viewOptions = .randomStory
         self.viewMode = viewMode
         self.listOptions = ListOptions()
         
@@ -196,11 +172,6 @@ final class MainViewModel: ObservableObject {
         #if DEBUG
         print("MainViewModel: handleURL: deeplink home")
         #endif
-        
-        //  FIXME: FINISH THIS: list? or not?
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            self.viewOptions = .list
-        }
     }
     
     private func handleStoryURL(_ url: URL) {
@@ -222,11 +193,6 @@ final class MainViewModel: ObservableObject {
             let request = Story.fetchRequest(predicate, sortDescriptors: sortDescriptors)
             return request
         }()
-        
-        //  FIXME: FINISH THIS:
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            self.viewOptions = .widgetStory
-        }
     }
     
     private func handleFileURL(_ url: URL) {
@@ -237,13 +203,6 @@ final class MainViewModel: ObservableObject {
         #endif
         
         self.sheetID = SheetID.file(url)
-        
-        // FIXME: temporary feedback:
-        //  FIXME: FINISH THIS: ANY REQUEST CHANGES NEEDED???
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            self.viewOptions = .list
-        }
     }
     
     
