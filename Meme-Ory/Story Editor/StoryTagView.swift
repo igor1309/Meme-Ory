@@ -47,7 +47,7 @@ struct StoryTagView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
                     .contextMenu {
-                        MyButton(title: "Edit Tags", icon: "tag", action: showTagGrid)
+                        LabeledButton(title: "Edit Tags", icon: "tag", action: showTagGrid)
                     }
             }
             

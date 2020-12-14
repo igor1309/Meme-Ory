@@ -34,25 +34,10 @@ struct ImportTextView: View {
     }
     
     var body: some View {
-        if model.briefs.isEmpty {
-            NavigationView {
-                VStack {
-                    Text("Nothing to import or cannot parse this file\n(an array of strings would be ok)\n\nPlease try again if you are sure that file is ok")
-                        .padding(.vertical)
-                    
-                    Text(model.string)
-                        .foregroundColor(.secondary)
-                        .font(.caption)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Spacer()
-                }
-                .padding()
-                .navigationBarTitle("Import Fail", displayMode: .inline)
-                .navigationBarItems(trailing: Button("Close") { presentation.wrappedValue.dismiss() })
-            }
-        } else {
-            NavigationView {
+        NavigationView {
+            if model.briefs.isEmpty {
+                cannotParse()
+            } else {
                 List {
                     Section(header: Text("Selected: \(model.selectedCount) of \(model.count)")) {
                         ForEach(model.briefs, content: briefListRow)
@@ -63,6 +48,23 @@ struct ImportTextView: View {
                 .navigationBarItems(leading: cancelButton(), trailing: importButton())
             }
         }
+    }
+    
+    private func cannotParse() -> some View {
+        VStack {
+            Text("Nothing to import or cannot parse this file\n(an array of strings would be ok)\n\nPlease try again if you are sure that file is ok")
+                .padding(.vertical)
+            
+            Text(model.string)
+                .foregroundColor(.secondary)
+                .font(.caption)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Spacer()
+        }
+        .padding()
+        .navigationBarTitle("Import Fail", displayMode: .inline)
+        .navigationBarItems(trailing: Button("Close") { presentation.wrappedValue.dismiss() })
     }
     
     private func briefListRow(_ story: Brief) -> some View {

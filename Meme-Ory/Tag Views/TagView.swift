@@ -49,11 +49,11 @@ struct TagView: View {
     
     @ViewBuilder
     private func contextMenu() -> some  View {
-        MyButton(title: "Rename Tag", icon: "square.and.pencil") {
+        LabeledButton(title: "Rename Tag", icon: "square.and.pencil") {
             showEditTag = true
         }
         
-        MyButton(title: "Delete Tag", icon: "trash.circle") {
+        LabeledButton(title: "Delete Tag", icon: "trash.circle") {
             showDeleteConfirmation = true
         }
     }

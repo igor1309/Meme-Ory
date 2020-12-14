@@ -14,11 +14,7 @@ extension String {
         let separator = "***"
         let components = self.components(separatedBy: separator)
         
-        let cleaned = components
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
-        
-        return cleaned
+        return components.trimmed()
     }
     
     /// get first maxLength symbols of the first line

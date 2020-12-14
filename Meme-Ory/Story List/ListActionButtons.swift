@@ -11,22 +11,22 @@ struct ListActionButtons: View {
     
     @EnvironmentObject private var model: MainViewModel
     
-    var labelStyle: MyButton.Style = .none
+    var labelStyle: LabeledButton.Style = .none
     
     /// list limit and reminders aren't important to be menu, leaving them in options sheet
     var showUnimportant: Bool = false
     
     var body: some View {
         Section(header: Text("Create")) {
-            MyButton(title:"Paste to New Story", icon: "doc.on.clipboard", labelStyle: labelStyle, action: model.pasteToNewStory)
+            LabeledButton(title:"Paste to New Story", icon: "doc.on.clipboard", labelStyle: labelStyle, action: model.pasteToNewStory)
             // to disable with .hasStrings its value should be updated
             //.disabled(!UIPasteboard.general.hasStrings)
             
-            MyButton(title:"New Story", icon: "plus", labelStyle: labelStyle, action: model.createNewStory)
+            LabeledButton(title:"New Story", icon: "plus", labelStyle: labelStyle, action: model.createNewStory)
         }
         
         Section(header: Text("Shuffle List")) {
-            MyButton(title: "Shuffle List", icon: "wand.and.stars", action: model.shuffleList)
+            LabeledButton(title: "Shuffle List", icon: "wand.and.stars", action: model.shuffleList)
                 .disabled(true)
         }
         
@@ -36,14 +36,14 @@ struct ListActionButtons: View {
         /// reset filter by tag(s)
         if model.listOptions.isTagFilterActive {
             Section {
-                MyButton(title: "Reset Tags", icon: "tag.slash.fill", action: model.resetTags)
+                LabeledButton(title: "Reset Tags", icon: "tag.slash.fill", action: model.resetTags)
             }
         }
         
         if showUnimportant {
             Section {
                 /// list limit
-                MyButton(title: model.listOptions.isListLimited ? "Reset List Limit": "Set last Limit (\(model.listOptions.listLimit))", icon: model.listOptions.isListLimited ? "infinity" : "arrow.up.and.down") {
+                LabeledButton(title: model.listOptions.isListLimited ? "Reset List Limit": "Set last Limit (\(model.listOptions.listLimit))", icon: model.listOptions.isListLimited ? "infinity" : "arrow.up.and.down") {
                     model.listOptions.isListLimited.toggle()
                 }
                 
@@ -90,7 +90,7 @@ struct ListActionButtons: View {
         }
         
         Section {
-            MyButton(title: "Show Options", icon: "slider.horizontal.3", action: model.showListOptions)
+            LabeledButton(title: "Show Options", icon: "slider.horizontal.3", action: model.showListOptions)
         }
         
     }

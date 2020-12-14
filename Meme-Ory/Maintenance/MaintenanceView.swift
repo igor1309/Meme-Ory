@@ -88,13 +88,13 @@ struct MaintenanceView: View {
             Menu {
                 #if DEBUG
                 Section(header: Text("Testing")) {
-                    MyButton(title: "Add more Stories", icon: "plus.square", action: addMore)
-                    MyButton(title: "Add more NO DATE", icon: "plus.diamond", action: addMoreNoDate)
-                    MyButton(title: "Add Special Story", icon: "plus.rectangle.on.rectangle", action: addSpecial)
+                    LabeledButton(title: "Add more Stories", icon: "plus.square", action: addMore)
+                    LabeledButton(title: "Add more NO DATE", icon: "plus.diamond", action: addMoreNoDate)
+                    LabeledButton(title: "Add Special Story", icon: "plus.rectangle.on.rectangle", action: addSpecial)
                 }
                 #endif
                 
-                MyButton(title: "Delete Marked", icon: "trash") {
+                LabeledButton(title: "Delete Marked", icon: "trash") {
                     actionID = .confirmDelete
                 }
             } label: {

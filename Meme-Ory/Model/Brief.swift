@@ -15,16 +15,3 @@ struct Brief: Identifiable, Hashable {
     var check: Bool = false
 }
 
-extension Sequence where Element == Brief {
-    func convertToStories(in context: NSManagedObjectContext) {
-        let date = Date()
-        
-        for element in self {
-            let story = Story(context: context)
-            story.text = element.text
-            story.timestamp = date
-        }
-        
-        context.saveContext()
-    }
-}

@@ -106,7 +106,7 @@ final class StoryEditorViewModel: ObservableObject {
     func toggleReminder(eventStore: EventStore) {
         Ory.withHapticsAndAnimation {
             if let storyToEdit = self.storyToEdit,
-                storyToEdit.hasReminder {
+               storyToEdit.hasReminder {
                 // delete reminder
                 eventStore.deleteReminder(withIdentifier: self.calendarItemIdentifier)
                 storyToEdit.calendarItemIdentifier = ""
@@ -160,13 +160,11 @@ final class StoryEditorViewModel: ObservableObject {
                 /// create new story
                 story = Story(context: context)
                 story.timestamp = Date()
-                let center = NotificationCenter.default
-                center.post(name: .NewStoryCreated, object: story.url)
             }
             
-            story.text                   = self.text
-            story.tags                   = Array(self.tags)
-            story.isFavorite             = self.isFavorite
+            story.text =                   self.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            story.tags =                   Array(self.tags)
+            story.isFavorite =             self.isFavorite
             story.calendarItemIdentifier = self.calendarItemIdentifier
             
             context.saveContext()

@@ -7,7 +7,22 @@
 
 import SwiftUI
 
-struct CardModifier<Background: View>: ViewModifier {
+extension View {
+    func cardModifier<Background: View>(padding: CGFloat? = nil,
+                                        cornerRadius: CGFloat = 16,
+                                        strokeBorderColor: Color = Color(UIColor.systemGray3),
+                                        background: Background) -> some View {
+        self.modifier(
+            CardModifier(padding: padding,
+                         cornerRadius: cornerRadius,
+                         strokeBorderColor: strokeBorderColor,
+                         background: background
+            )
+        )
+    }
+}
+
+fileprivate struct CardModifier<Background: View>: ViewModifier {
     let padding: CGFloat?
     var cornerRadius: CGFloat
     var strokeBorderColor: Color
@@ -22,21 +37,6 @@ struct CardModifier<Background: View>: ViewModifier {
                     .strokeBorder(strokeBorderColor, lineWidth: 1)
             )
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-    }
-}
-
-extension View {
-    func cardModifier<Background: View>(padding: CGFloat? = nil,
-                                        cornerRadius: CGFloat = 16,
-                                        strokeBorderColor: Color = Color(UIColor.systemGray3),
-                                        background: Background) -> some View {
-        self.modifier(
-            CardModifier(padding: padding,
-                         cornerRadius: cornerRadius,
-                         strokeBorderColor: strokeBorderColor,
-                         background: background
-            )
-        )
     }
 }
 

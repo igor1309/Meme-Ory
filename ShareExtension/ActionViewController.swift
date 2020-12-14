@@ -48,7 +48,7 @@ class ActionViewController: UIViewController {
                 DispatchQueue.main.async {
                     if let strongTextView = weakTextView {
                         if let text = result as? String {
-                            strongTextView.text = text
+                            strongTextView.text = text.trimmingCharacters(in: .whitespacesAndNewlines)
                         }
                     }
                 }

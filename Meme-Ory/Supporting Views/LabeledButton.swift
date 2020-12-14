@@ -1,5 +1,5 @@
 //
-//  MyButton.swift
+//  LabeledButton.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 03.12.2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyButton: View {
+struct LabeledButton: View {
     let title: String
     let icon: String
     let labelStyle: Style
@@ -60,7 +60,7 @@ struct MyButton: View {
 struct MyButton_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            MyButton(title: "Do this", icon: "star", action: {})
+            LabeledButton(title: "Do this", icon: "star", action: {})
         }
     }
 }

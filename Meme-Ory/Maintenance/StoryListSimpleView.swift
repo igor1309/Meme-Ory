@@ -28,12 +28,11 @@ extension MaintenanceViewModel {
         
         let date = Date()
         
-        let tag = Tag(context: context)
-        tag.name = "Date Fixing"
+        let tag = context.getTag(withName: "Date Fixing")
         
         for text in textsCopy {
             let story = Story(context: context)
-            story.text = text
+            story.text = text.trimmingCharacters(in: .whitespacesAndNewlines)
             story.timestamp = date
             story.tags.append(tag)
         }
@@ -78,7 +77,7 @@ struct StoryListSimpleView: View {
                     }
             ) {
                 if kind == .withoutTimestamp {
-                    MyButton(title: "Fix Timestamp for \(stories.count.storySuffix)", icon: "wand.and.stars") {
+                    LabeledButton(title: "Fix Timestamp for \(stories.count.storySuffix)", icon: "wand.and.stars") {
                         model.fixNoTimestampStoryDuplicates(stories: stories)
                     }
                 }

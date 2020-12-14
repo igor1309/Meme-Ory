@@ -10,77 +10,7 @@ import CoreData
 import Combine
 
 extension NSManagedObjectContext {
-    
-    //  MARK: - Publishers
-    
-    var didSavePublisher: AnyPublisher<Notification, Never> {
-        let sub = NotificationCenter.default
-            .publisher(for: .NSManagedObjectContextDidSave)
-            .filter { notification in
-                let context = notification.object as? NSManagedObjectContext
-                return context == self
-            }
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
         
-        return sub
-    }
-    
-    var didChangePublisher: AnyPublisher<Notification, Never> {
-        let sub = NotificationCenter.default
-            .publisher(for: .NSManagedObjectContextObjectsDidChange)
-            .filter { notification in
-                let context = notification.object as? NSManagedObjectContext
-                return context == self
-            }
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        
-        return sub
-    }
-    
-    var insertedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
-        let sub = didChangePublisher
-            .compactMap { notification -> Set<Story>? in
-                guard let insertedStories = notification.userInfo?[NSInsertedObjectsKey] as? Set<Story> else { return nil }
-                return insertedStories
-            }
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        
-        return sub
-    }
-    
-    var deletedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
-        let sub = didChangePublisher
-            .compactMap { notification -> Set<Story>? in
-                guard let insertedStories = notification.userInfo?[NSDeletedObjectsKey] as? Set<Story> else { return nil }
-                return insertedStories
-            }
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        
-        return sub
-    }
-    
-    var updatedObjectsPublisher: AnyPublisher<Set<Story>, Never> {
-        let sub = didChangePublisher
-            .compactMap { notification -> Set<Story>? in
-                guard let insertedStories = notification.userInfo?[NSUpdatedObjectsKey] as? Set<Story> else { return nil }
-                return insertedStories
-            }
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        
-        return sub
-    }
-    
-    
     //  MARK: - Real Count: non-optional count
     
     /// count func without optionality
@@ -106,103 +36,22 @@ extension NSManagedObjectContext {
     }
     
     
-    //  MARK: - Get ObjectID & Object
+    //  MARK: - Delete Stories with Tag
     
-    func getObjectID(for url: URL?) -> NSManagedObjectID? {
-        guard let coordinator = persistentStoreCoordinator,
-              let url = url,
-              let coreDataURL = url.coreDataURL,
-              let objectID = coordinator.managedObjectID(forURIRepresentation: coreDataURL) else { return nil }
+    func deleteStories(withTag tag: Tag) {
+        let predicate = NSPredicate(format: "ANY %K == %@", #keyPath(Story.tags_), tag)
+        let request = Story.fetchRequest(predicate)
         
-        return objectID
+        guard let fetch = try? self.fetch(request) else {
+            print("deleteStories: fetch error")
+            return
+        }
+        
+        for story in fetch {
+            self.delete(story)
+        }
+        
+        self.saveContext()
     }
-    
-    func getObject(with url: URL?) -> NSManagedObject? {
-        guard let objectID = getObjectID(for: url),
-              let object = try? existingObject(with: objectID) else { return nil }
-        
-//        guard let coordinator = persistentStoreCoordinator,
-//              let url = url,
-//              let coreDataURL = url.coreDataURL,
-//              let objectID = coordinator.managedObjectID(forURIRepresentation: coreDataURL),
-//              let object = try? existingObject(with: objectID) else { return nil }
-        
-        return object
-    }
-    
-    
-    //  MARK: - Random
-    
-    func randomObject<T: NSManagedObject>(ofType type: T.Type) -> T? {
-        guard let objectID = randomObjectID(ofType: type),
-              let object = try? existingObject(with: objectID) else { return nil }
-        
-        #if DEBUG
-        // print("randomObjectID: \(objectID)")
-        #endif
-        
-        return object as? T
-    }
-    
-    func randomObjects<T :NSManagedObject>(_ k: Int = 1, ofType type: T.Type) -> [T] {
-        guard k > 0 else { return [] }
-        
-        let randomIDs = randomObjectIDs(k, ofType: T.self)
-        
-        let request = NSFetchRequest<T>()
-        request.entity = T.entity()
-        request.predicate = NSPredicate(format: "self IN %@", /* #keyPath(T.objectID),*/ randomIDs)
-        
-        guard let fetch = try? self.fetch(request) else { return [] }
-        return fetch
-    }
-    
-    fileprivate func randomObjectID<T: NSManagedObject>(ofType type: T.Type) -> NSManagedObjectID? {
-        // https://stackoverflow.com/a/4792331/11793043
-        let objectIdDesc = NSExpressionDescription()
-        objectIdDesc.name = "objectID"
-        objectIdDesc.expression = NSExpression.expressionForEvaluatedObject()
-        objectIdDesc.expressionResultType = .objectIDAttributeType
-        
-        let request = NSFetchRequest<NSDictionary>()
-        request.entity = T.entity()
-        request.resultType = .dictionaryResultType
-        request.propertiesToFetch = [objectIdDesc]//[#keyPath(Story.text_)]
-        request.returnsDistinctResults = true
-        
-        /// fetch all object IDs for provided type T
-        guard let fetch = try? self.fetch(request) else { return nil }
-        
-        //print(fetch)
-        let objectIDs = fetch.flatMap(\.allValues)
-        //print(values)
-        let randomID = objectIDs.randomElement()
-        return randomID as? NSManagedObjectID
-    }
-    
-    fileprivate func randomObjectIDs<T: NSManagedObject>(_ k: Int = 1, ofType type: T.Type) -> [NSManagedObjectID] {
-        guard k > 0 else { return [] }
-        
-        // https://stackoverflow.com/a/4792331/11793043
-        let objectIdDesc = NSExpressionDescription()
-        objectIdDesc.name = "objectID"
-        objectIdDesc.expression = NSExpression.expressionForEvaluatedObject()
-        objectIdDesc.expressionResultType = .objectIDAttributeType
-        
-        let request = NSFetchRequest<NSDictionary>()
-        request.entity = T.entity()
-        request.resultType = .dictionaryResultType
-        request.propertiesToFetch = [objectIdDesc]//[#keyPath(Story.text_)]
-        request.returnsDistinctResults = true
-        
-        /// fetch all object IDs for provided type T
-        guard let fetch = try? self.fetch(request) else { return [] }
-        
-        let objectIDs = fetch.flatMap(\.allValues)
-        let randomSlice = objectIDs.shuffled().prefix(k)
-        let randomIDs = Array(randomSlice)
-        return randomIDs as? [NSManagedObjectID] ?? []
-    }
-    
 }
 

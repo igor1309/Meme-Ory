@@ -21,7 +21,7 @@ struct StoryImportTester: View {
     
     private func toolbar() -> some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
-            MyButton(title: "Import File", icon: "arrow.down.doc") {
+            LabeledButton(title: "Import File", icon: "arrow.down.doc") {
                 showingFileImporter = true
             }
         }

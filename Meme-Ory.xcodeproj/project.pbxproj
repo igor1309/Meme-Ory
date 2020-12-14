@@ -30,12 +30,19 @@
 		2A19440F2587717200E81C73 /* Text and Timestamp Duplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A19440E2587717200E81C73 /* Text and Timestamp Duplicate.swift */; };
 		2A19441A258771AF00E81C73 /* StoryTextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A194419258771AF00E81C73 /* StoryTextPicker.swift */; };
 		2A194424258771C100E81C73 /* TimestampPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A194423258771C100E81C73 /* TimestampPicker.swift */; };
-		2A19442A2587721700E81C73 /* Context+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1944292587721700E81C73 /* Context+Ext.swift */; };
 		2A1944302587723300E81C73 /* MaintenanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A19442F2587723300E81C73 /* MaintenanceViewModel.swift */; };
 		2A19443A2587737B00E81C73 /* StoryListSimpleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1944392587737B00E81C73 /* StoryListSimpleView.swift */; };
 		2A1944402587740400E81C73 /* StoryListRowSimpleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A19443F2587740400E81C73 /* StoryListRowSimpleView.swift */; };
 		2A1944462587743900E81C73 /* StorySimpleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1944452587743900E81C73 /* StorySimpleView.swift */; };
 		2A19444C2587749500E81C73 /* ListKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A19444B2587749500E81C73 /* ListKind.swift */; };
+		2A1A4C2D2587EA36008A84A2 /* Sequence+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C2C2587EA36008A84A2 /* Sequence+Ext.swift */; };
+		2A1A4C322587EA61008A84A2 /* Sequence+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C2C2587EA36008A84A2 /* Sequence+Ext.swift */; };
+		2A1A4C372587EA62008A84A2 /* Sequence+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C2C2587EA36008A84A2 /* Sequence+Ext.swift */; };
+		2A1A4C3D2587EB43008A84A2 /* NSManagedObjectContext+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C3C2587EB43008A84A2 /* NSManagedObjectContext+Publishers.swift */; };
+		2A1A4C432587EBEB008A84A2 /* NSManagedObjectContext+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C422587EBEB008A84A2 /* NSManagedObjectContext+Get.swift */; };
+		2A1A4C492587EC6C008A84A2 /* NSManagedObjectContext+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C482587EC6C008A84A2 /* NSManagedObjectContext+Random.swift */; };
+		2A1A4C4E2587EC94008A84A2 /* NSManagedObjectContext+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C482587EC6C008A84A2 /* NSManagedObjectContext+Random.swift */; };
+		2A1A4C532587EC97008A84A2 /* NSManagedObjectContext+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A4C482587EC6C008A84A2 /* NSManagedObjectContext+Random.swift */; };
 		2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */; };
 		2A1B5FBB256A4A5E00E3283D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
 		2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBD256A4A5E00E3283D /* Preview Assets.xcassets */; };
@@ -46,10 +53,8 @@
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
 		2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportTextView.swift */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
-		2A4CC9FB25795A5E000A21C9 /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* MyButton.swift */; };
+		2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
-		2A4FDD86257EB333008C6DEE /* Notification.Name+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */; };
-		2A4FDD8A257EB34D008C6DEE /* Notification.Name+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */; };
 		2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5005F2257197B4005E969A /* ImportTextViewModel.swift */; };
 		2A64D42D257164B900C1817F /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A6A3112257163CC007F2C0D /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
@@ -76,6 +81,7 @@
 		2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CA8256A83A0004B6E10 /* TagGridView.swift */; };
 		2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CAB256A98C4004B6E10 /* TagView.swift */; };
 		2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A935CB4256AE8C0004B6E10 /* TagGridWrapperView.swift */; };
+		2AA540372587E91C00A5FBED /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A167B99258316D3007A986B /* String+Ext.swift */; };
 		2AA89175256BE8080042395A /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA89174256BE8080042395A /* SearchModifier.swift */; };
 		2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB03179256CD35700BEC832 /* StoryTagView.swift */; };
 		2ABAB1922575010300D9B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */; };
@@ -167,12 +173,15 @@
 		2A19440E2587717200E81C73 /* Text and Timestamp Duplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text and Timestamp Duplicate.swift"; sourceTree = "<group>"; };
 		2A194419258771AF00E81C73 /* StoryTextPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextPicker.swift; sourceTree = "<group>"; };
 		2A194423258771C100E81C73 /* TimestampPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampPicker.swift; sourceTree = "<group>"; };
-		2A1944292587721700E81C73 /* Context+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Ext.swift"; sourceTree = "<group>"; };
 		2A19442F2587723300E81C73 /* MaintenanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceViewModel.swift; sourceTree = "<group>"; };
 		2A1944392587737B00E81C73 /* StoryListSimpleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListSimpleView.swift; sourceTree = "<group>"; };
 		2A19443F2587740400E81C73 /* StoryListRowSimpleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowSimpleView.swift; sourceTree = "<group>"; };
 		2A1944452587743900E81C73 /* StorySimpleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySimpleView.swift; sourceTree = "<group>"; };
 		2A19444B2587749500E81C73 /* ListKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListKind.swift; sourceTree = "<group>"; };
+		2A1A4C2C2587EA36008A84A2 /* Sequence+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Ext.swift"; sourceTree = "<group>"; };
+		2A1A4C3C2587EB43008A84A2 /* NSManagedObjectContext+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Publishers.swift"; sourceTree = "<group>"; };
+		2A1A4C422587EBEB008A84A2 /* NSManagedObjectContext+Get.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Get.swift"; sourceTree = "<group>"; };
+		2A1A4C482587EC6C008A84A2 /* NSManagedObjectContext+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Random.swift"; sourceTree = "<group>"; };
 		2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meme-Ory.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme_OryApp.swift; sourceTree = "<group>"; };
 		2A1B5FBA256A4A5E00E3283D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -186,9 +195,8 @@
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		2A33A3E125714DA500538FE3 /* ImportTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextView.swift; sourceTree = "<group>"; };
 		2A4CC9F525795269000A21C9 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
-		2A4CC9FA25795A5E000A21C9 /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
+		2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledButton.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
-		2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Ext.swift"; sourceTree = "<group>"; };
 		2A5005F2257197B4005E969A /* ImportTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextViewModel.swift; sourceTree = "<group>"; };
 		2A6D6BE6258608A500BBA8C7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2A6D6BF1258608C500BBA8C7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -322,7 +330,6 @@
 				2A19442F2587723300E81C73 /* MaintenanceViewModel.swift */,
 				2A19440E2587717200E81C73 /* Text and Timestamp Duplicate.swift */,
 				2A19444B2587749500E81C73 /* ListKind.swift */,
-				2A1944292587721700E81C73 /* Context+Ext.swift */,
 			);
 			path = "Maintenance Model";
 			sourceTree = "<group>";
@@ -522,7 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				2AFE9E3E257246270037E8CF /* ErrorSheet.swift */,
-				2A4CC9FA25795A5E000A21C9 /* MyButton.swift */,
+				2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */,
 				2A4CC9F525795269000A21C9 /* CardModifier.swift */,
 			);
 			path = "Supporting Views";
@@ -566,9 +573,12 @@
 			children = (
 				2AEEF8FD25700061008D1B31 /* Calendar.Component+Ext.swift */,
 				2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */,
-				2A4FDD85257EB333008C6DEE /* Notification.Name+Ext.swift */,
 				2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */,
+				2A1A4C422587EBEB008A84A2 /* NSManagedObjectContext+Get.swift */,
+				2A1A4C3C2587EB43008A84A2 /* NSManagedObjectContext+Publishers.swift */,
+				2A1A4C482587EC6C008A84A2 /* NSManagedObjectContext+Random.swift */,
 				2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */,
+				2A1A4C2C2587EA36008A84A2 /* Sequence+Ext.swift */,
 				2A167B99258316D3007A986B /* String+Ext.swift */,
 				2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */,
 				2AFD320E25841DCC00334A92 /* View+Ext.swift */,
@@ -755,10 +765,10 @@
 			files = (
 				2AFD320F25841DCC00334A92 /* View+Ext.swift in Sources */,
 				2A1943CB258751CB00E81C73 /* StoryListRowView.swift in Sources */,
-				2A4FDD86257EB333008C6DEE /* Notification.Name+Ext.swift in Sources */,
 				2A19444C2587749500E81C73 /* ListKind.swift in Sources */,
+				2A1A4C3D2587EB43008A84A2 /* NSManagedObjectContext+Publishers.swift in Sources */,
 				2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */,
-				2A19442A2587721700E81C73 /* Context+Ext.swift in Sources */,
+				2A1A4C2D2587EA36008A84A2 /* Sequence+Ext.swift in Sources */,
 				2A1943E125876D8000E81C73 /* MainViewWrapper.swift in Sources */,
 				2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */,
 				2AEEF8FE25700061008D1B31 /* Calendar.Component+Ext.swift in Sources */,
@@ -792,6 +802,7 @@
 				2AFE9E3F257246270037E8CF /* ErrorSheet.swift in Sources */,
 				2AB0317A256CD35700BEC832 /* StoryTagView.swift in Sources */,
 				2A1943D7258763D700E81C73 /* MainViewActionButtons.swift in Sources */,
+				2A1A4C432587EBEB008A84A2 /* NSManagedObjectContext+Get.swift in Sources */,
 				2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */,
 				2A16CDF52574F0E400146F3E /* NSPredicate+Ext.swift in Sources */,
 				2A6D6C132586BAAD00BBA8C7 /* StoryActionButtons.swift in Sources */,
@@ -802,10 +813,11 @@
 				2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */,
 				2A19443A2587737B00E81C73 /* StoryListSimpleView.swift in Sources */,
 				2A935CAC256A98C4004B6E10 /* TagView.swift in Sources */,
+				2A1A4C492587EC6C008A84A2 /* NSManagedObjectContext+Random.swift in Sources */,
 				2A167B9A258316D3007A986B /* String+Ext.swift in Sources */,
 				2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */,
 				2A1B5FB7256A4A5D00E3283D /* Meme_OryApp.swift in Sources */,
-				2A4CC9FB25795A5E000A21C9 /* MyButton.swift in Sources */,
+				2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */,
 				2A19441A258771AF00E81C73 /* StoryTextPicker.swift in Sources */,
 				2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */,
 				2A8AFCCD25805DEC00A0DD94 /* ListOptions Enums + Ext.swift in Sources */,
@@ -835,10 +847,12 @@
 				2ACCEE5F257E15760022B752 /* Ory.swift in Sources */,
 				2A031FFF257E4BDD009AF197 /* Calendar.Component+Ext.swift in Sources */,
 				2ACCEE50257E13740022B752 /* EventStore.swift in Sources */,
+				2A1A4C532587EC97008A84A2 /* NSManagedObjectContext+Random.swift in Sources */,
 				2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */,
 				2ADAD3CB256DA5E000AF463B /* Meme_Ory.xcdatamodeld in Sources */,
 				2ADAD409256E4FE800AF463B /* URL+Extension.swift in Sources */,
 				2ADAD3C5256DA5CB00AF463B /* Persistence.swift in Sources */,
+				2A1A4C372587EA62008A84A2 /* Sequence+Ext.swift in Sources */,
 				2ADAD3CE256DA5E300AF463B /* Story.swift in Sources */,
 				2A03200E257E6B61009AF197 /* NSManagedObjectContext+Ext.swift in Sources */,
 				2A8E440F256EF1C8002C0DFC /* Provider.swift in Sources */,
@@ -855,6 +869,7 @@
 			files = (
 				2A16CDE82574EFF000146F3E /* Meme_Ory.xcdatamodeld in Sources */,
 				2ACCEE41257E10AE0022B752 /* Ory.swift in Sources */,
+				2A1A4C4E2587EC94008A84A2 /* NSManagedObjectContext+Random.swift in Sources */,
 				2A8AFCF4258100B800A0DD94 /* NSManagedObjectContext+Ext.swift in Sources */,
 				2ACCEE49257E12AF0022B752 /* EventStore.swift in Sources */,
 				2A16CDE32574EFEC00146F3E /* Tag.swift in Sources */,
@@ -865,8 +880,9 @@
 				2AFE9E6E25744F480037E8CF /* ActionViewController.swift in Sources */,
 				2A16CDDB2574EFDE00146F3E /* Persistence.swift in Sources */,
 				2A16CDEC2574F09C00146F3E /* Brief.swift in Sources */,
-				2A4FDD8A257EB34D008C6DEE /* Notification.Name+Ext.swift in Sources */,
 				2A16CDE42574EFEC00146F3E /* Story.swift in Sources */,
+				2A1A4C322587EA61008A84A2 /* Sequence+Ext.swift in Sources */,
+				2AA540372587E91C00A5FBED /* String+Ext.swift in Sources */,
 				2A16CDF02574F0A300146F3E /* SampleData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1016,7 +1032,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -1045,7 +1061,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Meme-Ory/Meme-Ory.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_ASSET_PATHS = "\"Meme-Ory/Preview Content\"";
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
@@ -1070,7 +1086,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1094,7 +1110,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1121,7 +1137,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1149,7 +1165,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Meme-OryWidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1176,7 +1192,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1203,7 +1219,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIconExtension-iOS";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;

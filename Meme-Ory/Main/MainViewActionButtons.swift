@@ -23,14 +23,14 @@ struct MainViewActionButtons: View {
             }
         }
         
-        MyButton(title: "Maintenance", icon: "wrench.and.screwdriver", action: model.showMaintenance)
+        LabeledButton(title: "Maintenance", icon: "wrench.and.screwdriver", action: model.showMaintenance)
         
         Section(header: Text("Import & Export")) {
-            MyButton(title: "Import Stories", icon: "arrow.down.doc.fill", labelStyle: .none, action: model.importFile)
-            MyButton(title: "Backup Stories", icon: "tray.and.arrow.down") {
+            LabeledButton(title: "Import Stories", icon: "arrow.down.doc.fill", labelStyle: .none, action: model.importFile)
+            LabeledButton(title: "Backup Stories", icon: "tray.and.arrow.down") {
                 model.exportFile(stories: stories)
             }
-            MyButton(title: "Share Stories", icon: "square.and.arrow.up") {
+            LabeledButton(title: "Share Stories", icon: "square.and.arrow.up") {
                 model.shareStories(stories: stories)
             }
         }

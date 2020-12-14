@@ -45,9 +45,9 @@ struct StoryListRowSimpleView: View {
     
     @ViewBuilder
     private func menuContent() -> some View {
-        MyButton(title: "Show Story", icon: "doc.text.magnifyingglass", action: showStory)
-        MyButton(title: "Split Story", icon: "scissors", action: splitStory)
-        MyButton(title: hasDeleteMark.wrappedValue ? "Unmark delete" : "Mark to delete", icon: hasDeleteMark.wrappedValue ? "trash.slash" : "trash", action: toggleMarkDelete)
+        LabeledButton(title: "Show Story", icon: "doc.text.magnifyingglass", action: showStory)
+        LabeledButton(title: "Split Story", icon: "scissors", action: splitStory)
+        LabeledButton(title: hasDeleteMark.wrappedValue ? "Unmark delete" : "Mark to delete", icon: hasDeleteMark.wrappedValue ? "trash.slash" : "trash", action: toggleMarkDelete)
     }
     
     private func showStory() {

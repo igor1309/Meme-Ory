@@ -58,6 +58,9 @@ extension URL {
 }
 
 extension URL {
+    
+    /// Decode JSON contents of url
+    /// - Returns: array of non-duplicating strings without whitespaces and newlines
     func getTexts() -> [String] {
         
         guard self.startAccessingSecurityScopedResource() else {
@@ -66,11 +69,7 @@ extension URL {
         }
          
         defer { self.stopAccessingSecurityScopedResource() }
-        
-//        if let content = try? String(contentsOf: self) {
-//            print("getTexts: \(content)")
-//        }
-        
+                
         guard let data = try? Data(contentsOf: self) else {
             print("getTexts: Failed to load file from \(self)")
             return []
@@ -85,7 +84,9 @@ extension URL {
         
         /// remove duplicates from import
         /// this doesn't check for duplicates in store
-        return Array(Set(texts)).sorted()
+        let noDuplicates: [String] = Set(texts).sorted()
+        
+        return noDuplicates.trimmed()
     }
 }
 

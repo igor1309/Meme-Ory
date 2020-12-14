@@ -39,8 +39,8 @@ extension ListOptions.RemindersFilterOptions: LabelProvider {
     
     var icon: String {
         switch self {
-            case .all:   return "bell.slash.circle.fill"
-            case .have:   return "bell.circle"
+            case .all:     return "bell.slash.circle.fill"
+            case .have:    return "bell.circle"
             case .notHave: return "bell.slash"
         }
     }
