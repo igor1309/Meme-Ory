@@ -10,22 +10,6 @@ import SwiftUI
 
 //  MARK: - Enum Extensions: LabelProvider
 
-extension RandomStoryListViewModel.ListType: LabelProvider {
-    var rawValue: String {
-        switch self {
-            case .random: return "Random"
-            case .ordered: return "Ordered"
-        }
-    }
-
-    var icon: String {
-        switch self {
-            case .random: return "wand.and.stars"
-            case .ordered: return "list.number"
-        }
-    }
-}
-
 extension ListOptions.FavoritesFilterOptions: LabelProvider {
     var rawValue: String {
         switch self {

@@ -21,7 +21,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
             .environmentObject(EventStore())
-            .environmentObject(Filter())
             .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 350, height: 800))
     }

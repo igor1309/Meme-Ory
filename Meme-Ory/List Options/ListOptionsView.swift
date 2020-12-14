@@ -136,7 +136,6 @@ struct ListOptionsView_Previews: PreviewProvider {
     static var previews: some View {
         ListOptionsView_Testing()
             .environment(\.managedObjectContext, SampleData.preview.container.viewContext)
-            .environmentObject(Filter())
             .previewLayout(.fixed(width: 350, height: 800))
             .preferredColorScheme(.dark)
     }

@@ -13,7 +13,6 @@ struct Meme_OryApp: App {
     let persistenceController: PersistenceController
     
     @StateObject private var eventStore = EventStore()
-    @StateObject private var filter = Filter()
     
     @StateObject private var listModel: MainViewModel
     
@@ -30,7 +29,6 @@ struct Meme_OryApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(listModel)
                 .environmentObject(eventStore)
-                .environmentObject(filter)
         }
     }
 }
