@@ -69,6 +69,7 @@ final class StoryEditorViewModel: ObservableObject {
         )
         .dropFirst()
         .throttle(for: 0.5, scheduler: RunLoop.main, latest: true)
+        .subscribe(on: DispatchQueue.global())
         .receive(on: DispatchQueue.main)
         .sink { [weak self] _ in
             print("StoryEditorViewModel: model changed")

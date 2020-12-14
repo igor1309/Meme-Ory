@@ -23,6 +23,7 @@ final class EventStore: ObservableObject {
         
         store
             .currentAuthorizationStatus()
+            .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 print("EKEventStore access checked in subscription. Access \($0 ? "granted" : "denied").")
@@ -43,6 +44,7 @@ final class EventStore: ObservableObject {
 }
 
 extension EventStore {
+    
     typealias CalendarItemIdentifier = String
     
     

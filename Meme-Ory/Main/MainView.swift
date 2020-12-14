@@ -67,7 +67,7 @@ struct MainView: View {
                 .font(.footnote)
                 .padding(.bottom)
             
-            Button("TBD: Add Story") {
+            Button("Add Story") {
                 //  FIXME: FINISH THIS:
                 model.createNewStory()
             }

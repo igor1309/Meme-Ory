@@ -38,24 +38,24 @@ struct TagView: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .strokeBorder(strokeBorderColor)
             )
-            .contextMenu {
-                Button {
-                    showEditTag = true
-                } label: {
-                    Label("Rename Tag", systemImage: "square.and.pencil")
-                }
-                Button {
-                    showDeleteConfirmation = true
-                } label: {
-                    Label("Delete Tag", systemImage: "trash.circle")
-                }
-            }
+            .contextMenu(menuItems: contextMenu)
             .actionSheet(isPresented: $showDeleteConfirmation) {
                 actionSheetDelete(tag: tag)
             }
             .sheet(isPresented: $showEditTag, onDismiss: context.saveContext) {
                 TagEditView($tag.name)
             }
+    }
+    
+    @ViewBuilder
+    private func contextMenu() -> some  View {
+        MyButton(title: "Rename Tag", icon: "square.and.pencil") {
+            showEditTag = true
+        }
+        
+        MyButton(title: "Delete Tag", icon: "trash.circle") {
+            showDeleteConfirmation = true
+        }
     }
     
     private func actionSheetDelete(tag: Tag) -> ActionSheet {
