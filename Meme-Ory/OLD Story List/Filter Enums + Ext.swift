@@ -7,24 +7,6 @@
 
 import SwiftUI
 
-
-//  MARK: LabelProvider
-
-protocol LabelProvider: RawRepresentable where Self.RawValue == String {
-    var icon: String { get }
-    
-    associatedtype V: View
-    func label(prefix: String) -> V
-}
-
-extension LabelProvider {
-    func label(prefix: String = "") -> some View {
-        let title = prefix.isEmpty ? rawValue : "\(prefix)\(rawValue)"
-        return Label(title, systemImage: icon)
-    }
-}
-
-
 //  MARK: - Enum Extensions: LabelProvider
 
 extension Filter.FavoritesFilterOptions: LabelProvider {

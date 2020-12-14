@@ -10,27 +10,9 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     
-    @Environment(\.managedObjectContext) private var context
-    @Environment(\.scenePhase) private var scenePhase
-    
-    @EnvironmentObject var filter: Filter
-    
     var body: some View {
-        RandomStoryListViewWrapper()
-            .environmentObject(RandomStoryListViewModel(context: context))
-            .onChange(of: scenePhase, perform: handleScenePhase)
+        MainViewWrapper()
     }
-    
-    private func handleScenePhase(scenePhase: ScenePhase) {
-        if scenePhase == .background {
-            #if DEBUG
-            print("ContentView: gone to background")
-            #endif
-            
-            context.saveContext()
-        }
-    }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {

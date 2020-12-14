@@ -1,58 +1,37 @@
 //
-//  RandomListOptionsMenu.swift
+//  ListActionButtons.swift
 //  Meme-Ory
 //
-//  Created by Igor Malyarov on 08.12.2020.
+//  Created by Igor Malyarov on 14.12.2020.
 //
 
 import SwiftUI
 
-extension RandomStoryListViewModel {
-    var hasLineLimit: Bool {
-        get { lineLimit != nil }
-        set { lineLimit = newValue ? RandomStoryListViewModel.lineLimitConstant : nil }
-    }
+struct ListActionButtons: View {
     
-    private static let lineLimitConstant = 4
+    @EnvironmentObject private var model: MainViewModel
     
-}
-
-struct RandomListOptionsMenu: View {
-    
-    @Environment(\.managedObjectContext) private var context
-    
-    @EnvironmentObject var model: RandomStoryListViewModel
+    var labelStyle: MyButton.Style = .none
     
     /// list limit and reminders aren't important to be menu, leaving them in options sheet
-    @State private var showUnimportant = false
+    var showUnimportant: Bool = false
     
     var body: some View {
-        #if DEBUG
-        Section(header: Text("Debug")) {
-            MyButton(title: "Test Context Notification", icon: "sparkles.rectangle.stack") {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    let story = Story(context: context)
-                    story.text = "Test \(Date().description)"
-                    story.timestamp = Date()
-                    context.saveContext()
-                }
-            }
-        }
-        #endif
-        
-        Section(header: Text("Random")) {
-            MyButton(title: "Shuffle List", icon: "wand.and.stars", action: model.update)
-            #if DEBUG
-            MyButton(title:"Random Story", icon: "wand.and.stars") { model.getRandomStory(hasHapticsAndAnimation: false)
-            }
-            #endif
+        Section(header: Text("Create")) {
+            MyButton(title:"Paste to New Story", icon: "doc.on.clipboard", labelStyle: labelStyle, action: model.pasteToNewStory)
+            // to disable with .hasStrings its value should be updated
+            //.disabled(!UIPasteboard.general.hasStrings)
+            
+            MyButton(title:"New Story", icon: "plus", labelStyle: labelStyle, action: model.createNewStory)
         }
         
-        Section(header: Text("View")) {
-            Toggle(isOn: $model.hasLineLimit) {
-                Label("Line Limit", systemImage: "rectangle.arrowtriangle.2.inward")
-            }
+        Section(header: Text("Shuffle List")) {
+            MyButton(title: "Shuffle List", icon: "wand.and.stars", action: model.shuffleList)
+                .disabled(true)
         }
+        
+        //  MARK: - FINISH WITH LIST OPTIONS
+        //  FIXME: FINISH THIS:
         
         /// reset filter by tag(s)
         if model.listOptions.isTagFilterActive {
@@ -102,12 +81,6 @@ struct RandomListOptionsMenu: View {
                 }
             }
             
-            if showUnimportant {
-                /// toggle sort order
-                MyButton(title: "Sort \(model.listOptions.sortOrder.areInIncreasingOrder ? "Descending": "Ascending")", icon: model.listOptions.sortOrder.areInIncreasingOrder ? "textformat" : "textformat.size") {
-                    model.listOptions.sortOrder.areInIncreasingOrder.toggle()
-                }
-            }
             
             Picker("SortOrder", selection: $model.listOptions.sortOrder) {
                 ForEach(ListOptions.SortOrder.allCases) { order in
@@ -119,26 +92,21 @@ struct RandomListOptionsMenu: View {
         Section {
             MyButton(title: "Show Options", icon: "slider.horizontal.3", action: model.showListOptions)
         }
+        
     }
 }
 
-struct RandomListOptionsMenu_Previews: PreviewProvider {
-    @State static var context = SampleData.preview.container.viewContext
+
+struct ListActionButtons_Previews: PreviewProvider {
+    @State static private var context = SampleData.preview.container.viewContext
     
     static var previews: some View {
-        NavigationView {
-            List {
-                RandomListOptionsMenu()
-            }
-            .listStyle(InsetGroupedListStyle())
-            .navigationBarTitleDisplayMode(.inline)
+        List {
+            ListActionButtons()
         }
-        .environment(\.managedObjectContext, context)
-        .environmentObject(RandomStoryListViewModel(context: context))
-        .environmentObject(Filter())
-        .environmentObject(EventStore())
-        .environment(\.colorScheme, .dark)
-        .previewLayout(.fixed(width: 350, height: 800))
-        .environment(\.sizeCategory, .large)
+        .listStyle(InsetGroupedListStyle())
+        .environmentObject(MainViewModel(context: context))
+        .preferredColorScheme(.dark)
+        .previewLayout(.fixed(width: 350, height: 600))
     }
 }

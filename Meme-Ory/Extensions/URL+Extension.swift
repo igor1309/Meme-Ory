@@ -17,7 +17,7 @@ extension URL {
     
     var deeplink: Deeplink? {
         //  MARK: - FINISH THIS
-        // it's not safe to check just file extension
+        //  FIXME: it's not safe to check just file extension
         if absoluteString.contains(".json") {
             print("deeplink: it's JSON \(self)")
             return .file(url: self)
@@ -59,6 +59,18 @@ extension URL {
 
 extension URL {
     func getTexts() -> [String] {
+        
+        guard self.startAccessingSecurityScopedResource() else {
+            print("getTexts: denied access to file at \(self)")
+            return []
+        }
+         
+        defer { self.stopAccessingSecurityScopedResource() }
+        
+//        if let content = try? String(contentsOf: self) {
+//            print("getTexts: \(content)")
+//        }
+        
         guard let data = try? Data(contentsOf: self) else {
             print("getTexts: Failed to load file from \(self)")
             return []

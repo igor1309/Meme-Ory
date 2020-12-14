@@ -11,7 +11,7 @@ struct ListOptionsView: View {
     
     @Environment(\.presentationMode) private var presentation
     
-    @ObservedObject var model: RandomStoryListViewModel
+    @ObservedObject var model: MainViewModel
     
     var body: some View {
         NavigationView {
@@ -125,7 +125,7 @@ struct ListOptionsView: View {
 }
 
 fileprivate struct ListOptionsView_Testing: View {
-    @StateObject private var model = RandomStoryListViewModel(context: SampleData.preview.container.viewContext)
+    @StateObject private var model = MainViewModel(context: SampleData.preview.container.viewContext)
     
     var body: some View {
         ListOptionsView(model: model)

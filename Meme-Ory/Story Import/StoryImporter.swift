@@ -65,10 +65,13 @@ fileprivate struct StoryImporter: ViewModifier {
     private func handleFileImporter(_ result: Result<URL, Error>) {
         switch result {
             case .success(let url):
+                #if DEBUG
+                print("StoryImporter: Import success")
+                #endif
+                
                 let texts = url.getTexts()
                 
                 #if DEBUG
-                print("StoryImporter: Import success")
                 print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")
                 #endif
                 

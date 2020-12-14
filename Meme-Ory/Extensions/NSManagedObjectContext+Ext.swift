@@ -106,14 +106,26 @@ extension NSManagedObjectContext {
     }
     
     
-    //  MARK: - Get Object
+    //  MARK: - Get ObjectID & Object
     
-    func getObject(with url: URL?) -> NSManagedObject? {
+    func getObjectID(for url: URL?) -> NSManagedObjectID? {
         guard let coordinator = persistentStoreCoordinator,
               let url = url,
               let coreDataURL = url.coreDataURL,
-              let objectID = coordinator.managedObjectID(forURIRepresentation: coreDataURL),
+              let objectID = coordinator.managedObjectID(forURIRepresentation: coreDataURL) else { return nil }
+        
+        return objectID
+    }
+    
+    func getObject(with url: URL?) -> NSManagedObject? {
+        guard let objectID = getObjectID(for: url),
               let object = try? existingObject(with: objectID) else { return nil }
+        
+//        guard let coordinator = persistentStoreCoordinator,
+//              let url = url,
+//              let coreDataURL = url.coreDataURL,
+//              let objectID = coordinator.managedObjectID(forURIRepresentation: coreDataURL),
+//              let object = try? existingObject(with: objectID) else { return nil }
         
         return object
     }

@@ -170,7 +170,7 @@ struct RandomStoryListView: View {
                 //
                 
                 case .listOptions:
-                    ListOptionsView(model: model)
+                    OLDListOptionsView(model: model)
                     
                 case .edit: Text("TBD")
                 //  MARK: - FINISH THIS:
@@ -258,7 +258,7 @@ struct RamdonStoryListView_Previews: PreviewProvider {
             RandomStoryListView()
                 .preferredColorScheme(.dark)
         }
-        .environment(\.sizeCategory, .extraLarge)
+        .environment(\.sizeCategory, .large)
         .environment(\.managedObjectContext, context)
         .environmentObject(RandomStoryListViewModel(context: context))
         .environmentObject(Filter())

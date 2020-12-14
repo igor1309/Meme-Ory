@@ -43,7 +43,7 @@ final class RandomStoryListViewModel: ObservableObject {
         /// if listOptions change list is ordered
         $listOptions
             .compactMap { [weak self] options in
-                let request = Story.fetchRequest(options.predicate, sortDescriptors: options.sortDescriptors)
+                let request = options.fetchRequest
                 let fetch = try? self?.context.fetch(request)
                 return fetch
             }

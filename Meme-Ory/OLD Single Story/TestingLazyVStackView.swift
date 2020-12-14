@@ -59,10 +59,10 @@ struct TestingLazyVStackView_Previews: PreviewProvider {
     
     static var previews: some View {
         TestingLazyVStackView(context: context)
-            .environment(\.sizeCategory, .extraLarge)
-            .preferredColorScheme(.dark)
             .environment(\.managedObjectContext, context)
             .environmentObject(Filter())
             .environmentObject(EventStore())
+            .environment(\.sizeCategory, .large)
+            .preferredColorScheme(.dark)
     }
 }

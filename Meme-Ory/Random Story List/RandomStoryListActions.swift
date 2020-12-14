@@ -47,10 +47,11 @@ struct StoryListActions_Previews: PreviewProvider {
                 .environmentObject(RandomStoryListViewModel(context: context))
         }
         .listStyle(InsetGroupedListStyle())
-        .previewLayout(.fixed(width: 350, height: 500))
-        .environment(\.sizeCategory, .extraLarge)
         .environment(\.managedObjectContext, context)
         .environmentObject(Filter())
         .environmentObject(EventStore())
+        .environment(\.colorScheme, .dark)
+        .previewLayout(.fixed(width: 350, height: 500))
+        .environment(\.sizeCategory, .large)
     }
 }
