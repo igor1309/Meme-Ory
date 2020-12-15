@@ -13,7 +13,6 @@ struct Meme_OryApp: App {
     let persistenceController: PersistenceController
     
     @StateObject private var eventStore = EventStore()
-    
     @StateObject private var listModel: MainViewModel
     
     init() {

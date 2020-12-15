@@ -20,10 +20,17 @@ extension NSManagedObjectContext {
         return objectID
     }
     
-    func getObject(with url: URL?) -> NSManagedObject? {
+//    func getObject(with url: URL?) -> NSManagedObject? {
+//        guard let objectID = getObjectID(for: url),
+//              let object = try? existingObject(with: objectID) else { return nil }
+//
+//        return object
+//    }
+    
+    func getObject<T: NSManagedObject>(with url: URL?) -> T? {
         guard let objectID = getObjectID(for: url),
-              let object = try? existingObject(with: objectID) else { return nil }
-        
+              let object = try? existingObject(with: objectID) as? T else { return nil }
+
         return object
     }
     

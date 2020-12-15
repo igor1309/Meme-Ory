@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct MainViewWrapper: View {
     
@@ -35,6 +36,7 @@ struct MainViewWrapper: View {
             
             model.deleteTemporaryFile()
             context.saveContext()
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
     
@@ -48,7 +50,7 @@ struct MainViewWrapper_Previews: PreviewProvider {
         Group {
             MainViewWrapper()
                 .environmentObject(MainViewModel(context: context, viewMode: .list))
-
+            
             MainViewWrapper()
                 .environmentObject(MainViewModel(context: context))
         }

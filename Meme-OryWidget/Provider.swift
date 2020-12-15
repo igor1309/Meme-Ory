@@ -11,6 +11,8 @@ import CoreData
 
 struct Provider: TimelineProvider {
     
+    let viewContext = PersistenceController.shared.container.viewContext
+    
     func placeholder(in context: Context) -> Entry {
         Entry.sampleOneStory
     }
@@ -36,7 +38,6 @@ struct Provider: TimelineProvider {
         let currentDate = Date()
         for offset in 0 ..< 6 {
             let entryDate = Calendar.current.date(byAdding: .minute, value: 10 * offset, to: currentDate)!
-            let viewContext = PersistenceController.shared.container.viewContext
             let limit = 9
             let stories = viewContext.randomObjects(limit, ofType: Story.self)
             let newEntry = Entry(date: entryDate, stories: stories)

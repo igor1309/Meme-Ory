@@ -121,7 +121,8 @@ struct MainView: View {
                     ListOptionsView(model: model)
                     
                 case let .story(url):
-                    if let story = context.getObject(with: url) as? Story {
+//                    if let story = context.getObject(with: url) as? Story {
+                    if let story: Story = context.getObject(with: url) {
                         ScrollView {
                             Text(story.text)
                                 .padding()
