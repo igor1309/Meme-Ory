@@ -237,10 +237,17 @@ final class MainViewModel: ObservableObject {
     }
     
     
-    //  MARK: - Reset Tags
+    //  MARK: - Reset
+    
+    func reset() {
+        //  FIXME: FINISH THIS:
+        listOptions.reset()
+    }
     
     func resetTags() {
-        listOptions.resetTags()
+        Ory.withHapticsAndAnimation {
+            self.listOptions.resetTags()
+        }
     }
     
 

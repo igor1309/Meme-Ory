@@ -25,15 +25,14 @@ struct ListActionButtons: View {
             LabeledButton(title:"New Story", icon: "plus", labelStyle: labelStyle, action: model.createNewStory)
         }
         
-        Section(header: Text("Shuffle List")) {
-            LabeledButton(title: "Shuffle List", icon: "wand.and.stars", action: model.shuffleList)
-                .disabled(true)
-        }
-        
-        /// reset filter by tag(s)
-        if model.listOptions.isTagFilterActive {
-            Section {
-                LabeledButton(title: "Reset Tags", icon: "tag.slash.fill", action: model.resetTags)
+        Section(header: Text("Reset")) {
+            LabeledButton(title: "Reset", icon: "arrow.counterclockwise", action: model.reset)
+            
+            /// reset filter by tag(s)
+            if model.listOptions.isTagFilterActive {
+                Section {
+                    LabeledButton(title: "Reset Tags", icon: "tag.slash.fill", action: model.resetTags)
+                }
             }
         }
         
@@ -98,12 +97,19 @@ struct ListActionButtons_Previews: PreviewProvider {
     @State static private var context = SampleData.preview.container.viewContext
     
     static var previews: some View {
-        List {
-            ListActionButtons()
+        Group {
+            List {
+                ListActionButtons(showUnimportant: false)
+            }
+            .previewLayout(.fixed(width: 350, height: 600))
+            
+            List {
+                ListActionButtons(showUnimportant: true)
+            }
+            .previewLayout(.fixed(width: 350, height: 700))
         }
         .listStyle(InsetGroupedListStyle())
         .environmentObject(MainViewModel(context: context))
         .preferredColorScheme(.dark)
-        .previewLayout(.fixed(width: 350, height: 600))
     }
 }

@@ -57,7 +57,7 @@ struct LabeledButton: View {
 }
 
 
-struct MyButton_Previews: PreviewProvider {
+struct LabeledButton_Previews: PreviewProvider {
     static var previews: some View {
         List {
             LabeledButton(title: "Do this", icon: "star", action: {})

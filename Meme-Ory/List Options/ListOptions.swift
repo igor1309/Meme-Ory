@@ -18,6 +18,13 @@ struct ListOptions {
         }
     }
     
+    mutating func reset() {
+        self.isTagFilterActive = false
+        self.isListLimited = false
+        self.remindersFilter = .all
+        self.favoritesFilter = .all
+    }
+    
     var isActive: Bool {
         isTagFilterActive || isListLimited || remindersFilter != .all || favoritesFilter != .all
     }
@@ -88,7 +95,10 @@ struct ListOptions {
     
     var tags = Set<Tag>()
     
-    var isTagFilterActive: Bool { !tags.isEmpty }
+    var isTagFilterActive: Bool {
+        get { !tags.isEmpty }
+        set { resetTags() }
+    }
     
     var tagList: String {
         tags.map { $0.name }.sorted().joined(separator: ", ")
