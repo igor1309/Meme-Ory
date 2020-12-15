@@ -46,9 +46,9 @@ struct ContentView: View {
     //  MARK: - Scene Change Handling
     
     private func handleScenePhase(scenePhase: ScenePhase) {
-        if scenePhase == .background {
+        if scenePhase == .background || scenePhase == .inactive {
             #if DEBUG
-            print("ContentView: gone to background")
+            print("ContentView: gone to background or inactive state")
             #endif
             
             model.deleteTemporaryFile()
