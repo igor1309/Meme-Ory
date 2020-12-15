@@ -26,7 +26,6 @@
 		2A1943CB258751CB00E81C73 /* StoryListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943CA258751CB00E81C73 /* StoryListRowView.swift */; };
 		2A1943D12587527F00E81C73 /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943D02587527F00E81C73 /* StoryListView.swift */; };
 		2A1943D7258763D700E81C73 /* MainViewActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943D6258763D700E81C73 /* MainViewActionButtons.swift */; };
-		2A1943E125876D8000E81C73 /* MainViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943E025876D8000E81C73 /* MainViewWrapper.swift */; };
 		2A19440F2587717200E81C73 /* Text and Timestamp Duplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A19440E2587717200E81C73 /* Text and Timestamp Duplicate.swift */; };
 		2A19441A258771AF00E81C73 /* StoryTextPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A194419258771AF00E81C73 /* StoryTextPicker.swift */; };
 		2A194424258771C100E81C73 /* TimestampPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A194423258771C100E81C73 /* TimestampPicker.swift */; };
@@ -169,7 +168,6 @@
 		2A1943CA258751CB00E81C73 /* StoryListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowView.swift; sourceTree = "<group>"; };
 		2A1943D02587527F00E81C73 /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		2A1943D6258763D700E81C73 /* MainViewActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewActionButtons.swift; sourceTree = "<group>"; };
-		2A1943E025876D8000E81C73 /* MainViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewWrapper.swift; sourceTree = "<group>"; };
 		2A19440E2587717200E81C73 /* Text and Timestamp Duplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text and Timestamp Duplicate.swift"; sourceTree = "<group>"; };
 		2A194419258771AF00E81C73 /* StoryTextPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextPicker.swift; sourceTree = "<group>"; };
 		2A194423258771C100E81C73 /* TimestampPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampPicker.swift; sourceTree = "<group>"; };
@@ -366,7 +364,7 @@
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
 				2ABAEEC32587A9B000D59CA2 /* TESTING */,
-				2A6D6BEC258608AC00BBA8C7 /* Main */,
+				2A6D6BEC258608AC00BBA8C7 /* Main View */,
 				2A194400258770D800E81C73 /* Single Story */,
 				2A194405258770E700E81C73 /* Story List */,
 				2ABAEEA625877A9000D59CA2 /* Story List Row */,
@@ -437,14 +435,13 @@
 			path = "Story Import";
 			sourceTree = "<group>";
 		};
-		2A6D6BEC258608AC00BBA8C7 /* Main */ = {
+		2A6D6BEC258608AC00BBA8C7 /* Main View */ = {
 			isa = PBXGroup;
 			children = (
-				2A1943E025876D8000E81C73 /* MainViewWrapper.swift */,
 				2A6D6BE6258608A500BBA8C7 /* MainView.swift */,
 				2A1943D6258763D700E81C73 /* MainViewActionButtons.swift */,
 			);
-			path = Main;
+			path = "Main View";
 			sourceTree = "<group>";
 		};
 		2A8AFCE12580FCAE00A0DD94 /* Meme-OryUITests */ = {
@@ -769,7 +766,6 @@
 				2A1A4C3D2587EB43008A84A2 /* NSManagedObjectContext+Publishers.swift in Sources */,
 				2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */,
 				2A1A4C2D2587EA36008A84A2 /* Sequence+Ext.swift in Sources */,
-				2A1943E125876D8000E81C73 /* MainViewWrapper.swift in Sources */,
 				2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */,
 				2AEEF8FE25700061008D1B31 /* Calendar.Component+Ext.swift in Sources */,
 				2A1943C52587506B00E81C73 /* SingleStoryView.swift in Sources */,
