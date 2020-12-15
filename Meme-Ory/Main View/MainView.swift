@@ -60,27 +60,26 @@ struct MainView: View {
     }
     
     private func noStoriesView() -> some View {
-        VStack(spacing: 16) {
-            Text("No Saved Stories")
-            Text("Add stories from other apps via share sheet or directly")
-                .foregroundColor(.secondary)
-                .font(.footnote)
-                .padding(.bottom)
-            
-            Button("Add Story") {
-                model.createNewStory()
-            }
-            
-            Button("Paste Clipboard to New Story") {
-                model.pasteToNewStory()
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Color(UIColor.secondarySystemGroupedBackground)
-                .ignoresSafeArea(.all)
-        )
+        Color(UIColor.secondarySystemGroupedBackground)
+            .ignoresSafeArea(.all)
+            .overlay(
+                VStack(spacing: 16) {
+                    Text("No Saved Stories")
+                    Text("Add stories from other apps via share sheet or directly")
+                        .foregroundColor(.secondary)
+                        .font(.footnote)
+                        .padding(.bottom)
+                    
+                    Button("Add Story") {
+                        model.createNewStory()
+                    }
+                    
+                    Button("Paste Clipboard to New Story") {
+                        model.pasteToNewStory()
+                    }
+                }
+                .padding()
+            )
     }
     
     

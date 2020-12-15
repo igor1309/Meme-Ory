@@ -10,6 +10,8 @@ import SwiftUI
 @main
 struct Meme_OryApp: App {
     
+    @Environment(\.scenePhase) private var scenePhase
+    
     @StateObject var storageProvider: StorageProvider
     
     init() {
@@ -20,6 +22,13 @@ struct Meme_OryApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(context: storageProvider.container.viewContext)
+        }
+        .onChange(of: scenePhase, perform: handleScenePhase)
+    }
+    
+    private func handleScenePhase(phase: ScenePhase) {
+        if phase == .background {
+            storageProvider.container.viewContext.saveContext()
         }
     }
 }
