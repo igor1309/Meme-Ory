@@ -11,7 +11,7 @@ import CoreData
 
 struct Provider: TimelineProvider {
     
-    let viewContext = PersistenceController.shared.container.viewContext
+    let viewContext = StorageProvider.shared.container.viewContext
     
     func placeholder(in context: Context) -> Entry {
         Entry.sampleOneStory

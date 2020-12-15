@@ -105,8 +105,8 @@ class ActionViewController: UIViewController {
         
         //  MARK: save Story
         //
-        let persistenceController = PersistenceController.shared
-        let context = persistenceController.container.viewContext
+        let storageProvider = StorageProvider.shared
+        let context = storageProvider.container.viewContext
         
         let story = Story(context: context)
         story.text_ = textView.text

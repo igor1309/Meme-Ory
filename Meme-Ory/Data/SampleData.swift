@@ -9,8 +9,8 @@ import CoreData
 
 struct SampleData {
     
-    static var preview: PersistenceController = {
-        let controller = PersistenceController(inMemory: true)
+    static var preview: StorageProvider = {
+        let controller = StorageProvider(inMemory: true)
         let context = controller.container.viewContext
         
         let tags: [Tag] = tagStrings.map {

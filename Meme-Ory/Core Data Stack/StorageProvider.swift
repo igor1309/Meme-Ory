@@ -1,5 +1,5 @@
 //
-//  Persistence.swift
+//  StorageProvider.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 22.11.2020.
@@ -7,8 +7,8 @@
 
 import CoreData
 
-struct PersistenceController {
-    static let shared = PersistenceController()
+class StorageProvider: ObservableObject {
+    static let shared = StorageProvider()
     
     let container: NSPersistentCloudKitContainer
     
