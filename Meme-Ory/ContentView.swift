@@ -6,14 +6,28 @@
 //
 
 import SwiftUI
+import CoreData
 import WidgetKit
 
 struct ContentView: View {
     
-    @Environment(\.managedObjectContext) private var context
     @Environment(\.scenePhase) private var scenePhase
     
-    @EnvironmentObject private var model: MainViewModel
+    @StateObject private var eventStore: EventStore
+    @StateObject private var model: MainViewModel
+    
+    let context: NSManagedObjectContext
+    
+    init(context: NSManagedObjectContext) {
+        self.context = context
+        
+        let eventStore = EventStore()
+        _eventStore = StateObject(wrappedValue: eventStore)
+        
+        let model = MainViewModel(context: context)
+        _model = StateObject(wrappedValue: model)
+    }
+    
     
     var body: some View {
         NavigationView {
@@ -23,6 +37,9 @@ struct ContentView: View {
         .onOpenURL(perform: model.handleURL)
         .storyImporter(isPresented: $model.showingFileImporter)
         .fileExporter(isPresented: $model.showingFileExporter, document: model.document, contentType: .json, onCompletion: model.handleFileExporter)
+        .environment(\.managedObjectContext, context)
+        .environmentObject(eventStore)
+        .environmentObject(model)
     }
     
     
@@ -47,10 +64,10 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            ContentView()
+            ContentView(context: context)
                 .environmentObject(MainViewModel(context: context, viewMode: .list))
             
-            ContentView()
+            ContentView(context: context)
                 .environmentObject(MainViewModel(context: context))
         }
         .environment(\.managedObjectContext, context)

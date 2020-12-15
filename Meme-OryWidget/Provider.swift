@@ -11,7 +11,7 @@ import CoreData
 
 struct Provider: TimelineProvider {
     
-    let viewContext = StorageProvider.shared.container.viewContext
+    let viewContext = StorageProvider().container.viewContext
     
     func placeholder(in context: Context) -> Entry {
         Entry.sampleOneStory

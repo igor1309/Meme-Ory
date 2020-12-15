@@ -10,23 +10,16 @@ import SwiftUI
 @main
 struct Meme_OryApp: App {
     
-    let storageProvider: StorageProvider
-    
-    @StateObject private var eventStore = EventStore()
-    @StateObject private var listModel: MainViewModel
+    @StateObject var storageProvider: StorageProvider
     
     init() {
-        storageProvider = StorageProvider.shared
-        let context = storageProvider.container.viewContext
-        _listModel = StateObject(wrappedValue: MainViewModel(context: context))
+        let storageProvider = StorageProvider()
+        _storageProvider = StateObject(wrappedValue: storageProvider)
     }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, storageProvider.container.viewContext)
-                .environmentObject(listModel)
-                .environmentObject(eventStore)
+            ContentView(context: storageProvider.container.viewContext)
         }
     }
 }

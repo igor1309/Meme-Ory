@@ -8,7 +8,7 @@
 import CoreData
 
 class StorageProvider: ObservableObject {
-    static let shared = StorageProvider()
+    //static let shared = StorageProvider()
     
     let container: NSPersistentCloudKitContainer
     

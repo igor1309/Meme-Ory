@@ -105,7 +105,7 @@ class ActionViewController: UIViewController {
         
         //  MARK: save Story
         //
-        let storageProvider = StorageProvider.shared
+        let storageProvider = StorageProvider()
         let context = storageProvider.container.viewContext
         
         let story = Story(context: context)
