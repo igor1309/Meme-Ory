@@ -47,6 +47,7 @@
 		2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
 		2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A21716E257CEE3C0098681E /* StoryImporter.swift */; };
 		2A251B8A25767960004F9218 /* ShareStoryButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A251B8925767960004F9218 /* ShareStoryButtons.swift */; };
+		2A29E7012589598600F2719B /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A167B99258316D3007A986B /* String+Ext.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
 		2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportTextView.swift */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
@@ -863,6 +864,7 @@
 				2ACCEE58257E13790022B752 /* EKEventStore+Ext.swift in Sources */,
 				2A64D42D257164B900C1817F /* Brief.swift in Sources */,
 				2ADAD3DE256DA67500AF463B /* SampleData.swift in Sources */,
+				2A29E7012589598600F2719B /* String+Ext.swift in Sources */,
 				2A8E4418256EF228002C0DFC /* WidgetEntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

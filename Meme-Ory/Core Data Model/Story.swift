@@ -72,7 +72,7 @@ extension Story {
     static func createStoryFromPasteboard(context: NSManagedObjectContext) {
         guard let content = UIPasteboard.general.string else { return }
         
-        let clean = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        let clean = content.trimmed()
         if !clean.isEmpty {
             let story = Story(context: context)
             story.text = clean

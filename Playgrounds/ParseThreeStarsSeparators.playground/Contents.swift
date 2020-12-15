@@ -69,6 +69,8 @@ let source = """
 
 """
 
+print("source.count: \(source.count)")
+
 let separator = "***"
 let components = source.components(separatedBy: separator)
 let first = components[0]

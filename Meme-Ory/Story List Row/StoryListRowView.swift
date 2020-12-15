@@ -34,9 +34,10 @@ struct StoryListRowView: View {
     var label: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(story.text)//.storyText())
+                story.text.storyText(maxTextLength: 1_000)
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(20)
                 
                 if !story.tagList.isEmpty {
                     Label {

@@ -37,11 +37,12 @@ struct StorySimpleView: View {
                     .padding([.top, .horizontal])
                 
                 ScrollView {
-                    Text(text)
+                    text.storyText(maxTextLength: maxTextLength)
                         .padding(.horizontal)
                 }
             }
-            .navigationBarTitle(title, displayMode: .inline)
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 trailing: Button("Done") {
                     presentation.wrappedValue.dismiss()
@@ -49,6 +50,12 @@ struct StorySimpleView: View {
             )
         }
     }
+    
+    
+    //  MARK: - Constants
+    
+    let maxTextLength = 5_000
+
 }
 
 

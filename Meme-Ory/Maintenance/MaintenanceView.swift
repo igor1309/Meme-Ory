@@ -47,6 +47,7 @@ struct MaintenanceView: View {
             .environmentObject(model)
             .navigationBarTitle("Maintenance", displayMode: .inline)
             .toolbar(content: toolbar)
+            .onDisappear(perform: context.saveContext)
             .actionSheet(item: $actionID, content: actionSheet)
             .confirmAndDelete($actionID, title: "Delete Selected Stories?".uppercased()) { _ in
                 delete()

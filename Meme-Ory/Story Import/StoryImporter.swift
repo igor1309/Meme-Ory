@@ -34,28 +34,21 @@ fileprivate struct StoryImporter: ViewModifier {
     //  MARK: - Handle Open URL
     
     private func handleOpenURL(url: URL) {
-        guard let deeplink = url.deeplink else {
+        guard let deeplink = url.deeplink,
+              case .file(let fileURL) = deeplink else {
             showingFailedImportAlert = true
             return
         }
         
-        switch deeplink {
-            case .home, .story(_):
-                //  FIXME: - FINISH THIS: ANY FEEDBACK TO USER?
-                /// do nothing we are here
-                return
-                
-            case let .file(url):
-                withAnimation {
-                    let texts = url.getTexts()
-                    
-                    #if DEBUG
-                    print("StoryImporter: handleOpenURL: importing file \(url)")
-                    print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")
-                    #endif
-                    
-                    textsStruct = TextsStruct(texts: texts)
-                }
+        withAnimation {
+            let texts = fileURL.getTexts()
+            
+            #if DEBUG
+            print("StoryImporter: handleOpenURL: importing file \(url)")
+            print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")
+            #endif
+            
+            textsStruct = TextsStruct(texts: texts)
         }
     }
     

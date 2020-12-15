@@ -38,6 +38,7 @@ final class ImportTextViewModel: ObservableObject {
         briefs = texts.map {
             Brief(text: $0)
         }
+        
         string = texts.joined(separator: "\n")
         
         #if DEBUG

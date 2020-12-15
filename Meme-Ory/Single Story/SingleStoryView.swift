@@ -19,7 +19,7 @@ struct SingleStoryView: View {
     var body: some View {
         VStack(spacing: 16) {
             ScrollView(showsIndicators: false) {
-                Text(story.text)
+                story.text.storyText(maxTextLength: maxTextLength)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
             .cardModifier(strokeBorderColor: Color(UIColor.systemGray3), background: cardBackground)
@@ -65,9 +65,10 @@ struct SingleStoryView: View {
 
     //  MARK: - Constants
     
+    let maxTextLength = 5_000
     let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
     
-    
+
     //  MARK: - Icons
     
     @ViewBuilder

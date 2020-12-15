@@ -32,7 +32,7 @@ extension MaintenanceViewModel {
         
         for text in textsCopy {
             let story = Story(context: context)
-            story.text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            story.text = text.trimmed()
             story.timestamp = date
             story.tags.append(tag)
         }

@@ -48,7 +48,7 @@ class ActionViewController: UIViewController {
                 DispatchQueue.main.async {
                     if let strongTextView = weakTextView {
                         if let text = result as? String {
-                            strongTextView.text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                            strongTextView.text = text.trimmed()
                         }
                     }
                 }
@@ -66,7 +66,7 @@ class ActionViewController: UIViewController {
                 let pageTitle = javaScriptValues["title"] as? String ?? ""
                 let pageURL = javaScriptValues["URL"] as? String ?? ""
                 let pageBody = javaScriptValues["body"] as? String ?? ""
-                let text = "\(pageTitle)\n\(pageURL)\n\n\(pageBody)".trimmingCharacters(in: .whitespacesAndNewlines)
+                let text = "\(pageTitle)\n\(pageURL)\n\n\(pageBody)".trimmed()
                 
                 DispatchQueue.main.async {
                     if let strongTextView = weakTextView {

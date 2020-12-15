@@ -95,7 +95,7 @@ final class StoryEditorViewModel: ObservableObject {
             if self.mode == .create {
                 guard let content = UIPasteboard.general.string else { return }
                 
-                let clean = content.trimmingCharacters(in: .whitespacesAndNewlines)
+                let clean = content.trimmed()
                 if !clean.isEmpty {
                     self.text = content
                 }
@@ -162,7 +162,7 @@ final class StoryEditorViewModel: ObservableObject {
                 story.timestamp = Date()
             }
             
-            story.text =                   self.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            story.text =                   self.text.trimmed()
             story.tags =                   Array(self.tags)
             story.isFavorite =             self.isFavorite
             story.calendarItemIdentifier = self.calendarItemIdentifier

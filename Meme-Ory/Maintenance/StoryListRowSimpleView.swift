@@ -15,17 +15,10 @@ struct StoryListRowSimpleView: View {
     
     @ObservedObject var story: Story
     
-    @State private var sheetID: SheetID?
-    
-    enum SheetID: Identifiable {
-        case split, showStory
-        var id: Int { hashValue }
-    }
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(story.text)
-                .lineLimit(model.hasTimestampDate ? nil : 2)
+            story.text.storyText(maxTextLength: maxTextLength)
+                .lineLimit(3)
                 .if(hasDeleteMark.wrappedValue) { $0.foregroundColor(Color(UIColor.systemRed)) }
                 .font(.subheadline)
             
@@ -39,22 +32,37 @@ struct StoryListRowSimpleView: View {
         .contentShape(Rectangle())
         .padding(.vertical, 3)
         .onTapGesture(count: 1, perform: toggleMarkDelete)
-        .contextMenu(menuItems: menuContent)
+        .contextMenu(menuItems: contextMenu)
         .sheet(item: $sheetID, content: splitView)
     }
     
+    
+    //  MARK: - Constants
+    
+    let maxTextLength = 5_000
+    
+    
+    //  MARK: - Context Menu
+    
     @ViewBuilder
-    private func menuContent() -> some View {
+    private func contextMenu() -> some View {
         LabeledButton(title: "Show Story", icon: "doc.text.magnifyingglass", action: showStory)
         LabeledButton(title: "Split Story", icon: "scissors", action: splitStory)
-        LabeledButton(title: hasDeleteMark.wrappedValue ? "Unmark delete" : "Mark to delete", icon: hasDeleteMark.wrappedValue ? "trash.slash" : "trash", action: toggleMarkDelete)
+        LabeledButton(title: hasDeleteMark.wrappedValue ? "Unmark delete" : "Mark to delete", icon: hasDeleteMark.wrappedValue ? "trash.slash" : "trash.circle.fill", action: toggleMarkDelete)
     }
+    
+    
+    //  MARK: - Functions
     
     private func showStory() {
         sheetID = .showStory
     }
     
     private func splitStory() {
+        /// mark story to easy find later
+        let splitTag = context.getTag(withName: "##splist##")
+        story.addToTags_(splitTag)
+        
         sheetID = .split
     }
     
@@ -75,6 +83,16 @@ struct StoryListRowSimpleView: View {
         )
     }
     
+    
+    //  MARK: - Split View Sheet
+    
+    @State private var sheetID: SheetID?
+    
+    enum SheetID: Identifiable {
+        case split, showStory
+        var id: Int { hashValue }
+    }    
+    
     @ViewBuilder
     private func splitView(sheetID: SheetID) -> some View {
         switch sheetID {
@@ -92,6 +110,7 @@ struct StoryListRowSimpleView: View {
         }
     }
 }
+
 
 struct StoryListRowSimpleView_Previews: PreviewProvider {
     @State static private var context = SampleData.preview.container.viewContext

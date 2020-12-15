@@ -36,7 +36,7 @@ struct ImportTextView: View {
     var body: some View {
         NavigationView {
             if model.briefs.isEmpty {
-                cannotParse()
+                failView()
             } else {
                 List {
                     Section(header: Text("Selected: \(model.selectedCount) of \(model.count)")) {
@@ -44,16 +44,27 @@ struct ImportTextView: View {
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
-                .navigationBarTitle(title, displayMode: .inline)
-                .navigationBarItems(leading: cancelButton(), trailing: importButton())
+                .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(content: toolbar)
             }
         }
     }
     
-    private func cannotParse() -> some View {
+    
+    //  MARK: - Fail View
+    
+    private func failView() -> some View {
         VStack {
-            Text("Nothing to import or cannot parse this file\n(an array of strings would be ok)\n\nPlease try again if you are sure that file is ok")
-                .padding(.vertical)
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Nothing to import or cannot parse this file.")
+                Text("(An array of strings would be ok.)")
+                    .padding(.bottom)
+                Text("Please try again if you are sure that file is ok.")
+                    .foregroundColor(.secondary)
+                    .font(.footnote)
+            }
+            .padding(.vertical)
             
             Text(model.string)
                 .foregroundColor(.secondary)
@@ -66,6 +77,9 @@ struct ImportTextView: View {
         .navigationBarTitle("Import Fail", displayMode: .inline)
         .navigationBarItems(trailing: Button("Close") { presentation.wrappedValue.dismiss() })
     }
+    
+    
+    //  MARK: - Brief List Row
     
     private func briefListRow(_ story: Brief) -> some View {
         Button {
@@ -87,6 +101,19 @@ struct ImportTextView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
+    }
+    
+    
+    //  MARK: - Toolbar
+    
+    @ToolbarContentBuilder
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            importButton()
+        }
+        ToolbarItem(placement: .cancellationAction) {
+            cancelButton()
+        }
     }
     
     private func cancelButton() -> some View {
@@ -127,6 +154,7 @@ struct ImportTextView: View {
         presentation.wrappedValue.dismiss()
     }
 }
+
 
 struct ImportBriefView_Previews: PreviewProvider {
     static var previews: some View {
