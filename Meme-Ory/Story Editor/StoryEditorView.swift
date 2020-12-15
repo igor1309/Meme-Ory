@@ -56,9 +56,25 @@ struct StoryEditorView: View {
         .background(textBackground)
         .navigationBarTitle(model.mode.title, displayMode: .inline)
         .navigationBarItems(leading: cancelButton(), trailing: saveButton())
-        .actionSheet(isPresented: $model.showingMessage, content: { ActionSheet(title: Text(model.message), buttons: []) })
-        .onAppear { model.reminderCleanUp(eventStore: eventStore, context: context) }
+        .actionSheet(isPresented: $model.showingMessage, content: actionSheet)
+        .onAppear(perform: onAppear)
+        .onDisappear(perform: context.saveContext)
     }
+    
+    private func onAppear() {
+        model.reminderCleanUp(eventStore: eventStore, context: context)
+    }
+    
+    
+    //  MARK: - Action Sheet
+    
+    private func actionSheet() -> ActionSheet {
+        ActionSheet(title: Text(model.message),
+                    buttons: [])
+    }
+    
+    
+    //  MARK: - Views
     
     @ViewBuilder
     private var textBackground: some View {
