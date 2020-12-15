@@ -14,6 +14,8 @@ struct WidgetEntryView: View {
     
     let entry: Entry
     
+    let publisherForCoreDataRemoteNotifications = NotificationCenter.default.publisher(for: .NSPersistentStoreRemoteChange)
+    
     var stories: [Story] {
         switch size {
             case .systemSmall:  return entry.stories.isEmpty ? [] : [entry.stories.first!]
@@ -24,6 +26,16 @@ struct WidgetEntryView: View {
     }
     
     var body: some View {
+        content
+        .onReceive(publisherForCoreDataRemoteNotifications) { _ in
+            // https://stackoverflow.com/a/63971182/11793043
+            // make sure you don't call this too often
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
         if stories.isEmpty {
             Text("No stories here ☹️")
                 .font(.title)
