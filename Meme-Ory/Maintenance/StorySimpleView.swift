@@ -43,11 +43,7 @@ struct StorySimpleView: View {
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                trailing: Button("Done") {
-                    presentation.wrappedValue.dismiss()
-                }
-            )
+            .toolbar(content: toolbar)
         }
     }
     
@@ -56,6 +52,15 @@ struct StorySimpleView: View {
     
     let maxTextLength = 5_000
 
+    //  MARK: - Toolbar
+    
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button("Done") {
+                presentation.wrappedValue.dismiss()
+            }
+        }
+    }
 }
 
 

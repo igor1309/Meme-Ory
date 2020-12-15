@@ -23,8 +23,11 @@ struct ErrorSheet<V: View>: View {
             VStack(spacing: 24) {
                 Text(message)
                     .foregroundColor(.red)
-                    .navigationBarTitle("Error", displayMode: .inline)
-                    .navigationBarItems(trailing: closeButton())
+                    .navigationTitle("Error")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .primaryAction, content: closeButton)
+                    }
                 
                 button()
             }

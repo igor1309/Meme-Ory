@@ -54,8 +54,9 @@ struct StoryEditorView: View {
             .padding(.trailing)
         }
         .background(textBackground)
-        .navigationBarTitle(model.mode.title, displayMode: .inline)
-        .navigationBarItems(leading: cancelButton(), trailing: saveButton())
+        .navigationTitle(model.mode.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(content: toolbar)
         .actionSheet(isPresented: $model.showingMessage, content: actionSheet)
         .onAppear(perform: onAppear)
         .onDisappear(perform: context.saveContext)
@@ -117,7 +118,14 @@ struct StoryEditorView: View {
         }
     }
     
-    @ViewBuilder
+    //  MARK: - Toolbar
+    
+    @ToolbarContentBuilder
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction, content: saveButton)
+        ToolbarItem(placement: .cancellationAction, content: cancelButton)
+    }
+
     private func cancelButton() -> some View {
         Button("Cancel") {
             presentation.wrappedValue.dismiss()

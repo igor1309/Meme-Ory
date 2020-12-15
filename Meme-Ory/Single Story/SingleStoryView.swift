@@ -91,7 +91,8 @@ struct SingleStoryView: View {
             Menu {
                 StoryActionButtons(story: story)
             } label: {
-                Label("Story Menu", systemImage: "doc.plaintext")
+                Image(systemName: "doc.plaintext")
+                    .frame(width: 44, height: 44, alignment: .trailing)
             }
         }
     }

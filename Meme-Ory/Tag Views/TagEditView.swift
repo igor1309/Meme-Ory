@@ -27,9 +27,18 @@ struct TagEditView: View {
                     TextField("tag Name", text: $draft)
                 }
             }
-            .navigationBarTitle("Edit tag", displayMode: .inline)
-            .navigationBarItems(leading: cancelButton(), trailing: saveButton())
+            .navigationTitle("Edit tag")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(content: toolbar)
         }
+    }
+    
+    //  MARK: - Toolbar
+    
+    @ToolbarContentBuilder
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction, content: saveButton)
+        ToolbarItem(placement: .cancellationAction, content: cancelButton)
     }
     
     private func cancelButton() -> some View {

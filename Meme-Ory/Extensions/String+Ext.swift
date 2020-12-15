@@ -44,7 +44,9 @@ extension String {
     @ViewBuilder
     func storyText(maxTextLength: Int) -> some View {
         if count > maxTextLength {
-            Text("Story too long, showing first \(maxTextLength) characters\n\n").foregroundColor(Color(UIColor.systemRed)).font(.footnote)
+            Text("Story too long, showing first \(maxTextLength) characters\n\n")
+                .foregroundColor(Color(UIColor.systemRed))
+                .font(.footnote)
                 + Text(prefix(maxTextLength))
         } else {
             Text(self)
@@ -52,5 +54,5 @@ extension String {
     }
     
     
-
+    
 }

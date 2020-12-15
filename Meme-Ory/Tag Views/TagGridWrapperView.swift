@@ -55,10 +55,8 @@ struct TagGridWrapperView: View {
                 Spacer()
             }
             .padding()
-            .navigationBarTitle("Tags")//, displayMode: .inline)
-            .navigationBarItems(trailing: Button("Done") {
-                presentation.wrappedValue.dismiss()
-            })
+            .navigationTitle("Tags")
+            .toolbar(content: toolbar)
         }
     }
     
@@ -77,6 +75,17 @@ struct TagGridWrapperView: View {
             selected.insert(tag)
             
             newTagName = ""
+        }
+    }
+
+
+    //  MARK: - Toolbar
+    
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button("Done") {
+                presentation.wrappedValue.dismiss()
+            }
         }
     }
 }

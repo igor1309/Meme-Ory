@@ -72,7 +72,7 @@ struct ListOptionsView: View {
             .pickerStyle(MenuPickerStyle())
             .accentColor(Color(UIColor.systemOrange))
             .navigationTitle("List Options")
-            .navigationBarItems(trailing: doneButton())
+            .toolbar(content: toolbar)
         }
     }
     
@@ -117,9 +117,14 @@ struct ListOptionsView: View {
         .disabled(model.listOptions.tags.isEmpty)
     }
     
-    private func doneButton() -> some View {
-        Button("Done") {
-            presentation.wrappedValue.dismiss()
+    
+    //  MARK: - Toolbar
+    
+    private func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button("Done") {
+                presentation.wrappedValue.dismiss()
+            }
         }
     }
 }

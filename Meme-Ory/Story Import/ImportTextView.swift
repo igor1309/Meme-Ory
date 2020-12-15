@@ -47,6 +47,7 @@ struct ImportTextView: View {
                 .navigationTitle(title)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: toolbar)
+                .actionSheet(isPresented: $showConfirmation, content: confirmationActionSheet)
             }
         }
     }
@@ -75,7 +76,13 @@ struct ImportTextView: View {
         }
         .padding()
         .navigationBarTitle("Import Fail", displayMode: .inline)
-        .navigationBarItems(trailing: Button("Close") { presentation.wrappedValue.dismiss() })
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Close") {
+                    presentation.wrappedValue.dismiss()
+                }
+            }
+        }
     }
     
     
@@ -108,12 +115,8 @@ struct ImportTextView: View {
     
     @ToolbarContentBuilder
     private func toolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            importButton()
-        }
-        ToolbarItem(placement: .cancellationAction) {
-            cancelButton()
-        }
+        ToolbarItem(placement: .primaryAction, content: importButton)
+        ToolbarItem(placement: .cancellationAction, content: cancelButton)
     }
     
     private func cancelButton() -> some View {
@@ -129,7 +132,6 @@ struct ImportTextView: View {
             showConfirmation = true
         }
         .disabled(model.selectedCount == 0)
-        .actionSheet(isPresented: $showConfirmation, content: confirmationActionSheet)
     }
     
     private func confirmationActionSheet() -> ActionSheet {

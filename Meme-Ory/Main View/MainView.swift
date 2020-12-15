@@ -149,7 +149,8 @@ struct MainView: View {
                 Menu {
                     MainViewActionButtons(stories: Array(stories))
                 } label: {
-                    Image(systemName: "ellipsis.circle")
+                    Image(systemName: "ellipsis")
+                        .frame(width: 44, height: 44, alignment: .leading)
                 }
             }
         }

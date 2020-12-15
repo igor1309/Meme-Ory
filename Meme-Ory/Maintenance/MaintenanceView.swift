@@ -100,6 +100,7 @@ struct MaintenanceView: View {
                 }
             } label: {
                 Image(systemName: "target")
+                    .frame(width: 44, height: 44, alignment: .trailing)
             }
         }
         

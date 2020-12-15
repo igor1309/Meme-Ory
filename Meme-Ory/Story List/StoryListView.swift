@@ -50,7 +50,8 @@ struct StoryListView: View {
             Menu {
                 ListActionButtons()
             } label: {
-                Label("Story Menu", systemImage: "list.bullet")
+                Image(systemName: "list.bullet")
+                    .frame(width: 44, height: 44, alignment: .trailing)
                     .if(model.listOptions.isActive) { $0.foregroundColor(Color(UIColor.systemOrange)) }
             }
         }
