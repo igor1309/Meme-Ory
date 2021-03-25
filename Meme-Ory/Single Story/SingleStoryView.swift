@@ -18,6 +18,21 @@ struct SingleStoryView: View {
     
     var body: some View {
         VStack(spacing: 16) {
+            HStack(alignment: .firstTextBaseline) {
+                Button("Switch to List") {
+                    model.switchViewMode()
+                }
+
+                Spacer()
+                
+                Group {
+                    favoriteIcon()
+                    reminderIcon()
+                }
+                .imageScale(.small)
+                // .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
+            }
+            
             ScrollView(showsIndicators: false) {
                 story.text.storyText(maxTextLength: maxTextLength)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -39,12 +54,12 @@ struct SingleStoryView: View {
                 
                 Spacer()
                 
-                HStack {
-                    favoriteIcon()
-                    reminderIcon()
-                }
-                .imageScale(.small)
-                .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
+                //                HStack {
+                //                    favoriteIcon()
+                //                    reminderIcon()
+                //                }
+                //                .imageScale(.small)
+                //                .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
             }
             
             Text("Tap card to get next random story")
@@ -61,13 +76,11 @@ struct SingleStoryView: View {
     private func handleOnApper() {
         eventStore.reminderCleanup(for: story, in: context)
     }
-    
 
     //  MARK: - Constants
     
     let maxTextLength = 5_000
     let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
-    
 
     //  MARK: - Icons
     
@@ -83,7 +96,6 @@ struct SingleStoryView: View {
             .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
     }
     
-    
     //  MARK: - Toolbar
     
     private func toolbar() -> some ToolbarContent {
@@ -95,8 +107,7 @@ struct SingleStoryView: View {
                     .frame(width: 44, height: 44, alignment: .trailing)
             }
         }
-    }
-    
+    }    
     
     //  MARK: - Action Sheets
     
@@ -136,6 +147,6 @@ struct SingleStoryView_Previews: PreviewProvider {
         .environmentObject(EventStore())
         .environment(\.sizeCategory, .large)
         .environment(\.colorScheme, .dark)
-        .previewLayout(.fixed(width: 350, height: 600))
+        .previewLayout(.fixed(width: 350, height: 700))
     }
 }
