@@ -49,6 +49,6 @@ jobs:
           # token: ${{ secrets.GH_TOKEN }}
           commit-message: Auto Pull Request
           title: Auto-created Pull Request
-          branch: ${{ steps.vars.outputs.head_branch }}
+          branch: ${{ steps.vars.outputs.branch }}
           # delete-branch: true
           base: dev
