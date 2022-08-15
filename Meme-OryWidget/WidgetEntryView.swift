@@ -18,16 +18,10 @@ struct WidgetEntryView: View {
     
     var stories: [Story] {
         switch size {
-        case .systemSmall, .accessoryCircular:
-            return entry.stories.isEmpty ? [] : [entry.stories.first!]
-        
-        case .systemMedium, .accessoryInline:
-            return Array(entry.stories.prefix(3))
-        
-        case .systemLarge, .systemExtraLarge, .accessoryRectangular:
-            return entry.stories
-            
-        @unknown default:   return entry.stories
+            case .systemSmall:  return entry.stories.isEmpty ? [] : [entry.stories.first!]
+            case .systemMedium: return Array(entry.stories.prefix(3))
+            case .systemLarge:  return entry.stories
+            @unknown default:   return entry.stories
         }
     }
     
@@ -57,11 +51,12 @@ struct WidgetEntryView: View {
     @ViewBuilder
     private func storyRowView(_ story: Story) -> some View {
         switch size {
-        case .systemSmall, .accessoryCircular:
-            rowLabel(story).widgetURL(story.url)
-            
-        default:
-            Link(destination: story.url, label: { rowLabel(story) })
+            case .systemSmall:
+                rowLabel(story).widgetURL(story.url)
+            case .systemMedium, .systemLarge:
+                Link(destination: story.url, label: { rowLabel(story) })
+            @unknown default:
+                Text("TBD")
         }
     }
     
@@ -75,17 +70,14 @@ struct WidgetEntryView: View {
     
     private func storyText(of story: Story) -> String {
         switch size {
-        case .systemSmall, .accessoryCircular:
-            return story.storyText(maxCount: 100, maxLines: 3)
-            
-        case .systemMedium, .accessoryInline:
-            return story.storyText(maxCount: 180, maxLines: 4)
-            
-        case .systemLarge, .systemExtraLarge, .accessoryRectangular:
-            return story.storyText(maxCount: 360, maxLines: 8)
-            
-        @unknown default:
-            return story.storyText(maxCount: 100, maxLines: 3)
+            case .systemSmall:
+                return story.storyText(maxCount: 100, maxLines: 3)
+            case .systemMedium:
+                return story.storyText(maxCount: 180, maxLines: 4)
+            case .systemLarge:
+                return story.storyText(maxCount: 360, maxLines: 8)
+            @unknown default:
+                return story.storyText(maxCount: 100, maxLines: 3)
         }
     }
 }
