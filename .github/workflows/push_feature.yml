@@ -51,5 +51,4 @@ jobs:
           title: Auto-created Pull Request
           branch: ${{ steps.vars.outputs.base_branch }}
           # delete-branch: true
-          branch-suffix: timestamp
           base: dev
