@@ -47,6 +47,6 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: Auto Pull Request
-          branch: ${{ github.ref }} # The branch where you commit
-          base: dev # Don't forget to specify the right base branch here
+          # branch: ${{ github.ref }} # The branch where you commit
+          # base: dev # Don't forget to specify the right base branch here
 
