@@ -49,5 +49,5 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: Auto Pull Request
           title: Auto-created Pull Request
-          branch: ${{ github.ref }} # The branch where you commit
+          # branch: ${{ github.ref }} # The branch where you commit
           base: dev # Don't forget to specify the right base branch here
