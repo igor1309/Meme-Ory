@@ -10,12 +10,7 @@ import SwiftUI
 @main
 struct Meme_OryApp: App {
     
-    @StateObject var storageProvider: StorageProvider
-    
-    init() {
-        let storageProvider = StorageProvider()
-        _storageProvider = StateObject(wrappedValue: storageProvider)
-    }
+    @StateObject private var storageProvider = StorageProvider()
     
     var body: some Scene {
         WindowGroup {
