@@ -46,8 +46,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4.0.4
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          # token: ${{ secrets.GH_TOKEN }}
           commit-message: Auto Pull Request
           title: Auto-created Pull Request
-          # branch: ${{ github.ref }} # The branch where you commit
+          branch: ${{ github.ref }} # The branch where you commit
           base: dev # Don't forget to specify the right base branch here
