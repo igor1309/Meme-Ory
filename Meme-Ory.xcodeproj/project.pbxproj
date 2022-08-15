@@ -205,6 +205,7 @@
 		2A6D6C122586BAAD00BBA8C7 /* StoryActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryActionButtons.swift; sourceTree = "<group>"; };
 		2A6D6C182586DB3300BBA8C7 /* ListActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListActionButtons.swift; sourceTree = "<group>"; };
 		2A6D6C1E2587311300BBA8C7 /* ListOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptionsView.swift; sourceTree = "<group>"; };
+		2A7FE97828AAC88100797A7C /* swift-meme-ory */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-meme-ory"; sourceTree = "<group>"; };
 		2A85412A256EFED20051906B /* TagEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEditView.swift; sourceTree = "<group>"; };
 		2A8AFCC725805D7500A0DD94 /* ListOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOptions.swift; sourceTree = "<group>"; };
 		2A8AFCCC25805DEC00A0DD94 /* ListOptions Enums + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListOptions Enums + Ext.swift"; sourceTree = "<group>"; };
@@ -342,6 +343,7 @@
 		2A1B5FAA256A4A5D00E3283D = {
 			isa = PBXGroup;
 			children = (
+				2A7FE97828AAC88100797A7C /* swift-meme-ory */,
 				2ADAD3E3256DB9A000AF463B /* Meme-OryWidgetExtension.entitlements */,
 				2A1B5FB5256A4A5D00E3283D /* Meme-Ory */,
 				2A2CE5A3256C00E400FBFDB6 /* Playgrounds */,
