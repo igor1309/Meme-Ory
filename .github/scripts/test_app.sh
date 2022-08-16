@@ -1,3 +1,7 @@
+# do not forget to make file executable with `chmod +x the_file_name`
+
+
+
 #!/bin/bash
 
 set -eo pipefail
