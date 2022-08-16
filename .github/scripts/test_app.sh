@@ -8,7 +8,7 @@ set -eo pipefail
 
 xcodebuild clean build test \
            -project Meme-Ory.xcodeproj \
-           -scheme "Meme-Ory" \
+           -scheme "CI" \
            -sdk iphonesimulator \
            -destination "platform=iOS Simulator,name=iPhone 13 Pro" \
            CODE_SIGN_IDENTITY="" \
