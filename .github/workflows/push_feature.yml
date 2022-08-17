@@ -1,6 +1,6 @@
 # This workflow will run on push for any "feature" or fix branch, auto-creating pull request to merge in "dev", auto-merge if "clean build CI test" check pass
 
-name: Push-Feature
+name: Push Feature or Fix to Deploy
 
 # Controls when the workflow will run
 on:
@@ -26,7 +26,7 @@ jobs:
 #    uses: ./.github/workflows/ci.yml
     uses: ./.github/workflows/ci-fake-wip.yml
     with:
-      finish_ok: false
+      finish_ok: true
 
 #  ci:
 #    # The type of runner that the job will run on
@@ -54,13 +54,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo pull request from feature or fix branch into dev was created after successful CI check
+      
+      - name: checking out code
+        uses: actions/checkout@v2
+        
+      - name: extract git commit data
+        uses: rlespinasse/git-commit-data-action@v1.x
+        
+      - name: Update author information
+        run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
+        
+      - name: Raise PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: "auto-pr-branch"
+          base: dev
+          title: "demo for auto pr"
+          committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}
+          author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}
+          body:
+            This is to show automatic PR creation
+          token: ${{ secrets.GITHUB_TOKEN }}
+          delete-branch: true
           
   # Auto-merge with rebase (!!)
   auto_merge_with_rebase:
     needs: auto_create_pull_request
     runs-on: ubuntu-latest
     steps:
-      - run: echo pull request was auto-merged
+      - run: echo pull request was auto-merged, branch deleted
+      # - name: Approve Pull Request
+      #  uses: juliangruber/approve-pull-request-action@v1.1.1
+
           
   # This workflow contains a single job called "build"
 #  build-and-test:
