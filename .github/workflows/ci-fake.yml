@@ -13,7 +13,7 @@ on:
 jobs:
   # Pretend CI performed ok
   fail_if:
-    if: finish_ok
+    if: finish_ok != true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v3
