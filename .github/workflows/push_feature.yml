@@ -22,7 +22,6 @@ jobs:
   # Build and test
   ci:
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - uses: ./.github/workflows/ci-fake
 
