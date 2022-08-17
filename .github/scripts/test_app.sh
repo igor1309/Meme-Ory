@@ -1,9 +1,15 @@
 # Run Xcode clean build and test according to provided parameters
-# do not forget to make this file executable with `chmod +x the_file_name`
+
+# Do not forget to make this file executable with `chmod +x the_file_name`
 
 #!/bin/bash
 
-# `set -o pipefail` causes a pipeline (for example, `curl -s https://sipb.mit.edu/ | grep foo`) to produce a failure return code if any command errors. Normally, pipelines only return a failure if the last command errors. In combination with `set -e`, this will make your script exit if any command in a pipeline errors.
+# `set -o pipefail` causes a pipeline (for example,
+# `curl -s https://sipb.mit.edu/ | grep foo`) to produce
+# a failure return code if any command errors.
+# Normally, pipelines only return a failure if the last command errors.
+# In combination with `set -e`, this will make your script exit
+# if any command in a pipeline errors.
 set -eo pipefail
 
 xcodebuild clean build test \
