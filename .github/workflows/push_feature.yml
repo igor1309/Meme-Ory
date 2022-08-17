@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/workflows/ci-fake
+      - uses: ./.github/workflows/ci
 
 #  ci:
 #    # The type of runner that the job will run on
