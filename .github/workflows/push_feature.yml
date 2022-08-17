@@ -72,7 +72,7 @@ jobs:
         
     - name: Print
       run |
-        echo ${{ steps.cpr.outputs.pull-request-operation }}
+        echo "${{ steps.cpr.outputs.pull-request-operation }}"
 
     - name: Check outputs
       if: steps.cpr.outputs.pull-request-number
