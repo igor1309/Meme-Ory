@@ -50,9 +50,9 @@ jobs:
   # Auto-merge with rebase (!!)
   auto-merge-with-rebase:
     needs: auto-create-pull-request
-        runs-on: ubuntu-latest
-        steps:
-          - run: echo pull request was auto-merged
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo pull request was auto-merged
           
   # This workflow contains a single job called "build"
 #  build-and-test:
