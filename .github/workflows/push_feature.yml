@@ -9,6 +9,8 @@ on:
     branches:
       - 'feature/**'
       - 'fix/**'
+      # TEMP TO SIMPLIFY TESTING; REMOVE AFTERWARDS
+      - dev
 
 # The following workflow code is from CI-iOS.yml
 
