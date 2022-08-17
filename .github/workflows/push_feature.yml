@@ -71,7 +71,7 @@ jobs:
         base: dev
         
     - name: Print
-      run |
+      run: |
         echo "${{ steps.cpr.outputs.pull-request-operation }}"
 
     - name: Check outputs
