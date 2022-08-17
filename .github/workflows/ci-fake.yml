@@ -17,4 +17,5 @@ jobs:
     
     if: success()
     runs-on: ubuntu-latest
+    steps:
       - run: echo Pretending CI performed ok
