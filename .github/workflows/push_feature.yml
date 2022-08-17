@@ -16,16 +16,16 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  echo:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo push from feature or fix branch
+#  echo:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: echo push from feature or fix branch
       
   # Build and test
   ci:
     uses: ./.github/workflows/ci-fake.yml
-    with:
-      finish_ok: false
+#    with:
+#      finish_ok: false
 
 #  ci:
 #    # The type of runner that the job will run on
