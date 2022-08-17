@@ -66,7 +66,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        token: ${{ secrets.PAT }}
+        # token: ${{ secrets.PAT }}
+        delete-branch: true
+        base: dev
 
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
