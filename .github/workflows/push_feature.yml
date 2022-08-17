@@ -61,15 +61,24 @@ jobs:
     # Make changes to pull request here
 
     - name: Create Pull Request
-      id: cpr
       uses: peter-evans/create-pull-request@v3
+      id: cpr
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         # token: ${{ secrets.PAT }}
         delete-branch: true
         base: dev
+        
+    - name: Print
+      run |
+        echo ${{ steps.cpr.outputs.pull-request-operation }}
 
+    - name: Check outputs
+      if: steps.cpr.outputs.pull-request-number
+      run: |
+        echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"; exit 1;
+          
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: peter-evans/enable-pull-request-automerge@v2
