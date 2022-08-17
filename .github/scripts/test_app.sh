@@ -1,8 +1,8 @@
+#!/bin/bash
+
 # Run Xcode clean build and test according to provided parameters
 
 # Do not forget to make this file executable with `chmod +x the_file_name`
-
-#!/bin/bash
 
 # `set -o pipefail` causes a pipeline (for example,
 # `curl -s https://sipb.mit.edu/ | grep foo`) to produce
