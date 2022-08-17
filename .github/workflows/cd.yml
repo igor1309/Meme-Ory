@@ -1,0 +1,38 @@
+# This is a workflow to run on opening of the pull request
+
+name: CD
+
+on:
+  pull_request:
+    type:
+      - open
+    branch:
+      - dev
+    
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo pull request was open on dev branch
+
+  # Build and test
+#  ci:
+#    # The type of runner that the job will run on
+#    runs-on: macos-latest
+#
+#    # Steps represent a sequence of tasks that will be executed as part of the job
+#    steps:
+#    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#    - uses: actions/checkout@v3
+#
+#    - name: Select Xcode
+#      # run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
+#      # - name: Xcode Select
+#      uses: devbotsxyz/xcode-select@v1.1.0
+#
+#    - name: Xcode version
+#      run: /usr/bin/xcodebuild -version
+#
+#    - name: Run Test App script
+#      run: exec ./.github/scripts/test_app.sh
