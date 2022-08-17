@@ -1,0 +1,16 @@
+# This is a reusable workflow that could be used as a stub instead of heavy real-life workflows
+
+name: Failing Fake CI Workflow Stub
+
+on:
+  workflow_call:
+
+jobs:
+  # Pretend CI failed
+  fail:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('Fake CI Workflow Stub FAILED')
