@@ -1,9 +1,6 @@
-# This is to test calling a reusable workflow
-#
-# Reusing workflows - GitHub Docs
-# https://docs.github.com/en/actions/using-workflows/reusing-workflows
+# This is a reusable workflow that could be used as a stub instead of heavy real-life workflows
 
-name: Fake CI Workflow
+name: Fake CI Workflow Stub
 
 on:
   workflow_call:
@@ -13,6 +10,4 @@ jobs:
   fake-ci:
     runs-on: ubuntu-latest
     steps:
-      # - uses: ./.github/workflows/ci-fake
-      # - uses: actions/checkout@v2
       - run: echo Pretending CI performed ok
