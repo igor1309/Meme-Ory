@@ -20,7 +20,7 @@ jobs:
       - run: echo push from feature or fix branch
       
   # Build and test
-  reusable_ci_job:
+  ci:
     runs-on: ubuntu-latest
     environment: production
     steps:
