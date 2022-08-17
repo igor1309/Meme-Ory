@@ -4,6 +4,10 @@ name: Fake CI Workflow Stub
 
 on:
   workflow_call:
+    inputs:
+      finish_ok:
+        type: bool
+        default: true
 
 jobs:
   # Pretend CI performed ok
