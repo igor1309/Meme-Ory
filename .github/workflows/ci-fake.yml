@@ -14,5 +14,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/ci-fake
-      - uses: actions/checkout@v2
+      # - uses: actions/checkout@v2
       - run: echo Pretending CI performed ok
