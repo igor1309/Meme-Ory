@@ -55,7 +55,7 @@ jobs:
           
   # Auto-merge with rebase (!!)
   auto_merge_with_rebase:
-    needs: auto-create-pull-request
+    needs: auto_create_pull_request
     runs-on: ubuntu-latest
     steps:
       - run: echo pull request was auto-merged
