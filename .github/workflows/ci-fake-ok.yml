@@ -10,7 +10,4 @@ jobs:
   ok:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('Fake CI Workflow Stub finished OK')
+      - run: Fake CI Workflow Stub finished OK
