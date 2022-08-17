@@ -10,4 +10,4 @@ jobs:
   ok:
     runs-on: ubuntu-latest
     steps:
-      - run: Fake CI Workflow Stub finished OK
+      - run: echo Fake CI Workflow Stub finished OK
