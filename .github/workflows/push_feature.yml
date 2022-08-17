@@ -20,35 +20,41 @@ jobs:
       - run: echo push from feature or fix branch
       
   # Build and test
-  ci:
-    # The type of runner that the job will run on
-    runs-on: macos-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  reusable_ci_job:
+    runs-on: ubuntu-latest
+    environment: production
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      - uses: ./.github/workflows/ci-fake
 
-    - name: Select Xcode
-      # run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
-      # - name: Xcode Select
-      uses: devbotsxyz/xcode-select@v1.1.0
-
-    - name: Xcode version
-      run: /usr/bin/xcodebuild -version
-
-    - name: Run Test App script
-      run: exec ./.github/scripts/test_app.sh
+#  ci:
+#    # The type of runner that the job will run on
+#    runs-on: macos-latest
+#
+#    # Steps represent a sequence of tasks that will be executed as part of the job
+#    steps:
+#    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#    - uses: actions/checkout@v2
+#
+#    - name: Select Xcode
+#      # run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
+#      # - name: Xcode Select
+#      uses: devbotsxyz/xcode-select@v1.1.0
+#
+#    - name: Xcode version
+#      run: /usr/bin/xcodebuild -version
+#
+#    - name: Run Test App script
+#      run: exec ./.github/scripts/test_app.sh
 
   # Auto-create pull request only if CI passes
-  auto-create-pull-request:
+  auto_create_pull_request:
     needs: ci
     runs-on: ubuntu-latest
     steps:
       - run: echo pull request from feature or fix branch into dev was created after successful CI check
           
   # Auto-merge with rebase (!!)
-  auto-merge-with-rebase:
+  auto_merge_with_rebase:
     needs: auto-create-pull-request
     runs-on: ubuntu-latest
     steps:
