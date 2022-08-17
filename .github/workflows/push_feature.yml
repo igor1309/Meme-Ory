@@ -36,19 +36,19 @@ jobs:
 #      run: xcodebuild clean build test -project Meme-Ory.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 13 Pro" ONLY_ACTIVE_ARCH=YES
       
   # another job is to create a pull request
-  create-pull_request:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-         with:
-           ref: dev
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4.0.4
-        with:
-          # token: ${{ secrets.GH_TOKEN }}
-          commit-message: Auto Pull Request
-          title: Auto-created Pull Request
-          # branch: ${{ steps.vars.outputs.branch }}
-          # delete-branch: true
-          # base: dev
+#  create-pull_request:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#         with:
+#           ref: dev
+#      - name: Create Pull Request
+#        uses: peter-evans/create-pull-request@v4.0.4
+#        with:
+#          # token: ${{ secrets.GH_TOKEN }}
+#          commit-message: Auto Pull Request
+#          title: Auto-created Pull Request
+#          # branch: ${{ steps.vars.outputs.branch }}
+#          # delete-branch: true
+#          # base: dev
