@@ -1,0 +1,28 @@
+# This is a reusable workflow to run Xcode build and test
+
+name: CI
+
+on:
+  workflow_call:
+
+jobs:
+  # Build and test
+  ci:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Select Xcode
+      # run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
+      # - name: Xcode Select
+      uses: devbotsxyz/xcode-select@v1.1.0
+
+    - name: Xcode version
+      run: /usr/bin/xcodebuild -version
+
+    - name: Run Test App script
+      run: exec ./.github/scripts/test_app.sh
