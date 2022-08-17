@@ -23,10 +23,10 @@ jobs:
       
   # Build and test
   ci:
-    uses: ./.github/workflows/ci.yml
-#    uses: ./.github/workflows/ci-fake-wip.yml
-#    with:
-#      finish_ok: false
+#    uses: ./.github/workflows/ci.yml
+    uses: ./.github/workflows/ci-fake-wip.yml
+    with:
+      finish_ok: false
 
 #  ci:
 #    # The type of runner that the job will run on
