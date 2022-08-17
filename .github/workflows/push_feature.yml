@@ -42,9 +42,9 @@ jobs:
   # Auto-create pull request only if CI passes
   auto-create-pull-request:
     needs: ci
-        runs-on: ubuntu-latest
-        steps:
-          - run: echo pull request from feature or fix branch into dev was created after successful CI check
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo pull request from feature or fix branch into dev was created after successful CI check
           
   # Auto-merge with rebase (!!)
   auto-merge-with-rebase:
