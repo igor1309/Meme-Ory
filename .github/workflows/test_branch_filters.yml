@@ -1,4 +1,4 @@
-name: test_branch_filters
+name: Branch Filters (test)
 
 on:
   pull_request:
