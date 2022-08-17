@@ -13,5 +13,4 @@ jobs:
   fake-ci:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
       - run: echo Pretending CI performed ok
