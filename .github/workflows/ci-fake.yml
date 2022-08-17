@@ -9,6 +9,7 @@ jobs:
   # Pretend CI performed ok
   fail_if:
     if: true
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v3
         with:
