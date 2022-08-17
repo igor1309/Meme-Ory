@@ -3,7 +3,7 @@
 # Reusing workflows - GitHub Docs
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
 
-name: Fake CI
+name: ci-fake
 
 on:
   workflow_call:

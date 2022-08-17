@@ -1,6 +1,6 @@
 # This is a reusable workflow to run Xcode build and test
 
-name: CI
+name: ci
 
 on:
   workflow_call:
