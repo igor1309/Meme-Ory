@@ -6,7 +6,8 @@ on:
   workflow_call:
     inputs:
       finish_ok:
-        type: bool
+        type: boolean
+        required: false
         default: true
 
 jobs:
