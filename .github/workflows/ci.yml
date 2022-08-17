@@ -1,6 +1,6 @@
-# This is a reusable workflow to run Xcode build and test
+# This is a reusable workflow to run Xcode clean build and test with script
 
-name: ci
+name: CI: clean build and test with script
 
 on:
   workflow_call:
