@@ -54,6 +54,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Set auth token
+      run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        
     # Make changes to pull request here
 
     - name: Create Pull Request
