@@ -4,10 +4,10 @@ name: Push-Feature
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push events but only for the "feature" branches
+  # Triggers the workflow on push events but only for the "feature" or "fix" branches
   push:
     branches: 
-      - feature/*
+      - feature/* | fix/**
 
 # The following workflow code is from CI-iOS.yml
 
