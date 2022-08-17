@@ -23,7 +23,7 @@ jobs:
       
   # Build and test
   ci:
-    uses: ./.github/workflows/ci-fake-ok.yml
+    uses: ./.github/workflows/ci-fake-fail.yml
 
 #  ci:
 #    # The type of runner that the job will run on
