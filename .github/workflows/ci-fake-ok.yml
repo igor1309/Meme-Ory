@@ -1,6 +1,6 @@
 # This is a reusable workflow that could be used as a stub instead of heavy real-life workflows
 
-name: Fake CI Workflow Stub
+name: OK Fake CI Workflow Stub
 
 on:
   workflow_call:
