@@ -23,10 +23,7 @@ jobs:
       
   # Build and test
   ci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/workflows/ci-fake.yml@dev
+    uses: ./.github/workflows/ci-fake.yml
 
 #  ci:
 #    # The type of runner that the job will run on
