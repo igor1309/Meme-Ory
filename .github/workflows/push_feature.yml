@@ -13,6 +13,10 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo push from feature or fix branch
   # This workflow contains a single job called "build"
 #  build-and-test:
 #    # The type of runner that the job will run on
