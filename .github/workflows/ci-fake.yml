@@ -14,11 +14,14 @@ jobs:
       - uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('Fake CI Workflow Stub FAILSED')
+            core.setFailed('Fake CI Workflow Stub FAILED')
     
     #if: success()
   ok:
     needs: fail_if
     runs-on: ubuntu-latest
     steps:
-      - run: echo Pretending CI performed ok
+      - uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('Fake CI Workflow Stub finished OK')
