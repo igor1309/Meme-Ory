@@ -7,7 +7,7 @@ on:
 
 jobs:
   # Pretend CI performed ok
-  fake-ci:
+  fail_if:
     if: true
     steps:
       - uses: actions/github-script@v3
@@ -15,7 +15,9 @@ jobs:
           script: |
             core.setFailed('Fake CI Workflow Stub FAILSED')
     
-    if: success()
+    #if: success()
+  ok:
+    needs: fail_if
     runs-on: ubuntu-latest
     steps:
       - run: echo Pretending CI performed ok
