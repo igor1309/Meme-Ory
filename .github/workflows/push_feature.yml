@@ -12,6 +12,9 @@ on:
       # TEMP TO SIMPLIFY TESTING; REMOVE AFTERWARDS
       # - dev
 
+permissions:
+  pull-requests: write
+
 # The following workflow code is from CI-iOS.yml
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
