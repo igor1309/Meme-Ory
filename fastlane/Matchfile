@@ -11,7 +11,11 @@ git_url("https://github.com/photoigor/certificates.git")
 type("development")
 
 # app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
-app_identifier(["com.photoigor.Meme-Ory"])
+app_identifier([
+    "com.photoigor.Meme-Ory",
+    "com.photoigor.Meme-Ory.Meme-OryWidget",
+    "com.photoigor.Meme-Ory.ShareExtension"
+])
 
 # Your Apple Developer Portal username
 username("photo.igor@mac.com")
