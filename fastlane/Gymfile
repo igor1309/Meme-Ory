@@ -6,7 +6,7 @@
 
 clean true
 
-scheme "CI"
+scheme "Meme-Ory"
 
 output_directory "./fastlane/build"
 
