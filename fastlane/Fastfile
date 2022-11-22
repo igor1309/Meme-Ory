@@ -70,7 +70,7 @@ platform :ios do
     
         # beginning git actions
         ensure_git_status_clean
-        ensure_git_branch(branch: "main")
+        ensure_git_branch(branch: "dev")
         git_pull
         
         sync_signing_assets(type: "appstore")
