@@ -38,7 +38,7 @@ jobs:
 #    # Steps represent a sequence of tasks that will be executed as part of the job
 #    steps:
 #    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#    - uses: actions/checkout@v2
+#    - uses: actions/checkout@v3
 #
 #    - name: Select Xcode
 #      # run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2.4.2
+      uses: actions/checkout@v3.4.2
 
     - name: Set auth token
       run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
@@ -99,7 +99,7 @@ jobs:
 #      - run: echo pull request from feature or fix branch into dev was created after successful CI check
 #
 #      - name: checking out code
-#        uses: actions/checkout@v2
+#        uses: actions/checkout@v3
 #
 #      - name: extract git commit data
 #        uses: rlespinasse/git-commit-data-action@v1.x
@@ -144,7 +144,7 @@ jobs:
 #    # Steps represent a sequence of tasks that will be executed as part of the job
 #    steps:
 #    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#    - uses: actions/checkout@v2
+#    - uses: actions/checkout@v3
 #
 #    - name: Select Xcode
 #      # run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
