@@ -20,6 +20,34 @@
                ReferencedContainer = "container:Meme-Ory.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2AFE9E6825744F480037E8CF"
+               BuildableName = "ShareExtension.appex"
+               BlueprintName = "ShareExtension"
+               ReferencedContainer = "container:Meme-Ory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2ADAD3AF256DA23A00AF463B"
+               BuildableName = "Meme-OryWidgetExtension.appex"
+               BlueprintName = "Meme-OryWidgetExtension"
+               ReferencedContainer = "container:Meme-Ory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -28,16 +56,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2A8AFCDF2580FCAE00A0DD94"
-               BuildableName = "Meme-OryUITests.xctest"
-               BlueprintName = "Meme-OryUITests"
-               ReferencedContainer = "container:Meme-Ory.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
