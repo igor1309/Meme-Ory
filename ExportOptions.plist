@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>generateAppStoreInformation</key>
+	<false/>
+	<key>iCloudContainerEnvironment</key>
+	<string>Production</string>
+	<key>manageAppVersionAndBuildNumber</key>
+	<true/>
+	<key>method</key>
+	<string>app-store</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.photoigor.Meme-Ory</key>
+		<string>Meme-Ory Distribution Provisioning Profile</string>
+		<key>com.photoigor.Meme-Ory.Meme-OryWidget</key>
+		<string>Meme-Ory Widget Provisioning Profile</string>
+		<key>com.photoigor.Meme-Ory.ShareExtension</key>
+		<string>Meme-Ory ShareExtension Provisioning Profile</string>
+	</dict>
+	<key>signingCertificate</key>
+	<string>Apple Distribution</string>
+	<key>signingStyle</key>
+	<string>manual</string>
+	<key>stripSwiftSymbols</key>
+	<true/>
+	<key>teamID</key>
+	<string>VRVJ9YNRQU</string>
+	<key>uploadBitcode</key>
+	<true/>
+	<key>uploadSymbols</key>
+	<true/>
+	<key>destination</key>
+	<string>upload</string>
+</dict>
+</plist>
