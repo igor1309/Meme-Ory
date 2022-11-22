@@ -1,0 +1,28 @@
+# The Deliverfile allows you to store various App Store Connect metadata
+# For more information, check out the docs
+# https://docs.fastlane.tools/actions/deliver/
+
+# Metadata: List of languages to activate
+# Valid languages are: ["ar-SA", "ca", "cs", "da", "de-DE", "el", "en-AU", "en-CA", "en-GB", "en-US", "es-ES", "es-MX", "fi", "fr-CA", "fr-FR", "he", "hi", "hr", "hu", "id", "it", "ja", "ko", "ms", "nl-NL", "no", "pl", "pt-BR", "pt-PT", "ro", "ru", "sk", "sv", "th", "tr", "uk", "vi", "zh-Hans", "zh-Hant"]
+languages(['en-US','ru'])
+
+# Your Apple Developer Portal username
+username "photo.igor@mac.com"
+
+# App Store Connect Team Name
+team_name "Igor Malyarov"
+
+# App Store Connect Team ID
+team_id "118511815"
+
+# Path to the folder containing the screenshots
+screenshots_path "./AppStorePreviewsTests/AppStoreScreenshots"
+
+# Disable verification of the upload via the HTML file
+force true
+
+# For more information, check out the docs
+# https://docs.fastlane.tools/actions/deliver/
+
+# In general, you can use the options available
+# fastlane deliver --help

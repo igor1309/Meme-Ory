@@ -1,0 +1,21 @@
+# For more information about this configuration visit
+# https://docs.fastlane.tools/actions/gym/#gymfile
+
+# In general, you can use the options available
+# fastlane gym --help
+
+clean true
+
+scheme "CI"
+
+output_directory "./fastlane/build"
+
+output_name "Meme-Ory"
+
+# Excludes bitcode from the build
+# Bitcode is deprecated starting with Xcode 14
+# https://developer.apple.com/documentation/xcode-release-notes/xcode-14-release-notes
+include_bitcode false
+
+# Excludes symbols from the build
+include_symbols false

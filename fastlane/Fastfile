@@ -1,0 +1,165 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+    lane :beta do
+        build_app(scheme: 'CI')
+    end
+
+    lane :release do
+        precheck
+        build_appstore
+        screenshots
+        deliver(run_precheck_before_submit: false)
+        send_slack(message: "Released", success: true)
+    end
+
+    desc "Create AppStore Previews"
+    lane :screenshots do
+        scan(
+            scheme: "AppStorePreviews",
+            clean: false
+        )
+    end
+
+    desc "Re-obtain match code-signing credentials for Development, AdHoc, and AppStore"
+    lane :bootstrap_code_signing do
+        sync_device_info
+        match(type: "development")
+        # match(type: "adhoc")
+        match(type: "appstore")
+    end
+    
+    lane :distribute_to_appstore do
+        changelog = changelog_from_git_commits(
+            merge_commit_filtering: "exclude_merges",
+            between: ["origin/main", "HEAD"],
+            pretty: "- %s",
+            date_format: "short"
+        )
+
+        build_appstore
+        
+        pilot(
+            team_name: "Igor Malyarov",
+            changelog: changelog
+        )
+        
+        pilot_to_slack(
+            message: changelog
+        )
+    end
+    
+    desc "Build for AppStore submission"
+    lane :build_appstore do
+    
+        # beginning git actions
+        ensure_git_status_clean
+        ensure_git_branch(branch: "main")
+        git_pull
+        
+        sync_signing_assets(type: "appstore")
+        
+        scan
+        
+        increment_build_number
+        gym(
+            export_method: "app-store"
+        )
+        
+        # ending git actions
+        commit_version_bump(
+            force: true,
+            xcodeproj: "Meme-Ory.xcodeproj",
+            message: "Version bumped by fastlane"
+        )
+        add_git_tag(
+            grouping: "fastlane",
+            build_number: lane_context[SharedValues::BUILD_NUMBER]
+        )
+        push_to_git_remote
+        
+        send_slack(
+            version: lane_context[SharedValues::VERSION_NUMBER],
+            build: lane_context[SharedValues::BUILD_NUMBER]
+        )
+    end
+    
+    desc "Sync team Code-Signing assets"
+    private_lane :sync_signing_assets do |options|
+        sync_device_info
+        selectedType = options[:type]
+        match(type: selectedType)
+    end
+    
+    desc "Update Devices UUID's on the Developer Portal"
+    # private_lane :sync_device_info do
+    lane :sync_device_info do
+        register_devices(
+            devices: {
+                "iPhone X" => "8048dda69dd87a517040fe1a33d80d34c07c9aa9"
+            }
+        )
+    end
+    
+    lane :ping_slack do
+        #slack(
+        #    message: "Hello from fastlane",
+        #    slack_url: slack_hook
+        #)
+        send_slack(message: "test")
+    end
+    
+    lane :pilot_to_slack do |options|
+        msg = options[:message]
+        dat = sh "date -u"
+        payload = {"Sent to TestFlight" => dat}
+        send_slack(
+            message: msg + "\n ---",
+            payload: payload,
+            success: true
+        )
+    end
+
+    private_lane :send_slack do |options|
+        msg = options[:message] || ""
+        ver = options[:version] || ""
+        bld = options[:build]   || ""
+        pay = options[:payload] || {}
+        default_pay = options[:default_payloads] || []
+        suc = options[:success] != false
+        dat = sh "date -u"
+        
+        slack_hook = ENV["SLACK_WEBHOOK"]
+
+        if pay.empty? && suc
+            slack(
+                payload: {"FASTLANE PRODUCTION - #{ver}(#{bld})" => dat},
+                slack_url: slack_hook
+            )
+        else
+            slack(
+                message: msg,
+                payload: pay,
+                success: suc,
+                slack_url: slack_hook
+            )
+        end
+    end
+end
+

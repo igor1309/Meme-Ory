@@ -1,0 +1,51 @@
+# For more information about this configuration visit
+# https://docs.fastlane.tools/actions/precheck/
+
+# In general, you can use the options available
+# fastlane precheck --help
+
+# Remove the # in front of the line to enable the option
+
+# You have three possible values for each rule options
+# :skip
+# indicates that your metadata will not be checked by this rule
+
+# :warn
+# when triggered, this rule will warn you of a potential problem
+
+# :error
+# when triggered, this rule will cause an error to be displayed and it will prevent any further fastlane commands from running after precheck finishes
+
+# Examples:
+# negative_apple_sentiment(level: :skip)
+# curse_words(level: :warn)
+# future_functionality(level: :error)
+# other_platforms(level: :error)
+# placeholder_text(level: :error)
+# test_words(level: :error)
+# unreachable_urls(level: :error)
+# custom_text(data: ["fabric"], level: :warn)
+
+# ===============================================================
+# The Precheckfile stores configuration for the fastlane precheck command
+
+# Precheck does not check Appfile for App Store credentials
+# and app identifiers
+
+# The bundle identifier of your app
+app_identifier "com.photoigor.Meme-Ory"
+
+# Your Apple Developer Portal username
+username "photo.igor@mac.com"
+
+# App Store Connect Team Name
+team_name "Igor Malyarov"
+
+# App Store Connect Team ID
+team_id "118511815"
+
+# For more information about this configuration visit
+# https://docs.fastlane.tools/actions/precheck/
+
+# In general, you can use the options available
+# fastlane precheck --help
