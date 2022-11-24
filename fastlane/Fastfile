@@ -45,6 +45,7 @@ platform :ios do
         match(type: "appstore")
     end
 
+    desc "Build for AppStore submission and send to TestFlight"
     lane :distribute_to_appstore do
         changelog = changelog_from_git_commits(
             merge_commit_filtering: "exclude_merges",
