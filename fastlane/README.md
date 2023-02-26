@@ -53,7 +53,7 @@ Re-obtain match code-signing credentials for Development, AdHoc, and AppStore
 [bundle exec] fastlane ios distribute_to_appstore
 ```
 
-
+Build for AppStore submission and send to TestFlight
 
 ### ios build_appstore
 
