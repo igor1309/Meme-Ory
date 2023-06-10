@@ -50,11 +50,9 @@ struct StoryListRowView: View {
                     .font(.caption)
                 }
                 
-                if let timestamp = story.timestamp {
-                    Text("\(timestamp, formatter: Ory.storyFormatter)")
-                        .foregroundColor(Color(UIColor.tertiaryLabel))
-                        .font(.caption)
-                }
+                Text("\(story.timestamp, formatter: Ory.storyFormatter)")
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .font(.caption)
             }
             
             HStack {
