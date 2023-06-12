@@ -20,10 +20,10 @@ struct StoryListRowView: View {
         content
             .contentShape(Rectangle())
             .contextMenu(menuItems: contextMenu)
-            .onAppear(perform: handleOnApper)
+            .onAppear(perform: handleOnAppear)
     }
     
-    private func handleOnApper() {
+    private func handleOnAppear() {
         eventStore.reminderCleanup(for: story, in: context)
     }
     
