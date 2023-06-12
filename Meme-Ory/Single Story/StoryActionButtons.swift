@@ -9,9 +9,13 @@ import SwiftUI
 
 struct StoryActionButtons: View {
     
-    @EnvironmentObject private var model: MainViewModel
+    @ObservedObject private var model: MainViewModel
+    @ObservedObject private var story: Story
     
-    @ObservedObject var story: Story
+    init(model: MainViewModel, story: Story) {
+        self.model = model
+        self.story = story
+    }
     
     var labelStyle: LabeledButton.Style = .none
     
@@ -57,14 +61,17 @@ struct StoryActionButtons: View {
 }
 
 struct StoryActionButtons_Previews: PreviewProvider {
+    
     @State static private var context = SampleData.preview.container.viewContext
     
     static var previews: some View {
         List {
-            StoryActionButtons(story: SampleData.story())
+            StoryActionButtons(
+                model: .init(context: context),
+                story: SampleData.story()
+            )
         }
         .listStyle(InsetGroupedListStyle())
-        .environmentObject(MainViewModel(context: context))
         .preferredColorScheme(.dark)
         .previewLayout(.fixed(width: 350, height: 700))
     }

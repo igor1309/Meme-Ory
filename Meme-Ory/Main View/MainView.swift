@@ -136,7 +136,7 @@ struct MainView: View {
     ) -> some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Menu {
-                StoryActionButtons(story: story)
+                StoryActionButtons(model: model, story: story)
             } label: {
                 Image(systemName: "doc.plaintext")
                     .frame(width: 44, height: 44, alignment: .trailing)
