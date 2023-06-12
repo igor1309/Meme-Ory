@@ -1,5 +1,5 @@
 import XCTest
-@testable import swift_meme_ory
+@testable import SingleStoryComponent
 
 final class swift_meme_oryTests: XCTestCase {
     func test() throws {
