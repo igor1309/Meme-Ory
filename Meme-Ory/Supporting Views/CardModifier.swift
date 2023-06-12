@@ -8,21 +8,26 @@
 import SwiftUI
 
 extension View {
-    func cardModifier<Background: View>(padding: CGFloat? = nil,
-                                        cornerRadius: CGFloat = 16,
-                                        strokeBorderColor: Color = Color(UIColor.systemGray3),
-                                        background: Background) -> some View {
+    
+    func cardModifier<Background: View>(
+        padding: CGFloat? = nil,
+        cornerRadius: CGFloat = 16,
+        strokeBorderColor: Color = Color(UIColor.systemGray3),
+        background: Background
+    ) -> some View {
         self.modifier(
-            CardModifier(padding: padding,
-                         cornerRadius: cornerRadius,
-                         strokeBorderColor: strokeBorderColor,
-                         background: background
+            CardModifier(
+                padding: padding,
+                cornerRadius: cornerRadius,
+                strokeBorderColor: strokeBorderColor,
+                background: background
             )
         )
     }
 }
 
 fileprivate struct CardModifier<Background: View>: ViewModifier {
+    
     let padding: CGFloat?
     var cornerRadius: CGFloat
     var strokeBorderColor: Color
@@ -33,10 +38,16 @@ fileprivate struct CardModifier<Background: View>: ViewModifier {
             .padding(.all, padding == nil ? .none : padding)
             .background(background)
             .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .strokeBorder(strokeBorderColor, lineWidth: 1)
+                RoundedRectangle(
+                    cornerRadius: cornerRadius,
+                    style: .continuous
+                )
+                .strokeBorder(strokeBorderColor, lineWidth: 1)
             )
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: cornerRadius, style: .continuous
+                )
+            )
     }
 }
-
