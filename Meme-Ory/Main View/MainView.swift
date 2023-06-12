@@ -48,15 +48,6 @@ struct MainView: View {
         }
     }
     
-    @ViewBuilder
-    private func oneStoryUI() -> some View {
-        if let story = stories.first {
-            SingleStoryViewWrapper(story: story)
-        } else {
-            Text("ERROR: can't get first story from non-empty array")
-        }
-    }
-    
     private func noStoriesView() -> some View {
         Color(UIColor.secondarySystemGroupedBackground)
             .ignoresSafeArea(.all)
@@ -78,6 +69,15 @@ struct MainView: View {
                 }
                     .padding()
             )
+    }
+
+    @ViewBuilder
+    private func oneStoryUI() -> some View {
+        if let story = stories.first {
+            SingleStoryViewWrapper(story: story)
+        } else {
+            Text("ERROR: can't get first story from non-empty array")
+        }
     }
     
     //  MARK: - Sheets
