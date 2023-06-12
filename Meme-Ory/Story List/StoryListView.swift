@@ -36,6 +36,12 @@ struct StoryListView: View {
             .contextMenu {
                 ListRowActionButtons(story: story)
             }
+            .onAppear {
+                eventStore.reminderCleanup(
+                    for: story,
+                    in: context
+                )
+            }
     }
     
     //  MARK: - Sheets

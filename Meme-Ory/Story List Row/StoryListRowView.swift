@@ -12,20 +12,10 @@ struct StoryListRowView: View {
     @Environment(\.managedObjectContext) private var context
     
     @EnvironmentObject private var model: MainViewModel
-    @EnvironmentObject private var eventStore: EventStore
     
     @ObservedObject var story: Story
     
     var body: some View {
-        content
-            .onAppear(perform: handleOnAppear)
-    }
-    
-    private func handleOnAppear() {
-        eventStore.reminderCleanup(for: story, in: context)
-    }
-    
-    var content: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack(alignment: .leading, spacing: 3) {
                 story.text.storyText(maxTextLength: 1_000)
