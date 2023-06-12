@@ -82,17 +82,22 @@ struct MainView: View {
     
     private func singleStoryView(story: Story) -> some View {
         
-        SingleStoryViewWrapper(story: story)
-            .onAppear {
-                eventStore.reminderCleanup(
-                    for: story,
-                    in: context
-                )
-            }
-            .actionSheet(item: $model.actionSheetID) {
-                actionSheet(actionSheetID: $0, story: story)
-            }
-            .toolbar { singleStoryToolbar(story: story) }
+        SingleStoryViewWrapper(
+            story: story,
+            switchViewMode: model.switchViewMode,
+            getRandomStory: model.getRandomStory,
+            showTagGrid: model.showTagGrid(story:)
+        )
+        .onAppear {
+            eventStore.reminderCleanup(
+                for: story,
+                in: context
+            )
+        }
+        .actionSheet(item: $model.actionSheetID) {
+            actionSheet(actionSheetID: $0, story: story)
+        }
+        .toolbar { singleStoryToolbar(story: story) }
     }
     
     //  MARK: - Action Sheets

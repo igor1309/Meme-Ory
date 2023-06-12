@@ -10,15 +10,17 @@ import SwiftUI
 
 struct SingleStoryViewWrapper: View {
     
-    @EnvironmentObject private var model: MainViewModel
-    
     @ObservedObject var story: Story
+    
+    let switchViewMode: () -> Void
+    let getRandomStory: () -> Void
+    let showTagGrid: (Story) -> Void
     
     var body: some View {
         VStack(spacing: 16) {
             
             SingleStoryToolbar(
-                switchViewMode: model.switchViewMode,
+                switchViewMode: switchViewMode,
                 favoriteIcon: favoriteIcon,
                 reminderIcon: reminderIcon
             )
@@ -28,10 +30,10 @@ struct SingleStoryViewWrapper: View {
                 maxTextLength: maxTextLength
             )
             .contentShape(Rectangle())
-            .onTapGesture(count: 1, perform: model.getRandomStory)
+            .onTapGesture(count: 1, perform: getRandomStory)
             
             SingleStoryTagListButton(story: story) {
-                model.showTagGrid(story: story)
+                showTagGrid(story)
             }
             
             Text("Tap card to get next random story")
@@ -66,7 +68,12 @@ struct SingleStoryView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            SingleStoryViewWrapper(story: .preview)
+            SingleStoryViewWrapper(
+                story: .preview,
+                switchViewMode: {},
+                getRandomStory: {},
+                showTagGrid: { _ in }
+            )
                 .navigationTitle("Random/Widget Story")
                 .navigationBarTitleDisplayMode(.inline)
         }
