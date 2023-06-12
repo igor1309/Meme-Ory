@@ -42,14 +42,6 @@ struct SingleStoryViewWrapper: View {
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
     }
     
-    var tagList: String {
-        if story.tags.isEmpty {
-            return "no tags"
-        } else {
-            return story.tagList
-        }
-    }
-    
     //  MARK: - Constants
     
     let maxTextLength = 5_000
