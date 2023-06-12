@@ -45,7 +45,6 @@ struct SingleStoryViewWrapper: View {
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
         .toolbar(content: toolbar)
         .actionSheet(item: $model.actionSheetID, content: actionSheet)
-        .onAppear(perform: handleOnAppear)
     }
     
     var tagList: String {
@@ -56,10 +55,6 @@ struct SingleStoryViewWrapper: View {
         }
     }
     
-    private func handleOnAppear() {
-        eventStore.reminderCleanup(for: story, in: context)
-    }
-
     //  MARK: - Constants
     
     let maxTextLength = 5_000

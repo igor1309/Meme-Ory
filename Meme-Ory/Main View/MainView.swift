@@ -74,10 +74,21 @@ struct MainView: View {
     @ViewBuilder
     private func oneStoryUI() -> some View {
         if let story = stories.first {
-            SingleStoryViewWrapper(story: story)
+            singleStoryView(story: story)
         } else {
             Text("ERROR: can't get first story from non-empty array")
         }
+    }
+    
+    private func singleStoryView(story: Story) -> some View {
+        
+        SingleStoryViewWrapper(story: story)
+            .onAppear {
+                eventStore.reminderCleanup(
+                    for: story,
+                    in: context
+                )
+            }
     }
     
     //  MARK: - Sheets
