@@ -1,5 +1,5 @@
 //
-//  StoryListRowView.swift
+//  StoryListRowViewWrapper.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 14.12.2020.
@@ -7,13 +7,11 @@
 
 import SwiftUI
 
-struct StoryListRowView: View {
+struct StoryListRowViewWrapper: View {
     
-    @ObservedObject private var model: MainViewModel
     @ObservedObject private var story: Story
     
-    init(model: MainViewModel, story: Story) {
-        self.model = model
+    init(story: Story) {
         self.story = story
     }
     
@@ -59,23 +57,19 @@ struct StoryListRowView: View {
     }
 }
 
-
 struct StoryListRowView_Previews: PreviewProvider {
     @State static var context = SampleData.preview.container.viewContext
     
     static var previews: some View {
         NavigationView {
             List {
-                StoryListRowView(
-                    model: MainViewModel.init(context: context),
+                StoryListRowViewWrapper(
                     story: SampleData.story())
                 
                 Section {
-                    StoryListRowView(
-                        model: MainViewModel.init(context: context),
+                    StoryListRowViewWrapper(
                         story: SampleData.story())
-                    StoryListRowView(
-                        model: MainViewModel.init(context: context),
+                    StoryListRowViewWrapper(
                         story: SampleData.story(storyIndex: 1)
                     )
                 }
