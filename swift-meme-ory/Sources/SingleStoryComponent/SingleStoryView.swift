@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct SingleStoryView: View {
+public struct SingleStoryView: View {
     
     let text: String
     let maxTextLength: Int?
     
-    init(text: String, maxTextLength: Int? = nil) {
+    public init(text: String, maxTextLength: Int? = nil) {
         self.text = text
         self.maxTextLength = maxTextLength
     }
     
     private let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
     
-    var body: some View {
+    public var body: some View {
         ScrollView(showsIndicators: false) {
             storyText(
                 text: text,
@@ -62,6 +62,10 @@ struct SingleStoryView_Previews: PreviewProvider {
         
         Group {
             SingleStoryView(text: .preview)
+            SingleStoryView(
+                text: .preview,
+                maxTextLength: 10
+            )
             SingleStoryView(
                 text: .preview,
                 maxTextLength: 100
