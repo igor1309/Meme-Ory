@@ -37,7 +37,7 @@ struct SingleStoryViewWrapper: View {
                 Button {
                     model.showTagGrid(story: story)
                 } label: {
-                    Text(story.tagList)
+                    Text(tagList)
                         .foregroundColor(Color(UIColor.systemOrange))
                         .font(.caption)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -62,10 +62,18 @@ struct SingleStoryViewWrapper: View {
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
         .toolbar(content: toolbar)
         .actionSheet(item: $model.actionSheetID, content: actionSheet)
-        .onAppear(perform: handleOnApper)
+        .onAppear(perform: handleOnAppear)
     }
     
-    private func handleOnApper() {
+    var tagList: String {
+        if story.tags.isEmpty {
+            return "no tags"
+        } else {
+            return story.tagList
+        }
+    }
+    
+    private func handleOnAppear() {
         eventStore.reminderCleanup(for: story, in: context)
     }
 
