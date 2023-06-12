@@ -57,6 +57,7 @@
 		2A41A5032A37247600BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5022A37247600BA6053 /* SingleStoryComponent */; };
 		2A41A5052A3728DD00BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5042A3728DD00BA6053 /* SingleStoryComponent */; };
 		2A41A5092A372DB900BA6053 /* SingleStoryTagListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A41A5082A372DB900BA6053 /* SingleStoryTagListButton.swift */; };
+		2A41A50B2A37432C00BA6053 /* StoryListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A41A50A2A37432C00BA6053 /* StoryListRowView.swift */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
 		2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
@@ -209,6 +210,7 @@
 		2A41A4F92A37240500BA6053 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2A41A5082A372DB900BA6053 /* SingleStoryTagListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryTagListButton.swift; sourceTree = "<group>"; };
+		2A41A50A2A37432C00BA6053 /* StoryListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowView.swift; sourceTree = "<group>"; };
 		2A4CC9F525795269000A21C9 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
 		2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledButton.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 			isa = PBXGroup;
 			children = (
 				2A1943CA258751CB00E81C73 /* StoryListRowViewWrapper.swift */,
+				2A41A50A2A37432C00BA6053 /* StoryListRowView.swift */,
 				2ABAEEAB25877ACA00D59CA2 /* ListRowActionButtons.swift */,
 			);
 			path = "Story List Row";
@@ -871,6 +874,7 @@
 				2AEEF8FE25700061008D1B31 /* Calendar.Component+Ext.swift in Sources */,
 				2A1943C52587506B00E81C73 /* SingleStoryViewWrapper.swift in Sources */,
 				2A8AFCC825805D7500A0DD94 /* ListOptions.swift in Sources */,
+				2A41A50B2A37432C00BA6053 /* StoryListRowView.swift in Sources */,
 				2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */,
 				2A1944302587723300E81C73 /* MaintenanceViewModel.swift in Sources */,
 				2A935CB5256AE8C0004B6E10 /* TagGridWrapperView.swift in Sources */,

@@ -16,48 +16,18 @@ struct StoryListRowViewWrapper: View {
     }
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            VStack(alignment: .leading, spacing: 3) {
-                story.text.storyText(maxTextLength: 1_000)
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineLimit(20)
-                
-                if !story.tagList.isEmpty {
-                    Label {
-                        Text(story.tagList)
-                    } icon: {
-                        Image(systemName: "tag")
-                            .imageScale(.small)
-                    }
-                    .foregroundColor(.orange)
-                    .font(.caption)
-                }
-                
-                Text("\(story.timestamp, formatter: Ory.storyFormatter)")
-                    .foregroundColor(Color(UIColor.tertiaryLabel))
-                    .font(.caption)
-            }
-            
-            HStack {
-                if story.hasReminder {
-                    Image(systemName: "bell")
-                        .foregroundColor(Color(UIColor.systemTeal))
-                    
-                }
-                
-                if story.isFavorite {
-                    Image(systemName: "star.circle")
-                        .foregroundColor(Color(UIColor.systemOrange))
-                }
-            }
-            .font(.caption)
-        }
-        .padding(.vertical, 3)
+        StoryListRowView(
+            text: story.text,
+            tagList: story.tagList,
+            timestamp: story.timestamp,
+            hasReminder: story.hasReminder,
+            isFavorite: story.isFavorite
+        )
     }
 }
 
-struct StoryListRowView_Previews: PreviewProvider {
+struct StoryListRowViewWrapper_Previews: PreviewProvider {
+    
     @State static var context = SampleData.preview.container.viewContext
     
     static var previews: some View {
