@@ -5,6 +5,7 @@
 //  Created by Igor Malyarov on 14.12.2020.
 //
 
+import SingleStoryComponent
 import SwiftUI
 
 struct SingleStoryView: View {
@@ -33,11 +34,10 @@ struct SingleStoryView: View {
                 // .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
             }
             
-            ScrollView(showsIndicators: false) {
-                story.text.storyText(maxTextLength: maxTextLength)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            }
-            .cardModifier(strokeBorderColor: Color(UIColor.systemGray3), background: cardBackground)
+            SingleStoryComponent.SingleStoryView(
+                text: story.text,
+                maxTextLength: maxTextLength
+            )
             .contentShape(Rectangle())
             .onTapGesture(count: 1, perform: model.getRandomStory)
             

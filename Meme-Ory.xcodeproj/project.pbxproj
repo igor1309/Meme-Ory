@@ -55,6 +55,7 @@
 		2A41A4FA2A37240500BA6053 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A41A4F92A37240500BA6053 /* Assets.xcassets */; };
 		2A41A4FD2A37240500BA6053 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */; };
 		2A41A5032A37247600BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5022A37247600BA6053 /* SingleStoryComponent */; };
+		2A41A5052A3728DD00BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5042A3728DD00BA6053 /* SingleStoryComponent */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
 		2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
@@ -273,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A41A5052A3728DD00BA6053 /* SingleStoryComponent in Frameworks */,
 				2AC2F9F82588DA6700D49560 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,6 +677,9 @@
 				2AFE9E7425744F480037E8CF /* PBXTargetDependency */,
 			);
 			name = "Meme-Ory";
+			packageProductDependencies = (
+				2A41A5042A3728DD00BA6053 /* SingleStoryComponent */,
+			);
 			productName = "Meme-Ory";
 			productReference = 2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */;
 			productType = "com.apple.product-type.application";
@@ -1478,6 +1483,10 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		2A41A5022A37247600BA6053 /* SingleStoryComponent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SingleStoryComponent;
+		};
+		2A41A5042A3728DD00BA6053 /* SingleStoryComponent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SingleStoryComponent;
 		};
