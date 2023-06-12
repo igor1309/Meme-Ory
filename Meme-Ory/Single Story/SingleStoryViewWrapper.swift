@@ -34,7 +34,7 @@ struct SingleStoryViewWrapper: View {
             .contentShape(Rectangle())
             .onTapGesture(count: 1, perform: getRandomStory)
             
-            SingleStoryTagListButton(story: story) {
+            SingleStoryTagListButton(tagList: tagList) {
                 showTagGrid(story)
             }
             
@@ -44,6 +44,14 @@ struct SingleStoryViewWrapper: View {
         }
         .padding([.top, .horizontal])
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
+    }
+    
+    private var tagList: String {
+        if story.tags.isEmpty {
+            return "no tags"
+        } else {
+            return story.tagList
+        }
     }
 }
 
