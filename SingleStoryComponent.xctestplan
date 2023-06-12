@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "B612A161-6C92-434E-848E-1D6C280FACF5",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SingleStoryComponentTests",
+        "name" : "SingleStoryComponentTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -49,6 +49,20 @@
                ReferencedContainer = "container:Meme-Ory.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SingleStoryComponent"
+               BuildableName = "SingleStoryComponent"
+               BlueprintName = "SingleStoryComponent"
+               ReferencedContainer = "container:swift-meme-ory">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -68,6 +82,18 @@
                BuildableName = "Meme-OryUITests.xctest"
                BlueprintName = "Meme-OryUITests"
                ReferencedContainer = "container:Meme-Ory.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SingleStoryComponentTests"
+               BuildableName = "SingleStoryComponentTests"
+               BlueprintName = "SingleStoryComponentTests"
+               ReferencedContainer = "container:swift-meme-ory">
             </BuildableReference>
          </TestableReference>
       </Testables>

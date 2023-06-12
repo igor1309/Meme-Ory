@@ -195,6 +195,7 @@
 		2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StoryText.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		2A33A3E125714DA500538FE3 /* ImportTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextView.swift; sourceTree = "<group>"; };
+		2A41A4EE2A371C4900BA6053 /* SingleStoryComponent.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = SingleStoryComponent.xctestplan; sourceTree = "<group>"; };
 		2A4CC9F525795269000A21C9 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
 		2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledButton.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
@@ -343,6 +344,7 @@
 		2A1B5FAA256A4A5D00E3283D = {
 			isa = PBXGroup;
 			children = (
+				2A41A4EE2A371C4900BA6053 /* SingleStoryComponent.xctestplan */,
 				2A7FE97828AAC88100797A7C /* swift-meme-ory */,
 				2ADAD3E3256DB9A000AF463B /* Meme-OryWidgetExtension.entitlements */,
 				2A1B5FB5256A4A5D00E3283D /* Meme-Ory */,
