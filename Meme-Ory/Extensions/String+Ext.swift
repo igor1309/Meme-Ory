@@ -16,7 +16,6 @@ extension String {
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    
     // FIXME: get more options for separators
     func splitText() -> [String] {
         let separator = "***"
@@ -38,7 +37,6 @@ extension String {
         return String(first.prefix(maxLength)).appending("...")
     }
     
-    
     //  MARK: - Story Text View
     
     @ViewBuilder
@@ -47,12 +45,9 @@ extension String {
             Text("Story too long, showing first \(maxTextLength) characters\n\n")
                 .foregroundColor(Color(UIColor.systemRed))
                 .font(.footnote)
-                + Text(prefix(maxTextLength))
+            + Text(prefix(maxTextLength))
         } else {
             Text(self)
         }
     }
-    
-    
-    
 }
