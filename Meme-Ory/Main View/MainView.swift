@@ -52,7 +52,7 @@ struct MainView: View {
     @ViewBuilder
     private func oneStoryUI() -> some View {
         if let story = stories.first {
-            SingleStoryView(story: story)
+            SingleStoryViewWrapper(story: story)
         } else {
             Text("ERROR: can't get first story from nnon-empty array")
         }

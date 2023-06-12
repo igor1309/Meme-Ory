@@ -1,5 +1,5 @@
 //
-//  SingleStoryView.swift
+//  SingleStoryViewWrapper.swift
 //  Meme-Ory
 //
 //  Created by Igor Malyarov on 14.12.2020.
@@ -8,7 +8,7 @@
 import SingleStoryComponent
 import SwiftUI
 
-struct SingleStoryView: View {
+struct SingleStoryViewWrapper: View {
     
     @Environment(\.managedObjectContext) private var context
     
@@ -34,7 +34,7 @@ struct SingleStoryView: View {
                 // .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
             }
             
-            SingleStoryComponent.SingleStoryView(
+            SingleStoryView(
                 text: story.text,
                 maxTextLength: maxTextLength
             )
@@ -138,7 +138,7 @@ struct SingleStoryView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            SingleStoryView(story: SampleData.story())
+            SingleStoryViewWrapper(story: SampleData.story())
                 .navigationTitle("Random/Widget Story")
                 .navigationBarTitleDisplayMode(.inline)
         }

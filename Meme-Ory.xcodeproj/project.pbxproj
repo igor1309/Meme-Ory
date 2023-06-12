@@ -21,7 +21,7 @@
 		2A16CDF92574F0F000146F3E /* NSPredicate+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */; };
 		2A16CDFD2574F0F100146F3E /* NSPredicate+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */; };
 		2A16CE102574F12B00146F3E /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3F5256E4B5F00AF463B /* URL+Extension.swift */; };
-		2A1943C52587506B00E81C73 /* SingleStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943C42587506B00E81C73 /* SingleStoryView.swift */; };
+		2A1943C52587506B00E81C73 /* SingleStoryViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943C42587506B00E81C73 /* SingleStoryViewWrapper.swift */; };
 		2A1943CB258751CB00E81C73 /* StoryListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943CA258751CB00E81C73 /* StoryListRowView.swift */; };
 		2A1943D12587527F00E81C73 /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943D02587527F00E81C73 /* StoryListView.swift */; };
 		2A1943D7258763D700E81C73 /* MainViewActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1943D6258763D700E81C73 /* MainViewActionButtons.swift */; };
@@ -56,6 +56,7 @@
 		2A41A4FD2A37240500BA6053 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */; };
 		2A41A5032A37247600BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5022A37247600BA6053 /* SingleStoryComponent */; };
 		2A41A5052A3728DD00BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5042A3728DD00BA6053 /* SingleStoryComponent */; };
+		2A41A5072A372AF300BA6053 /* SingleStoryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A41A5062A372AF300BA6053 /* SingleStoryToolbar.swift */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
 		2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
@@ -173,7 +174,7 @@
 		2A1164A6257102BF000AD487 /* Brief.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brief.swift; sourceTree = "<group>"; };
 		2A167B99258316D3007A986B /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		2A16CDF42574F0E400146F3E /* NSPredicate+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Ext.swift"; sourceTree = "<group>"; };
-		2A1943C42587506B00E81C73 /* SingleStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryView.swift; sourceTree = "<group>"; };
+		2A1943C42587506B00E81C73 /* SingleStoryViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryViewWrapper.swift; sourceTree = "<group>"; };
 		2A1943CA258751CB00E81C73 /* StoryListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListRowView.swift; sourceTree = "<group>"; };
 		2A1943D02587527F00E81C73 /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		2A1943D6258763D700E81C73 /* MainViewActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewActionButtons.swift; sourceTree = "<group>"; };
@@ -207,6 +208,7 @@
 		2A41A4F72A37240400BA6053 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2A41A4F92A37240500BA6053 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2A41A5062A372AF300BA6053 /* SingleStoryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryToolbar.swift; sourceTree = "<group>"; };
 		2A4CC9F525795269000A21C9 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
 		2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledButton.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
@@ -336,7 +338,8 @@
 		2A194400258770D800E81C73 /* Single Story */ = {
 			isa = PBXGroup;
 			children = (
-				2A1943C42587506B00E81C73 /* SingleStoryView.swift */,
+				2A1943C42587506B00E81C73 /* SingleStoryViewWrapper.swift */,
+				2A41A5062A372AF300BA6053 /* SingleStoryToolbar.swift */,
 				2A6D6C122586BAAD00BBA8C7 /* StoryActionButtons.swift */,
 			);
 			path = "Single Story";
@@ -866,7 +869,7 @@
 				2A1A4C2D2587EA36008A84A2 /* Sequence+Ext.swift in Sources */,
 				2AFE9E5C2573B00D0037E8CF /* ContentView.swift in Sources */,
 				2AEEF8FE25700061008D1B31 /* Calendar.Component+Ext.swift in Sources */,
-				2A1943C52587506B00E81C73 /* SingleStoryView.swift in Sources */,
+				2A1943C52587506B00E81C73 /* SingleStoryViewWrapper.swift in Sources */,
 				2A8AFCC825805D7500A0DD94 /* ListOptions.swift in Sources */,
 				2AEEF90625702EBF008D1B31 /* EventStore.swift in Sources */,
 				2A1944302587723300E81C73 /* MaintenanceViewModel.swift in Sources */,
@@ -879,6 +882,7 @@
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A6D6BF2258608C500BBA8C7 /* MainViewModel.swift in Sources */,
 				2ABAEEBA258798E400D59CA2 /* ConfirmAndDelete.swift in Sources */,
+				2A41A5072A372AF300BA6053 /* SingleStoryToolbar.swift in Sources */,
 				2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */,
 				2A6D6C052586735400BBA8C7 /* MainViewModel Enums + Ext.swift in Sources */,
 				2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */,
