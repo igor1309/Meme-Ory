@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-#warning("remove after importing `SingleStoryComponent`")
 extension View {
     
     func cardModifier<Background: View>(
