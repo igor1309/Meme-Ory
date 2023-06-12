@@ -25,26 +25,25 @@ struct MainView: View {
     }
     
     var body: some View {
-        viewSwither()
+        viewSwitcher()
             .navigationTitle(model.viewMode.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: toolbar)
             .sheet(item: $model.sheetID, content: sheetView)
     }
     
-    
     //  MARK: - Views
     
     @ViewBuilder
-    private func viewSwither() -> some View {
+    private func viewSwitcher() -> some View {
         if stories.isEmpty {
             noStoriesView()
         } else {
             switch model.viewMode {
-                case .single:
-                    oneStoryUI()
-                case .list:
-                    StoryListView(stories: _stories)
+            case .single:
+                oneStoryUI()
+            case .list:
+                StoryListView(stories: _stories)
             }
         }
     }
@@ -54,9 +53,8 @@ struct MainView: View {
         if let story = stories.first {
             SingleStoryViewWrapper(story: story)
         } else {
-            Text("ERROR: can't get first story from nnon-empty array")
+            Text("ERROR: can't get first story from non-empty array")
         }
-        
     }
     
     private func noStoriesView() -> some View {
@@ -78,10 +76,9 @@ struct MainView: View {
                         model.pasteToNewStory()
                     }
                 }
-                .padding()
+                    .padding()
             )
     }
-    
     
     //  MARK: - Sheets
     
@@ -89,56 +86,55 @@ struct MainView: View {
     private func sheetView(sheetID: MainViewModel.SheetID) -> some View {
         Group {
             switch sheetID {
-                case .new:
+            case .new:
+                NavigationView {
+                    StoryEditorView()
+                }
+                
+            case .edit:
+                if let storyToEdit = model.storyToEdit {
                     NavigationView {
-                        StoryEditorView()
+                        StoryEditorView(story: storyToEdit)
                     }
-                    
-                case .edit:
-                    if let storyToEdit = model.storyToEdit {
-                        NavigationView {
-                            StoryEditorView(story: storyToEdit)
-                        }
+                    .environment(\.managedObjectContext, context)
+                    .environmentObject(eventStore)
+                } else {
+                    Text("ERROR getting story to edit")
+                }
+                
+            case .tags:
+                if let storyToEdit = model.storyToEdit {
+                    TagsWrapperWrapper(story: storyToEdit)
                         .environment(\.managedObjectContext, context)
-                        .environmentObject(eventStore)
-                    } else {
-                        Text("ERROR getting story to edit")
+                } else {
+                    Text("ERROR getting story to show tags")
+                }
+                
+            case .maintenance:
+                MaintenanceView(context: context)
+                
+            case .listOptions:
+                ListOptionsView(model: model)
+                
+            case let .story(url):
+                //                    if let story = context.getObject(with: url) as? Story {
+                if let story: Story = context.getObject(with: url) {
+                    ScrollView {
+                        Text(story.text)
+                            .padding()
                     }
-                    
-                case .tags:
-                    if let storyToEdit = model.storyToEdit {
-                        TagsWrapperWrapper(story: storyToEdit)
-                            .environment(\.managedObjectContext, context)
-                    } else {
-                        Text("ERROR getting story to show tags")
-                    }
-                    
-                case .maintenance:
-                    MaintenanceView(context: context)
-                    
-                case .listOptions:
-                    ListOptionsView(model: model)
-                    
-                case let .story(url):
-//                    if let story = context.getObject(with: url) as? Story {
-                    if let story: Story = context.getObject(with: url) {
-                        ScrollView {
-                            Text(story.text)
-                                .padding()
-                        }
-                    } else {
-                        Text("Error getting Story from URL")
-                    }
-                    
-                case let .file(url):
-                    ImportTextView(url: url)
-                        .environment(\.managedObjectContext, context)
+                } else {
+                    Text("Error getting Story from URL")
+                }
+                
+            case let .file(url):
+                ImportTextView(url: url)
+                    .environment(\.managedObjectContext, context)
             }
         }
         .environment(\.managedObjectContext, context)
         .environmentObject(eventStore)
     }
-    
     
     //  MARK: - Toolbar
     
@@ -156,7 +152,6 @@ struct MainView: View {
         }
     }
 }
-
 
 struct MainView_Previews: PreviewProvider {
     @State static var context = SampleData.preview.container.viewContext
