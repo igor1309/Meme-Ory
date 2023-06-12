@@ -19,20 +19,12 @@ struct SingleStoryViewWrapper: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            HStack(alignment: .firstTextBaseline) {
-                Button("Switch to List") {
-                    model.switchViewMode()
-                }
-
-                Spacer()
-                
-                Group {
-                    favoriteIcon()
-                    reminderIcon()
-                }
-                .imageScale(.small)
-                // .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
-            }
+            
+            SingleStoryToolbar(
+                switchViewMode: model.switchViewMode,
+                favoriteIcon: favoriteIcon,
+                reminderIcon: reminderIcon
+            )
             
             SingleStoryView(
                 text: story.text,
