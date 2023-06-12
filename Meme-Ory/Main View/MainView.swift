@@ -89,8 +89,40 @@ struct MainView: View {
                     in: context
                 )
             }
+            .actionSheet(item: $model.actionSheetID) {
+                actionSheet(actionSheetID: $0, story: story)
+            }
     }
     
+    //  MARK: - Action Sheets
+    
+    private func actionSheet(
+        actionSheetID: MainViewModel.ActionSheetID,
+        story: Story
+    ) -> ActionSheet {
+        
+        switch actionSheetID {
+        case .delete:
+            return confirmationActionSheet(story: story)
+        case .remindMe:
+            return eventStore.remindMeActionSheet(for: story, in: context)
+        }
+    }
+    
+    private func confirmationActionSheet(
+        story: Story
+    ) -> ActionSheet {
+        
+        .init(
+            title: Text("Delete Story?".uppercased()),
+            message: Text("Are you sure? This cannot be undone."),
+            buttons: [
+                .destructive(Text("Yes, delete!")) { model.delete(story: story) },
+                .cancel()
+            ]
+        )
+    }
+
     //  MARK: - Sheets
     
     @ViewBuilder

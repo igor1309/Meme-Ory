@@ -44,7 +44,6 @@ struct SingleStoryViewWrapper: View {
         .padding([.top, .horizontal])
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
         .toolbar(content: toolbar)
-        .actionSheet(item: $model.actionSheetID, content: actionSheet)
     }
     
     var tagList: String {
@@ -86,28 +85,6 @@ struct SingleStoryViewWrapper: View {
             }
         }
     }    
-    
-    //  MARK: - Action Sheets
-    
-    private func actionSheet(actionSheetID: MainViewModel.ActionSheetID) -> ActionSheet {
-        switch actionSheetID {
-            case .delete:
-                return confirmationActionSheet()
-            case .remindMe:
-                return eventStore.remindMeActionSheet(for: story, in: context)
-        }
-    }
-    
-    private func confirmationActionSheet() -> ActionSheet {
-        ActionSheet(
-            title: Text("Delete Story?".uppercased()),
-            message: Text("Are you sure? This cannot be undone."),
-            buttons: [
-                .destructive(Text("Yes, delete!")) { model.delete(story: story) },
-                .cancel()
-            ]
-        )
-    }
 }
 
 struct SingleStoryView_Previews: PreviewProvider {
