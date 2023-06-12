@@ -31,7 +31,7 @@ struct StoryListView: View {
     
     private func storyListRowView(story: Story) -> some View {
         
-        StoryListRowView(story: story)
+        StoryListRowView(model: model, story: story)
             .contentShape(Rectangle())
             .contextMenu {
                 ListRowActionButtons(story: story)

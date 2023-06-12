@@ -9,11 +9,13 @@ import SwiftUI
 
 struct StoryListRowView: View {
     
-    @Environment(\.managedObjectContext) private var context
+    @ObservedObject private var model: MainViewModel
+    @ObservedObject private var story: Story
     
-    @EnvironmentObject private var model: MainViewModel
-    
-    @ObservedObject var story: Story
+    init(model: MainViewModel, story: Story) {
+        self.model = model
+        self.story = story
+    }
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -64,19 +66,24 @@ struct StoryListRowView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             List {
-                StoryListRowView(story: SampleData.story())
+                StoryListRowView(
+                    model: MainViewModel.init(context: context),
+                    story: SampleData.story())
                 
                 Section {
-                    StoryListRowView(story: SampleData.story())
-                    StoryListRowView(story: SampleData.story(storyIndex: 1))
+                    StoryListRowView(
+                        model: MainViewModel.init(context: context),
+                        story: SampleData.story())
+                    StoryListRowView(
+                        model: MainViewModel.init(context: context),
+                        story: SampleData.story(storyIndex: 1)
+                    )
                 }
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Story List Row View")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .environmentObject(MainViewModel(context: context))
-        .environmentObject(EventStore())
         .environment(\.sizeCategory, .large)
         .environment(\.colorScheme, .dark)
         .previewLayout(.fixed(width: 350, height: 700))
