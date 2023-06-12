@@ -32,6 +32,10 @@ struct StoryListView: View {
     private func storyListRowView(story: Story) -> some View {
         
         StoryListRowView(story: story)
+            .contentShape(Rectangle())
+            .contextMenu {
+                ListRowActionButtons(story: story)
+            }
     }
     
     //  MARK: - Sheets

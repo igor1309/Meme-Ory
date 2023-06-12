@@ -18,17 +18,11 @@ struct StoryListRowView: View {
     
     var body: some View {
         content
-            .contentShape(Rectangle())
-            .contextMenu(menuItems: contextMenu)
             .onAppear(perform: handleOnAppear)
     }
     
     private func handleOnAppear() {
         eventStore.reminderCleanup(for: story, in: context)
-    }
-    
-    private func contextMenu() -> some View {
-        ListRowActionButtons(story: story)
     }
     
     var content: some View {
