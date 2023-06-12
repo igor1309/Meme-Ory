@@ -178,7 +178,9 @@ struct MainView: View {
                 MaintenanceView(context: context)
                 
             case .listOptions:
-                ListOptionsView(model: model)
+                NavigationView {
+                    ListOptionsView(model: model)
+                }
                 
             case let .story(url):
                 //                    if let story = context.getObject(with: url) as? Story {

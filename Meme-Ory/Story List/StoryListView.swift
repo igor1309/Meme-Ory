@@ -50,7 +50,9 @@ struct StoryListView: View {
     private func sheetView(sheetID: MainViewModel.SheetID) -> some View {
         switch sheetID {
         case .listOptions:
-            ListOptionsView(model: model)
+            NavigationView {
+                ListOptionsView(model: model)
+            }
             
         default: Text("TBD")
         }

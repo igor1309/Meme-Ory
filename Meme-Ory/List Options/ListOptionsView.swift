@@ -14,66 +14,64 @@ struct ListOptionsView: View {
     @ObservedObject var model: MainViewModel
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Sort")) {
-                    Toggle(isOn: $model.listOptions.sortOrder.areInIncreasingOrder) {
-                        sortToggleLabel()
-                    }
-                    
-                    Picker(selection: $model.listOptions.itemToSortBy, label: model.listOptions.itemToSortBy.label(prefix: "Sort Stories by ")) {
-                        ForEach(ListOptions.SortByOptions.allCases) { item in
-                            item.label().tag(item)
-                        }
-                    }
+        Form {
+            Section(header: Text("Sort")) {
+                Toggle(isOn: $model.listOptions.sortOrder.areInIncreasingOrder) {
+                    sortToggleLabel()
                 }
                 
-                Section(header: Text("Limit")) {
-                    Toggle(isOn: $model.listOptions.isListLimited) {
-                        limitLabel()
+                Picker(selection: $model.listOptions.itemToSortBy, label: model.listOptions.itemToSortBy.label(prefix: "Sort Stories by ")) {
+                    ForEach(ListOptions.SortByOptions.allCases) { item in
+                        item.label().tag(item)
                     }
-                    
-                    if model.listOptions.isListLimited {
-                        Picker(selection: $model.listOptions.listLimit, label: limitLabel()) {
-                            ForEach(ListOptions.listLimitOptions, id:\.self) { item in
-                                Text("\(item)").tag(item)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                    }
-                }
-                
-                Section(header: Text("Extra Filters")) {
-                    Picker(selection: $model.listOptions.favoritesFilter, label: model.listOptions.favoritesFilter.label()) {
-                        ForEach(ListOptions.FavoritesFilterOptions.allCases) { item in
-                            item.label().tag(item)
-                        }
-                    }
-                    
-                    Picker(selection: $model.listOptions.remindersFilter, label: model.listOptions.remindersFilter.label(prefix: "Reminders: ")) {
-                        ForEach(ListOptions.RemindersFilterOptions.allCases) { item in
-                            item.label().tag(item)
-                        }
-                    }
-                }
-                
-                Section(header: Text("Selected Tags")) {
-                    if !model.listOptions.tags.isEmpty {
-                        resetTagsButton()
-                    }
-                    
-                    selectedTags()
-                    
-                    TagGridView(selected: $model.listOptions.tags)
-                        .padding(.vertical, 6)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(Color(UIColor.systemOrange))
-            .navigationTitle("List Options")
-            .toolbar(content: toolbar)
+            
+            Section(header: Text("Limit")) {
+                Toggle(isOn: $model.listOptions.isListLimited) {
+                    limitLabel()
+                }
+                
+                if model.listOptions.isListLimited {
+                    Picker(selection: $model.listOptions.listLimit, label: limitLabel()) {
+                        ForEach(ListOptions.listLimitOptions, id:\.self) { item in
+                            Text("\(item)").tag(item)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                }
+            }
+            
+            Section(header: Text("Extra Filters")) {
+                Picker(selection: $model.listOptions.favoritesFilter, label: model.listOptions.favoritesFilter.label()) {
+                    ForEach(ListOptions.FavoritesFilterOptions.allCases) { item in
+                        item.label().tag(item)
+                    }
+                }
+                
+                Picker(selection: $model.listOptions.remindersFilter, label: model.listOptions.remindersFilter.label(prefix: "Reminders: ")) {
+                    ForEach(ListOptions.RemindersFilterOptions.allCases) { item in
+                        item.label().tag(item)
+                    }
+                }
+            }
+            
+            Section(header: Text("Selected Tags")) {
+                if !model.listOptions.tags.isEmpty {
+                    resetTagsButton()
+                }
+                
+                selectedTags()
+                
+                TagGridView(selected: $model.listOptions.tags)
+                    .padding(.vertical, 6)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
+        .pickerStyle(.menu)
+        .accentColor(Color(UIColor.systemOrange))
+        .navigationTitle("List Options")
+        .toolbar(content: toolbar)
     }
     
     private func sortToggleLabel() -> some View {
