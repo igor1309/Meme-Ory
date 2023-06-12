@@ -70,7 +70,7 @@ struct MainView: View {
                     .padding()
             )
     }
-
+    
     @ViewBuilder
     private func oneStoryUI() -> some View {
         if let story = stories.first {
@@ -92,6 +92,7 @@ struct MainView: View {
             .actionSheet(item: $model.actionSheetID) {
                 actionSheet(actionSheetID: $0, story: story)
             }
+            .toolbar { singleStoryToolbar(story: story) }
     }
     
     //  MARK: - Action Sheets
@@ -122,7 +123,22 @@ struct MainView: View {
             ]
         )
     }
-
+    
+    //  MARK: - Toolbar
+    
+    private func singleStoryToolbar(
+        story: Story
+    ) -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Menu {
+                StoryActionButtons(story: story)
+            } label: {
+                Image(systemName: "doc.plaintext")
+                    .frame(width: 44, height: 44, alignment: .trailing)
+            }
+        }
+    }
+    
     //  MARK: - Sheets
     
     @ViewBuilder

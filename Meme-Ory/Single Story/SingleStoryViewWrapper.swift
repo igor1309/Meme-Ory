@@ -43,7 +43,6 @@ struct SingleStoryViewWrapper: View {
         }
         .padding([.top, .horizontal])
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
-        .toolbar(content: toolbar)
     }
     
     var tagList: String {
@@ -72,19 +71,6 @@ struct SingleStoryViewWrapper: View {
         Image(systemName: story.hasReminder ? "bell.fill" : "bell.slash")
             .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
     }
-    
-    //  MARK: - Toolbar
-    
-    private func toolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Menu {
-                StoryActionButtons(story: story)
-            } label: {
-                Image(systemName: "doc.plaintext")
-                    .frame(width: 44, height: 44, alignment: .trailing)
-            }
-        }
-    }    
 }
 
 struct SingleStoryView_Previews: PreviewProvider {
