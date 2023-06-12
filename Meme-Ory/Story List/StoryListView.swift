@@ -51,12 +51,18 @@ struct StoryListView: View {
         switch sheetID {
         case .listOptions:
             NavigationView {
-                ListOptionsView(model: model)
-                    .toolbar {
-                        ToolbarItem(placement: .primaryAction) {
-                            Button("Done", action: model.dismissSheet)
-                        }
+                ListOptionsView(
+                    model: model,
+                    resetTags: {
+                        model.listOptions.resetTags()
+                        model.dismissSheet()
                     }
+                )
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button("Done", action: model.dismissSheet)
+                    }
+                }
             }
             
         default: Text("TBD")

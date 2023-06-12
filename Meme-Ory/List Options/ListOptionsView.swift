@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ListOptionsView: View {
     
-    @Environment(\.presentationMode) private var presentation
-    
     @ObservedObject var model: MainViewModel
+    
+    let resetTags: () -> Void
     
     var body: some View {
         Form {
@@ -107,11 +107,8 @@ struct ListOptionsView: View {
     }
     
     private func resetTagsButton() -> some View {
-        Button("Clear Tags") {
-            model.listOptions.resetTags()
-            presentation.wrappedValue.dismiss()
-        }
-        .disabled(model.listOptions.tags.isEmpty)
+        Button("Clear Tags", action: resetTags)
+            .disabled(model.listOptions.tags.isEmpty)
     }
 }
 
@@ -119,7 +116,7 @@ fileprivate struct ListOptionsView_Testing: View {
     @StateObject private var model = MainViewModel(context: SampleData.preview.container.viewContext)
     
     var body: some View {
-        ListOptionsView(model: model)
+        ListOptionsView(model: model, resetTags: {})
     }
 }
 
