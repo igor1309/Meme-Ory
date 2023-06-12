@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -50,6 +50,11 @@
 		2A29E7012589598600F2719B /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A167B99258316D3007A986B /* String+Ext.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
 		2A33A3E225714DA500538FE3 /* ImportTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3E125714DA500538FE3 /* ImportTextView.swift */; };
+		2A41A4F62A37240400BA6053 /* SingleStoryComponentPreviewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A41A4F52A37240400BA6053 /* SingleStoryComponentPreviewApp.swift */; };
+		2A41A4F82A37240400BA6053 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A41A4F72A37240400BA6053 /* ContentView.swift */; };
+		2A41A4FA2A37240500BA6053 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A41A4F92A37240500BA6053 /* Assets.xcassets */; };
+		2A41A4FD2A37240500BA6053 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */; };
+		2A41A5032A37247600BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5022A37247600BA6053 /* SingleStoryComponent */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
 		2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
@@ -196,6 +201,11 @@
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		2A33A3E125714DA500538FE3 /* ImportTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextView.swift; sourceTree = "<group>"; };
 		2A41A4EE2A371C4900BA6053 /* SingleStoryComponent.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = SingleStoryComponent.xctestplan; sourceTree = "<group>"; };
+		2A41A4F32A37240400BA6053 /* SingleStoryComponentPreview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SingleStoryComponentPreview.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A41A4F52A37240400BA6053 /* SingleStoryComponentPreviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryComponentPreviewApp.swift; sourceTree = "<group>"; };
+		2A41A4F72A37240400BA6053 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2A41A4F92A37240500BA6053 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2A4CC9F525795269000A21C9 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
 		2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledButton.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
@@ -264,6 +274,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AC2F9F82588DA6700D49560 /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A41A4F02A37240400BA6053 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A41A5032A37247600BA6053 /* SingleStoryComponent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +370,7 @@
 				2ADAD3B6256DA23A00AF463B /* Meme-OryWidget */,
 				2AFE9E6A25744F480037E8CF /* ShareExtension */,
 				2A8AFCE12580FCAE00A0DD94 /* Meme-OryUITests */,
+				2A41A5012A37241800BA6053 /* PreviewApps */,
 				2ADAD3B1256DA23A00AF463B /* Frameworks */,
 				2A1B5FB4256A4A5D00E3283D /* Products */,
 			);
@@ -364,6 +383,7 @@
 				2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */,
 				2AFE9E6925744F480037E8CF /* ShareExtension.appex */,
 				2A8AFCE02580FCAE00A0DD94 /* Meme-OryUITests.xctest */,
+				2A41A4F32A37240400BA6053 /* SingleStoryComponentPreview.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -434,6 +454,33 @@
 				2A8AFD07258118A100A0DD94 /* ParseThreeStarsSeparators.playground */,
 			);
 			path = Playgrounds;
+			sourceTree = "<group>";
+		};
+		2A41A4F42A37240400BA6053 /* SingleStoryComponentPreview */ = {
+			isa = PBXGroup;
+			children = (
+				2A41A4F52A37240400BA6053 /* SingleStoryComponentPreviewApp.swift */,
+				2A41A4F72A37240400BA6053 /* ContentView.swift */,
+				2A41A4F92A37240500BA6053 /* Assets.xcassets */,
+				2A41A4FB2A37240500BA6053 /* Preview Content */,
+			);
+			path = SingleStoryComponentPreview;
+			sourceTree = "<group>";
+		};
+		2A41A4FB2A37240500BA6053 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2A41A5012A37241800BA6053 /* PreviewApps */ = {
+			isa = PBXGroup;
+			children = (
+				2A41A4F42A37240400BA6053 /* SingleStoryComponentPreview */,
+			);
+			path = PreviewApps;
 			sourceTree = "<group>";
 		};
 		2A5005ED2571965A005E969A /* Story Import */ = {
@@ -632,6 +679,26 @@
 			productReference = 2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2A41A4F22A37240400BA6053 /* SingleStoryComponentPreview */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A41A4FE2A37240500BA6053 /* Build configuration list for PBXNativeTarget "SingleStoryComponentPreview" */;
+			buildPhases = (
+				2A41A4EF2A37240400BA6053 /* Sources */,
+				2A41A4F02A37240400BA6053 /* Frameworks */,
+				2A41A4F12A37240400BA6053 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SingleStoryComponentPreview;
+			packageProductDependencies = (
+				2A41A5022A37247600BA6053 /* SingleStoryComponent */,
+			);
+			productName = SingleStoryComponentPreview;
+			productReference = 2A41A4F32A37240400BA6053 /* SingleStoryComponentPreview.app */;
+			productType = "com.apple.product-type.application";
+		};
 		2A8AFCDF2580FCAE00A0DD94 /* Meme-OryUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2A8AFCE72580FCAE00A0DD94 /* Build configuration list for PBXNativeTarget "Meme-OryUITests" */;
@@ -690,11 +757,14 @@
 		2A1B5FAB256A4A5D00E3283D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1230;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					2A1B5FB2256A4A5D00E3283D = {
 						CreatedOnToolsVersion = 12.2;
+					};
+					2A41A4F22A37240400BA6053 = {
+						CreatedOnToolsVersion = 14.3.1;
 					};
 					2A8AFCDF2580FCAE00A0DD94 = {
 						CreatedOnToolsVersion = 12.3;
@@ -725,6 +795,7 @@
 				2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */,
 				2AFE9E6825744F480037E8CF /* ShareExtension */,
 				2A8AFCDF2580FCAE00A0DD94 /* Meme-OryUITests */,
+				2A41A4F22A37240400BA6053 /* SingleStoryComponentPreview */,
 			);
 		};
 /* End PBXProject section */
@@ -736,6 +807,15 @@
 			files = (
 				2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */,
 				2A1B5FBB256A4A5E00E3283D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A41A4F12A37240400BA6053 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A41A4FD2A37240500BA6053 /* Preview Assets.xcassets in Resources */,
+				2A41A4FA2A37240500BA6053 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,6 +914,15 @@
 				2A935C8C256A51AC004B6E10 /* Story.swift in Sources */,
 				2A1943D12587527F00E81C73 /* StoryListView.swift in Sources */,
 				2AFE9E522572F66A0037E8CF /* StoryEditorViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A41A4EF2A37240400BA6053 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A41A4F82A37240400BA6053 /* ContentView.swift in Sources */,
+				2A41A4F62A37240400BA6053 /* SingleStoryComponentPreviewApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1098,6 +1187,68 @@
 			};
 			name = Release;
 		};
+		2A41A4FF2A37240500BA6053 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"$(SRCROOT)/PreviewApps/SingleStoryComponentPreview\"";
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.photoigor.SingleStoryComponentPreview;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2A41A5002A37240500BA6053 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"$(SRCROOT)/PreviewApps/SingleStoryComponentPreview\"";
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.photoigor.SingleStoryComponentPreview;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		2A8AFCE82580FCAE00A0DD94 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1287,6 +1438,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2A41A4FE2A37240500BA6053 /* Build configuration list for PBXNativeTarget "SingleStoryComponentPreview" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A41A4FF2A37240500BA6053 /* Debug */,
+				2A41A5002A37240500BA6053 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2A8AFCE72580FCAE00A0DD94 /* Build configuration list for PBXNativeTarget "Meme-OryUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1315,6 +1475,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2A41A5022A37247600BA6053 /* SingleStoryComponent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SingleStoryComponent;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */ = {
