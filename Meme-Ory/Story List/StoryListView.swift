@@ -19,7 +19,7 @@ struct StoryListView: View {
     var body: some View {
         List {
             Section(header: Text("Stories: \(stories.count)")) {
-                ForEach(stories, content: StoryListRowView.init)
+                ForEach(stories, content: storyListRowView)
                     .onDelete(perform: confirmDelete)
             }
         }
@@ -29,19 +29,22 @@ struct StoryListView: View {
         .actionSheet(item: $model.actionSheetID, content: actionSheet)
     }
     
+    private func storyListRowView(story: Story) -> some View {
+        
+        StoryListRowView(story: story)
+    }
     
     //  MARK: - Sheets
     
     @ViewBuilder
     private func sheetView(sheetID: MainViewModel.SheetID) -> some View {
         switch sheetID {
-            case .listOptions:
-                ListOptionsView(model: model)
-                
-            default: Text("TBD")
+        case .listOptions:
+            ListOptionsView(model: model)
+            
+        default: Text("TBD")
         }
     }
-    
     
     //  MARK: - Toolbar
     
@@ -57,20 +60,19 @@ struct StoryListView: View {
         }
     }
     
-    
     //  MARK: - Action Sheets
     
     private func actionSheet(actionSheetID: MainViewModel.ActionSheetID) -> ActionSheet {
         switch actionSheetID {
-            case .remindMe:
-                if let storyToEdit = model.storyToEdit {
-                    return eventStore.remindMeActionSheet(for: storyToEdit, in: context)
-                } else {
-                    return ActionSheet(title: Text("ERROR getting story"))
-                }
-                
-            case .delete:
-                return deleteConfirmActionSheet()
+        case .remindMe:
+            if let storyToEdit = model.storyToEdit {
+                return eventStore.remindMeActionSheet(for: storyToEdit, in: context)
+            } else {
+                return ActionSheet(title: Text("ERROR getting story"))
+            }
+            
+        case .delete:
+            return deleteConfirmActionSheet()
         }
     }
     
@@ -106,9 +108,10 @@ struct StoryListView: View {
     }
 }
 
-
 struct StoryListView_Previews: PreviewProvider {
+    
     @State static var context = SampleData.preview.container.viewContext
+    
     static let request: FetchRequest<Story> = {
         let request = Story.fetchRequest(.all, sortDescriptors: [])
         return FetchRequest(fetchRequest: request)
