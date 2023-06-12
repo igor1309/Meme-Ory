@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct SingleStoryToolbar<FavoriteIcon: View, ReminderIcon: View>: View {
+struct SingleStoryToolbar: View {
     
     let switchViewMode: () -> Void
-    let favoriteIcon: () -> FavoriteIcon
-    let reminderIcon: () -> ReminderIcon
+    let isFavorite: Bool
+    let hasReminder: Bool
     
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -19,7 +19,7 @@ struct SingleStoryToolbar<FavoriteIcon: View, ReminderIcon: View>: View {
                 
                 Label("Switch to List", systemImage: "list.bullet")
             }
-
+            
             Spacer()
             
             Group {
@@ -30,14 +30,45 @@ struct SingleStoryToolbar<FavoriteIcon: View, ReminderIcon: View>: View {
             // .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
         }
     }
+    
+    //  MARK: - Icons
+    
+    @ViewBuilder
+    private func favoriteIcon() -> some View {
+        Image(systemName: isFavorite ? "star.fill" : "star")
+            .foregroundColor(isFavorite ? Color(UIColor.systemOrange) : .secondary)
+    }
+    
+    @ViewBuilder
+    private func reminderIcon() -> some View {
+        Image(systemName: hasReminder ? "bell.fill" : "bell.slash")
+            .foregroundColor(hasReminder ? Color(UIColor.systemTeal) : .secondary)
+    }
 }
 
 struct SingleStoryToolbar_Previews: PreviewProvider {
+    
     static var previews: some View {
+        
+        VStack {
+            
+            singleStoryToolbar(true, true)
+            singleStoryToolbar(true, false)
+            singleStoryToolbar(false, true)
+            singleStoryToolbar(false, false)
+        }
+    }
+    
+    private static func singleStoryToolbar(
+        switchViewMode: @escaping () -> Void = {},
+        _ isFavorite: Bool,
+        _ hasReminder: Bool
+    ) -> some View {
+        
         SingleStoryToolbar(
-            switchViewMode: {},
-            favoriteIcon: { Image(systemName: "star")},
-            reminderIcon: { Image(systemName: "bell")}
+            switchViewMode: switchViewMode,
+            isFavorite: isFavorite,
+            hasReminder: hasReminder
         )
     }
 }

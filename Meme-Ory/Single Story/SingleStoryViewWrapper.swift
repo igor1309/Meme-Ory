@@ -21,8 +21,8 @@ struct SingleStoryViewWrapper: View {
             
             SingleStoryToolbar(
                 switchViewMode: switchViewMode,
-                favoriteIcon: favoriteIcon,
-                reminderIcon: reminderIcon
+                isFavorite: story.isFavorite,
+                hasReminder: story.hasReminder
             )
             
             SingleStoryView(
@@ -48,20 +48,6 @@ struct SingleStoryViewWrapper: View {
     
     let maxTextLength = 5_000
     let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
-
-    //  MARK: - Icons
-    
-    @ViewBuilder
-    private func favoriteIcon() -> some View {
-        Image(systemName: story.isFavorite ? "star.fill" : "star")
-            .foregroundColor(story.isFavorite ? Color(UIColor.systemOrange) : .secondary)
-    }
-    
-    @ViewBuilder
-    private func reminderIcon() -> some View {
-        Image(systemName: story.hasReminder ? "bell.fill" : "bell.slash")
-            .foregroundColor(story.hasReminder ? Color(UIColor.systemTeal) : .secondary)
-    }
 }
 
 struct SingleStoryView_Previews: PreviewProvider {
