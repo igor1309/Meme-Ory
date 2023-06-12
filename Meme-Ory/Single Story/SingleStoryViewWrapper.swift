@@ -16,6 +16,8 @@ struct SingleStoryViewWrapper: View {
     let getRandomStory: () -> Void
     let showTagGrid: (Story) -> Void
     
+    let maxTextLength = 5_000
+    
     var body: some View {
         VStack(spacing: 16) {
             
@@ -43,11 +45,6 @@ struct SingleStoryViewWrapper: View {
         .padding([.top, .horizontal])
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
     }
-    
-    //  MARK: - Constants
-    
-    let maxTextLength = 5_000
-    let cardBackground = Color(UIColor.tertiarySystemBackground).opacity(0.2)
 }
 
 struct SingleStoryView_Previews: PreviewProvider {
@@ -60,8 +57,8 @@ struct SingleStoryView_Previews: PreviewProvider {
                 getRandomStory: {},
                 showTagGrid: { _ in }
             )
-                .navigationTitle("Random/Widget Story")
-                .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Random/Widget Story")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .environment(\.sizeCategory, .large)
         .environment(\.colorScheme, .dark)
