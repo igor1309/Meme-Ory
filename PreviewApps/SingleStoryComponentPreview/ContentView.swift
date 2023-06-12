@@ -17,7 +17,7 @@ struct ContentView: View {
     private let maxLengths: [Int?] = [10, 100, nil]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             
             Picker("Max Text Length", selection: $maxTextLength) {
                 ForEach(maxLengths, id: \.self) { maxTextLength in
@@ -31,6 +31,12 @@ struct ContentView: View {
                 }
             }
             .pickerStyle(.segmented)
+            
+            SingleStoryToolbar(
+                isFavorite: true,
+                hasReminder: true,
+                switchViewMode: {}
+            )
             
             SingleStoryView(
                 text: .preview,

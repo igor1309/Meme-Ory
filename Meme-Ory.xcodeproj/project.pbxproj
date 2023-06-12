@@ -56,7 +56,6 @@
 		2A41A4FD2A37240500BA6053 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */; };
 		2A41A5032A37247600BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5022A37247600BA6053 /* SingleStoryComponent */; };
 		2A41A5052A3728DD00BA6053 /* SingleStoryComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 2A41A5042A3728DD00BA6053 /* SingleStoryComponent */; };
-		2A41A5072A372AF300BA6053 /* SingleStoryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A41A5062A372AF300BA6053 /* SingleStoryToolbar.swift */; };
 		2A41A5092A372DB900BA6053 /* SingleStoryTagListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A41A5082A372DB900BA6053 /* SingleStoryTagListButton.swift */; };
 		2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9F525795269000A21C9 /* CardModifier.swift */; };
 		2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */; };
@@ -209,7 +208,6 @@
 		2A41A4F72A37240400BA6053 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2A41A4F92A37240500BA6053 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A41A4FC2A37240500BA6053 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2A41A5062A372AF300BA6053 /* SingleStoryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryToolbar.swift; sourceTree = "<group>"; };
 		2A41A5082A372DB900BA6053 /* SingleStoryTagListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryTagListButton.swift; sourceTree = "<group>"; };
 		2A4CC9F525795269000A21C9 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
 		2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledButton.swift; sourceTree = "<group>"; };
@@ -341,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				2A1943C42587506B00E81C73 /* SingleStoryViewWrapper.swift */,
-				2A41A5062A372AF300BA6053 /* SingleStoryToolbar.swift */,
 				2A41A5082A372DB900BA6053 /* SingleStoryTagListButton.swift */,
 				2A6D6C122586BAAD00BBA8C7 /* StoryActionButtons.swift */,
 			);
@@ -885,7 +882,6 @@
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A6D6BF2258608C500BBA8C7 /* MainViewModel.swift in Sources */,
 				2ABAEEBA258798E400D59CA2 /* ConfirmAndDelete.swift in Sources */,
-				2A41A5072A372AF300BA6053 /* SingleStoryToolbar.swift in Sources */,
 				2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */,
 				2A6D6C052586735400BBA8C7 /* MainViewModel Enums + Ext.swift in Sources */,
 				2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */,

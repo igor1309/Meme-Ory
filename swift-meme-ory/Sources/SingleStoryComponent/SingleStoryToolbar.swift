@@ -7,13 +7,23 @@
 
 import SwiftUI
 
-struct SingleStoryToolbar: View {
+public struct SingleStoryToolbar: View {
     
-    let switchViewMode: () -> Void
     let isFavorite: Bool
     let hasReminder: Bool
+    let switchViewMode: () -> Void
     
-    var body: some View {
+    public init(
+        isFavorite: Bool,
+        hasReminder: Bool,
+        switchViewMode: @escaping () -> Void
+    ) {
+        self.isFavorite = isFavorite
+        self.hasReminder = hasReminder
+        self.switchViewMode = switchViewMode
+    }
+    
+    public var body: some View {
         HStack(alignment: .firstTextBaseline) {
             Button(action: switchViewMode) {
                 
@@ -66,9 +76,9 @@ struct SingleStoryToolbar_Previews: PreviewProvider {
     ) -> some View {
         
         SingleStoryToolbar(
-            switchViewMode: switchViewMode,
             isFavorite: isFavorite,
-            hasReminder: hasReminder
+            hasReminder: hasReminder,
+            switchViewMode: switchViewMode
         )
     }
 }

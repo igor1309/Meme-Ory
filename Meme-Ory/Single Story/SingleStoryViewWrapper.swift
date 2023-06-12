@@ -22,9 +22,9 @@ struct SingleStoryViewWrapper: View {
         VStack(spacing: 16) {
             
             SingleStoryToolbar(
-                switchViewMode: switchViewMode,
                 isFavorite: story.isFavorite,
-                hasReminder: story.hasReminder
+                hasReminder: story.hasReminder,
+                switchViewMode: switchViewMode
             )
             
             SingleStoryView(
