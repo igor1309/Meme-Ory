@@ -20,30 +20,32 @@ final class MainViewModel: ObservableObject {
         
         var title: String {
             switch self {
-                case .single: return "Story"
-                case .list:   return "Stories"
+            case .single: return "Story"
+            case .list:   return "Stories"
             }
         }
     }
     
     
     @Published var listOptions: ListOptions
-
+    
     //  MARK: - Request
     
     @Published private(set) var request: NSFetchRequest<Story>
     
-    
     //  MARK: - Handle URLs and Sheets
     
     @Published var sheetID: SheetID?
+    
+    func dismissSheet() {
+        sheetID = nil
+    }
     
     enum SheetID {
         case new, edit, tags, maintenance, listOptions
         case story(_ url: URL)
         case file(_ url: URL)
     }
-    
     
     @Published var actionSheetID: ActionSheetID?
     
@@ -60,7 +62,6 @@ final class MainViewModel: ObservableObject {
     
     let maxLineLimit = 12
     
-    
     //  MARK: - Init
     
     init(context: NSManagedObjectContext, viewMode: ViewMode = .single, limit: Int = 12) {
@@ -76,14 +77,13 @@ final class MainViewModel: ObservableObject {
             return request
         }()
         
-        
         /// subscribe to change view mode `to list` - reset predicate to filter
         //  FIXME: FINISH THIS:
         $viewMode
             .compactMap { mode -> Bool? in
                 switch mode {
-                    case .single: return nil
-                    case .list:   return true
+                case .single: return nil
+                case .list:   return true
                 }
             }
             .subscribe(on: DispatchQueue.global())
@@ -100,24 +100,23 @@ final class MainViewModel: ObservableObject {
         // subscribe to changes in list options if mode is list
         $listOptions
             .sink { [weak self] listOptions in
-                #if DEBUG
+#if DEBUG
                 //print("MainViewModel: $listOptions subs: SINK")
-                #endif
+#endif
                 
                 guard self?.viewMode == .some(.list) else { return }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     if let self = self {
                         self.request = self.listOptions.fetchRequest
-                        #if DEBUG
+#if DEBUG
                         //print("MainViewModel: $listOptions subs: REQUEST CHANGED")
-                        #endif
+#endif
                     }
                 }
             }
             .store(in: &cancellableSet)
     }
-
     
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -129,39 +128,36 @@ final class MainViewModel: ObservableObject {
         deleteTemporaryFile()
     }
     
-    
-    
     //  MARK: - Handle URLs
     
     func handleURL(_ url: URL) {
         Ory.withHapticsAndAnimation {
             
-            #if DEBUG
+#if DEBUG
             print("MainViewModel: handleURL call: \(url)")
-            #endif
+#endif
             
             guard let deeplink = url.deeplink else {
                 // FIXME: create enum for alerts
                 //showingFailedImportAlert = true
                 
-                #if DEBUG
+#if DEBUG
                 print("MainViewModel: handleURL: deeplink error")
-                #endif
+#endif
                 
                 return
             }
             
             switch deeplink {
-                case .home:
-                    self.handleHomeURL()
-                    
-                case let .story(url):
-                    self.handleStoryURL(url)
-                    
-                    
-                case let .file(url):
-                    self.handleFileURL(url)
-                    
+            case .home:
+                self.handleHomeURL()
+                
+            case let .story(url):
+                self.handleStoryURL(url)
+                
+                
+            case let .file(url):
+                self.handleFileURL(url)
             }
         }
     }
@@ -169,20 +165,20 @@ final class MainViewModel: ObservableObject {
     private func handleHomeURL() {
         //  FIXME: - FINISH THIS: ANY FEEDBACK TO USER?
         /// do nothing we are here (??)
-        #if DEBUG
+#if DEBUG
         print("MainViewModel: handleURL: deeplink home")
-        #endif
+#endif
     }
     
     private func handleStoryURL(_ url: URL) {
-        #if DEBUG
+#if DEBUG
         print("MainViewModel: handleURL: deeplink storyURL")
-        #endif
+#endif
         
         guard let objectID = self.context.getObjectID(for: url) else {
-            #if DEBUG
+#if DEBUG
             print("MainViewModel: handleURL: can't find story for this URL")
-            #endif
+#endif
             
             return
         }
@@ -198,9 +194,9 @@ final class MainViewModel: ObservableObject {
     private func handleFileURL(_ url: URL) {
         let texts = url.getTexts()
         
-        #if DEBUG
+#if DEBUG
         print("MainViewModel: handleURL: file with text: \((texts.first ?? "no texts").prefix(30))...")
-        #endif
+#endif
         
         self.sheetID = SheetID.file(url)
     }
@@ -213,9 +209,9 @@ final class MainViewModel: ObservableObject {
             self.viewMode = .single
             
             guard let randomStory = self.context.randomObject(ofType: Story.self) else {
-                #if DEBUG
+#if DEBUG
                 print("MainViewModel: getRandomStory: ERROR getting random story from context")
-                #endif
+#endif
                 return
             }
             
@@ -228,14 +224,12 @@ final class MainViewModel: ObservableObject {
         }
     }
     
-    
     //  MARK: - Shuffle List
     
     func shuffleList() {
         //  FIXME: FINISH THIS:
         
     }
-    
     
     //  MARK: - Reset
     
@@ -250,7 +244,6 @@ final class MainViewModel: ObservableObject {
         }
     }
     
-
     //  MARK: - Import
     
     @Published var showingFileImporter = false
@@ -258,7 +251,6 @@ final class MainViewModel: ObservableObject {
     func importFile() {
         showingFileImporter = true
     }
-    
     
     //  MARK: - Export
     
@@ -286,13 +278,12 @@ final class MainViewModel: ObservableObject {
     
     func handleFileExporter(_ result: Result<URL, Error>) {
         switch result {
-            case .success:
-                print("Exported successfully.")
-            case .failure(let error):
-                print("Export error \(error.localizedDescription)")
+        case .success:
+            print("Exported successfully.")
+        case .failure(let error):
+            print("Export error \(error.localizedDescription)")
         }
     }
-    
     
     //  MARK: - Share Stories
     
@@ -317,7 +308,7 @@ final class MainViewModel: ObservableObject {
             let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
             let temporaryFilename = "stories.json"//ProcessInfo().globallyUniqueString
             self.temporaryFileURL =
-                temporaryDirectoryURL.appendingPathComponent(temporaryFilename)
+            temporaryDirectoryURL.appendingPathComponent(temporaryFilename)
             
             /// write to temporary file
             guard let temporaryFileURL = self.temporaryFileURL, let _ = try? export.write(to: temporaryFileURL, options: .atomic) else { return }
@@ -334,7 +325,6 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
-    
     
     //  MARK: -Show Sheets: Create New Ctory, Story Editor, Story List & Tag Grid for Editing
     
@@ -374,7 +364,6 @@ final class MainViewModel: ObservableObject {
         self.sheetID = .listOptions
     }
     
-
     //  MARK: Show Action Sheets: Delete Story & RemindMe
     
     func deleteStoryAction() {
@@ -388,7 +377,6 @@ final class MainViewModel: ObservableObject {
         }
     }
     
-    
     //  MARK: - Paste Clipboard to New Story
     
     func pasteToNewStory() {
@@ -400,7 +388,6 @@ final class MainViewModel: ObservableObject {
         }
     }
     
-    
     //  MARK: Share Story Text
     
     func shareText(_ text: String) {
@@ -409,18 +396,16 @@ final class MainViewModel: ObservableObject {
         UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true)
     }
     
-    
     //  MARK: - Switch View Mode
     
     func switchViewMode() {
         Ory.withHapticsAndAnimation {
             switch self.viewMode {
-                case .single: self.viewMode = .list
-                case .list:   self.viewMode = .single
+            case .single: self.viewMode = .list
+            case .list:   self.viewMode = .single
             }
         }
     }
-    
     
     //  MARK: - Delete Story
     
@@ -434,5 +419,4 @@ final class MainViewModel: ObservableObject {
         //  FIXME: FINISH THIS:
         //self.title = "Story was deleted"
     }
-
 }

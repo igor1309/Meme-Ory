@@ -52,6 +52,11 @@ struct StoryListView: View {
         case .listOptions:
             NavigationView {
                 ListOptionsView(model: model)
+                    .toolbar {
+                        ToolbarItem(placement: .primaryAction) {
+                            Button("Done", action: model.dismissSheet)
+                        }
+                    }
             }
             
         default: Text("TBD")

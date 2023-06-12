@@ -71,7 +71,6 @@ struct ListOptionsView: View {
         .pickerStyle(.menu)
         .accentColor(Color(UIColor.systemOrange))
         .navigationTitle("List Options")
-        .toolbar(content: toolbar)
     }
     
     private func sortToggleLabel() -> some View {
@@ -113,17 +112,6 @@ struct ListOptionsView: View {
             presentation.wrappedValue.dismiss()
         }
         .disabled(model.listOptions.tags.isEmpty)
-    }
-    
-    
-    //  MARK: - Toolbar
-    
-    private func toolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button("Done") {
-                presentation.wrappedValue.dismiss()
-            }
-        }
     }
 }
 

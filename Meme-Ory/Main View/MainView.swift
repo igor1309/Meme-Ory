@@ -180,6 +180,11 @@ struct MainView: View {
             case .listOptions:
                 NavigationView {
                     ListOptionsView(model: model)
+                        .toolbar {
+                            ToolbarItem(placement: .primaryAction) {
+                                Button("Done", action: model.dismissSheet)
+                            }
+                        }
                 }
                 
             case let .story(url):
