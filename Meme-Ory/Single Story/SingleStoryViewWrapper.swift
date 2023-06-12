@@ -33,25 +33,8 @@ struct SingleStoryViewWrapper: View {
             .contentShape(Rectangle())
             .onTapGesture(count: 1, perform: model.getRandomStory)
             
-            HStack(alignment: .top) {
-                Button {
-                    model.showTagGrid(story: story)
-                } label: {
-                    Text(tagList)
-                        .foregroundColor(Color(UIColor.systemOrange))
-                        .font(.caption)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
-                }
-                
-                Spacer()
-                
-                //                HStack {
-                //                    favoriteIcon()
-                //                    reminderIcon()
-                //                }
-                //                .imageScale(.small)
-                //                .cardModifier(padding: 9, cornerRadius: 9, background: cardBackground)
+            SingleStoryTagListButton(story: story) {
+                model.showTagGrid(story: story)
             }
             
             Text("Tap card to get next random story")
@@ -130,7 +113,6 @@ struct SingleStoryViewWrapper: View {
             ]
         )
     }
-    
 }
 
 struct SingleStoryView_Previews: PreviewProvider {
