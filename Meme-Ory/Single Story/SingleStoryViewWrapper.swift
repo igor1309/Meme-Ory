@@ -10,10 +10,7 @@ import SwiftUI
 
 struct SingleStoryViewWrapper: View {
     
-    @Environment(\.managedObjectContext) private var context
-    
     @EnvironmentObject private var model: MainViewModel
-    @EnvironmentObject private var eventStore: EventStore
     
     @ObservedObject var story: Story
     
@@ -74,7 +71,6 @@ struct SingleStoryViewWrapper: View {
 }
 
 struct SingleStoryView_Previews: PreviewProvider {
-    @State static var context = SampleData.preview.container.viewContext
     
     static var previews: some View {
         NavigationView {
@@ -82,9 +78,6 @@ struct SingleStoryView_Previews: PreviewProvider {
                 .navigationTitle("Random/Widget Story")
                 .navigationBarTitleDisplayMode(.inline)
         }
-        .environment(\.managedObjectContext, context)
-        .environmentObject(MainViewModel(context: context))
-        .environmentObject(EventStore())
         .environment(\.sizeCategory, .large)
         .environment(\.colorScheme, .dark)
         .previewLayout(.fixed(width: 350, height: 700))
