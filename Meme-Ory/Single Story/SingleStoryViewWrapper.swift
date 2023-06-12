@@ -138,7 +138,7 @@ struct SingleStoryView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            SingleStoryViewWrapper(story: SampleData.story())
+            SingleStoryViewWrapper(story: .preview)
                 .navigationTitle("Random/Widget Story")
                 .navigationBarTitleDisplayMode(.inline)
         }
@@ -149,4 +149,9 @@ struct SingleStoryView_Previews: PreviewProvider {
         .environment(\.colorScheme, .dark)
         .previewLayout(.fixed(width: 350, height: 700))
     }
+}
+
+extension Story {
+    
+    static let preview: Story = SampleData.story()
 }
