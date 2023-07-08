@@ -5,6 +5,7 @@
 //  Created by Igor Malyarov on 06.12.2020.
 //
 
+import Combine
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -29,6 +30,8 @@ extension View {
 final class StoryImporterModel: ObservableObject {
     
     @Published private(set) var state: State?
+    
+    private let stateSubject = PassthroughSubject<State?, Never>()
     
     enum State {
         case texts([String])
@@ -58,14 +61,22 @@ final class StoryImporterModel: ObservableObject {
         }
     }
     
+    init(state: State? = nil) {
+        self.state = state
+        
+        stateSubject
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$state)
+    }
+    
     func setState(to wrapper: State.TextsWrapper?) {
         guard let texts = wrapper?.texts else { return }
-        state = .texts(texts)
+        stateSubject.send(.texts(texts))
     }
     
     func setState(to alert: State.AlertWrapper?) {
         guard let alert else { return }
-        state = .alert(alert)
+        stateSubject.send(.alert(alert))
     }
     
     //  MARK: - Handle Open URL
@@ -84,14 +95,14 @@ final class StoryImporterModel: ObservableObject {
     
     func handleURLResult(_ result: Result<URL, Error>) {
         do {
-            state = .texts(try result.get().getTexts())
+            stateSubject.send(.texts(try result.get().getTexts()))
         } catch {
             handleError(error.localizedDescription)
         }
     }
     
     private func handleError(_ message: String) {
-        state = .alert(.init(message: message))
+        stateSubject.send(.alert(.init(message: message)))
     }
 }
 
