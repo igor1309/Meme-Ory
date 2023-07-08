@@ -33,7 +33,7 @@ final class StoryImporterModel: ObservableObject {
     func handleOpenURL(url: URL) {
         switch url.deeplink {
         case let .file(url: fileURL):
-            handleFileImporter(.success(fileURL))
+            handleURLResult(.success(fileURL))
             
         default:
             showingFailedImportAlert = true
@@ -42,7 +42,7 @@ final class StoryImporterModel: ObservableObject {
     
     //  MARK: - Handle File Importer
     
-    func handleFileImporter(_ result: Result<URL, Error>) {
+    func handleURLResult(_ result: Result<URL, Error>) {
         do {
             textsWrapper = .init(texts: try result.get().getTexts())
         } catch {
@@ -68,7 +68,7 @@ fileprivate struct StoryImporter: ViewModifier {
             .fileImporter(
                 isPresented: $isPresented,
                 allowedContentTypes: [UTType.json],
-                onCompletion: model.handleFileImporter
+                onCompletion: model.handleURLResult
             )
             .sheet(
                 item: $model.textsWrapper,
