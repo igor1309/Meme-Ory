@@ -101,6 +101,11 @@
 		2AC2F9F82588DA6700D49560 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC2F9F72588DA6700D49560 /* CloudKit.framework */; };
 		2AC2F9F92588DD9E00D49560 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC2F9F72588DA6700D49560 /* CloudKit.framework */; };
 		2ACBA0182A59EC6E00E87949 /* StoryImporter in Frameworks */ = {isa = PBXBuildFile; productRef = 2ACBA0172A59EC6E00E87949 /* StoryImporter */; };
+		2ACBA0202A59FFCC00E87949 /* StoryImporterPreviewAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACBA01F2A59FFCC00E87949 /* StoryImporterPreviewAppApp.swift */; };
+		2ACBA0222A59FFCC00E87949 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACBA0212A59FFCC00E87949 /* ContentView.swift */; };
+		2ACBA0242A59FFCE00E87949 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ACBA0232A59FFCE00E87949 /* Assets.xcassets */; };
+		2ACBA0272A59FFCE00E87949 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ACBA0262A59FFCE00E87949 /* Preview Assets.xcassets */; };
+		2ACBA02C2A59FFF700E87949 /* StoryImporter in Frameworks */ = {isa = PBXBuildFile; productRef = 2ACBA02B2A59FFF700E87949 /* StoryImporter */; };
 		2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
 		2ACCEE41257E10AE0022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
 		2ACCEE49257E12AF0022B752 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF90525702EBF008D1B31 /* EventStore.swift */; };
@@ -260,6 +265,11 @@
 		2AC2F9F72588DA6700D49560 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		2AC2FA062588E55500D49560 /* CoreData Stack & iCloud README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CoreData Stack & iCloud README.md"; sourceTree = "<group>"; };
 		2ACBA0162A59E85800E87949 /* StoryImporter.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoryImporter.xctestplan; sourceTree = "<group>"; };
+		2ACBA01D2A59FFCC00E87949 /* StoryImporterPreviewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryImporterPreviewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2ACBA01F2A59FFCC00E87949 /* StoryImporterPreviewAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryImporterPreviewAppApp.swift; sourceTree = "<group>"; };
+		2ACBA0212A59FFCC00E87949 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2ACBA0232A59FFCE00E87949 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2ACBA0262A59FFCE00E87949 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2ACCEE39257E08A40022B752 /* Ory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ory.swift; sourceTree = "<group>"; };
 		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -315,6 +325,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ACBA01A2A59FFCC00E87949 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ACBA02C2A59FFF700E87949 /* StoryImporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +432,7 @@
 				2A8AFCE02580FCAE00A0DD94 /* Meme-OryUITests.xctest */,
 				2A41A4F32A37240400BA6053 /* SingleStoryComponentPreview.app */,
 				2A1E6D722A59B9A10072E69E /* Meme-OryTests.xctest */,
+				2ACBA01D2A59FFCC00E87949 /* StoryImporterPreviewApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -518,6 +537,7 @@
 			isa = PBXGroup;
 			children = (
 				2A41A4F42A37240400BA6053 /* SingleStoryComponentPreview */,
+				2ACBA01E2A59FFCC00E87949 /* StoryImporterPreviewApp */,
 			);
 			path = PreviewApps;
 			sourceTree = "<group>";
@@ -639,6 +659,25 @@
 				2AB03179256CD35700BEC832 /* StoryTagView.swift */,
 			);
 			path = "Story Editor";
+			sourceTree = "<group>";
+		};
+		2ACBA01E2A59FFCC00E87949 /* StoryImporterPreviewApp */ = {
+			isa = PBXGroup;
+			children = (
+				2ACBA01F2A59FFCC00E87949 /* StoryImporterPreviewAppApp.swift */,
+				2ACBA0212A59FFCC00E87949 /* ContentView.swift */,
+				2ACBA0232A59FFCE00E87949 /* Assets.xcassets */,
+				2ACBA0252A59FFCE00E87949 /* Preview Content */,
+			);
+			path = StoryImporterPreviewApp;
+			sourceTree = "<group>";
+		};
+		2ACBA0252A59FFCE00E87949 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2ACBA0262A59FFCE00E87949 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		2ADAD3B1256DA23A00AF463B /* Frameworks */ = {
@@ -778,6 +817,26 @@
 			productReference = 2A8AFCE02580FCAE00A0DD94 /* Meme-OryUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		2ACBA01C2A59FFCC00E87949 /* StoryImporterPreviewApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ACBA0282A59FFCE00E87949 /* Build configuration list for PBXNativeTarget "StoryImporterPreviewApp" */;
+			buildPhases = (
+				2ACBA0192A59FFCC00E87949 /* Sources */,
+				2ACBA01A2A59FFCC00E87949 /* Frameworks */,
+				2ACBA01B2A59FFCC00E87949 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StoryImporterPreviewApp;
+			packageProductDependencies = (
+				2ACBA02B2A59FFF700E87949 /* StoryImporter */,
+			);
+			productName = StoryImporterPreviewApp;
+			productReference = 2ACBA01D2A59FFCC00E87949 /* StoryImporterPreviewApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		2ADAD3AF256DA23A00AF463B /* Meme-OryWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2ADAD3BF256DA23B00AF463B /* Build configuration list for PBXNativeTarget "Meme-OryWidgetExtension" */;
@@ -836,6 +895,9 @@
 						CreatedOnToolsVersion = 12.3;
 						TestTargetID = 2A1B5FB2256A4A5D00E3283D;
 					};
+					2ACBA01C2A59FFCC00E87949 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					2ADAD3AF256DA23A00AF463B = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -863,6 +925,7 @@
 				2AFE9E6825744F480037E8CF /* ShareExtension */,
 				2A8AFCDF2580FCAE00A0DD94 /* Meme-OryUITests */,
 				2A41A4F22A37240400BA6053 /* SingleStoryComponentPreview */,
+				2ACBA01C2A59FFCC00E87949 /* StoryImporterPreviewApp */,
 			);
 		};
 /* End PBXProject section */
@@ -898,6 +961,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ACBA01B2A59FFCC00E87949 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ACBA0272A59FFCE00E87949 /* Preview Assets.xcassets in Resources */,
+				2ACBA0242A59FFCE00E87949 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1016,6 +1088,15 @@
 			files = (
 				2A8AFCEF2580FF0800A0DD94 /* UILaunchTests.swift in Sources */,
 				2A8AFCE32580FCAE00A0DD94 /* Meme_OryUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ACBA0192A59FFCC00E87949 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ACBA0222A59FFCC00E87949 /* ContentView.swift in Sources */,
+				2ACBA0202A59FFCC00E87949 /* StoryImporterPreviewAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1429,6 +1510,68 @@
 			};
 			name = Release;
 		};
+		2ACBA0292A59FFCE00E87949 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PreviewApps/StoryImporterPreviewApp/Preview Content\"";
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.photoigor.StoryImporterPreviewApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2ACBA02A2A59FFCE00E87949 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PreviewApps/StoryImporterPreviewApp/Preview Content\"";
+				DEVELOPMENT_TEAM = VRVJ9YNRQU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.photoigor.StoryImporterPreviewApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		2ADAD3C0256DA23B00AF463B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1597,6 +1740,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2ACBA0282A59FFCE00E87949 /* Build configuration list for PBXNativeTarget "StoryImporterPreviewApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2ACBA0292A59FFCE00E87949 /* Debug */,
+				2ACBA02A2A59FFCE00E87949 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2ADAD3BF256DA23B00AF463B /* Build configuration list for PBXNativeTarget "Meme-OryWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1627,6 +1779,10 @@
 			productName = SingleStoryComponent;
 		};
 		2ACBA0172A59EC6E00E87949 /* StoryImporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StoryImporter;
+		};
+		2ACBA02B2A59FFF700E87949 /* StoryImporter */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StoryImporter;
 		};
