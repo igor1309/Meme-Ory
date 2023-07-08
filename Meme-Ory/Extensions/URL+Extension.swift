@@ -61,7 +61,7 @@ extension URL {
     
     /// Decode JSON contents of url
     /// - Returns: array of non-duplicating strings without whitespaces and newlines
-    func getTexts() throws -> [String] {
+    public func getTexts() throws -> [String] {
         
         guard startAccessingSecurityScopedResource()
         else {
@@ -89,12 +89,12 @@ extension URL {
         return noDuplicates.trimmed()
     }
     
-    enum URLError: LocalizedError {
+    public enum URLError: LocalizedError {
         case deniedAccess
         case loadFailure
         case readFailure
         
-        var errorDescription: String? {
+        public var errorDescription: String? {
             switch self {
             case .deniedAccess:
                 return "Denied access to file at \(self)"

@@ -56,6 +56,17 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2A1E6D712A59B9A10072E69E"
+               BuildableName = "Meme-OryTests.xctest"
+               BlueprintName = "Meme-OryTests"
+               ReferencedContainer = "container:Meme-Ory.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

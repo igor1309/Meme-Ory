@@ -53,6 +53,17 @@
                ReferencedContainer = "container:Meme-Ory.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2A1E6D712A59B9A10072E69E"
+               BuildableName = "Meme-OryTests.xctest"
+               BlueprintName = "Meme-OryTests"
+               ReferencedContainer = "container:Meme-Ory.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -111,6 +122,7 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES"
+      askForAppToLaunch = "Yes"
       launchAutomaticallySubstyle = "2">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
