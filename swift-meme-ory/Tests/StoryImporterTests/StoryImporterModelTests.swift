@@ -19,6 +19,15 @@ final class StoryImporterModelTests: XCTestCase {
         XCTAssertEqual(spy.values, [nil])
     }
     
+    func test_init_shouldSetStateToGiven() {
+        
+        let initialState: StoryImporterModel.State = .texts([])
+        let (sut, spy) = makeSUT(state: initialState)
+        
+        XCTAssertEqual(spy.values, [initialState])
+        XCTAssertNotNil(sut)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
