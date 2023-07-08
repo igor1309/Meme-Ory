@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import SingleStoryComponent
 
 
 //  MARK: - Main View
@@ -19,7 +20,9 @@ struct MainView: View {
     @EnvironmentObject private var model: MainViewModel
     
     @FetchRequest var stories: FetchedResults<Story>
-    
+
+    private let maxTextLength = 5_000
+
     init(fetchRequest: NSFetchRequest<Story>) {
         _stories = FetchRequest(fetchRequest: fetchRequest)
     }
@@ -82,11 +85,30 @@ struct MainView: View {
     
     private func singleStoryView(story: Story) -> some View {
         
-        SingleStoryViewWrapper(
+        SingleStoryWrapperView(
             story: story,
-            switchViewMode: model.switchViewMode,
-            getRandomStory: model.getRandomStory,
-            showTagGrid: model.showTagGrid(story:)
+            singleStoryToolbar: { story in
+                SingleStoryToolbar(
+                    isFavorite: story.isFavorite,
+                    hasReminder: story.hasReminder,
+                    switchViewMode: model.switchViewMode
+                )
+            },
+            singleStoryView: { story in
+                SingleStoryView(
+                    text: story.text,
+                    maxTextLength: maxTextLength
+                )
+            },
+            onStoryTap: { _ in model.getRandomStory() },
+            onStoryTapText: "Tap on the card to get next random story.",
+            tagListButton: { story in
+                SingleStoryTagListButton(
+                    tagList: story.tags.isEmpty ? "no tags" : story.tagList
+                ) {
+                    model.showTagGrid(story: story)
+                }
+            }
         )
         .onAppear {
             eventStore.reminderCleanup(
