@@ -16,7 +16,7 @@ public final class StoryImporterModel: ObservableObject {
     private let getTexts: (URL) throws -> [String]
     
     public init(
-        state: State? = nil,
+        initialState state: State? = nil,
         getTexts: @escaping (URL) throws -> [String]
     ) {
         self.state = state

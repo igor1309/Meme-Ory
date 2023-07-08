@@ -22,7 +22,7 @@ final class StoryImporterModelTests: XCTestCase {
     func test_init_shouldSetStateToGiven() {
         
         let initialState: StoryImporterModel.State = .texts([])
-        let (sut, spy) = makeSUT(state: initialState)
+        let (sut, spy) = makeSUT(initialState: initialState)
         
         XCTAssertEqual(spy.values, [initialState])
         XCTAssertNotNil(sut)
@@ -31,7 +31,7 @@ final class StoryImporterModelTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(
-        state: StoryImporterModel.State? = nil,
+        initialState: StoryImporterModel.State? = nil,
         getTexts: @escaping (URL) throws -> [String] = { _ in [] },
         file: StaticString = #file,
         line: UInt = #line
@@ -41,7 +41,7 @@ final class StoryImporterModelTests: XCTestCase {
     ) {
         
         let sut = StoryImporterModel(
-            state: state,
+            initialState: initialState,
             getTexts: getTexts
         )
         let spy = ValueSpy(sut.$state)
