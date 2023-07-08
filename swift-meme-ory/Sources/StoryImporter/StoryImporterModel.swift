@@ -25,6 +25,7 @@ public final class StoryImporterModel: ObservableObject {
         self.getTexts = getTexts
         
         stateSubject
+            .removeDuplicates()
             .receive(on: scheduler)
             .assign(to: &$state)
     }

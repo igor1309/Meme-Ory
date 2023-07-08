@@ -43,10 +43,39 @@ final class StoryImporterModelTests: XCTestCase {
         XCTAssertNoDiff(spy.values, [nil])
     }
     
+    func test_setStateToTexts_shouldNotChangeStateOnNilTwice() {
+        
+        let (sut, spy, scheduler) = makeSUT()
+
+        sut.setState(to: StoryImporterModel.State.TextsWrapper?.none)
+        scheduler.advance()
+        
+        sut.setState(to: StoryImporterModel.State.TextsWrapper?.none)
+        scheduler.advance()
+                
+        XCTAssertNoDiff(spy.values, [nil])
+    }
+    
     func test_setStateToTexts_shouldSetState() {
         
         let (sut, spy, scheduler) = makeSUT()
 
+        sut.setState(to: .init(texts: []))
+        scheduler.advance()
+        
+        XCTAssertNoDiff(spy.values, [
+            nil,
+            .texts([])
+        ])
+    }
+    
+    func test_setStateToTexts_shouldSetStateOnceOnTwice() {
+        
+        let (sut, spy, scheduler) = makeSUT()
+
+        sut.setState(to: .init(texts: []))
+        scheduler.advance()
+        
         sut.setState(to: .init(texts: []))
         scheduler.advance()
         
@@ -70,6 +99,22 @@ final class StoryImporterModelTests: XCTestCase {
         
         let (sut, spy, scheduler) = makeSUT()
 
+        sut.setState(to: .init(message: "error"))
+        scheduler.advance()
+        
+        XCTAssertNoDiff(spy.values, [
+            nil,
+            .alert(.init(message: "error"))
+        ])
+    }
+    
+    func test_setStateToAlert_shouldSetStateOnceOnTwice() {
+        
+        let (sut, spy, scheduler) = makeSUT()
+
+        sut.setState(to: .init(message: "error"))
+        scheduler.advance()
+        
         sut.setState(to: .init(message: "error"))
         scheduler.advance()
         
