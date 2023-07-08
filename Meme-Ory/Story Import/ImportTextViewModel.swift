@@ -17,7 +17,7 @@ final class ImportTextViewModel: ObservableObject {
         print("ImportTextViewModel.init: ...")
         #endif
         
-        let texts = url.getTexts()
+        let texts = (try? url.getTexts()) ?? []
         
         briefs = texts.map {
             Brief(text: $0)

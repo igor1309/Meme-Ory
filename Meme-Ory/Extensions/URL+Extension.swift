@@ -61,25 +61,25 @@ extension URL {
     
     /// Decode JSON contents of url
     /// - Returns: array of non-duplicating strings without whitespaces and newlines
-    func getTexts() -> [String] {
+    func getTexts() throws -> [String] {
         
-        guard self.startAccessingSecurityScopedResource() else {
-            print("getTexts: denied access to file at \(self)")
-            return []
+        guard startAccessingSecurityScopedResource()
+        else {
+            throw URLError.deniedAccess
         }
          
-        defer { self.stopAccessingSecurityScopedResource() }
+        defer { stopAccessingSecurityScopedResource() }
                 
-        guard let data = try? Data(contentsOf: self) else {
-            print("getTexts: Failed to load file from \(self)")
-            return []
+        guard let data = try? Data(contentsOf: self)
+        else {
+            throw URLError.loadFailure
         }
         
         let decoder = JSONDecoder()
         
-        guard let texts = try? decoder.decode([String].self, from: data) else {
-            print("getTexts: Failed to decode file at \(self)")
-            return []
+        guard let texts = try? decoder.decode([String].self, from: data)
+        else {
+            throw URLError.readFailure
         }
         
         /// remove duplicates from import
@@ -87,6 +87,23 @@ extension URL {
         let noDuplicates: [String] = Set(texts).sorted()
         
         return noDuplicates.trimmed()
+    }
+    
+    enum URLError: LocalizedError {
+        case deniedAccess
+        case loadFailure
+        case readFailure
+        
+        var errorDescription: String? {
+            switch self {
+            case .deniedAccess:
+                return "Denied access to file at \(self)"
+            case .loadFailure:
+                return "Failed to load file from \(self)"
+            case .readFailure:
+                return "Failed to decode file at \(self)"
+            }
+        }
     }
 }
 

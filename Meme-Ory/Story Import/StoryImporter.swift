@@ -49,7 +49,7 @@ fileprivate struct StoryImporter: ViewModifier {
         }
         
         withAnimation {
-            let texts = fileURL.getTexts()
+            let texts = (try? fileURL.getTexts()) ?? []
             
             #if DEBUG
             print("StoryImporter: handleOpenURL: importing file \(url)")
@@ -69,7 +69,7 @@ fileprivate struct StoryImporter: ViewModifier {
                 print("StoryImporter: Import success")
                 #endif
                 
-                let texts = url.getTexts()
+                let texts = (try? url.getTexts()) ?? []
                 
                 #if DEBUG
                 print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")

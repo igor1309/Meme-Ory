@@ -192,7 +192,7 @@ final class MainViewModel: ObservableObject {
     }
     
     private func handleFileURL(_ url: URL) {
-        let texts = url.getTexts()
+        let texts = (try? url.getTexts()) ?? []
         
 #if DEBUG
         print("MainViewModel: handleURL: file with text: \((texts.first ?? "no texts").prefix(30))...")
