@@ -53,23 +53,15 @@ final class StoryImporterModel: ObservableObject {
     //  MARK: - Handle File Importer
     
     func handleFileImporter(_ result: Result<URL, Error>) {
-        switch result {
-            case let .success(url):
-                #if DEBUG
-                print("StoryImporter: Import success")
-                #endif
-                
-                let texts = (try? url.getTexts()) ?? []
-                
-                #if DEBUG
-                print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")
-                #endif
-                
-                textsWrapper = TextsWrapper(texts: texts)
-                
-            case let .failure(error):
-                print("StoryImporter: Import error \(error.localizedDescription)")
+        do {
+            textsWrapper = .init(texts: try result.get().getTexts())
+        } catch {
+            handleError(error)
         }
+    }
+    
+    private func handleError(_ error: Error) {
+        print("StoryImporter: Import error \(error.localizedDescription)")
     }
 }
 
