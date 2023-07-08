@@ -27,12 +27,12 @@ public final class StoryImporterModel: ObservableObject {
             .assign(to: &$state)
     }
     
-    func setState(to wrapper: State.TextsWrapper?) {
+    public func setState(to wrapper: State.TextsWrapper?) {
         guard let texts = wrapper?.texts else { return }
         stateSubject.send(.texts(texts))
     }
     
-    func setState(to alert: State.AlertWrapper?) {
+    public func setState(to alert: State.AlertWrapper?) {
         guard let alert else { return }
         stateSubject.send(.alert(alert))
     }
@@ -83,15 +83,23 @@ extension StoryImporterModel {
             return alert
         }
         
-        struct TextsWrapper: Identifiable {
+        public struct TextsWrapper: Identifiable {
             let texts: [String]
-            var id: Int { texts.hashValue }
+            public var id: Int { texts.hashValue }
+            
+            public init(texts: [String]) {
+                self.texts = texts
+            }
         }
         
         public struct AlertWrapper: Identifiable & Hashable {
             let message: String
             
             public var id: Self { self }
+            
+            public init(message: String) {
+                self.message = message
+            }
         }
     }
 }

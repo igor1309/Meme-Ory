@@ -28,6 +28,52 @@ final class StoryImporterModelTests: XCTestCase {
         XCTAssertNotNil(sut)
     }
     
+    func test_setStateToTexts_shouldNotChangeStateOnNil() {
+        
+        let (sut, spy) = makeSUT()
+
+        sut.setState(to: StoryImporterModel.State.TextsWrapper?.none)
+        
+        XCTAssertEqual(spy.values, [nil])
+    }
+    
+    func test_setStateToTexts_shouldSetState() {
+        
+        let (sut, spy) = makeSUT()
+
+        sut.setState(to: .init(texts: []))
+        
+        _ = XCTWaiter().wait(for: [.init()], timeout: 0.1)
+        
+        XCTAssertEqual(spy.values, [
+            nil,
+            .texts([])
+        ])
+    }
+    
+    func test_setStateToAlert_shouldNotChangeStateOnNil() {
+        
+        let (sut, spy) = makeSUT()
+
+        sut.setState(to: StoryImporterModel.State.AlertWrapper?.none)
+        
+        XCTAssertEqual(spy.values, [nil])
+    }
+    
+    func test_setStateToAlert_shouldSetState() {
+        
+        let (sut, spy) = makeSUT()
+
+        sut.setState(to: .init(message: "error"))
+        
+        _ = XCTWaiter().wait(for: [.init()], timeout: 0.1)
+        
+        XCTAssertEqual(spy.values, [
+            nil,
+            .alert(.init(message: "error"))
+        ])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
