@@ -14,7 +14,10 @@ struct StoryImportTester: View {
     var body: some View {
         NavigationView {
             StoryImportTesterListView()
-                .storyImporter(isPresented: $showingFileImporter)
+                .storyImporter(
+                    isPresented: $showingFileImporter,
+                    importTextView: { _ in Text("TBD: Texts importer") }
+                )
                 .toolbar(content: toolbar)
         }
     }

@@ -35,7 +35,12 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase, perform: handleScenePhase)
         .onOpenURL(perform: model.handleURL)
-        .storyImporter(isPresented: $model.showingFileImporter)
+        .storyImporter(
+            isPresented: $model.showingFileImporter
+        ) {
+            ImportTextView(texts: $0)
+                .environment(\.managedObjectContext, context)
+        }
         .fileExporter(isPresented: $model.showingFileExporter, document: model.document, contentType: .json, onCompletion: model.handleFileExporter)
         .environment(\.managedObjectContext, context)
         .environmentObject(eventStore)

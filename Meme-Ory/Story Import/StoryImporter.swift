@@ -13,8 +13,16 @@ extension View {
     /// Import files via FileImporter.
     /// - Parameter isPresented: Binding Bool to present Import Sheet
     /// - Returns: modified view able to handle import
-    func storyImporter(isPresented: Binding<Bool>) -> some View {
-        self.modifier(StoryImporter(isPresented: isPresented))
+    func storyImporter<ImportTextView: View>(
+        isPresented: Binding<Bool>,
+        importTextView: @escaping ([String]) -> ImportTextView
+    ) -> some View {
+        self.modifier(
+            StoryImporter(
+                isPresented: isPresented,
+                importTextView: importTextView
+            )
+        )
     }
 }
 
@@ -87,11 +95,11 @@ final class StoryImporterModel: ObservableObject {
     }
 }
 
-fileprivate struct StoryImporter: ViewModifier {
-    
-    @Environment(\.managedObjectContext) private var context
+fileprivate struct StoryImporter<ImportTextView: View>: ViewModifier {
     
     @Binding var isPresented: Bool
+    
+    let importTextView: ([String]) -> ImportTextView
     
     @StateObject var model: StoryImporterModel = .init()
     
@@ -123,8 +131,7 @@ fileprivate struct StoryImporter: ViewModifier {
     private func importTextView(
         textsWrapper: StoryImporterModel.State.TextsWrapper
     ) -> some View {
-        ImportTextView(texts: textsWrapper.texts)
-            .environment(\.managedObjectContext, context)
+        importTextView(textsWrapper.texts)
     }
     
     //  MARK: - Failed Import Alert
