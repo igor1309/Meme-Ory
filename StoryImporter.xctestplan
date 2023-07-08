@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "18815408-2877-4B5F-BFC6-1319AE019721",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "StoryImporterTests",
+        "name" : "StoryImporterTests"
+      }
+    }
+  ],
+  "version" : 1
+}

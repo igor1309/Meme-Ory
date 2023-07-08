@@ -98,13 +98,26 @@
          </TestableReference>
          <TestableReference
             skipped = "NO"
-            parallelizable = "YES">
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2A1E6D712A59B9A10072E69E"
                BuildableName = "Meme-OryTests.xctest"
                BlueprintName = "Meme-OryTests"
                ReferencedContainer = "container:Meme-Ory.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "StoryImporterTests"
+               BuildableName = "StoryImporterTests"
+               BlueprintName = "StoryImporterTests"
+               ReferencedContainer = "container:swift-meme-ory">
             </BuildableReference>
          </TestableReference>
       </Testables>

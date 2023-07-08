@@ -260,6 +260,7 @@
 		2ABAEEB9258798E400D59CA2 /* ConfirmAndDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAndDelete.swift; sourceTree = "<group>"; };
 		2AC2F9F72588DA6700D49560 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		2AC2FA062588E55500D49560 /* CoreData Stack & iCloud README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CoreData Stack & iCloud README.md"; sourceTree = "<group>"; };
+		2ACBA0162A59E85800E87949 /* StoryImporter.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoryImporter.xctestplan; sourceTree = "<group>"; };
 		2ACCEE39257E08A40022B752 /* Ory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ory.swift; sourceTree = "<group>"; };
 		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -388,6 +389,7 @@
 		2A1B5FAA256A4A5D00E3283D = {
 			isa = PBXGroup;
 			children = (
+				2ACBA0162A59E85800E87949 /* StoryImporter.xctestplan */,
 				2A41A4EE2A371C4900BA6053 /* SingleStoryComponent.xctestplan */,
 				2A7FE97828AAC88100797A7C /* swift-meme-ory */,
 				2ADAD3E3256DB9A000AF463B /* Meme-OryWidgetExtension.entitlements */,
