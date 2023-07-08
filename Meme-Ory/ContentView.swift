@@ -5,6 +5,7 @@
 //  Created by Igor Malyarov on 29.11.2020.
 //
 
+import StoryImporter
 import SwiftUI
 import CoreData
 import WidgetKit
@@ -36,17 +37,15 @@ struct ContentView: View {
         .onChange(of: scenePhase, perform: handleScenePhase)
         .onOpenURL(perform: model.handleURL)
         .storyImporter(
-            isPresented: $model.showingFileImporter
-        ) {
-            ImportTextView(texts: $0)
-                .environment(\.managedObjectContext, context)
-        }
+            isPresented: $model.showingFileImporter,
+            getTexts: { try $0.getTexts() },
+            importTextView: importTextView
+        )
         .fileExporter(isPresented: $model.showingFileExporter, document: model.document, contentType: .json, onCompletion: model.handleFileExporter)
         .environment(\.managedObjectContext, context)
         .environmentObject(eventStore)
         .environmentObject(model)
     }
-    
     
     //  MARK: - Scene Change Handling
     
@@ -61,7 +60,11 @@ struct ContentView: View {
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
-    
+ 
+    private func importTextView(texts: [String]) -> some View {
+        ImportTextView(texts: texts)
+            .environment(\.managedObjectContext, context)
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {

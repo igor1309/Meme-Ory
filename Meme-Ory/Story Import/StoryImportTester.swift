@@ -5,6 +5,7 @@
 //  Created by Igor Malyarov on 12.12.2020.
 //
 
+import StoryImporter
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -16,6 +17,7 @@ struct StoryImportTester: View {
             StoryImportTesterListView()
                 .storyImporter(
                     isPresented: $showingFileImporter,
+                    getTexts: { try $0.getTexts() },
                     importTextView: { _ in Text("TBD: Texts importer") }
                 )
                 .toolbar(content: toolbar)

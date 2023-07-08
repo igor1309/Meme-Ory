@@ -46,7 +46,6 @@
 		2A1B5FBE256A4A5E00E3283D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBD256A4A5E00E3283D /* Preview Assets.xcassets */; };
 		2A1B5FCD256A4AE100E3283D /* Meme_Ory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FCB256A4AE100E3283D /* Meme_Ory.xcdatamodeld */; };
 		2A1E6D7C2A59BA050072E69E /* URL+getTextsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1E6D7B2A59BA050072E69E /* URL+getTextsTests.swift */; };
-		2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A21716E257CEE3C0098681E /* StoryImporter.swift */; };
 		2A251B8A25767960004F9218 /* ShareStoryButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A251B8925767960004F9218 /* ShareStoryButtons.swift */; };
 		2A29E7012589598600F2719B /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A167B99258316D3007A986B /* String+Ext.swift */; };
 		2A33A3DA257139E200538FE3 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33A3D9257139E200538FE3 /* JSONDocument.swift */; };
@@ -101,6 +100,7 @@
 		2AC2F9E22588C23C00D49560 /* StorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B5FBF256A4A5E00E3283D /* StorageProvider.swift */; };
 		2AC2F9F82588DA6700D49560 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC2F9F72588DA6700D49560 /* CloudKit.framework */; };
 		2AC2F9F92588DD9E00D49560 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC2F9F72588DA6700D49560 /* CloudKit.framework */; };
+		2ACBA0182A59EC6E00E87949 /* StoryImporter in Frameworks */ = {isa = PBXBuildFile; productRef = 2ACBA0172A59EC6E00E87949 /* StoryImporter */; };
 		2ACCEE3A257E08A40022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
 		2ACCEE41257E10AE0022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
 		2ACCEE49257E12AF0022B752 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF90525702EBF008D1B31 /* EventStore.swift */; };
@@ -209,7 +209,6 @@
 		2A1B5FCC256A4AE100E3283D /* Meme_Ory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Meme_Ory.xcdatamodel; sourceTree = "<group>"; };
 		2A1E6D722A59B9A10072E69E /* Meme-OryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meme-OryTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1E6D7B2A59BA050072E69E /* URL+getTextsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+getTextsTests.swift"; sourceTree = "<group>"; };
-		2A21716E257CEE3C0098681E /* StoryImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryImporter.swift; sourceTree = "<group>"; };
 		2A251B8925767960004F9218 /* ShareStoryButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareStoryButtons.swift; sourceTree = "<group>"; };
 		2A2CE5A4256C00E400FBFDB6 /* StoryText.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StoryText.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2A33A3D9257139E200538FE3 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
@@ -292,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A41A5052A3728DD00BA6053 /* SingleStoryComponent in Frameworks */,
+				2ACBA0182A59EC6E00E87949 /* StoryImporter in Frameworks */,
 				2AC2F9F82588DA6700D49560 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,7 +525,6 @@
 		2A5005ED2571965A005E969A /* Story Import */ = {
 			isa = PBXGroup;
 			children = (
-				2A21716E257CEE3C0098681E /* StoryImporter.swift */,
 				2AFD326C2584F4EF00334A92 /* StoryImportTester.swift */,
 				2A33A3E125714DA500538FE3 /* ImportTextView.swift */,
 				2A5005F2257197B4005E969A /* ImportTextViewModel.swift */,
@@ -717,6 +716,7 @@
 			name = "Meme-Ory";
 			packageProductDependencies = (
 				2A41A5042A3728DD00BA6053 /* SingleStoryComponent */,
+				2ACBA0172A59EC6E00E87949 /* StoryImporter */,
 			);
 			productName = "Meme-Ory";
 			productReference = 2A1B5FB3256A4A5D00E3283D /* Meme-Ory.app */;
@@ -950,7 +950,6 @@
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A6D6BF2258608C500BBA8C7 /* MainViewModel.swift in Sources */,
 				2ABAEEBA258798E400D59CA2 /* ConfirmAndDelete.swift in Sources */,
-				2A21716F257CEE3C0098681E /* StoryImporter.swift in Sources */,
 				2A6D6C052586735400BBA8C7 /* MainViewModel Enums + Ext.swift in Sources */,
 				2A4CC9F625795269000A21C9 /* CardModifier.swift in Sources */,
 				2A41A5092A372DB900BA6053 /* SingleStoryTagListButton.swift in Sources */,
@@ -1626,6 +1625,10 @@
 		2A41A5042A3728DD00BA6053 /* SingleStoryComponent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SingleStoryComponent;
+		};
+		2ACBA0172A59EC6E00E87949 /* StoryImporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StoryImporter;
 		};
 /* End XCSwiftPackageProductDependency section */
 
