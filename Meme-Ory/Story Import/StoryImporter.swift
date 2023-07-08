@@ -20,12 +20,18 @@ extension View {
 
 final class StoryImporterModel: ObservableObject {
     
-    @Published var showingFailedImportAlert = false
+    @Published var alert: AlertWrapper?
     @Published var textsWrapper: TextsWrapper?
     
     struct TextsWrapper: Identifiable {
         let texts: [String]
         var id: Int { texts.hashValue }
+    }
+    
+    struct AlertWrapper: Identifiable & Hashable {
+        let message: String
+        
+        var id: Self { self }
     }
     
     //  MARK: - Handle Open URL
@@ -36,7 +42,7 @@ final class StoryImporterModel: ObservableObject {
             handleURLResult(.success(fileURL))
             
         default:
-            showingFailedImportAlert = true
+            alert = .init(message: "Can't process your request.\nSorry about that")
         }
     }
     
@@ -51,7 +57,7 @@ final class StoryImporterModel: ObservableObject {
     }
     
     private func handleError(_ error: Error) {
-        print("StoryImporter: Import error \(error.localizedDescription)")
+        alert = .init(message: "StoryImporter: Import error \(error.localizedDescription)")
     }
 }
 
@@ -75,8 +81,8 @@ fileprivate struct StoryImporter: ViewModifier {
                 content: importTextView
             )
             .alert(
-                isPresented: $model.showingFailedImportAlert,
-                content: failedImportAlert
+                item: $model.alert,
+                content: alert
             )
     }
 
@@ -91,10 +97,12 @@ fileprivate struct StoryImporter: ViewModifier {
     
     //  MARK: - Failed Import Alert
     
-    private func failedImportAlert() -> Alert {
+    private func alert(
+        alert: StoryImporterModel.AlertWrapper
+    ) -> Alert {
         Alert(
             title: Text("Error"),
-            message: Text("Can't process your request.\nSorry about that"),
+            message: Text(alert.message),
             dismissButton: Alert.Button.cancel(Text("Ok"))
         )
     }
