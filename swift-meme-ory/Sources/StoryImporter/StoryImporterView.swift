@@ -10,11 +10,11 @@ import UniformTypeIdentifiers
 
 struct StoryImporterView<ImportTextView: View>: ViewModifier {
     
-    @Binding var isPresented: Bool
+    @Binding private var isPresented: Bool
     
-    let importTextView: ([String]) -> ImportTextView
+    @StateObject private var model: StoryImporterModel
     
-    @StateObject var model: StoryImporterModel
+    private let importTextView: ([String]) -> ImportTextView
     
     init(
         isPresented: Binding<Bool>,
