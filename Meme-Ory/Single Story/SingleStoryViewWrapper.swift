@@ -47,11 +47,7 @@ struct SingleStoryViewWrapper: View {
     }
     
     private var tagList: String {
-        if story.tags.isEmpty {
-            return "no tags"
-        } else {
-            return story.tagList
-        }
+        story.tags.isEmpty ? "no tags" : story.tagList
     }
 }
 
