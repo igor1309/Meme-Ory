@@ -28,7 +28,7 @@ struct TagView: View {
     
     var body: some View {
         Text(tag.name)
-            .foregroundColor(isSelected ? Color(UIColor.systemOrange) : Color.secondary)
+            .foregroundColor(isSelected ? .orange : .secondary)
             .font(.footnote)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
