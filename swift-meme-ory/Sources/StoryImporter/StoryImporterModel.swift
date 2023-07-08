@@ -81,7 +81,8 @@ final class StoryImporterModel: ObservableObject {
     
     func handleURLResult(_ result: Result<URL, Error>) {
         do {
-            stateSubject.send(.texts(try getTexts(result.get())))
+            let texts = try getTexts(result.get())
+            stateSubject.send(.texts(texts))
         } catch {
             handleError(error.localizedDescription)
         }
