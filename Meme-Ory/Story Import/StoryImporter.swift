@@ -8,6 +8,16 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+extension View {
+    
+    /// Import files via FileImporter.
+    /// - Parameter isPresented: Binding Bool to present Import Sheet
+    /// - Returns: modified view able to handle import
+    func storyImporter(isPresented: Binding<Bool>) -> some View {
+        self.modifier(StoryImporter(isPresented: isPresented))
+    }
+}
+
 fileprivate struct StoryImporter: ViewModifier {
     
     @Environment(\.managedObjectContext) private var context
@@ -27,9 +37,7 @@ fileprivate struct StoryImporter: ViewModifier {
             .fileImporter(isPresented: $isPresented, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
             .sheet(item: $textsStruct, content: importTextView)
             .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
-            //.onOpenURL(perform: handleOpenURL)
     }
-    
     
     //  MARK: - Handle Open URL
     
@@ -51,7 +59,6 @@ fileprivate struct StoryImporter: ViewModifier {
             textsStruct = TextsStruct(texts: texts)
         }
     }
-    
     
     //  MARK: - Handle File Importer
     
@@ -82,21 +89,9 @@ fileprivate struct StoryImporter: ViewModifier {
             .environment(\.managedObjectContext, context)
     }
     
-    
     //  MARK: - Failed Import Alert
     
     private func failedImportAlert() -> Alert {
         Alert(title: Text("Error"), message: Text("Can't process your request.\nSorry about that"), dismissButton: Alert.Button.cancel(Text("Ok")))
-    }
-    
-}
-
-extension View {
-    
-    /// import files via fileImporter and onOpenURL
-    /// - Parameter isPresented: Binnding Bool to present Import Sheet
-    /// - Returns: modified view able to handli import
-    func storyImporter(isPresented: Binding<Bool>) -> some View {
-        self.modifier(StoryImporter(isPresented: isPresented))
     }
 }
