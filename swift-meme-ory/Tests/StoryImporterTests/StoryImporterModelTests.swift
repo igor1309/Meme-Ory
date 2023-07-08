@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CombineSchedulers
 import StoryImporter
 import XCTest
 
@@ -13,39 +14,43 @@ final class StoryImporterModelTests: XCTestCase {
     
     func test_init_shouldSetStateToNil() {
         
-        let (sut, spy) = makeSUT()
+        let (sut, spy, scheduler) = makeSUT()
+
+        scheduler.advance()
         
         XCTAssertNil(sut.state)
-        XCTAssertEqual(spy.values, [nil])
+        XCTAssertNoDiff(spy.values, [nil])
     }
     
     func test_init_shouldSetStateToGiven() {
         
         let initialState: StoryImporterModel.State = .texts([])
-        let (sut, spy) = makeSUT(initialState: initialState)
+        let (sut, spy, scheduler) = makeSUT(initialState: initialState)
         
-        XCTAssertEqual(spy.values, [initialState])
+        scheduler.advance()
+        
+        XCTAssertNoDiff(spy.values, [initialState])
         XCTAssertNotNil(sut)
     }
     
     func test_setStateToTexts_shouldNotChangeStateOnNil() {
         
-        let (sut, spy) = makeSUT()
+        let (sut, spy, scheduler) = makeSUT()
 
         sut.setState(to: StoryImporterModel.State.TextsWrapper?.none)
-        
-        XCTAssertEqual(spy.values, [nil])
+        scheduler.advance()
+                
+        XCTAssertNoDiff(spy.values, [nil])
     }
     
     func test_setStateToTexts_shouldSetState() {
         
-        let (sut, spy) = makeSUT()
+        let (sut, spy, scheduler) = makeSUT()
 
         sut.setState(to: .init(texts: []))
+        scheduler.advance()
         
-        _ = XCTWaiter().wait(for: [.init()], timeout: 0.1)
-        
-        XCTAssertEqual(spy.values, [
+        XCTAssertNoDiff(spy.values, [
             nil,
             .texts([])
         ])
@@ -53,22 +58,22 @@ final class StoryImporterModelTests: XCTestCase {
     
     func test_setStateToAlert_shouldNotChangeStateOnNil() {
         
-        let (sut, spy) = makeSUT()
+        let (sut, spy, scheduler) = makeSUT()
 
         sut.setState(to: StoryImporterModel.State.AlertWrapper?.none)
+        scheduler.advance()
         
-        XCTAssertEqual(spy.values, [nil])
+        XCTAssertNoDiff(spy.values, [nil])
     }
     
     func test_setStateToAlert_shouldSetState() {
         
-        let (sut, spy) = makeSUT()
+        let (sut, spy, scheduler) = makeSUT()
 
         sut.setState(to: .init(message: "error"))
+        scheduler.advance()
         
-        _ = XCTWaiter().wait(for: [.init()], timeout: 0.1)
-        
-        XCTAssertEqual(spy.values, [
+        XCTAssertNoDiff(spy.values, [
             nil,
             .alert(.init(message: "error"))
         ])
@@ -83,18 +88,21 @@ final class StoryImporterModelTests: XCTestCase {
         line: UInt = #line
     ) -> (
         sut: StoryImporterModel,
-        spy: ValueSpy<StoryImporterModel.State?>
+        spy: ValueSpy<StoryImporterModel.State?>,
+        scheduler: TestSchedulerOf<DispatchQueue>
     ) {
-        
+        let scheduler = DispatchQueue.test
         let sut = StoryImporterModel(
             initialState: initialState,
-            getTexts: getTexts
+            getTexts: getTexts,
+            scheduler: scheduler.eraseToAnyScheduler()
         )
         let spy = ValueSpy(sut.$state)
         
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(spy, file: file, line: line)
+        trackForMemoryLeaks(scheduler, file: file, line: line)
         
-        return (sut, spy)
+        return (sut, spy, scheduler)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CombineSchedulers
 import Foundation
 
 public final class StoryImporterModel: ObservableObject {
@@ -17,13 +18,14 @@ public final class StoryImporterModel: ObservableObject {
     
     public init(
         initialState state: State? = nil,
-        getTexts: @escaping (URL) throws -> [String]
+        getTexts: @escaping (URL) throws -> [String],
+        scheduler: AnySchedulerOf<DispatchQueue> = .main
     ) {
         self.state = state
         self.getTexts = getTexts
         
         stateSubject
-            .receive(on: DispatchQueue.main)
+            .receive(on: scheduler)
             .assign(to: &$state)
     }
     
