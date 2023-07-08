@@ -8,14 +8,14 @@
 import Combine
 import Foundation
 
-final class StoryImporterModel: ObservableObject {
+public final class StoryImporterModel: ObservableObject {
     
-    @Published private(set) var state: State?
+    @Published public private(set) var state: State?
     
     private let stateSubject = PassthroughSubject<State?, Never>()
     private let getTexts: (URL) throws -> [String]
     
-    init(
+    public init(
         state: State? = nil,
         getTexts: @escaping (URL) throws -> [String]
     ) {
@@ -67,7 +67,7 @@ final class StoryImporterModel: ObservableObject {
 
 extension StoryImporterModel {
     
-    enum State {
+    public enum State {
         case texts([String])
         case alert(AlertWrapper)
         
@@ -88,10 +88,10 @@ extension StoryImporterModel {
             var id: Int { texts.hashValue }
         }
         
-        struct AlertWrapper: Identifiable & Hashable {
+        public struct AlertWrapper: Identifiable & Hashable {
             let message: String
             
-            var id: Self { self }
+            public var id: Self { self }
         }
     }
 }
