@@ -32,7 +32,8 @@ final class StoryImporterModel: ObservableObject {
     
     func handleOpenURL(url: URL) {
         guard let deeplink = url.deeplink,
-              case .file(let fileURL) = deeplink else {
+              case .file(let fileURL) = deeplink
+        else {
             showingFailedImportAlert = true
             return
         }
@@ -53,7 +54,7 @@ final class StoryImporterModel: ObservableObject {
     
     func handleFileImporter(_ result: Result<URL, Error>) {
         switch result {
-            case .success(let url):
+            case let .success(url):
                 #if DEBUG
                 print("StoryImporter: Import success")
                 #endif
@@ -66,7 +67,7 @@ final class StoryImporterModel: ObservableObject {
                 
                 textsWrapper = TextsWrapper(texts: texts)
                 
-            case .failure(let error):
+            case let .failure(error):
                 print("StoryImporter: Import error \(error.localizedDescription)")
         }
     }
@@ -82,9 +83,19 @@ fileprivate struct StoryImporter: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .fileImporter(isPresented: $isPresented, allowedContentTypes: [UTType.json], onCompletion: model.handleFileImporter)
-            .sheet(item: $model.textsWrapper, content: importTextView)
-            .alert(isPresented: $model.showingFailedImportAlert, content: failedImportAlert)
+            .fileImporter(
+                isPresented: $isPresented,
+                allowedContentTypes: [UTType.json],
+                onCompletion: model.handleFileImporter
+            )
+            .sheet(
+                item: $model.textsWrapper,
+                content: importTextView
+            )
+            .alert(
+                isPresented: $model.showingFailedImportAlert,
+                content: failedImportAlert
+            )
     }
 
     //  MARK: Import File
@@ -99,6 +110,10 @@ fileprivate struct StoryImporter: ViewModifier {
     //  MARK: - Failed Import Alert
     
     private func failedImportAlert() -> Alert {
-        Alert(title: Text("Error"), message: Text("Can't process your request.\nSorry about that"), dismissButton: Alert.Button.cancel(Text("Ok")))
+        Alert(
+            title: Text("Error"),
+            message: Text("Can't process your request.\nSorry about that"),
+            dismissButton: Alert.Button.cancel(Text("Ok"))
+        )
     }
 }
