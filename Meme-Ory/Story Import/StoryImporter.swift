@@ -31,22 +31,12 @@ final class StoryImporterModel: ObservableObject {
     //  MARK: - Handle Open URL
     
     func handleOpenURL(url: URL) {
-        guard let deeplink = url.deeplink,
-              case .file(let fileURL) = deeplink
-        else {
+        switch url.deeplink {
+        case let .file(url: fileURL):
+            handleFileImporter(.success(fileURL))
+            
+        default:
             showingFailedImportAlert = true
-            return
-        }
-        
-        withAnimation {
-            let texts = (try? fileURL.getTexts()) ?? []
-            
-            #if DEBUG
-            print("StoryImporter: handleOpenURL: importing file \(url)")
-            print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")
-            #endif
-            
-            textsWrapper = TextsWrapper(texts: texts)
         }
     }
     
