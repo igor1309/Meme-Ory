@@ -18,30 +18,19 @@ extension View {
     }
 }
 
-fileprivate struct StoryImporter: ViewModifier {
+final class StoryImporterModel: ObservableObject {
     
-    @Environment(\.managedObjectContext) private var context
+    @Published var showingFailedImportAlert = false
+    @Published var textsWrapper: TextsWrapper?
     
-    @Binding var isPresented: Bool
-    
-    @State private var showingFailedImportAlert = false
-    @State private var textsWrapper: TextsWrapper?
-    
-    private struct TextsWrapper: Identifiable {
+    struct TextsWrapper: Identifiable {
         let texts: [String]
         var id: Int { texts.hashValue }
     }
     
-    func body(content: Content) -> some View {
-        content
-            .fileImporter(isPresented: $isPresented, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
-            .sheet(item: $textsWrapper, content: importTextView)
-            .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
-    }
-    
     //  MARK: - Handle Open URL
     
-    private func handleOpenURL(url: URL) {
+    func handleOpenURL(url: URL) {
         guard let deeplink = url.deeplink,
               case .file(let fileURL) = deeplink else {
             showingFailedImportAlert = true
@@ -62,7 +51,7 @@ fileprivate struct StoryImporter: ViewModifier {
     
     //  MARK: - Handle File Importer
     
-    private func handleFileImporter(_ result: Result<URL, Error>) {
+    func handleFileImporter(_ result: Result<URL, Error>) {
         switch result {
             case .success(let url):
                 #if DEBUG
@@ -81,10 +70,28 @@ fileprivate struct StoryImporter: ViewModifier {
                 print("StoryImporter: Import error \(error.localizedDescription)")
         }
     }
+}
+
+fileprivate struct StoryImporter: ViewModifier {
     
+    @Environment(\.managedObjectContext) private var context
+    
+    @Binding var isPresented: Bool
+    
+    @StateObject var model: StoryImporterModel = .init()
+    
+    func body(content: Content) -> some View {
+        content
+            .fileImporter(isPresented: $isPresented, allowedContentTypes: [UTType.json], onCompletion: model.handleFileImporter)
+            .sheet(item: $model.textsWrapper, content: importTextView)
+            .alert(isPresented: $model.showingFailedImportAlert, content: failedImportAlert)
+    }
+
     //  MARK: Import File
     
-    private func importTextView(textsWrapper: TextsWrapper) -> some View {
+    private func importTextView(
+        textsWrapper: StoryImporterModel.TextsWrapper
+    ) -> some View {
         ImportTextView(texts: textsWrapper.texts)
             .environment(\.managedObjectContext, context)
     }
