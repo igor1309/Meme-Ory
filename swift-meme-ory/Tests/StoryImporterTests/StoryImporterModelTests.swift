@@ -32,7 +32,7 @@ final class StoryImporterModelTests: XCTestCase {
             getTexts: getTexts
         )
         
-        // trackForMem
+         trackForMemoryLeaks(sut, file: file, line: line)
         
         return sut
     }
