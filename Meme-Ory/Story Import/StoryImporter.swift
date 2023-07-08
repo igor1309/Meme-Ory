@@ -25,9 +25,9 @@ fileprivate struct StoryImporter: ViewModifier {
     @Binding var isPresented: Bool
     
     @State private var showingFailedImportAlert = false
-    @State private var textsStruct: TextsStruct?
+    @State private var textsWrapper: TextsWrapper?
     
-    struct TextsStruct: Identifiable {
+    private struct TextsWrapper: Identifiable {
         let texts: [String]
         var id: Int { texts.hashValue }
     }
@@ -35,7 +35,7 @@ fileprivate struct StoryImporter: ViewModifier {
     func body(content: Content) -> some View {
         content
             .fileImporter(isPresented: $isPresented, allowedContentTypes: [UTType.json], onCompletion: handleFileImporter)
-            .sheet(item: $textsStruct, content: importTextView)
+            .sheet(item: $textsWrapper, content: importTextView)
             .alert(isPresented: $showingFailedImportAlert, content: failedImportAlert)
     }
     
@@ -56,7 +56,7 @@ fileprivate struct StoryImporter: ViewModifier {
             print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")
             #endif
             
-            textsStruct = TextsStruct(texts: texts)
+            textsWrapper = TextsWrapper(texts: texts)
         }
     }
     
@@ -75,7 +75,7 @@ fileprivate struct StoryImporter: ViewModifier {
                 print("StoryImporter: handleFileImporter: \((texts.first ?? "no texts").prefix(30))...")
                 #endif
                 
-                textsStruct = TextsStruct(texts: texts)
+                textsWrapper = TextsWrapper(texts: texts)
                 
             case .failure(let error):
                 print("StoryImporter: Import error \(error.localizedDescription)")
@@ -84,8 +84,8 @@ fileprivate struct StoryImporter: ViewModifier {
     
     //  MARK: Import File
     
-    private func importTextView(textsStruct: TextsStruct) -> some View {
-        ImportTextView(texts: textsStruct.texts)
+    private func importTextView(textsWrapper: TextsWrapper) -> some View {
+        ImportTextView(texts: textsWrapper.texts)
             .environment(\.managedObjectContext, context)
     }
     
