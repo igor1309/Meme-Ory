@@ -67,7 +67,7 @@ public final class StoryImporterModel: ObservableObject {
 
 extension StoryImporterModel {
     
-    public enum State {
+    public enum State: Equatable {
         case texts([String])
         case alert(AlertWrapper)
         

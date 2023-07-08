@@ -13,9 +13,10 @@ final class StoryImporterModelTests: XCTestCase {
     
     func test_init_shouldSetStateToNil() {
         
-        let sut = makeSUT()
+        let (sut, spy) = makeSUT()
         
         XCTAssertNil(sut.state)
+        XCTAssertEqual(spy.values, [nil])
     }
     
     // MARK: - Helpers
@@ -25,15 +26,20 @@ final class StoryImporterModelTests: XCTestCase {
         getTexts: @escaping (URL) throws -> [String] = { _ in [] },
         file: StaticString = #file,
         line: UInt = #line
-    ) -> StoryImporterModel {
+    ) -> (
+        sut: StoryImporterModel,
+        spy: ValueSpy<StoryImporterModel.State?>
+    ) {
         
         let sut = StoryImporterModel(
             state: state,
             getTexts: getTexts
         )
+        let spy = ValueSpy(sut.$state)
         
-         trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(spy, file: file, line: line)
         
-        return sut
+        return (sut, spy)
     }
 }
