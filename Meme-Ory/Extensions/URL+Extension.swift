@@ -67,39 +67,32 @@ extension URL {
         else {
             throw URLError.deniedAccess
         }
-         
+        
         defer { stopAccessingSecurityScopedResource() }
-                
-        guard let data = try? Data(contentsOf: self)
-        else {
-            throw URLError.loadFailure
-        }
         
-        let decoder = JSONDecoder()
-        
-        guard let texts = try? decoder.decode([String].self, from: data)
-        else {
+        do {
+            let data = try Data(contentsOf: self)
+            let decoder = JSONDecoder()
+            let texts = try decoder.decode([String].self, from: data)
+            
+            /// remove duplicates from import
+            /// this doesn't check for duplicates in store
+            let noDuplicates: [String] = Set(texts).sorted()
+            
+            return noDuplicates.trimmed()
+        } catch {
             throw URLError.readFailure
         }
-        
-        /// remove duplicates from import
-        /// this doesn't check for duplicates in store
-        let noDuplicates: [String] = Set(texts).sorted()
-        
-        return noDuplicates.trimmed()
     }
     
     public enum URLError: LocalizedError {
         case deniedAccess
-        case loadFailure
         case readFailure
         
         public var errorDescription: String? {
             switch self {
             case .deniedAccess:
                 return "Denied access to file at \(self)"
-            case .loadFailure:
-                return "Failed to load file from \(self)"
             case .readFailure:
                 return "Failed to decode file at \(self)"
             }

@@ -63,6 +63,7 @@
 		2A4CC9FB25795A5E000A21C9 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */; };
 		2A4F4AA02578ED03008536DE /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */; };
 		2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5005F2257197B4005E969A /* ImportTextViewModel.swift */; };
+		2A6386692A59BD68006916E1 /* badData.json in Resources */ = {isa = PBXBuildFile; fileRef = 2A6386682A59BD68006916E1 /* badData.json */; };
 		2A64D42D257164B900C1817F /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A6A3112257163CC007F2C0D /* Brief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1164A6257102BF000AD487 /* Brief.swift */; };
 		2A6D6BE7258608A500BBA8C7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D6BE6258608A500BBA8C7 /* MainView.swift */; };
@@ -225,6 +226,7 @@
 		2A4CC9FA25795A5E000A21C9 /* LabeledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledButton.swift; sourceTree = "<group>"; };
 		2A4F4A9F2578ED03008536DE /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
 		2A5005F2257197B4005E969A /* ImportTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextViewModel.swift; sourceTree = "<group>"; };
+		2A6386682A59BD68006916E1 /* badData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = badData.json; sourceTree = "<group>"; };
 		2A6D6BE6258608A500BBA8C7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2A6D6BF1258608C500BBA8C7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		2A6D6C042586735400BBA8C7 /* MainViewModel Enums + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel Enums + Ext.swift"; sourceTree = "<group>"; };
@@ -477,6 +479,7 @@
 			isa = PBXGroup;
 			children = (
 				2A1E6D7B2A59BA050072E69E /* URL+getTextsTests.swift */,
+				2A6386682A59BD68006916E1 /* badData.json */,
 			);
 			path = "Meme-OryTests";
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A6386692A59BD68006916E1 /* badData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
