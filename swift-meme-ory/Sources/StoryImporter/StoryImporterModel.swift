@@ -37,6 +37,36 @@ final class StoryImporterModel: ObservableObject {
         stateSubject.send(.alert(alert))
     }
     
+    //  MARK: - Handle Open URL
+    
+    //    func handleOpenURL(url: URL) {
+    //        switch url.deeplink {
+    //        case let .file(url: fileURL):
+    //            handleURLResult(.success(fileURL))
+    //
+    //        default:
+    //            handleError("Can't process your request.\nSorry about that")
+    //        }
+    //    }
+    
+    //  MARK: - Handle File Importer
+    
+    func handleURLResult(_ result: Result<URL, Error>) {
+        do {
+            let texts = try getTexts(result.get())
+            stateSubject.send(.texts(texts))
+        } catch {
+            handleError(error.localizedDescription)
+        }
+    }
+    
+    private func handleError(_ message: String) {
+        stateSubject.send(.alert(.init(message: message)))
+    }
+}
+
+extension StoryImporterModel {
+    
     enum State {
         case texts([String])
         case alert(AlertWrapper)
@@ -63,32 +93,5 @@ final class StoryImporterModel: ObservableObject {
             
             var id: Self { self }
         }
-    }
-    
-    //  MARK: - Handle Open URL
-    
-//    func handleOpenURL(url: URL) {
-//        switch url.deeplink {
-//        case let .file(url: fileURL):
-//            handleURLResult(.success(fileURL))
-//            
-//        default:
-//            handleError("Can't process your request.\nSorry about that")
-//        }
-//    }
-    
-    //  MARK: - Handle File Importer
-    
-    func handleURLResult(_ result: Result<URL, Error>) {
-        do {
-            let texts = try getTexts(result.get())
-            stateSubject.send(.texts(texts))
-        } catch {
-            handleError(error.localizedDescription)
-        }
-    }
-    
-    private func handleError(_ message: String) {
-        stateSubject.send(.alert(.init(message: message)))
     }
 }
