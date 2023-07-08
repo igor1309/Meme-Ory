@@ -20,18 +20,44 @@ extension View {
 
 final class StoryImporterModel: ObservableObject {
     
-    @Published var alert: AlertWrapper?
-    @Published var textsWrapper: TextsWrapper?
+    @Published private(set) var state: State?
     
-    struct TextsWrapper: Identifiable {
-        let texts: [String]
-        var id: Int { texts.hashValue }
+    enum State {
+        case texts([String])
+        case alert(AlertWrapper)
+        
+        var texts: TextsWrapper? {
+            guard case let .texts(texts) = self else { return nil }
+            
+            return .init(texts: texts)
+        }
+        
+        var alert: AlertWrapper? {
+            guard case let .alert(alert) = self else { return nil }
+            
+            return alert
+        }
+        
+        struct TextsWrapper: Identifiable {
+            let texts: [String]
+            var id: Int { texts.hashValue }
+        }
+        
+        struct AlertWrapper: Identifiable & Hashable {
+            let message: String
+            
+            var id: Self { self }
+        }
     }
     
-    struct AlertWrapper: Identifiable & Hashable {
-        let message: String
-        
-        var id: Self { self }
+    func setState(to wrapper: State.TextsWrapper?) {
+        guard let texts = wrapper?.texts else { return }
+        state = .texts(texts)
+    }
+    
+    func setState(to alert: State.AlertWrapper?) {
+        guard let alert else { return }
+        state = .alert(alert)
     }
     
     //  MARK: - Handle Open URL
@@ -42,7 +68,7 @@ final class StoryImporterModel: ObservableObject {
             handleURLResult(.success(fileURL))
             
         default:
-            alert = .init(message: "Can't process your request.\nSorry about that")
+            handleError("Can't process your request.\nSorry about that")
         }
     }
     
@@ -50,14 +76,14 @@ final class StoryImporterModel: ObservableObject {
     
     func handleURLResult(_ result: Result<URL, Error>) {
         do {
-            textsWrapper = .init(texts: try result.get().getTexts())
+            state = .texts(try result.get().getTexts())
         } catch {
-            handleError(error)
+            handleError(error.localizedDescription)
         }
     }
     
-    private func handleError(_ error: Error) {
-        alert = .init(message: "StoryImporter: Import error \(error.localizedDescription)")
+    private func handleError(_ message: String) {
+        state = .alert(.init(message: message))
     }
 }
 
@@ -77,11 +103,17 @@ fileprivate struct StoryImporter: ViewModifier {
                 onCompletion: model.handleURLResult
             )
             .sheet(
-                item: $model.textsWrapper,
+                item: .init(
+                    get: { model.state?.texts },
+                    set: model.setState(to:)
+                ),
                 content: importTextView
             )
             .alert(
-                item: $model.alert,
+                item: .init(
+                    get: { model.state?.alert },
+                    set: model.setState(to:)
+                ),
                 content: alert
             )
     }
@@ -89,7 +121,7 @@ fileprivate struct StoryImporter: ViewModifier {
     //  MARK: Import File
     
     private func importTextView(
-        textsWrapper: StoryImporterModel.TextsWrapper
+        textsWrapper: StoryImporterModel.State.TextsWrapper
     ) -> some View {
         ImportTextView(texts: textsWrapper.texts)
             .environment(\.managedObjectContext, context)
@@ -98,7 +130,7 @@ fileprivate struct StoryImporter: ViewModifier {
     //  MARK: - Failed Import Alert
     
     private func alert(
-        alert: StoryImporterModel.AlertWrapper
+        alert: StoryImporterModel.State.AlertWrapper
     ) -> Alert {
         Alert(
             title: Text("Error"),
