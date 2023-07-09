@@ -50,7 +50,7 @@ extension MainViewModel.SheetID: Identifiable {
     var id: Int {
         switch self {
             case .new:            return "new".hashValue
-            case .edit: return "edit".hashValue
+            case .edit:           return "edit".hashValue
             case .tags:           return "tags".hashValue
             case .maintenance:    return "maintenance".hashValue
             case .listOptions:    return "listOptions".hashValue
