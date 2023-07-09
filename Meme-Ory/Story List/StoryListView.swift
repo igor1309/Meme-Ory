@@ -16,6 +16,8 @@ struct StoryListView: View {
     
     @FetchRequest var stories: FetchedResults<Story>
     
+    let confirmDelete: (IndexSet) -> Void
+    
     var body: some View {
         List {
             Section(header: Text("Stories: \(stories.count)")) {
@@ -24,7 +26,6 @@ struct StoryListView: View {
             }
         }
         .listStyle(InsetGroupedListStyle())
-        .actionSheet(item: $model.actionSheetID, content: actionSheet)
     }
     
     private func storyListRowView(story: Story) -> some View {
@@ -40,52 +41,6 @@ struct StoryListView: View {
                     in: context
                 )
             }
-    }
-    
-    // MARK: - Action Sheets
-    
-    private func actionSheet(actionSheetID: MainViewModel.ActionSheetID) -> ActionSheet {
-        switch actionSheetID {
-        case .remindMe:
-            if let storyToEdit = model.storyToEdit {
-                return eventStore.remindMeActionSheet(for: storyToEdit, in: context)
-            } else {
-                return ActionSheet(title: Text("ERROR getting story"))
-            }
-            
-        case .delete:
-            return deleteConfirmActionSheet()
-        }
-    }
-    
-    // MARK: - Handle Delete
-    
-    @State private var indexSet = IndexSet()
-    
-    private func confirmDelete(_ indexSet: IndexSet) {
-        self.indexSet = indexSet
-        model.deleteStoryAction()
-    }
-    
-    private func deleteConfirmActionSheet() -> ActionSheet {
-        ActionSheet(
-            title: Text("Delete Story?".uppercased()),
-            message: Text("Are you sure? This cannot be undone."),
-            buttons: [
-                .destructive(Text("Yes, delete!"), action: delete),
-                .cancel()
-            ]
-        )
-    }
-    
-    private func delete() {
-        Ory.withHapticsAndAnimation {
-            for index in self.indexSet {
-                self.context.delete(self.stories[index])
-            }
-            
-            self.context.saveContext()
-        }
     }
 }
 
@@ -104,10 +59,11 @@ struct StoryListView_Previews: PreviewProvider {
                 context: context,
                 model: .init(context: context),
                 eventStore: .init(),
-                stories: request
+                stories: request,
+                confirmDelete: { _ in }
             )
-                .navigationTitle("Story List View")
-                .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Story List View")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .environment(\.sizeCategory, .large)
         .environment(\.colorScheme, .dark)

@@ -10,7 +10,7 @@ import CoreData
 import SingleStoryComponent
 
 
-//  MARK: - Main View
+// MARK: - Main View
 
 struct MainView: View {
     
@@ -35,7 +35,7 @@ struct MainView: View {
             .sheet(item: $model.sheetID, content: sheetView)
     }
     
-    //  MARK: - Views
+    // MARK: - Views
     
     @ViewBuilder
     private func viewSwitcher() -> some View {
@@ -126,15 +126,25 @@ struct MainView: View {
         .toolbar { singleStoryToolbar(story: story) }
     }
     
+    // MARK: Story List
+    
     private func storyListView() -> some View {
         StoryListView(
             context: context,
             model: model,
             eventStore: eventStore,
-            stories: _stories
+            stories: _stories,
+            confirmDelete: confirmDelete
         )
         .toolbar(content: storyListViewToolbar)
-        .sheet(item: $model.sheetID, content: storyListViewSheet)
+        .sheet(
+            item: $model.sheetID,
+            content: storyListViewSheet
+        )
+        .actionSheet(
+            item: $model.actionSheetID,
+            content: storyListViewActionSheet
+        )
     }
 
     private func storyListViewToolbar() -> some ToolbarContent {
@@ -174,7 +184,47 @@ struct MainView: View {
         }
     }
     
-    //  MARK: - Action Sheets
+    private func storyListViewActionSheet(
+        actionSheetID: MainViewModel.ActionSheetID
+    ) -> ActionSheet {
+        switch actionSheetID {
+        case .remindMe:
+            if let storyToEdit = model.storyToEdit {
+                return eventStore.remindMeActionSheet(for: storyToEdit, in: context)
+            } else {
+                return ActionSheet(title: Text("ERROR getting story"))
+            }
+            
+        case .delete:
+            return ActionSheet(
+                title: Text("Delete Story?".uppercased()),
+                message: Text("Are you sure? This cannot be undone."),
+                buttons: [
+                    .destructive(Text("Yes, delete!"), action: delete),
+                    .cancel()
+                ]
+            )
+        }
+    }
+    
+    private func confirmDelete(_ indexSet: IndexSet) {
+        self.indexSet = indexSet
+        model.deleteStoryAction()
+    }
+    
+    @State private var indexSet = IndexSet()
+    
+    private func delete() {
+        Ory.withHapticsAndAnimation {
+            for index in self.indexSet {
+                self.context.delete(self.stories[index])
+            }
+            
+            self.context.saveContext()
+        }
+    }
+
+    // MARK: - Action Sheets
     
     private func actionSheet(
         actionSheetID: MainViewModel.ActionSheetID,
@@ -203,7 +253,7 @@ struct MainView: View {
         )
     }
     
-    //  MARK: - Toolbar
+    // MARK: - Toolbar
     
     private func singleStoryToolbar(
         story: Story
@@ -218,7 +268,7 @@ struct MainView: View {
         }
     }
     
-    //  MARK: - Sheets
+    // MARK: - Sheets
     
     @ViewBuilder
     private func sheetView(sheetID: MainViewModel.SheetID) -> some View {
@@ -287,7 +337,7 @@ struct MainView: View {
         .environmentObject(eventStore)
     }
     
-    //  MARK: - Toolbar
+    // MARK: - Toolbar
     
     @ToolbarContentBuilder
     private func toolbar() -> some ToolbarContent {
