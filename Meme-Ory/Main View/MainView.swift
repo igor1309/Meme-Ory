@@ -102,7 +102,11 @@ struct MainView: View {
                 .contentShape(Rectangle())
                 .onTapGesture(count: 1, perform: model.getRandomStory)
             },
-            onStoryTapText: "Tap on the card to get next random story.",
+            bottomView: {
+                Text("Tap on the card to get next random story.")
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .font(.caption)
+            },
             tagListButton: { story in
                 SingleStoryTagListButton(
                     tagList: story.tags.isEmpty ? "no tags" : story.tagList

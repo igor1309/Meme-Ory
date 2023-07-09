@@ -8,15 +8,16 @@
 import SingleStoryComponent
 import SwiftUI
 
-struct SingleStoryWrapperView<Story, SingleStoryToolbar, SingleStoryView, TagListButton>: View
+struct SingleStoryWrapperView<Story, SingleStoryToolbar, SingleStoryView, TagListButton, BottomView>: View
 where SingleStoryToolbar: View,
       SingleStoryView: View,
-      TagListButton: View {
+      TagListButton: View,
+      BottomView: View {
     
     let story: Story
     let singleStoryToolbar: (Story) -> SingleStoryToolbar
     let singleStoryView: (Story) -> SingleStoryView
-    let onStoryTapText: String
+    let bottomView: () -> BottomView
     let tagListButton: (Story) -> TagListButton
     
     var body: some View {
@@ -24,10 +25,7 @@ where SingleStoryToolbar: View,
             singleStoryToolbar(story)
             singleStoryView(story)
             tagListButton(story)
-            
-            Text(onStoryTapText)
-                .foregroundColor(Color(UIColor.tertiaryLabel))
-                .font(.caption)
+            bottomView()
         }
         .padding([.top, .horizontal])
         .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
