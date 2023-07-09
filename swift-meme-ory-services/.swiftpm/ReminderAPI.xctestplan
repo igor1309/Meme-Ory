@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "D8A7EABF-152C-405A-9337-308FE14042B4",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ReminderAPITests",
+        "name" : "ReminderAPITests"
+      }
+    }
+  ],
+  "version" : 1
+}
