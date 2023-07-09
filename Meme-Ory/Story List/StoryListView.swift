@@ -24,7 +24,6 @@ struct StoryListView: View {
             }
         }
         .listStyle(InsetGroupedListStyle())
-        .toolbar(content: toolbar)
         .sheet(item: $model.sheetID, content: sheetView)
         .actionSheet(item: $model.actionSheetID, content: actionSheet)
     }
@@ -66,20 +65,6 @@ struct StoryListView: View {
             }
             
         default: Text("TBD")
-        }
-    }
-    
-    //  MARK: - Toolbar
-    
-    private func toolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Menu {
-                ListActionButtons()
-            } label: {
-                Image(systemName: "list.bullet")
-                    .frame(width: 44, height: 44, alignment: .trailing)
-                    .if(model.listOptions.isActive) { $0.foregroundColor(Color(UIColor.systemOrange)) }
-            }
         }
     }
     

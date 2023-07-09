@@ -133,6 +133,19 @@ struct MainView: View {
             eventStore: eventStore,
             stories: _stories
         )
+        .toolbar(content: storyListViewToolbar)
+    }
+
+    private func storyListViewToolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Menu {
+                ListActionButtons()
+            } label: {
+                Image(systemName: "list.bullet")
+                    .frame(width: 44, height: 44, alignment: .trailing)
+                    .if(model.listOptions.isActive) { $0.foregroundColor(Color(UIColor.systemOrange)) }
+            }
+        }
     }
     
     //  MARK: - Action Sheets
