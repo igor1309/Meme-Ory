@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct StoryListView<StoryListRowView: View>: View {
+struct StoryListView<Stories, StoryListRowView>: View
+where Stories: RandomAccessCollection<Story>,
+      StoryListRowView: View {
     
-    @FetchRequest var stories: FetchedResults<Story>
-    
+    let stories: Stories
     let storyListRowView: (Story) -> StoryListRowView
     let confirmDelete: (IndexSet) -> Void
     
@@ -27,15 +28,10 @@ struct StoryListView<StoryListRowView: View>: View {
 
 struct StoryListView_Previews: PreviewProvider {
     
-    static let request: FetchRequest<Story> = {
-        let request = Story.fetchRequest(.all, sortDescriptors: [])
-        return FetchRequest(fetchRequest: request)
-    }()
-    
     static var previews: some View {
         NavigationView {
             StoryListView(
-                stories: request,
+                stories: [],
                 storyListRowView: { Text($0.text) },
                 confirmDelete: { _ in }
             )

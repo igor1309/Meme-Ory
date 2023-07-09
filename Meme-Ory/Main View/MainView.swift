@@ -130,7 +130,7 @@ struct MainView: View {
     
     private func storyListView() -> some View {
         StoryListView(
-            stories: _stories,
+            stories: stories,
             storyListRowView: storyListRowView,
             confirmDelete: confirmDelete
         )
