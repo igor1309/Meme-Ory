@@ -5,14 +5,9 @@
 //  Created by Igor Malyarov on 14.12.2020.
 //
 
-import CoreData
 import SwiftUI
 
 struct StoryListView<StoryListRowView: View>: View {
-    
-    let context: NSManagedObjectContext
-    @ObservedObject var model: MainViewModel
-    @ObservedObject var eventStore: EventStore
     
     @FetchRequest var stories: FetchedResults<Story>
     
@@ -32,8 +27,6 @@ struct StoryListView<StoryListRowView: View>: View {
 
 struct StoryListView_Previews: PreviewProvider {
     
-    @State static var context = SampleData.preview.container.viewContext
-    
     static let request: FetchRequest<Story> = {
         let request = Story.fetchRequest(.all, sortDescriptors: [])
         return FetchRequest(fetchRequest: request)
@@ -42,9 +35,6 @@ struct StoryListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             StoryListView(
-                context: context,
-                model: .init(context: context),
-                eventStore: .init(),
                 stories: request,
                 storyListRowView: { Text($0.text) },
                 confirmDelete: { _ in }
