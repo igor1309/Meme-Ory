@@ -17,38 +17,24 @@ final class EventStore: ObservableObject {
     private let store: EKEventStore
     
     init() {
-        accessGranted = false
-        
-        store = EKEventStore()
+        self.accessGranted = false
+        self.store = EKEventStore()
         
         store
             .currentAuthorizationStatus()
             .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                print("EKEventStore access checked in subscription. Access \($0 ? "granted" : "denied").")
-                self?.accessGranted = $0
-            }
-            .store(in: &cancellables)
+            .assign(to: &$accessGranted)
     }
     
     static let components: [Calendar.Component] = [.day, .weekOfYear, .month, .year]
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    deinit {
-        for cancell in cancellables {
-            cancell.cancel()
-        }
-    }
 }
 
 extension EventStore {
     
     typealias CalendarItemIdentifier = String
     
-    
-    //  MARK: Manage Reminders
+    // MARK: Manage Reminders
     
     func reminderForStory(_ story: Story) -> EKReminder? {
         accessGranted ? store.calendarItem(withIdentifier: story.calendarItemIdentifier) as? EKReminder : nil
@@ -79,7 +65,7 @@ extension EventStore {
         }
     }
     
-    //  MARK: - FINISH THIS
+    // MARK: - FINISH THIS
     // next month: next month 1st day
     // next weeek: next monday
     // next year: next Jan 1
@@ -111,7 +97,7 @@ extension EventStore {
         )
     }
     
-    //  MARK: - FINISH THIS
+    // MARK: - FINISH THIS
     // next month: next month 1st day
     // next weeek: next monday
     // next year: next Jan 1
@@ -120,7 +106,7 @@ extension EventStore {
         
         guard accessGranted else { return nil }
         
-        //  MARK: - FINISH THIS
+        // MARK: - FINISH THIS
         //  add option to select calendar?
         //  https://nemecek.be/blog/16/how-to-use-ekcalendarchooser-in-swift-to-let-user-select-calendar-in-ios
         //
@@ -145,13 +131,13 @@ extension EventStore {
         // let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
         // newReminder.notes = "created by \(appName)"
         
-        //  MARK: setting url property has no effect, it's a known issue
+        // MARK: setting url property has no effect, it's a known issue
         //  https://developer.apple.com/forums/thread/128140
         newReminder.url = story.url
         //  that's why write to notes
         newReminder.notes = story.url.absoluteString
         
-        // delete existing reminder first - only one reminder ccould be tracked
+        // delete existing reminder first - only one reminder could be tracked
         // otherwise can't track reminders from stories
         deleteReminder(withIdentifier: story.calendarItemIdentifier)
         
