@@ -8,26 +8,28 @@
 import SingleStoryComponent
 import SwiftUI
 
-struct SingleStoryWrapperView<Story, SingleStoryToolbar, SingleStoryView, TagListButton, BottomView>: View
+struct SingleStoryWrapperView<SingleStoryToolbar, SingleStoryView, TagListButton, BottomView>: View
 where SingleStoryToolbar: View,
       SingleStoryView: View,
       TagListButton: View,
       BottomView: View {
     
-    let story: Story
-    let singleStoryToolbar: (Story) -> SingleStoryToolbar
-    let singleStoryView: (Story) -> SingleStoryView
+    let singleStoryToolbar: () -> SingleStoryToolbar
+    let singleStoryView: () -> SingleStoryView
     let bottomView: () -> BottomView
-    let tagListButton: (Story) -> TagListButton
+    let tagListButton: () -> TagListButton
     
     var body: some View {
         VStack(spacing: 16) {
-            singleStoryToolbar(story)
-            singleStoryView(story)
-            tagListButton(story)
+            singleStoryToolbar()
+            singleStoryView()
+            tagListButton()
             bottomView()
         }
         .padding([.top, .horizontal])
-        .background(Color(UIColor.secondarySystemGroupedBackground).ignoresSafeArea())
+        .background(
+            Color(UIColor.secondarySystemGroupedBackground)
+                .ignoresSafeArea()
+        )
     }
 }

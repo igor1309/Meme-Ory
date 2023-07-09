@@ -86,15 +86,14 @@ struct MainView: View {
     private func singleStoryView(story: Story) -> some View {
         
         SingleStoryWrapperView(
-            story: story,
-            singleStoryToolbar: { story in
+            singleStoryToolbar: {
                 SingleStoryToolbar(
                     isFavorite: story.isFavorite,
                     hasReminder: story.hasReminder,
                     switchViewMode: model.switchViewMode
                 )
             },
-            singleStoryView: { story in
+            singleStoryView: {
                 SingleStoryView(
                     text: story.text,
                     maxTextLength: maxTextLength
@@ -107,7 +106,7 @@ struct MainView: View {
                     .foregroundColor(Color(UIColor.tertiaryLabel))
                     .font(.caption)
             },
-            tagListButton: { story in
+            tagListButton: {
                 SingleStoryTagListButton(
                     tagList: story.tags.isEmpty ? "no tags" : story.tagList
                 ) {
