@@ -5,14 +5,14 @@
 //  Created by Igor Malyarov on 14.12.2020.
 //
 
+import CoreData
 import SwiftUI
 
 struct StoryListView: View {
     
-    @Environment(\.managedObjectContext) private var context
-    
-    @EnvironmentObject private var model: MainViewModel
-    @EnvironmentObject private var eventStore: EventStore
+    let context: NSManagedObjectContext
+    @ObservedObject var model: MainViewModel
+    @ObservedObject var eventStore: EventStore
     
     @FetchRequest var stories: FetchedResults<Story>
     
@@ -142,13 +142,15 @@ struct StoryListView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            StoryListView(stories: request)
+            StoryListView(
+                context: context,
+                model: .init(context: context),
+                eventStore: .init(),
+                stories: request
+            )
                 .navigationTitle("Story List View")
                 .navigationBarTitleDisplayMode(.inline)
         }
-        .environment(\.managedObjectContext, context)
-        .environmentObject(MainViewModel(context: context))
-        .environmentObject(EventStore())
         .environment(\.sizeCategory, .large)
         .environment(\.colorScheme, .dark)
         .previewLayout(.fixed(width: 350, height: 700))

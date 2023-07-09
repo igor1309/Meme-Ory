@@ -46,7 +46,12 @@ struct MainView: View {
             case .single:
                 oneStoryUI()
             case .list:
-                StoryListView(stories: _stories)
+                StoryListView(
+                    context: context,
+                    model: model,
+                    eventStore: eventStore,
+                    stories: _stories
+                )
             }
         }
     }
