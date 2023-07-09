@@ -24,7 +24,6 @@ struct StoryListView: View {
             }
         }
         .listStyle(InsetGroupedListStyle())
-        .sheet(item: $model.sheetID, content: sheetView)
         .actionSheet(item: $model.actionSheetID, content: actionSheet)
     }
     
@@ -43,32 +42,7 @@ struct StoryListView: View {
             }
     }
     
-    //  MARK: - Sheets
-    
-    @ViewBuilder
-    private func sheetView(sheetID: MainViewModel.SheetID) -> some View {
-        switch sheetID {
-        case .listOptions:
-            NavigationView {
-                ListOptionsView(
-                    model: model,
-                    resetTags: {
-                        model.listOptions.resetTags()
-                        model.dismissSheet()
-                    }
-                )
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button("Done", action: model.dismissSheet)
-                    }
-                }
-            }
-            
-        default: Text("TBD")
-        }
-    }
-    
-    //  MARK: - Action Sheets
+    // MARK: - Action Sheets
     
     private func actionSheet(actionSheetID: MainViewModel.ActionSheetID) -> ActionSheet {
         switch actionSheetID {
@@ -84,8 +58,7 @@ struct StoryListView: View {
         }
     }
     
-    
-    //  MARK: - Handle Delete
+    // MARK: - Handle Delete
     
     @State private var indexSet = IndexSet()
     

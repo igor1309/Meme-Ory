@@ -134,6 +134,7 @@ struct MainView: View {
             stories: _stories
         )
         .toolbar(content: storyListViewToolbar)
+        .sheet(item: $model.sheetID, content: storyListViewSheet)
     }
 
     private func storyListViewToolbar() -> some ToolbarContent {
@@ -145,6 +146,31 @@ struct MainView: View {
                     .frame(width: 44, height: 44, alignment: .trailing)
                     .if(model.listOptions.isActive) { $0.foregroundColor(Color(UIColor.systemOrange)) }
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func storyListViewSheet(
+        sheetID: MainViewModel.SheetID
+    ) -> some View {
+        switch sheetID {
+        case .listOptions:
+            NavigationView {
+                ListOptionsView(
+                    model: model,
+                    resetTags: {
+                        model.listOptions.resetTags()
+                        model.dismissSheet()
+                    }
+                )
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button("Done", action: model.dismissSheet)
+                    }
+                }
+            }
+            
+        default: Text("TBD")
         }
     }
     
