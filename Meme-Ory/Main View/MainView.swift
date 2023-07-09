@@ -99,8 +99,9 @@ struct MainView: View {
                     text: story.text,
                     maxTextLength: maxTextLength
                 )
+                .contentShape(Rectangle())
+                .onTapGesture(count: 1, perform: model.getRandomStory)
             },
-            onStoryTap: { _ in model.getRandomStory() },
             onStoryTapText: "Tap on the card to get next random story.",
             tagListButton: { story in
                 SingleStoryTagListButton(

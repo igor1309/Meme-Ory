@@ -16,7 +16,6 @@ where SingleStoryToolbar: View,
     let story: Story
     let singleStoryToolbar: (Story) -> SingleStoryToolbar
     let singleStoryView: (Story) -> SingleStoryView
-    let onStoryTap: (Story) -> Void
     let onStoryTapText: String
     let tagListButton: (Story) -> TagListButton
     
@@ -24,8 +23,6 @@ where SingleStoryToolbar: View,
         VStack(spacing: 16) {
             singleStoryToolbar(story)
             singleStoryView(story)
-                .contentShape(Rectangle())
-                .onTapGesture(count: 1) { onStoryTap(story) }
             tagListButton(story)
             
             Text(onStoryTapText)
