@@ -134,6 +134,7 @@ struct MainView: View {
             model: model,
             eventStore: eventStore,
             stories: _stories,
+            storyListRowView: storyListRowView,
             confirmDelete: confirmDelete
         )
         .toolbar(content: storyListViewToolbar)
@@ -145,6 +146,21 @@ struct MainView: View {
             item: $model.actionSheetID,
             content: storyListViewActionSheet
         )
+    }
+    
+    private func storyListRowView(story: Story) -> some View {
+        
+        StoryListRowViewWrapper(story: story)
+            .contentShape(Rectangle())
+            .contextMenu {
+                ListRowActionButtons(story: story)
+            }
+            .onAppear {
+                eventStore.reminderCleanup(
+                    for: story,
+                    in: context
+                )
+            }
     }
 
     private func storyListViewToolbar() -> some ToolbarContent {

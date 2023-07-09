@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct StoryListView: View {
+struct StoryListView<StoryListRowView: View>: View {
     
     let context: NSManagedObjectContext
     @ObservedObject var model: MainViewModel
@@ -16,6 +16,7 @@ struct StoryListView: View {
     
     @FetchRequest var stories: FetchedResults<Story>
     
+    let storyListRowView: (Story) -> StoryListRowView
     let confirmDelete: (IndexSet) -> Void
     
     var body: some View {
@@ -26,21 +27,6 @@ struct StoryListView: View {
             }
         }
         .listStyle(InsetGroupedListStyle())
-    }
-    
-    private func storyListRowView(story: Story) -> some View {
-        
-        StoryListRowViewWrapper(story: story)
-            .contentShape(Rectangle())
-            .contextMenu {
-                ListRowActionButtons(story: story)
-            }
-            .onAppear {
-                eventStore.reminderCleanup(
-                    for: story,
-                    in: context
-                )
-            }
     }
 }
 
@@ -60,6 +46,7 @@ struct StoryListView_Previews: PreviewProvider {
                 model: .init(context: context),
                 eventStore: .init(),
                 stories: request,
+                storyListRowView: { Text($0.text) },
                 confirmDelete: { _ in }
             )
             .navigationTitle("Story List View")
