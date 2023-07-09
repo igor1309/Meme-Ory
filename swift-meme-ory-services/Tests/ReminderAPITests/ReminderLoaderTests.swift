@@ -25,9 +25,27 @@ final class ReminderLoader {
 final class ReminderLoaderTests: XCTestCase {
     
     func test_init_shouldNotCallRetrieveOnEventStore() {
-        let store = ReminderStore()
-        let sut = ReminderLoader(store: store)
+        let (store, sut) = makeSUT()
         
         XCTAssertEqual(store.retrieveCallCount, 0)
+        XCTAssertNotNil(sut)
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> (
+        store: ReminderStore,
+        sut: ReminderLoader
+    ) {
+        let store = ReminderStore()
+        let sut = ReminderLoader(store: store)
+
+        trackForMemoryLeaks(store, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        
+        return (store, sut)
     }
 }
