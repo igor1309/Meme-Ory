@@ -46,12 +46,7 @@ struct MainView: View {
             case .single:
                 oneStoryUI()
             case .list:
-                StoryListView(
-                    context: context,
-                    model: model,
-                    eventStore: eventStore,
-                    stories: _stories
-                )
+                storyListView()
             }
         }
     }
@@ -129,6 +124,15 @@ struct MainView: View {
             actionSheet(actionSheetID: $0, story: story)
         }
         .toolbar { singleStoryToolbar(story: story) }
+    }
+    
+    private func storyListView() -> some View {
+        StoryListView(
+            context: context,
+            model: model,
+            eventStore: eventStore,
+            stories: _stories
+        )
     }
     
     //  MARK: - Action Sheets
