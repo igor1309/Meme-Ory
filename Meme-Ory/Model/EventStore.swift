@@ -13,7 +13,7 @@ import SwiftUI
 #warning("decouple from EventKit using protocol, next conform EKEventStore to it and inject in composition")
 final class EventStore: ObservableObject {
     
-    @Published var accessGranted: Bool
+    @Published private(set) var accessGranted: Bool
     
     private let store: EKEventStore
     
