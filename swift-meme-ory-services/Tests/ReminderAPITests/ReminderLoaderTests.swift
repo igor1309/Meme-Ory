@@ -24,7 +24,7 @@ final class ReminderLoader {
 
 final class ReminderLoaderTests: XCTestCase {
     
-    func test_init_shouldNotCallRetrieveOnEventStore() {
+    func test_init_shouldNotCallRetrieveOnReminderStore() {
         let (store, sut) = makeSUT()
         
         XCTAssertEqual(store.retrieveCallCount, 0)
