@@ -443,7 +443,7 @@
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
-				2ABAEEC32587A9B000D59CA2 /* TESTING */,
+				2ABAEEC32587A9B000D59CA2 /* EXPLORATION */,
 				2A6D6BEC258608AC00BBA8C7 /* Main View */,
 				2A194400258770D800E81C73 /* Single Story */,
 				2A194405258770E700E81C73 /* Story List */,
@@ -632,12 +632,12 @@
 			path = "Story List Row";
 			sourceTree = "<group>";
 		};
-		2ABAEEC32587A9B000D59CA2 /* TESTING */ = {
+		2ABAEEC32587A9B000D59CA2 /* EXPLORATION */ = {
 			isa = PBXGroup;
 			children = (
 				2ABAEEB9258798E400D59CA2 /* ConfirmAndDelete.swift */,
 			);
-			path = TESTING;
+			path = EXPLORATION;
 			sourceTree = "<group>";
 		};
 		2AC084552576481F00AFAE1C /* Supporting Views */ = {
