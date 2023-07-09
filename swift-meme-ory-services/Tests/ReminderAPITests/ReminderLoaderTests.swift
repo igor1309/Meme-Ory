@@ -17,8 +17,14 @@ final class ReminderStore {
 
 final class ReminderLoader {
     
+    private let store: ReminderStore
+    
     init(store: ReminderStore) {
-        
+        self.store = store
+    }
+    
+    func retrieve() {
+        store.retrieve()
     }
 }
 
@@ -29,6 +35,14 @@ final class ReminderLoaderTests: XCTestCase {
         
         XCTAssertEqual(store.retrieveCallCount, 0)
         XCTAssertNotNil(sut)
+    }
+    
+    func test_retrieve_shouldCallRetrieveOnReminderStore() {
+        let (store, sut) = makeSUT()
+        
+        sut.retrieve()
+        
+        XCTAssertEqual(store.retrieveCallCount, 1)
     }
     
     // MARK: - Helpers
@@ -42,7 +56,7 @@ final class ReminderLoaderTests: XCTestCase {
     ) {
         let store = ReminderStore()
         let sut = ReminderLoader(store: store)
-
+        
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         
