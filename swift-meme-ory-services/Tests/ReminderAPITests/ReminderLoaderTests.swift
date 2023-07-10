@@ -7,11 +7,25 @@
 
 import XCTest
 
+struct Reminder {}
+
 final class ReminderStore {
     private(set) var retrieveCallCount: UInt = 0
     
-    func retrieve() {
+    typealias RetrieveCompletion = (Error) -> Void
+    private var retrieveCompletions = [RetrieveCompletion]()
+    
+    func retrieve(completion: @escaping RetrieveCompletion) {
         retrieveCallCount += 1
+        retrieveCompletions.append(completion)
+    }
+    
+    func completeRetrieve(with error: Error, at index: Int = 0) {
+        retrieveCompletions[index](error)
+    }
+    
+    func completeRetrieveSuccessfully() {
+        
     }
 }
 
@@ -23,8 +37,8 @@ final class ReminderLoader {
         self.store = store
     }
     
-    func retrieve() {
-        store.retrieve()
+    func retrieve(completion: @escaping (Error) -> Void) {
+        store.retrieve(completion: completion)
     }
 }
 
@@ -40,9 +54,26 @@ final class ReminderLoaderTests: XCTestCase {
     func test_retrieve_shouldCallRetrieveOnReminderStore() {
         let (store, sut) = makeSUT()
         
-        sut.retrieve()
+        sut.retrieve { _ in }
         
         XCTAssertEqual(store.retrieveCallCount, 1)
+    }
+    
+    func test_retrieve_shouldDeliverErrorOnReminderStoreError() {
+        let (store, sut) = makeSUT()
+        let retrieveError = anyNSError()
+        var receivedError: Error?
+        let expectation = expectation(description: "wait for retrieve")
+        
+        sut.retrieve {
+            receivedError = $0
+            expectation.fulfill()
+        }
+        store.completeRetrieve(with: retrieveError)
+        
+        wait(for: [expectation], timeout: 1)
+        
+        XCTAssertNoDiff(receivedError as? NSError, retrieveError)
     }
     
     // MARK: - Helpers
