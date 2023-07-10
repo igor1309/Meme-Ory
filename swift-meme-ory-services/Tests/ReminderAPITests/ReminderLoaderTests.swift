@@ -36,13 +36,16 @@ final class ReminderStore {
 
 final class ReminderLoader {
     
+    typealias RetrieveResult = Result<Reminder, Error>
+    typealias RetrieveCompletion = (RetrieveResult) -> Void
+    
     private let store: ReminderStore
     
     init(store: ReminderStore) {
         self.store = store
     }
     
-    func retrieve(completion: @escaping ReminderStore.RetrieveCompletion) {
+    func retrieve(completion: @escaping RetrieveCompletion) {
         store.retrieve(completion: completion)
     }
 }
