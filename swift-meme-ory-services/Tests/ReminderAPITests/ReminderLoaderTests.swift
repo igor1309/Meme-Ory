@@ -7,25 +7,30 @@
 
 import XCTest
 
-struct Reminder {}
+struct Reminder {
+    let id: String
+}
 
 final class ReminderStore {
-    private(set) var retrieveCallCount: UInt = 0
+    typealias RetrieveResult = Result<Reminder, Error>
+    typealias RetrieveCompletion = (RetrieveResult) -> Void
     
-    typealias RetrieveCompletion = (Error) -> Void
     private var retrieveCompletions = [RetrieveCompletion]()
     
+    var retrieveCallCount: Int {
+        retrieveCompletions.count
+    }
+    
     func retrieve(completion: @escaping RetrieveCompletion) {
-        retrieveCallCount += 1
         retrieveCompletions.append(completion)
     }
     
     func completeRetrieve(with error: Error, at index: Int = 0) {
-        retrieveCompletions[index](error)
+        retrieveCompletions[index](.failure(error))
     }
     
-    func completeRetrieveSuccessfully() {
-        
+    func completeRetrieveSuccessfully(with reminder: Reminder, at index: Int = 0) {
+        retrieveCompletions[index](.success(reminder))
     }
 }
 
@@ -37,7 +42,7 @@ final class ReminderLoader {
         self.store = store
     }
     
-    func retrieve(completion: @escaping (Error) -> Void) {
+    func retrieve(completion: @escaping ReminderStore.RetrieveCompletion) {
         store.retrieve(completion: completion)
     }
 }
@@ -66,14 +71,43 @@ final class ReminderLoaderTests: XCTestCase {
         let expectation = expectation(description: "wait for retrieve")
         
         sut.retrieve {
-            receivedError = $0
-            expectation.fulfill()
+            switch $0 {
+            case let .failure(error):
+                receivedError = error
+                expectation.fulfill()
+                
+            case let .success(reminder):
+                XCTFail("Expected error, got \(reminder) instead.")
+            }
         }
         store.completeRetrieve(with: retrieveError)
         
         wait(for: [expectation], timeout: 1)
         
         XCTAssertNoDiff(receivedError as? NSError, retrieveError)
+    }
+    
+    func test_retrieve_shouldDeliverReminderOnReminderStoreSuccessfulRetrieve() {
+        let (store, sut) = makeSUT()
+        let retrieveReminder = Reminder(id: "abc")
+        var receivedReminder: Reminder?
+        let expectation = expectation(description: "wait for retrieve")
+        
+        sut.retrieve {
+            switch $0 {
+            case let .failure(error):
+                XCTFail("Expected reminder, got \(error) instead.")
+                
+            case let .success(reminder):
+                receivedReminder = reminder
+                expectation.fulfill()
+            }
+        }
+        store.completeRetrieveSuccessfully(with: retrieveReminder)
+        
+        wait(for: [expectation], timeout: 1)
+        
+        XCTAssertNoDiff(receivedReminder?.id, retrieveReminder.id)
     }
     
     // MARK: - Helpers
