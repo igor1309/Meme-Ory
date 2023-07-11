@@ -13,9 +13,14 @@ struct Reminder {
 
 final class ReminderStore {
     var deleteReminderCallCount = 0
+    var insertReminderCallCount = 0
     
     func delete(_ reminder: Reminder) {
         deleteReminderCallCount += 1
+    }
+    
+    func completeDeletion(with deletionError: Error, at index: Int = 0) {
+        
     }
 }
 
@@ -47,6 +52,17 @@ final class ReminderLoaderTests: XCTestCase {
         sut.save(reminder)
         
         XCTAssertEqual(store.deleteReminderCallCount, 1)
+    }
+    
+    func test_save_shouldNotRequestInsertionOnDeletionError() {
+        let (store, sut) = makeSUT()
+        let reminder = uniqueReminder()
+        let deletionError = anyNSError()
+        
+        sut.save(reminder)
+        store.completeDeletion(with: deletionError)
+        
+        XCTAssertEqual(store.insertReminderCallCount, 0)
     }
     
     // MARK: - Helpers
