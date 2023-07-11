@@ -22,6 +22,10 @@ final class ReminderStore {
     func completeDeletion(with deletionError: Error, at index: Int = 0) {
         
     }
+    
+    func completeDeletionSuccessfully(at index: Int = 0) {
+        insertReminderCallCount += 1
+    }
 }
 
 final class ReminderLoader {
@@ -63,6 +67,16 @@ final class ReminderLoaderTests: XCTestCase {
         store.completeDeletion(with: deletionError)
         
         XCTAssertEqual(store.insertReminderCallCount, 0)
+    }
+    
+    func test_save_shouldRequestInsertionOnSuccessfulDeletion() {
+        let (store, sut) = makeSUT()
+        let reminder = uniqueReminder()
+        
+        sut.save(reminder)
+        store.completeDeletionSuccessfully()
+        
+        XCTAssertEqual(store.insertReminderCallCount, 1)
     }
     
     // MARK: - Helpers
