@@ -151,7 +151,8 @@ extension EventStore {
         }
     }
     
-    func deleteReminder (withIdentifier calendarItemIdentifier: CalendarItemIdentifier) {
+    func deleteReminder(withIdentifier calendarItemIdentifier: CalendarItemIdentifier) {
+        
         guard accessGranted else { return }
         
         guard let reminder: EKReminder = store.calendarItem(withIdentifier: calendarItemIdentifier) as? EKReminder else { return }
