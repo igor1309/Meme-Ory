@@ -8,15 +8,28 @@
 import XCTest
 
 struct Reminder {
-    let id: String
+    let id: UUID
 }
 
 final class ReminderStore {
     var deleteReminderCallCount = 0
+    
+    func delete(_ reminder: Reminder) {
+        deleteReminderCallCount += 1
+    }
 }
 
 final class ReminderLoader {
-    init(store: ReminderStore) {}
+    
+    private let store: ReminderStore
+    
+    init(store: ReminderStore) {
+        self.store = store
+    }
+    
+    func save(_ reminder: Reminder) {
+        store.delete(reminder)
+    }
 }
 
 final class ReminderLoaderTests: XCTestCase {
@@ -25,6 +38,15 @@ final class ReminderLoaderTests: XCTestCase {
         let (store, _) = makeSUT()
         
         XCTAssertEqual(store.deleteReminderCallCount, 0)
+    }
+    
+    func test_save_shouldRequestReminderDeletion() {
+        let (store, sut) = makeSUT()
+        let reminder = uniqueReminder()
+        
+        sut.save(reminder)
+        
+        XCTAssertEqual(store.deleteReminderCallCount, 1)
     }
     
     // MARK: - Helpers
@@ -43,5 +65,9 @@ final class ReminderLoaderTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         
         return (store, sut)
+    }
+    
+    private func uniqueReminder() -> Reminder {
+        .init(id: .init())
     }
 }
