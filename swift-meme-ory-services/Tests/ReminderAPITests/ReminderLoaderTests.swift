@@ -70,47 +70,19 @@ final class ReminderLoaderTests: XCTestCase {
     func test_retrieve_shouldDeliverErrorOnReminderStoreError() {
         let (store, sut) = makeSUT()
         let retrieveError = anyNSError()
-        var receivedError: Error?
-        let expectation = expectation(description: "wait for retrieve")
-        
-        sut.retrieve {
-            switch $0 {
-            case let .failure(error):
-                receivedError = error
-                expectation.fulfill()
-                
-            case let .success(reminder):
-                XCTFail("Expected error, got \(reminder) instead.")
-            }
+
+        assert(expect: .failure(retrieveError), sut: sut) {
+            store.completeRetrieve(with: retrieveError)
         }
-        store.completeRetrieve(with: retrieveError)
-        
-        wait(for: [expectation], timeout: 1)
-        
-        XCTAssertNoDiff(receivedError as? NSError, retrieveError)
     }
     
     func test_retrieve_shouldDeliverReminderOnReminderStoreSuccessfulRetrieve() {
         let (store, sut) = makeSUT()
         let retrieveReminder = Reminder(id: "abc")
-        var receivedReminder: Reminder?
-        let expectation = expectation(description: "wait for retrieve")
         
-        sut.retrieve {
-            switch $0 {
-            case let .failure(error):
-                XCTFail("Expected reminder, got \(error) instead.")
-                
-            case let .success(reminder):
-                receivedReminder = reminder
-                expectation.fulfill()
-            }
+        assert(expect: .success(.init(id: "abc")), sut: sut) {
+            store.completeRetrieveSuccessfully(with: retrieveReminder)
         }
-        store.completeRetrieveSuccessfully(with: retrieveReminder)
-        
-        wait(for: [expectation], timeout: 1)
-        
-        XCTAssertNoDiff(receivedReminder?.id, retrieveReminder.id)
     }
     
     // MARK: - Helpers
@@ -129,5 +101,39 @@ final class ReminderLoaderTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         
         return (store, sut)
+    }
+    
+    private func assert(
+        expect expectedResult: ReminderLoader.RetrieveResult,
+        sut: ReminderLoader,
+        on action: @escaping () -> Void,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        var receivedResult: ReminderLoader.RetrieveResult?
+        let expectation = expectation(description: "wait for retrieve")
+        
+        sut.retrieve {
+            receivedResult = $0
+            expectation.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [expectation], timeout: 1)
+        
+        switch (receivedResult, expectedResult) {
+        case let (.failure(retrieveError as NSError), .failure(expectedError as NSError)):
+            XCTAssertNoDiff(retrieveError, expectedError, file: file, line: line)
+            
+        case let (.success(retrieveReminder), .success(expectedReminder)):
+            XCTAssertNoDiff(retrieveReminder.id, expectedReminder.id, file: file, line: line)
+
+        case let (.none, expectedResult):
+            XCTFail("Expected \(expectedResult), got no result.", file: file, line: line)
+            
+        case let (.some(receivedResult), expectedResult):
+            XCTFail("Expected \(expectedResult), got \(receivedResult) instead.", file: file, line: line)
+        }
     }
 }
