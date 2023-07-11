@@ -12,24 +12,19 @@ struct Reminder {
 }
 
 final class ReminderStore {
-    var retrieveCallCount = 0
+    var deleteReminderCallCount = 0
 }
 
 final class ReminderLoader {
-    private let store: ReminderStore
-    
-    init(store: ReminderStore) {
-        self.store = store
-    }
+    init(store: ReminderStore) {}
 }
 
 final class ReminderLoaderTests: XCTestCase {
     
-    func test_init_shouldNotCallRetrieveOnReminderStore() {
-        let (store, sut) = makeSUT()
+    func test_init_shouldNotCallDeleteUponCreation() {
+        let (store, _) = makeSUT()
         
-        XCTAssertEqual(store.retrieveCallCount, 0)
-        XCTAssertNotNil(sut)
+        XCTAssertEqual(store.deleteReminderCallCount, 0)
     }
     
     // MARK: - Helpers
