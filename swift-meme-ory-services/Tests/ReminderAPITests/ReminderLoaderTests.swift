@@ -52,10 +52,13 @@ final class ReminderLoader {
         self.store = store
     }
     
-    func save(_ reminder: Reminder) {
+    func save(
+        _ reminder: Reminder,
+        completion: @escaping (Error?) -> Void
+    ) {
         store.delete(reminder) { [unowned self] error in
             if error == nil {
-                store.insert(reminder, completion: { _ in })
+                store.insert(reminder, completion: completion)
             }
         }
     }
@@ -73,7 +76,7 @@ final class ReminderLoaderTests: XCTestCase {
         let (store, sut) = makeSUT()
         let reminder = uniqueReminder()
         
-        sut.save(reminder)
+        sut.save(reminder) { _ in }
         
         XCTAssertEqual(store.deleteReminderCallCount, 1)
     }
@@ -83,7 +86,7 @@ final class ReminderLoaderTests: XCTestCase {
         let reminder = uniqueReminder()
         let deletionError = anyNSError()
         
-        sut.save(reminder)
+        sut.save(reminder) { _ in }
         store.completeDeletion(with: deletionError)
         
         XCTAssertEqual(store.insertReminderCallCount, 0)
@@ -93,7 +96,7 @@ final class ReminderLoaderTests: XCTestCase {
         let (store, sut) = makeSUT()
         let reminder = uniqueReminder()
         
-        sut.save(reminder)
+        sut.save(reminder) { _ in }
         store.completeDeletionSuccessfully()
         
         XCTAssertEqual(store.insertReminderCallCount, 1)
