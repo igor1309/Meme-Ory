@@ -12,18 +12,25 @@ struct Reminder {
 }
 
 final class ReminderStore {
-    var deleteReminderCallCount = 0
+    var deleteReminderCallCount: Int { deletionCompletions.count }
     var insertReminderCallCount = 0
     
-    func delete(_ reminder: Reminder) {
-        deleteReminderCallCount += 1
+    typealias DeletionCompletion = (Error?) -> Void
+    private(set) var deletionCompletions = [DeletionCompletion]()
+    
+    func delete(
+        _ reminder: Reminder,
+        completion: @escaping DeletionCompletion
+    ) {
+        deletionCompletions.append(completion)
     }
     
     func completeDeletion(with deletionError: Error, at index: Int = 0) {
-        
+        deletionCompletions[index](deletionError)
     }
     
     func completeDeletionSuccessfully(at index: Int = 0) {
+        deletionCompletions[index](nil)
         insertReminderCallCount += 1
     }
 }
@@ -37,7 +44,7 @@ final class ReminderLoader {
     }
     
     func save(_ reminder: Reminder) {
-        store.delete(reminder)
+        store.delete(reminder) { _ in }
     }
 }
 
