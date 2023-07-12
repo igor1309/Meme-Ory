@@ -13,10 +13,13 @@ struct Reminder {
 
 final class ReminderStore {
     var deleteReminderCallCount: Int { deletionCompletions.count }
-    var insertReminderCallCount = 0
+    var insertReminderCallCount: Int { insertionCompletions.count }
     
     typealias DeletionCompletion = (Error?) -> Void
     private(set) var deletionCompletions = [DeletionCompletion]()
+    
+    typealias InsertionCompletion = (Error?) -> Void
+    private(set) var insertionCompletions = [InsertionCompletion]()
     
     func delete(
         _ reminder: Reminder,
@@ -25,13 +28,19 @@ final class ReminderStore {
         deletionCompletions.append(completion)
     }
     
+    func insert(
+        _ reminder: Reminder,
+        completion: @escaping InsertionCompletion
+    ) {
+        insertionCompletions.append(completion)
+    }
+    
     func completeDeletion(with deletionError: Error, at index: Int = 0) {
         deletionCompletions[index](deletionError)
     }
     
     func completeDeletionSuccessfully(at index: Int = 0) {
         deletionCompletions[index](nil)
-        insertReminderCallCount += 1
     }
 }
 
@@ -44,7 +53,11 @@ final class ReminderLoader {
     }
     
     func save(_ reminder: Reminder) {
-        store.delete(reminder) { _ in }
+        store.delete(reminder) { [unowned self] error in
+            if error == nil {
+                store.insert(reminder, completion: { _ in })
+            }
+        }
     }
 }
 
