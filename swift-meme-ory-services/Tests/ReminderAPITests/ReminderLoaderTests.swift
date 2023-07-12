@@ -52,9 +52,11 @@ final class ReminderLoader {
         self.store = store
     }
     
+    typealias SaveCompletion = (Error?) -> Void
+    
     func save(
         _ reminder: Reminder,
-        completion: @escaping (Error?) -> Void
+        completion: @escaping SaveCompletion
     ) {
         store.delete(reminder) { [unowned self] error in
             if error == nil {
