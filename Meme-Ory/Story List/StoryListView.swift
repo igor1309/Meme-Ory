@@ -22,7 +22,7 @@ where Stories.Element: Identifiable,
                     .onDelete(perform: confirmDelete)
             }
         }
-        .listStyle(InsetGroupedListStyle())
+        .listStyle(.plain)
     }
 }
 
