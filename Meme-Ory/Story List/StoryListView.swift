@@ -46,14 +46,14 @@ struct StoryListView_Previews: PreviewProvider {
 
 // MARK: - Preview Content
 
-private struct PreviewArticle: Identifiable {
+struct PreviewArticle: Identifiable {
     
     let text: String
     
     var id: Int { text.hashValue }
 }
 
-private extension Array where Element == PreviewArticle {
+extension Array where Element == PreviewArticle {
     
     static let preview: Self = [
         "Leaves rustled gently in the breeze.",
@@ -68,4 +68,3 @@ private extension Array where Element == PreviewArticle {
         "He discovered an old letter, revealing truths about his family's past.",
     ].map(PreviewArticle.init(text:))
 }
-

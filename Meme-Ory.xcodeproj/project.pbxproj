@@ -113,6 +113,9 @@
 		2ACCEE54257E13790022B752 /* EKEventStore+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */; };
 		2ACCEE58257E13790022B752 /* EKEventStore+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF9012570007F008D1B31 /* EKEventStore+Ext.swift */; };
 		2ACCEE5F257E15760022B752 /* Ory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCEE39257E08A40022B752 /* Ory.swift */; };
+		2AD3D3872B43C93E008F2C0A /* View+blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3D3862B43C93E008F2C0A /* View+blur.swift */; };
+		2AD3D3892B43C95A008F2C0A /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3D3882B43C95A008F2C0A /* Onboarding.swift */; };
+		2AD3D38B2B43CE81008F2C0A /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3D38A2B43CE81008F2C0A /* InfoView.swift */; };
 		2ADAD3B3256DA23A00AF463B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */; };
 		2ADAD3B5256DA23A00AF463B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */; };
 		2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */; };
@@ -271,6 +274,9 @@
 		2ACBA0232A59FFCE00E87949 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ACBA0262A59FFCE00E87949 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2ACCEE39257E08A40022B752 /* Ory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ory.swift; sourceTree = "<group>"; };
+		2AD3D3862B43C93E008F2C0A /* View+blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+blur.swift"; sourceTree = "<group>"; };
+		2AD3D3882B43C95A008F2C0A /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		2AD3D38A2B43CE81008F2C0A /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -636,6 +642,9 @@
 			isa = PBXGroup;
 			children = (
 				2ABAEEB9258798E400D59CA2 /* ConfirmAndDelete.swift */,
+				2AD3D3862B43C93E008F2C0A /* View+blur.swift */,
+				2AD3D3882B43C95A008F2C0A /* Onboarding.swift */,
+				2AD3D38A2B43CE81008F2C0A /* InfoView.swift */,
 			);
 			path = EXPLORATION;
 			sourceTree = "<group>";
@@ -1018,6 +1027,7 @@
 				2A8AFD0E25814A8E00A0DD94 /* MaintenanceView.swift in Sources */,
 				2A1944462587743900E81C73 /* StorySimpleView.swift in Sources */,
 				2A935C9B256A7717004B6E10 /* Tag.swift in Sources */,
+				2AD3D38B2B43CE81008F2C0A /* InfoView.swift in Sources */,
 				2AA89175256BE8080042395A /* SearchModifier.swift in Sources */,
 				2A6A3112257163CC007F2C0D /* Brief.swift in Sources */,
 				2A6D6BF2258608C500BBA8C7 /* MainViewModel.swift in Sources */,
@@ -1042,9 +1052,11 @@
 				2A1A4C432587EBEB008A84A2 /* NSManagedObjectContext+Get.swift in Sources */,
 				2A5005F3257197B4005E969A /* ImportTextViewModel.swift in Sources */,
 				2A16CDF52574F0E400146F3E /* NSPredicate+Ext.swift in Sources */,
+				2AD3D3872B43C93E008F2C0A /* View+blur.swift in Sources */,
 				2A6D6C132586BAAD00BBA8C7 /* StoryActionButtons.swift in Sources */,
 				2AFD326D2584F4EF00334A92 /* StoryImportTester.swift in Sources */,
 				2ADAD3F6256E4B5F00AF463B /* URL+Extension.swift in Sources */,
+				2AD3D3892B43C95A008F2C0A /* Onboarding.swift in Sources */,
 				2A935CA9256A83A0004B6E10 /* TagGridView.swift in Sources */,
 				2A6D6BE7258608A500BBA8C7 /* MainView.swift in Sources */,
 				2A935C9E256A77BE004B6E10 /* SampleData.swift in Sources */,
@@ -1307,7 +1319,7 @@
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Meme-Ory/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1339,7 +1351,7 @@
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Meme-Ory/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1582,7 +1594,7 @@
 				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1612,7 +1624,7 @@
 				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = VRVJ9YNRQU;
 				INFOPLIST_FILE = "Meme-OryWidget/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
