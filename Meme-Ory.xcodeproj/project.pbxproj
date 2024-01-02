@@ -116,6 +116,7 @@
 		2AD3D3872B43C93E008F2C0A /* View+blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3D3862B43C93E008F2C0A /* View+blur.swift */; };
 		2AD3D3892B43C95A008F2C0A /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3D3882B43C95A008F2C0A /* Onboarding.swift */; };
 		2AD3D38B2B43CE81008F2C0A /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3D38A2B43CE81008F2C0A /* InfoView.swift */; };
+		2AD3D3912B43EECF008F2C0A /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3D3902B43EECF008F2C0A /* LaunchScreenView.swift */; };
 		2ADAD3B3256DA23A00AF463B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */; };
 		2ADAD3B5256DA23A00AF463B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */; };
 		2ADAD3B8256DA23A00AF463B /* Meme_OryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADAD3B7256DA23A00AF463B /* Meme_OryWidget.swift */; };
@@ -277,6 +278,7 @@
 		2AD3D3862B43C93E008F2C0A /* View+blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+blur.swift"; sourceTree = "<group>"; };
 		2AD3D3882B43C95A008F2C0A /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		2AD3D38A2B43CE81008F2C0A /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		2AD3D3902B43EECF008F2C0A /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		2ADAD3B0256DA23A00AF463B /* Meme-OryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Meme-OryWidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ADAD3B2256DA23A00AF463B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2ADAD3B4256DA23A00AF463B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -449,6 +451,7 @@
 				2ADAD3E6256DB9B600AF463B /* Meme-Ory.entitlements */,
 				2A1B5FB6256A4A5D00E3283D /* Meme_OryApp.swift */,
 				2AFE9E5B2573B00D0037E8CF /* ContentView.swift */,
+				2AD3D3902B43EECF008F2C0A /* LaunchScreenView.swift */,
 				2ABAEEC32587A9B000D59CA2 /* EXPLORATION */,
 				2A6D6BEC258608AC00BBA8C7 /* Main View */,
 				2A194400258770D800E81C73 /* Single Story */,
@@ -1010,6 +1013,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AFD320F25841DCC00334A92 /* View+Ext.swift in Sources */,
+				2AD3D3912B43EECF008F2C0A /* LaunchScreenView.swift in Sources */,
 				2A1943CB258751CB00E81C73 /* StoryListRowViewWrapper.swift in Sources */,
 				2A19444C2587749500E81C73 /* ListKind.swift in Sources */,
 				2A1A4C3D2587EB43008A84A2 /* NSManagedObjectContext+Publishers.swift in Sources */,
