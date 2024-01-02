@@ -11,10 +11,27 @@ import SwiftUI
 struct Meme_OryApp: App {
     
     @StateObject private var storageProvider = StorageProvider()
+    @State private var isShowingLaunchScreen = true
     
     var body: some Scene {
         WindowGroup {
-            ContentView(context: storageProvider.container.viewContext)
+            
+            ZStack {
+                ContentView(context: storageProvider.container.viewContext)
+
+                LaunchScreenView()
+                    .opacity(isShowingLaunchScreen ? 1 : 0)
+                    .animation(.easeInOut(duration: 1), value: isShowingLaunchScreen)
+            }
+            .onAppear(perform: hideLaunchScreen)
+        }
+    }
+    
+    private func hideLaunchScreen() {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            
+            isShowingLaunchScreen = false
         }
     }
 }
